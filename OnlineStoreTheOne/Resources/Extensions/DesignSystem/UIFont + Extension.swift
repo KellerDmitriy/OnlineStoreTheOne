@@ -9,12 +9,15 @@ import UIKit
 
 // MARK: - FontType
 enum FontType: String {
-    case bold = "Typography-Bold"
-    case extraBold = "Typography-ExtraBold"
-    case light = "Typography-Light"
-    case medium = "Typography-Medium"
-    case regular = "Typography-Regular"
-    case semibold = "Typography-SemiBold"
+    case thin = "Inter-Thin"
+    case extraLight = "Inter-ExtraLight"
+    case light = "Inter-Light"
+    case regular = "Inter-Regular"
+    case medium = "Inter-Medium"
+    case semiBold = "Inter-SemiBold"
+    case bold = "Inter-Bold"
+    case extraBold = "Inter-ExtraBold"
+    case black = "Inter-Black"
 }
 
 // MARK: - UIFont
