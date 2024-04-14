@@ -29,6 +29,7 @@
 		E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2622BCC50D5001DC54D /* Observable.swift */; };
 		E1F1B2662BCC5122001DC54D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E1F1B2652BCC5122001DC54D /* SnapKit */; };
 		E1F1B2682BCC5122001DC54D /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E1F1B2672BCC5122001DC54D /* SnapKit-Dynamic */; };
+		E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B26A2BCC6B60001DC54D /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		E1F1B25C2BCC5042001DC54D /* CardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewModel.swift; sourceTree = "<group>"; };
 		E1F1B2602BCC5092001DC54D /* CardsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRouter.swift; sourceTree = "<group>"; };
 		E1F1B2622BCC50D5001DC54D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		E1F1B26A2BCC6B60001DC54D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F1B2252BCC1852001DC54D /* ViewController.swift */,
+				E1F1B2692BCC6B4B001DC54D /* TabBar */,
 				E1F1B2582BCC4FCA001DC54D /* Cards */,
 			);
 			path = Screens;
@@ -191,6 +194,14 @@
 				E1F1B2602BCC5092001DC54D /* CardsRouter.swift */,
 			);
 			path = Router;
+			sourceTree = "<group>";
+		};
+		E1F1B2692BCC6B4B001DC54D /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				E1F1B26A2BCC6B60001DC54D /* TabBarController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +299,7 @@
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
+				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
