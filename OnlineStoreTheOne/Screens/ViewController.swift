@@ -12,8 +12,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.yellow
+        
+        
     }
 
-
+    public func addConstraint() {
+        
+    }
 }
 
