@@ -12,6 +12,8 @@
 		E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2252BCC1852001DC54D /* ViewController.swift */; };
 		E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22A2BCC1853001DC54D /* Assets.xcassets */; };
 		E1F1B22E2BCC1853001DC54D /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22D2BCC1853001DC54D /* Base */; };
+		E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B23D2BCC2992001DC54D /* UIFont + Extension.swift */; };
+		E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B23F2BCC2E18001DC54D /* Color + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		E1F1B22A2BCC1853001DC54D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1F1B22D2BCC1853001DC54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1F1B22F2BCC1853001DC54D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1F1B23D2BCC2992001DC54D /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
+		E1F1B23F2BCC2E18001DC54D /* Color + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,10 +86,36 @@
 		E1F1B23B2BCC2634001DC54D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E1F1B2412BCC32B9001DC54D /* Fonts */,
+				E1F1B23C2BCC2934001DC54D /* Extensions */,
 				E1F1B22A2BCC1853001DC54D /* Assets.xcassets */,
 				E1F1B22C2BCC1853001DC54D /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		E1F1B23C2BCC2934001DC54D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E1F1B2422BCC335C001DC54D /* DesignSystem */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E1F1B2412BCC32B9001DC54D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E1F1B2422BCC335C001DC54D /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				E1F1B23D2BCC2992001DC54D /* UIFont + Extension.swift */,
+				E1F1B23F2BCC2E18001DC54D /* Color + Extension.swift */,
+			);
+			path = DesignSystem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,9 +188,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
+				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
