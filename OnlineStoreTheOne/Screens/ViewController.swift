@@ -8,19 +8,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    let networkService = NetworkService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.yellow
-        fetchProducts()
-    }
 
-    func fetchProducts() {
-        Task {
-            await networkService.fetchAllProducts()
-        }
     }
 
 }
