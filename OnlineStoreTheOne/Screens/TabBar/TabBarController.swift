@@ -15,7 +15,8 @@ final class TabBarController: UITabBarController {
         configureTabBarAppearance()
         setupViewControllers()
     }
-
+    
+    // MARK: - private methods
     private func configureTabBarAppearance() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -28,7 +29,7 @@ final class TabBarController: UITabBarController {
             appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: Colors.greenSheen]
         
         tabBar.scrollEdgeAppearance = appearance
-        tabBar.tintColor = .label
+        tabBar.tintColor = Colors.gray
 
     }
 
@@ -57,5 +58,4 @@ final class TabBarController: UITabBarController {
         tabBar.tintColor = .black
         setViewControllers([vc1, vc2, vc3, vc4], animated: true)
     }
-
 }
