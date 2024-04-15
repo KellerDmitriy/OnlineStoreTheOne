@@ -9,9 +9,9 @@ import Foundation
 
 // MARK: - Products
 struct Products: Codable {
-    let id: Int
-    let title: String
-    let price: Int
+    let id: Int?
+    let title: String?
+    let price: Int?
     let description: String?
     let category: Category?
     let images: [String]?
@@ -19,7 +19,7 @@ struct Products: Codable {
 
 // MARK: - Category
 struct Category: Codable {
-    let id: Int
+    let id: Int?
     let name: String?
     let image: String?
 }

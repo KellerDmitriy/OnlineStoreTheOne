@@ -39,7 +39,7 @@ struct Endpoint {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.escuelajs.co"
-        components.path = "/api/v1".appending(path)
+        components.path = "/api/v1/".appending(path)
         components.queryItems = queryItems
         
         guard let url = components.url else {
@@ -68,7 +68,6 @@ extension Endpoint {
         }
     }
 }
-
 
 extension Endpoint {
     enum HTTPMethod: String {

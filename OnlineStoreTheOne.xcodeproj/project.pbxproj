@@ -12,6 +12,8 @@
 		E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */; };
 		E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8362BCD019A00CC0D64 /* Endpoint + Extension.swift */; };
 		E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */; };
+		E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E83D2BCD20AA00CC0D64 /* Result + Extension.swift */; };
+		E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E83F2BCD216B00CC0D64 /* Sequwnces + Extension.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2252BCC1852001DC54D /* ViewController.swift */; };
@@ -43,6 +45,8 @@
 		E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		E1A2E8362BCD019A00CC0D64 /* Endpoint + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Endpoint + Extension.swift"; sourceTree = "<group>"; };
 		E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsModel.swift; sourceTree = "<group>"; };
+		E1A2E83D2BCD20AA00CC0D64 /* Result + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result + Extension.swift"; sourceTree = "<group>"; };
+		E1A2E83F2BCD216B00CC0D64 /* Sequwnces + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequwnces + Extension.swift"; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 			children = (
 				E1A2E83B2BCD10D000CC0D64 /* Models */,
 				E1A2E8382BCD01A100CC0D64 /* Endpoint */,
+				E1A2E83C2BCD208E00CC0D64 /* Extension */,
 				E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */,
 				E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */,
 			);
@@ -115,6 +120,15 @@
 				E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E1A2E83C2BCD208E00CC0D64 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E1A2E83D2BCD20AA00CC0D64 /* Result + Extension.swift */,
+				E1A2E83F2BCD216B00CC0D64 /* Sequwnces + Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		E1F1B2152BCC1852001DC54D = {
@@ -168,8 +182,8 @@
 		E1F1B23B2BCC2634001DC54D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E1F1B2412BCC32B9001DC54D /* Fonts */,
 				E1F1B23C2BCC2934001DC54D /* Extensions */,
+				E1F1B2412BCC32B9001DC54D /* Fonts */,
 				E1F1B22A2BCC1853001DC54D /* Assets.xcassets */,
 				E1F1B22C2BCC1853001DC54D /* LaunchScreen.storyboard */,
 			);
@@ -347,8 +361,10 @@
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CardsViewController.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
+				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
+				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,
 				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
