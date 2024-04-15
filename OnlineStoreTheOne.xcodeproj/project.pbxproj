@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */; };
+		E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */; };
+		E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */; };
+		E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8362BCD019A00CC0D64 /* Endpoint + Extension.swift */; };
+		E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2252BCC1852001DC54D /* ViewController.swift */; };
@@ -33,6 +38,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		E1A2E8362BCD019A00CC0D64 /* Endpoint + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Endpoint + Extension.swift"; sourceTree = "<group>"; };
+		E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsModel.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +81,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E1A2E8302BCCFB4300CC0D64 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E1A2E8312BCCFB6B00CC0D64 /* NetworkServices */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E1A2E8312BCCFB6B00CC0D64 /* NetworkServices */ = {
+			isa = PBXGroup;
+			children = (
+				E1A2E83B2BCD10D000CC0D64 /* Models */,
+				E1A2E8382BCD01A100CC0D64 /* Endpoint */,
+				E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */,
+				E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */,
+			);
+			path = NetworkServices;
+			sourceTree = "<group>";
+		};
+		E1A2E8382BCD01A100CC0D64 /* Endpoint */ = {
+			isa = PBXGroup;
+			children = (
+				E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */,
+				E1A2E8362BCD019A00CC0D64 /* Endpoint + Extension.swift */,
+			);
+			path = Endpoint;
+			sourceTree = "<group>";
+		};
+		E1A2E83B2BCD10D000CC0D64 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E1F1B2152BCC1852001DC54D = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +138,7 @@
 			children = (
 				E1F1B2392BCC24E7001DC54D /* Apps */,
 				E1F1B23A2BCC2629001DC54D /* Screens */,
+				E1A2E8302BCCFB4300CC0D64 /* Services */,
 				E1F1B23B2BCC2634001DC54D /* Resources */,
 			);
 			path = OnlineStoreTheOne;
@@ -290,6 +337,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
+				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
+				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CardsViewModel.swift in Sources */,
 				E1F1B2612BCC5092001DC54D /* CardsRouter.swift in Sources */,
@@ -299,6 +349,8 @@
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
+				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
+				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,
 				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
