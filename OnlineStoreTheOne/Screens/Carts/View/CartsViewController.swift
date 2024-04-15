@@ -23,7 +23,7 @@ final class CartsViewController: UIViewController {
     private lazy var payButton: UIButton = {
         let filledButtonFactory = FilledButtonFactory(
             title: "Selected payment method",
-            color: Colors.greenSheen,
+            type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.payButtonTap()
             }

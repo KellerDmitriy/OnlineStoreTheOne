@@ -14,9 +14,9 @@
 		E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */; };
 		E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E83D2BCD20AA00CC0D64 /* Result + Extension.swift */; };
 		E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E83F2BCD216B00CC0D64 /* Sequwnces + Extension.swift */; };
-		E1A2E8432BCD58D500CC0D64 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8422BCD58D500CC0D64 /* ButtonFactory.swift */; };
-		E1A2E8452BCD798A00CC0D64 /* CartsViewController + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8442BCD798A00CC0D64 /* CartsViewController + UITableView.swift */; };
-		E1A2E8472BCD7A3900CC0D64 /* CartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8462BCD7A3900CC0D64 /* CartsTableViewCell.swift */; };
+		E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */; };
+		E1D1DC102BCDBD2F0009C2A3 /* CartsViewController + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC0F2BCDBD2F0009C2A3 /* CartsViewController + UITableView.swift */; };
+		E1D1DC122BCDBD3D0009C2A3 /* CartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC112BCDBD3D0009C2A3 /* CartsTableViewCell.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2252BCC1852001DC54D /* ViewController.swift */; };
@@ -50,9 +50,9 @@
 		E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsModel.swift; sourceTree = "<group>"; };
 		E1A2E83D2BCD20AA00CC0D64 /* Result + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result + Extension.swift"; sourceTree = "<group>"; };
 		E1A2E83F2BCD216B00CC0D64 /* Sequwnces + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequwnces + Extension.swift"; sourceTree = "<group>"; };
-		E1A2E8422BCD58D500CC0D64 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
-		E1A2E8442BCD798A00CC0D64 /* CartsViewController + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CartsViewController + UITableView.swift"; sourceTree = "<group>"; };
-		E1A2E8462BCD7A3900CC0D64 /* CartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartsTableViewCell.swift; sourceTree = "<group>"; };
+		E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
+		E1D1DC0F2BCDBD2F0009C2A3 /* CartsViewController + UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CartsViewController + UITableView.swift"; sourceTree = "<group>"; };
+		E1D1DC112BCDBD3D0009C2A3 /* CartsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartsTableViewCell.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -137,20 +137,20 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		E1A2E8412BCD58B900CC0D64 /* Helpers */ = {
+		E1A2E8492BCDB90D00CC0D64 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E1A2E8422BCD58D500CC0D64 /* ButtonFactory.swift */,
+				E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		E1A2E8482BCD7A3C00CC0D64 /* Cells */ = {
+		E1D1DC132BCDBD440009C2A3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				E1A2E8462BCD7A3900CC0D64 /* CartsTableViewCell.swift */,
+				E1D1DC112BCDBD3D0009C2A3 /* CartsTableViewCell.swift */,
 			);
-			path = Cells;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		E1F1B2152BCC1852001DC54D = {
@@ -204,7 +204,7 @@
 		E1F1B23B2BCC2634001DC54D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E1A2E8412BCD58B900CC0D64 /* Helpers */,
+				E1A2E8492BCDB90D00CC0D64 /* Helpers */,
 				E1F1B23C2BCC2934001DC54D /* Extensions */,
 				E1F1B2412BCC32B9001DC54D /* Fonts */,
 				E1F1B22A2BCC1853001DC54D /* Assets.xcassets */,
@@ -259,9 +259,9 @@
 		E1F1B25B2BCC500F001DC54D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E1A2E8482BCD7A3C00CC0D64 /* Cells */,
+				E1D1DC132BCDBD440009C2A3 /* Cell */,
+				E1D1DC0F2BCDBD2F0009C2A3 /* CartsViewController + UITableView.swift */,
 				E1F1B2592BCC4FE2001DC54D /* CartsViewController.swift */,
-				E1A2E8442BCD798A00CC0D64 /* CartsViewController + UITableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -376,12 +376,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1A2E8432BCD58D500CC0D64 /* ButtonFactory.swift in Sources */,
+				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
-				E1A2E8452BCD798A00CC0D64 /* CartsViewController + UITableView.swift in Sources */,
+				E1D1DC102BCDBD2F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CartsViewModel.swift in Sources */,
 				E1F1B2612BCC5092001DC54D /* CardsRouter.swift in Sources */,
 				E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */,
@@ -391,7 +391,7 @@
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
-				E1A2E8472BCD7A3900CC0D64 /* CartsTableViewCell.swift in Sources */,
+				E1D1DC122BCDBD3D0009C2A3 /* CartsTableViewCell.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,

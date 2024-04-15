@@ -16,6 +16,11 @@ final class TabBarController: UITabBarController {
         setupViewControllers()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tabBar.frame.size.height = 100
+    }
+    
     // MARK: - private methods
     private func configureTabBarAppearance() {
         let appearance = UITabBarAppearance()

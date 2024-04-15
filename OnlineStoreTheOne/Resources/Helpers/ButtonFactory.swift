@@ -13,23 +13,28 @@ protocol ButtonFactory {
     func createButton() -> UIButton
 }
 
-/// Конкретная реализация `ButtonFactory` для создания заполненных кнопок.
+enum TypeButton {
+    case greenButton
+    case grayButton
+}
+
+/// Фабрика для создания заполненных кнопок с различными стилями и цветами.
 final class FilledButtonFactory: ButtonFactory {
     /// Заголовок кнопки.
     let title: String
-    /// Цвет кнопки.
-    let color: UIColor
+    /// Тип кнопки.
+    let type: TypeButton
     /// Действие, выполняемое при нажатии на кнопку.
     let action: UIAction
     
-    /// Инициализатор для создания фабрики заполненных кнопок.
+    /// Инициализирует фабрику для создания заполненных кнопок с заданными параметрами.
     /// - Parameters:
     ///   - title: Заголовок кнопки.
-    ///   - color: Цвет кнопки.
+    ///   - type: Тип кнопки.
     ///   - action: Действие, выполняемое при нажатии на кнопку.
-    init(title: String, color: UIColor, action: UIAction) {
+    init(title: String, type: TypeButton, action: UIAction) {
         self.title = title
-        self.color = color
+        self.type = type
         self.action = action
     }
     
@@ -39,8 +44,19 @@ final class FilledButtonFactory: ButtonFactory {
         var attributes = AttributeContainer()
         attributes.font = UIFont.makeTypography(.medium, size: 14)
         
-        var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.baseBackgroundColor = color
+        var buttonConfiguration: UIButton.Configuration
+        
+        switch type {
+        case .greenButton:
+            buttonConfiguration = UIButton.Configuration.filled()
+            buttonConfiguration.baseBackgroundColor = Colors.greenSheen
+            attributes.foregroundColor = .white
+        case .grayButton:
+            buttonConfiguration = UIButton.Configuration.filled()
+            buttonConfiguration.baseBackgroundColor = Colors.lightGray
+            attributes.foregroundColor = .black
+        }
+        
         buttonConfiguration.attributedTitle = AttributedString(title, attributes: attributes)
         
         let button = UIButton(configuration: buttonConfiguration, primaryAction: action)
