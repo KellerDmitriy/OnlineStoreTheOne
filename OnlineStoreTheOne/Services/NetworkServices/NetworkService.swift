@@ -7,14 +7,30 @@
 
 import Foundation
 
+
+/// Сервис для выполнения сетевых запросов.
 final class NetworkService {
+    
+    // MARK: - Properties
+    
+    /// Общий экземпляр сетевого сервиса.
     public static let shared = NetworkService()
     
+    /// Сессия URLSession для выполнения сетевых запросов.
     let session = URLSession.shared
+    
+    /// Декодер JSON для декодирования полученных данных.
     let decoder = JSONDecoder()
     
+    // MARK: - Initialization
+    
+    /// Приватный инициализатор для предотвращения создания экземпляров снаружи класса.
     private init () {}
     
+    // MARK: - Public Methods
+    
+    /// Получение всех продуктов из сети.
+    /// - Returns: Результат выполнения запроса с массивом продуктов или ошибкой сети.
     func fetchAllProducts() async -> Result<[Products], NetworkError> {
         await request(from: .allProducts())
             .mapError(NetworkError.init)
@@ -22,6 +38,12 @@ final class NetworkService {
 }
 
 extension NetworkService {
+    
+    // MARK: - Request Methods
+    
+    /// Выполнение сетевого запроса к указанному endpoint.
+    /// - Parameter endpoint: Endpoint для выполнения запроса.
+    /// - Returns: Результат выполнения запроса с декодированными данными или ошибкой сети.
     func request<T: Decodable>(from endpoint: Endpoint) async -> Result<T, Error> {
         return await Result
              .success(endpoint)
@@ -31,6 +53,11 @@ extension NetworkService {
              .decode(T.self, decoder: decoder)
     }
     
+    // MARK: - Response Handling
+    
+    /// Обработка ответа от сервера и извлечение данных.
+    /// - Parameter dataResponse: Кортеж с данными ответа и объектом URLResponse.
+    /// - Returns: Результат с извлеченными данными или ошибкой сети.
     func unwrapResponse(_ dataResponse: (Data, URLResponse)) -> Result<Data, Error> {
         guard let httpResponse = dataResponse.1 as? HTTPURLResponse else {
             return .failure(NetworkError.invalidResponse)

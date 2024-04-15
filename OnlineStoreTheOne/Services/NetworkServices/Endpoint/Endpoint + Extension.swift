@@ -9,11 +9,16 @@ import Foundation
 
 extension Endpoint {
     
+    /// Создает конечную точку для HTTP GET запроса.
     static func get() -> Endpoint { Endpoint(method: .GET) }
-    static func post() -> Endpoint {Endpoint(method: .POST) }
+    
+    /// Создает конечную точку для HTTP POST запроса.
+    static func post() -> Endpoint { Endpoint(method: .POST) }
+    
+    /// Создает конечную точку для HTTP PUT запроса.
     static func put() -> Endpoint { Endpoint(method: .PUT) }
     
-    
+    /// Создает конечную точку для получения всех продуктов.
     static func allProducts() -> Self {
         Endpoint.get()
             .path("products")
