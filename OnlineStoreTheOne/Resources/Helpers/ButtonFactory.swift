@@ -41,27 +41,22 @@ final class FilledButtonFactory: ButtonFactory {
     /// Создает новую заполненную кнопку с заданными параметрами.
     /// - Returns: Новая заполненная кнопка.
     func createButton() -> UIButton {
-        var attributes = AttributeContainer()
-        attributes.font = UIFont.makeTypography(.medium, size: 14)
-        
-        var buttonConfiguration: UIButton.Configuration
+        let button = UIButton(type: .system)
+        button.setTitle(title, for: .normal)
+        button.layer.cornerRadius = 5
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         switch type {
         case .greenButton:
-            buttonConfiguration = UIButton.Configuration.filled()
-            buttonConfiguration.baseBackgroundColor = Colors.greenSheen
-            attributes.foregroundColor = .white
+            button.backgroundColor = Colors.greenSheen
+            button.setTitleColor(.white, for: .normal)
         case .grayButton:
-            buttonConfiguration = UIButton.Configuration.filled()
-            buttonConfiguration.baseBackgroundColor = Colors.lightGray
-            attributes.foregroundColor = .black
+            button.backgroundColor = Colors.lightGray
+            button.setTitleColor(.black, for: .normal)
         }
-        
-        buttonConfiguration.attributedTitle = AttributedString(title, attributes: attributes)
-        
-        let button = UIButton(configuration: buttonConfiguration, primaryAction: action)
-        button.layer.cornerRadius = 5
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = UIFont.makeTypography(.medium, size: 14)
+        button.addAction(action, for: .touchUpInside)
         return button
     }
 }
+
