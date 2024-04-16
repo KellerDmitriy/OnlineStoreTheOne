@@ -35,10 +35,18 @@ final class TabBarController: UITabBarController {
     
     private func setupViewControllers() {
         
-        let vc1 = UINavigationController(rootViewController: ViewController())
-        let vc2 = UINavigationController(rootViewController: ViewController())
-        let vc3 = UINavigationController(rootViewController: ViewController())
-        let vc4 = UINavigationController(rootViewController: ViewController())
+        let vc1 = UINavigationController(
+            rootViewController: ViewController()
+        )
+        let vc2 = UINavigationController(
+            rootViewController: WishListViewController()
+        )
+        let vc3 = UINavigationController(
+            rootViewController: ViewController()
+        )
+        let vc4 = UINavigationController(
+            rootViewController: ViewController()
+        )
         
         vc1.title = "Home"
         vc2.title = "Categories"
