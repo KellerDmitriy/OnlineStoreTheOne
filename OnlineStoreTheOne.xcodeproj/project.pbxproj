@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		534C8E642BCD6EAE0035FFC3 /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534C8E632BCD6EAE0035FFC3 /* ProfileScreen.swift */; };
+		534C8E672BCD6F2A0035FFC3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534C8E662BCD6F2A0035FFC3 /* Button.swift */; };
+		534C8E692BCD72700035FFC3 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534C8E682BCD72700035FFC3 /* Label.swift */; };
+		534C8E6B2BCD727E0035FFC3 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534C8E6A2BCD727E0035FFC3 /* Image.swift */; };
+		534C8E6D2BCD72890035FFC3 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534C8E6C2BCD72890035FFC3 /* Icon.swift */; };
+		534C8E6F2BCD72950035FFC3 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534C8E6E2BCD72950035FFC3 /* Action.swift */; };
 		E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */; };
 		E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */; };
 		E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */; };
@@ -40,6 +46,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		534C8E632BCD6EAE0035FFC3 /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
+		534C8E662BCD6F2A0035FFC3 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		534C8E682BCD72700035FFC3 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		534C8E6A2BCD727E0035FFC3 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		534C8E6C2BCD72890035FFC3 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		534C8E6E2BCD72950035FFC3 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -85,6 +97,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		534C8E652BCD6F100035FFC3 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				534C8E632BCD6EAE0035FFC3 /* ProfileScreen.swift */,
+				534C8E662BCD6F2A0035FFC3 /* Button.swift */,
+				534C8E682BCD72700035FFC3 /* Label.swift */,
+				534C8E6A2BCD727E0035FFC3 /* Image.swift */,
+				534C8E6C2BCD72890035FFC3 /* Icon.swift */,
+				534C8E6E2BCD72950035FFC3 /* Action.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		E1A2E8302BCCFB4300CC0D64 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F1B2252BCC1852001DC54D /* ViewController.swift */,
+				534C8E652BCD6F100035FFC3 /* Profile */,
 				E1F1B2692BCC6B4B001DC54D /* TabBar */,
 				E1F1B2582BCC4FCA001DC54D /* Cards */,
 			);
@@ -356,17 +382,23 @@
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CardsViewModel.swift in Sources */,
+				534C8E672BCD6F2A0035FFC3 /* Button.swift in Sources */,
 				E1F1B2612BCC5092001DC54D /* CardsRouter.swift in Sources */,
+				534C8E6F2BCD72950035FFC3 /* Action.swift in Sources */,
+				534C8E6B2BCD727E0035FFC3 /* Image.swift in Sources */,
 				E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
+				534C8E6D2BCD72890035FFC3 /* Icon.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CardsViewController.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
+				534C8E642BCD6EAE0035FFC3 /* ProfileScreen.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,
+				534C8E692BCD72700035FFC3 /* Label.swift in Sources */,
 				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

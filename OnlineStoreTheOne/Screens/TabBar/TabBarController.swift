@@ -38,7 +38,7 @@ final class TabBarController: UITabBarController {
         let vc1 = UINavigationController(rootViewController: ViewController())
         let vc2 = UINavigationController(rootViewController: ViewController())
         let vc3 = UINavigationController(rootViewController: ViewController())
-        let vc4 = UINavigationController(rootViewController: ViewController())
+        let vc4 = UINavigationController(rootViewController: ProfileScreen())
 
         vc1.title = "Home"
         vc2.title = "Categories"
