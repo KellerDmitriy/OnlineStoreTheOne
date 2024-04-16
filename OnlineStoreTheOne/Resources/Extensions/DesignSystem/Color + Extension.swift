@@ -10,10 +10,12 @@ import UIKit
 enum Colors {
     public static let greenSheen = UIColor(hex: "#67C4A7")
     public static let darkArsenic = UIColor(hex: "#393F42")
+    public static let lightGray = UIColor(hex: "#F3F4F7")
     public static let gray = UIColor(hex: "#939393")
     public static let red = UIColor(hex: "#D65B5B")
     public static let yellow = UIColor(hex: "#F79008")
     public static let green = UIColor(hex: "#12B6A")
+    
 }
 
 extension UIColor {
