@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53D6CACA2BCF13CA006716BE /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC42BCF13CA006716BE /* Action.swift */; };
+		53D6CACB2BCF13CA006716BE /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC52BCF13CA006716BE /* Label.swift */; };
+		53D6CACC2BCF13CA006716BE /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC62BCF13CA006716BE /* Icon.swift */; };
+		53D6CACD2BCF13CA006716BE /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC72BCF13CA006716BE /* ProfileScreen.swift */; };
+		53D6CACE2BCF13CA006716BE /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC82BCF13CA006716BE /* Button.swift */; };
+		53D6CACF2BCF13CA006716BE /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC92BCF13CA006716BE /* Image.swift */; };
 		86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */; };
 		E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */; };
 		E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */; };
@@ -42,6 +48,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53D6CAC42BCF13CA006716BE /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Action.swift; path = OnlineStoreTheOne/Profile/Action.swift; sourceTree = SOURCE_ROOT; };
+		53D6CAC52BCF13CA006716BE /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Label.swift; path = OnlineStoreTheOne/Profile/Label.swift; sourceTree = SOURCE_ROOT; };
+		53D6CAC62BCF13CA006716BE /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Icon.swift; path = OnlineStoreTheOne/Profile/Icon.swift; sourceTree = SOURCE_ROOT; };
+		53D6CAC72BCF13CA006716BE /* ProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileScreen.swift; path = OnlineStoreTheOne/Profile/ProfileScreen.swift; sourceTree = SOURCE_ROOT; };
+		53D6CAC82BCF13CA006716BE /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Button.swift; path = OnlineStoreTheOne/Profile/Button.swift; sourceTree = SOURCE_ROOT; };
+		53D6CAC92BCF13CA006716BE /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Image.swift; path = OnlineStoreTheOne/Profile/Image.swift; sourceTree = SOURCE_ROOT; };
 		86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -89,6 +101,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53D6CAC32BCF1383006716BE /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				53D6CAC42BCF13CA006716BE /* Action.swift */,
+				53D6CAC82BCF13CA006716BE /* Button.swift */,
+				53D6CAC62BCF13CA006716BE /* Icon.swift */,
+				53D6CAC92BCF13CA006716BE /* Image.swift */,
+				53D6CAC52BCF13CA006716BE /* Label.swift */,
+				53D6CAC72BCF13CA006716BE /* ProfileScreen.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		86490FF22BCE9B3F00FCF45C /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,9 +217,9 @@
 		E1F1B23A2BCC2629001DC54D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				53D6CAC32BCF1383006716BE /* Profile */,
 				86490FF22BCE9B3F00FCF45C /* Onboarding */,
 				E1F1B2252BCC1852001DC54D /* ViewController.swift */,
-				534C8E652BCD6F100035FFC3 /* Profile */,
 				E1F1B2692BCC6B4B001DC54D /* TabBar */,
 				E1F1B2582BCC4FCA001DC54D /* Cards */,
 			);
@@ -379,26 +404,26 @@
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
 				86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */,
+				53D6CACB2BCF13CA006716BE /* Label.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CardsViewModel.swift in Sources */,
-				534C8E672BCD6F2A0035FFC3 /* Button.swift in Sources */,
 				E1F1B2612BCC5092001DC54D /* CardsRouter.swift in Sources */,
-				534C8E6F2BCD72950035FFC3 /* Action.swift in Sources */,
-				534C8E6B2BCD727E0035FFC3 /* Image.swift in Sources */,
 				E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */,
+				53D6CACC2BCF13CA006716BE /* Icon.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
-				534C8E6D2BCD72890035FFC3 /* Icon.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CardsViewController.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
+				53D6CACA2BCF13CA006716BE /* Action.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
-				534C8E642BCD6EAE0035FFC3 /* ProfileScreen.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
+				53D6CACE2BCF13CA006716BE /* Button.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
+				53D6CACD2BCF13CA006716BE /* ProfileScreen.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,
-				534C8E692BCD72700035FFC3 /* Label.swift in Sources */,
 				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
+				53D6CACF2BCF13CA006716BE /* Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
