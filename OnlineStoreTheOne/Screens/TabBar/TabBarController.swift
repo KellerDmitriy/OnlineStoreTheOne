@@ -31,6 +31,7 @@ final class TabBarController: UITabBarController {
         
         tabBar.scrollEdgeAppearance = appearance
         tabBar.tintColor = Colors.gray
+        navigationItem.hidesBackButton = true
     }
     
     private func setupViewControllers() {
