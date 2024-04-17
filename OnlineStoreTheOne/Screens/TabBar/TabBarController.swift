@@ -36,13 +36,21 @@ final class TabBarController: UITabBarController {
     
     private func setupViewControllers() {
         
-        let vc1 = UINavigationController(rootViewController: HomeViewController())
-        let vc2 = UINavigationController(rootViewController: CardsViewController())
-        let vc3 = UINavigationController(rootViewController: CardsViewController())
-        let vc4 = UINavigationController(rootViewController: CardsViewController())
+        let vc1 = UINavigationController(
+            rootViewController: HomeViewController()
+        )
+        let vc2 = UINavigationController(
+            rootViewController: WishListViewController()
+        )
+        let vc3 = UINavigationController(
+            rootViewController: CartsViewController()
+        )
+        let vc4 = UINavigationController(
+            rootViewController: CartsViewController()
+        )
         
         vc1.title = "Home"
-        vc2.title = "Categories"
+        vc2.title = "Wishlist"
         vc3.title = "Manager"
         vc4.title = "Account"
         

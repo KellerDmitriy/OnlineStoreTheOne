@@ -16,7 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        if isOnboardComplete() {
+        let storageService = StorageService.shared
+        
+        if storageService.isOnboardComplete() {
             let tabBarController = TabBarController()
             let navigationController = UINavigationController(rootViewController: tabBarController)
             window?.rootViewController = navigationController
@@ -28,11 +30,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.makeKeyAndVisible()
         }
     }
-    
-    func isOnboardComplete() -> Bool {
-        UserDefaults.standard.bool(forKey: "OnboardCompleted")
-    }
-
 }
 
 
