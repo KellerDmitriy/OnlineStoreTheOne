@@ -11,8 +11,8 @@ struct MockData {
     
     static let shared = MockData()
     
-    private let textField: ListSection = {
-        .textField([.init(image: "", categories: "", products: "", title: "", price: "")])
+    private let searchField: ListSection = {
+        .searchField([.init(image: "", categories: "", products: "", title: "", price: "")])
     }()
     
     private let categories: ListSection = {
@@ -37,6 +37,6 @@ struct MockData {
     }()
 
     var pageData: [ListSection] {
-        [textField, categories, products]
+        [searchField, categories, products]
     }
 }

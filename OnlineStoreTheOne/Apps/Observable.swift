@@ -13,7 +13,9 @@ class Observable<T> {
 
     var value: T {
         didSet {
-            lisner?(value)
+            DispatchQueue.main.async {
+                self.lisner?(self.value)
+            }
         }
     }
 

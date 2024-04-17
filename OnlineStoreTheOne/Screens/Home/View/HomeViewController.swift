@@ -34,7 +34,7 @@ final class HomeViewController: UIViewController {
     
     //MARK: - Private methods
     private func setupViews() {
-        collectionView.register(TextFieldCollectionViewCell.self, forCellWithReuseIdentifier: "TextFieldCollectionViewCell")
+        collectionView.register(SearchFieldCollectionViewCell.self, forCellWithReuseIdentifier: "SearchFieldCollectionViewCell")
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: "CategoryCollectionViewCell")
         collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: "ProductCollectionViewCell")
         collectionView.register(HeaderNavBarMenuView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderNavBarMenuView")
@@ -63,9 +63,9 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch sections[indexPath.section] {
             
-        case .textField(_):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextFieldCollectionViewCell", for: indexPath) as?
-                    TextFieldCollectionViewCell else { return UICollectionViewCell() }
+        case .searchField(_):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchFieldCollectionViewCell", for: indexPath) as?
+                    SearchFieldCollectionViewCell else { return UICollectionViewCell() }
             return cell
         case .categories(let categories):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath) as? CategoryCollectionViewCell else { return UICollectionViewCell() }
@@ -87,7 +87,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case UICollectionView.elementKindSectionHeader:
             let section = sections[indexPath.section]
             switch section {
-            case .textField(_):
+            case .searchField(_):
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                  withReuseIdentifier: "HeaderNavBarMenuView",
                                                                                  for: indexPath) as! HeaderNavBarMenuView
@@ -138,8 +138,8 @@ extension HomeViewController {
             guard let self = self else { return nil }
             let section = self.sections[sectionIndex]
             switch section {
-            case .textField(_):
-                return self.createTextFieldSection()
+            case .searchField(_):
+                return self.createSearchFieldSection()
             case .categories(_):
                 return self.createCategorySection()
             case .products(_):
@@ -161,7 +161,7 @@ extension HomeViewController {
         return section
     }
     
-    private func createTextFieldSection() -> NSCollectionLayoutSection {
+    private func createSearchFieldSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                             heightDimension: .fractionalHeight(1)))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0),

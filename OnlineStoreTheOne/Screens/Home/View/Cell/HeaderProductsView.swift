@@ -66,7 +66,7 @@ final class HeaderProductsView: UICollectionReusableView {
             make.centerY.equalToSuperview()
             make.height.equalTo(27)
             make.width.equalTo(78)
-            make.trailing.equalToSuperview().offset(-60)
+            make.trailing.equalToSuperview().offset(-25)
             
         }
     }

@@ -1,5 +1,5 @@
 //
-//  TextFieldCollectionViewCell.swift
+//  SearchFieldCollectionViewCell.swift
 //  OnlineStoreTheOne
 //
 //  Created by Иван Семенов on 16.04.2024.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TextFieldCollectionViewCell: UICollectionViewCell {
+final class SearchFieldCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private Properties
     private let mainView: UIView = {

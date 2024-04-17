@@ -8,13 +8,13 @@
 import Foundation
 
 enum ListSection {
-    case textField([ListItem])
+    case searchField([ListItem])
     case categories([ListItem])
     case products([ListItem])
     
     var items: [ListItem] {
         switch self {
-        case    .textField(let items),
+        case    .searchField(let items),
                 .categories(let items),
                 .products(let items):
             return items
@@ -27,7 +27,7 @@ enum ListSection {
     
     var title: String {
         switch self {
-        case .textField(_):
+        case .searchField(_):
             return NSLocalizedString("Delivery address", comment: "")
         case .categories(_):
             return ""
