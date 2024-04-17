@@ -26,6 +26,7 @@
 		E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E83D2BCD20AA00CC0D64 /* Result + Extension.swift */; };
 		E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E83F2BCD216B00CC0D64 /* Sequwnces + Extension.swift */; };
 		E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */; };
+		E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC1B2BD06FE30009C2A3 /* StorageService.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22A2BCC1853001DC54D /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		E1A2E83D2BCD20AA00CC0D64 /* Result + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result + Extension.swift"; sourceTree = "<group>"; };
 		E1A2E83F2BCD216B00CC0D64 /* Sequwnces + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequwnces + Extension.swift"; sourceTree = "<group>"; };
 		E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
+		E1D1DC1B2BD06FE30009C2A3 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				E1A2E8312BCCFB6B00CC0D64 /* NetworkServices */,
+				E1D1DC1D2BD06FEA0009C2A3 /* StorageServices */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -226,6 +229,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		E1D1DC1D2BD06FEA0009C2A3 /* StorageServices */ = {
+			isa = PBXGroup;
+			children = (
+				E1D1DC1B2BD06FE30009C2A3 /* StorageService.swift */,
+			);
+			path = StorageServices;
+			sourceTree = "<group>";
+		};
 		E1F1B2152BCC1852001DC54D = {
 			isa = PBXGroup;
 			children = (
@@ -267,9 +278,9 @@
 		E1F1B23A2BCC2629001DC54D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				BEBA5DAC2BD0621900737686 /* Home */,
 				86490FF22BCE9B3F00FCF45C /* Onboarding */,
 				E1F1B2692BCC6B4B001DC54D /* TabBar */,
+				BEBA5DAC2BD0621900737686 /* Home */,
 				E1F1B2582BCC4FCA001DC54D /* Cards */,
 			);
 			path = Screens;
@@ -465,6 +476,7 @@
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CardsViewController.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
+				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				BEBA5DC52BD0621900737686 /* HomeViewController.swift in Sources */,
 				BEBA5DC32BD0621900737686 /* SearchFieldCollectionViewCell.swift in Sources */,

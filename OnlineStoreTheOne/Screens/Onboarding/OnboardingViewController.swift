@@ -37,6 +37,8 @@ final class OnboardingViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
 
+    
+    
      //MARK: - Objc Methods
     @objc private func handleTap() {
         index += 1
