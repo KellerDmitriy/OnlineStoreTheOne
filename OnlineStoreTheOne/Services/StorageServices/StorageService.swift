@@ -13,7 +13,6 @@ final class StorageService {
     private let userDefaults = UserDefaults.standard
     
     enum UserDefaultKeys {
-        static let hasSeenOnboarding = "hasSeenOnboarding"
         static let onboardCompleted = "OnboardCompleted"
     }
     
