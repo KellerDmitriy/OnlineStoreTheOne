@@ -31,6 +31,7 @@
 		E1D1DC252BD071290009C2A3 /* CartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC242BD071290009C2A3 /* CartsTableViewCell.swift */; };
 		E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC2E2BD071B30009C2A3 /* WishListViewController.swift */; };
 		E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC302BD071BA0009C2A3 /* WishListViewModel.swift */; };
+		E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22A2BCC1853001DC54D /* Assets.xcassets */; };
@@ -80,6 +81,7 @@
 		E1D1DC242BD071290009C2A3 /* CartsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartsTableViewCell.swift; sourceTree = "<group>"; };
 		E1D1DC2E2BD071B30009C2A3 /* WishListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
 		E1D1DC302BD071BA0009C2A3 /* WishListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewModel.swift; sourceTree = "<group>"; };
+		E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F1B2422BCC335C001DC54D /* DesignSystem */,
+				E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				E1D1DC252BD071290009C2A3 /* CartsTableViewCell.swift in Sources */,
 				BEBA5DC22BD0621900737686 /* HeaderNavBarMenuView.swift in Sources */,
 				BEBA5DC02BD0621900737686 /* HeaderProductsView.swift in Sources */,
+				E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
 				86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
