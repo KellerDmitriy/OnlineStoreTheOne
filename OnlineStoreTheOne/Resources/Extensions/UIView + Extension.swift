@@ -13,7 +13,7 @@ extension UIView {
        /// - Parameter height: Высота нижней границы.
     func addBottomBorder(height: CGFloat ) {
         let separator = UIView()
-        separator.backgroundColor = Colors.gray
+        separator.backgroundColor = Colors.gray.withAlphaComponent(0.3)
         separator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         separator.frame = CGRect(
             x: 0,

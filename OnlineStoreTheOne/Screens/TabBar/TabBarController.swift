@@ -43,7 +43,7 @@ final class TabBarController: UITabBarController {
             rootViewController: WishListViewController()
         )
         let vc3 = UINavigationController(
-            rootViewController: CartsViewController()
+            rootViewController: ManagerViewController()
         )
         let vc4 = UINavigationController(
             rootViewController: CartsViewController()
