@@ -52,11 +52,21 @@ final class OnboardingViewController: UIViewController {
     @objc private func handleTap() {
         index += 1
         guard index < 3 else {
-            storageService.onboardCompleted()
-            let tabBarController = TabBarController()
-            navigationController?.pushViewController(tabBarController, animated: true)
+           
+            navigateToNextScreen()
             return
         }
         backgroundImageView.image = imageArray[index]
     }
+    
+    func navigateToNextScreen() {
+        storageService.onboardCompleted()
+       let tabBarController = TabBarController()
+       if let window = view.window {
+           window.rootViewController = tabBarController
+           UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {}, completion: nil)
+       }
+   }
 }
+
+

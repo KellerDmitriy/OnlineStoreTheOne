@@ -20,13 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if storageService.isOnboardComplete() {
             let tabBarController = TabBarController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
+            window?.rootViewController = tabBarController
             window?.makeKeyAndVisible()
         } else {
             let onboardController = OnboardingViewController()
-            let navigationController = UINavigationController(rootViewController: onboardController)
-            window?.rootViewController = navigationController
+            window?.rootViewController = onboardController
             window?.makeKeyAndVisible()
         }
     }
