@@ -23,5 +23,10 @@ extension Endpoint {
         Endpoint.get()
             .path("products")
     }
+    
+    static func products(with categoryID: Int) -> Self {
+        Endpoint.get()
+            .path("categories/\(categoryID)")
+    }
 }
 

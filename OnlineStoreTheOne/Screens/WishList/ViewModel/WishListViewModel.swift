@@ -9,4 +9,7 @@ import Foundation
 
 final class WishListViewModel {
     
+    var wishLists: [Products] = []
+    var filteredWishLists: [Products] = []
+    
 }

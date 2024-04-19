@@ -14,6 +14,7 @@ final class StorageService {
     
     enum UserDefaultKeys {
         static let onboardCompleted = "OnboardCompleted"
+        static let savedSearchText = "SavedSearchText"
     }
     
     // MARK: - Initialization
@@ -28,4 +29,12 @@ final class StorageService {
         userDefaults.bool(forKey: UserDefaultKeys.onboardCompleted)
     }
     
+    // MARK: - SavedSearchText
+    func saveSearchText() {
+        userDefaults.set(true, forKey: UserDefaultKeys.savedSearchText)
+    }
+    
+    func addSearchedText() -> String {
+        userDefaults.object(forKey: UserDefaultKeys.savedSearchText) as! String
+    }
 }

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class CartsViewController: UIViewController {
-    //    MARK: - Outlets
+    //    MARK: - UI elements
     private lazy var label: UILabel = {
     let label = UILabel()
         return label
@@ -41,6 +41,7 @@ final class CartsViewController: UIViewController {
     
     //    MARK: - Setup
     private func setupViews() {
+        navigationItem.title = "Your Cart"
         view.addSubview(tableView)
         view.addSubview(payButton)
     }
