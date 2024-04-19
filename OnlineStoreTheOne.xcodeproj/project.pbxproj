@@ -32,6 +32,11 @@
 		E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC2E2BD071B30009C2A3 /* WishListViewController.swift */; };
 		E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC302BD071BA0009C2A3 /* WishListViewModel.swift */; };
 		E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */; };
+		E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC372BD1132E0009C2A3 /* NavBarController.swift */; };
+		E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC392BD24FC10009C2A3 /* CartButton.swift */; };
+		E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */; };
+		E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */; };
+		E1D1DC422BD27AAB0009C2A3 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC412BD27AAB0009C2A3 /* Categories.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22A2BCC1853001DC54D /* Assets.xcassets */; };
@@ -82,6 +87,11 @@
 		E1D1DC2E2BD071B30009C2A3 /* WishListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
 		E1D1DC302BD071BA0009C2A3 /* WishListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewModel.swift; sourceTree = "<group>"; };
 		E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
+		E1D1DC372BD1132E0009C2A3 /* NavBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarController.swift; sourceTree = "<group>"; };
+		E1D1DC392BD24FC10009C2A3 /* CartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartButton.swift; sourceTree = "<group>"; };
+		E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WishListViewControllet + UICollectionView.swift"; sourceTree = "<group>"; };
+		E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionCell.swift; sourceTree = "<group>"; };
+		E1D1DC412BD27AAB0009C2A3 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -218,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				E1A2E8392BCD109600CC0D64 /* ProductsModel.swift */,
+				E1D1DC412BD27AAB0009C2A3 /* Categories.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -234,7 +245,8 @@
 		E1A2E8492BCDB90D00CC0D64 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */,
+				E1D1DC3B2BD2624B0009C2A3 /* Buttons */,
+				E1D1DC372BD1132E0009C2A3 /* NavBarController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -276,8 +288,27 @@
 			isa = PBXGroup;
 			children = (
 				E1D1DC2E2BD071B30009C2A3 /* WishListViewController.swift */,
+				E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */,
+				E1D1DC402BD273CF0009C2A3 /* Cells */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		E1D1DC3B2BD2624B0009C2A3 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */,
+				E1D1DC392BD24FC10009C2A3 /* CartButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		E1D1DC402BD273CF0009C2A3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		E1F1B2152BCC1852001DC54D = {
@@ -509,7 +540,9 @@
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
 				BEBA5DC12BD0621900737686 /* CategoryCollectionViewCell.swift in Sources */,
 				BEBA5DC42BD0621900737686 /* ProductCollectionViewCell.swift in Sources */,
+				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
+				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E1D1DC252BD071290009C2A3 /* CartsTableViewCell.swift in Sources */,
 				BEBA5DC22BD0621900737686 /* HeaderNavBarMenuView.swift in Sources */,
@@ -527,6 +560,7 @@
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */,
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
+				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
@@ -535,11 +569,13 @@
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
 				BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */,
+				E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */,
 				BEBA5DBC2BD0621900737686 /* MainViewModel.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,
 				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
+				E1D1DC422BD27AAB0009C2A3 /* Categories.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

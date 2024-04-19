@@ -36,16 +36,16 @@ final class TabBarController: UITabBarController {
     
     private func setupViewControllers() {
         
-        let vc1 = UINavigationController(
+        let vc1 = NavBarController(
             rootViewController: HomeViewController()
         )
-        let vc2 = UINavigationController(
+        let vc2 = NavBarController(
             rootViewController: WishListViewController()
         )
-        let vc3 = UINavigationController(
+        let vc3 = NavBarController(
             rootViewController: CartsViewController()
         )
-        let vc4 = UINavigationController(
+        let vc4 = NavBarController(
             rootViewController: CartsViewController()
         )
         
