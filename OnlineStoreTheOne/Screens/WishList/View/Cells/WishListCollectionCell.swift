@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class WishListCollectionCell: UICollectionViewCell {
     //MARK: - cellID
@@ -56,7 +57,6 @@ final class WishListCollectionCell: UICollectionViewCell {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //        backgroundColor = .white
         backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         layer.cornerRadius = 12
         setupView()
@@ -69,7 +69,12 @@ final class WishListCollectionCell: UICollectionViewCell {
     }
     //MARK: - Methods
     func configureCell(_ wishModel: Products) {
-        productImageView.image = UIImage(named: wishModel.images?.first ?? "")
+        if let imageUrlString = wishModel.image, let imageUrl = URL(string: imageUrlString) {
+            print(imageUrl)
+            productImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder_image"))
+        } else {
+            productImageView.image = UIImage(named: "ps4")
+        }
         titleLabel.text = wishModel.title
         priceLabel.text = String("\(wishModel.price)")
     }
@@ -84,6 +89,7 @@ final class WishListCollectionCell: UICollectionViewCell {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(112)
+            
         }
         
         titleLabel.snp.makeConstraints { make in

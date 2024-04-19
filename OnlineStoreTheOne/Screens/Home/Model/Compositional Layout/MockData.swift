@@ -40,3 +40,4 @@ struct MockData {
         [searchField, categories, products]
     }
 }
+

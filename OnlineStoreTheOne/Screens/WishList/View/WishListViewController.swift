@@ -33,8 +33,20 @@ final class WishListViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
+        
+        viewModel.$wishLists
+            .sink { [weak self] _ in
+                Task {
+                    self?.collectionView.reloadData()
+                }
+            }
+            .store(in: &viewModel.subscription)
+
+        viewModel.getData(id: 100)
     }
+           
     
     // MARK: - UI Setup
     private func setupUI() {

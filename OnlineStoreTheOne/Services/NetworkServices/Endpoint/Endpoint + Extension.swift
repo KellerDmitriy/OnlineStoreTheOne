@@ -24,9 +24,21 @@ extension Endpoint {
             .path("products")
     }
     
-    static func products(with categoryID: Int) -> Self {
+    /// Создает конечную точку для получения продуктов по категории.
+    static func products(with categoryID: Int? = nil) -> Self {
+        if let categoryID = categoryID {
+            return Endpoint.get()
+                .path("categories/\(categoryID)/products")
+        } else {
+            return Endpoint.get()
+                .path("categories/products")
+        }
+    }
+    
+    /// Создает конечную точку для получения продуктов по Id(для WishList).
+    static func products(for id: Int) -> Self {
         Endpoint.get()
-            .path("categories/\(categoryID)")
+            .path("products/\(id)")
     }
 }
 
