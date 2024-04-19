@@ -30,6 +30,9 @@ final class StorageService {
         userDefaults.bool(forKey: UserDefaultKeys.onboardCompleted)
     }
     
+    func onboardingOn() {
+        userDefaults.set(false, forKey: UserDefaultKeys.onboardCompleted)
+    }
     
     // MARK: - SavedWishListID
     func saveWishListID(id: Int) {
@@ -49,7 +52,7 @@ final class StorageService {
     }
 
     func getWishListIDs() -> [Int] {
-        if let wishListIDs = userDefaults.array(forKey: UserDefaultKeys.wishListID) as? [Int] {
+        if let wishListIDs = userDefaults.object(forKey: UserDefaultKeys.wishListID) as? [Int] {
             return wishListIDs
         } else {
             return []

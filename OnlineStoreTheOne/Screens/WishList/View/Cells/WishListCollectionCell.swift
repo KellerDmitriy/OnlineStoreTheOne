@@ -69,7 +69,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     }
     //MARK: - Methods
     func configureCell(_ wishModel: Products) {
-        if let imageUrlString = wishModel.image, let imageUrl = URL(string: imageUrlString) {
+        if let imageUrlString = wishModel.images?.first, let imageUrl = URL(string: imageUrlString) {
             print(imageUrl)
             productImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder_image"))
         } else {

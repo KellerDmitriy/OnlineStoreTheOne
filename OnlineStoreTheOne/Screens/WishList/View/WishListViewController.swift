@@ -43,10 +43,18 @@ final class WishListViewController: UIViewController {
                 }
             }
             .store(in: &viewModel.subscription)
-
-        viewModel.getData(id: 100)
+        for id in 1...10 {
+            viewModel.storageService.saveWishListID(id: id)
+            viewModel.fetchData(for: 1)
+        }
     }
-           
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.savedWishListIDs.forEach { id in
+            viewModel.fetchData(for: id)
+        }
+    }
     
     // MARK: - UI Setup
     private func setupUI() {
@@ -86,11 +94,12 @@ final class WishListViewController: UIViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         
-        let availableWidth = view.frame.width -  Constants.interItemSpacing * 2
-        let availableHeight = view.frame.height -  Constants.interItemSpacing * 3
+        let availableWidth = view.frame.width - Constants.interItemSpacing * 2
+        let availableHeight = view.frame.height - Constants.interItemSpacing * 2
         
-        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 2 / view.frame.width)
-        let itemHightDimension = NSCollectionLayoutDimension.fractionalWidth(availableHeight / 3 / view.frame.height)
+        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 1.8 / view.frame.width)
+        
+        let itemHightDimension = NSCollectionLayoutDimension.fractionalHeight(availableHeight / 1.55 / view.frame.height)
         
         let itemSize = NSCollectionLayoutSize(widthDimension: itemWidthDimension, heightDimension: itemHightDimension)
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -104,6 +113,7 @@ final class WishListViewController: UIViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
+    
     // MARK: - Navigation
     private func setupNavigation() {
         configureSearchController()

@@ -45,8 +45,8 @@ final class TabBarController: UITabBarController {
         let vc3 = UINavigationController(
             rootViewController: ManagerViewController()
         )
-        let vc4 = NavBarController(
-            rootViewController: ProfileScreen()
+        let vc4 = UINavigationController(
+            rootViewController: ProfileViewController()
         )
         
         vc1.title = "Home"

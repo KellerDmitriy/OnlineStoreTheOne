@@ -7,8 +7,9 @@
 
 import UIKit
 
-class ProfileScreen: UIViewController {
+final class ProfileViewController: UIViewController {
     
+    var viewModel = ProfileViewModel()
     //MARK: - UI elements
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
@@ -43,20 +44,38 @@ class ProfileScreen: UIViewController {
         label.attributedText = underlineAttributedString
         return label
     }()
+    
     private lazy var termsButton: UIView = {
         let button = ButtonLabelFactory(title: "Terms & Conditions", type: .standartButton, name: "ArrowIcon", homeView: view, action: termsAction(), textColor: nil).createButtonWithLabel()
         return button
     }()
     
     private lazy var typeButton: UIView = {
-        let button = ButtonLabelFactory(title: "Type of account", type: .standartButton, name: "ArrowIcon", homeView: view, action: action(), textColor: nil).createButtonWithLabel()
-        return button
-    }()
-    private lazy var signOutButton: UIView = {
-        let button = ButtonLabelFactory(title: "Sign Out", type: .standartButton, name: "SignOutIcon", homeView: view, action: signOutAction(), textColor: nil).createButtonWithLabel()
+        let button = ButtonLabelFactory(
+            title: "Type of account",
+            type: .standartButton,
+            name: "ArrowIcon",
+            homeView: view,
+            action: action(),
+            textColor: nil)
+            .createButtonWithLabel()
         return button
     }()
     
+    private lazy var signOutButton: UIView = {
+        let button = ButtonLabelFactory(
+            title: "Sign Out",
+            type: .standartButton,
+            name: "SignOutIcon",
+            homeView: view,
+            action: UIAction { [weak self] _ in
+                self?.signOutAction()
+            },
+            textColor: nil)
+            .createButtonWithLabel()
+        return button
+    }()
+
     private lazy var btnStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -70,13 +89,13 @@ class ProfileScreen: UIViewController {
     
 
     //MARK: - ViewDidLoad
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setUpView()
         setConstraint()
     }
+    
     //MARK: - Actions
     func termsAction() -> UIAction {
         let act = UIAction { _ in
@@ -86,12 +105,19 @@ class ProfileScreen: UIViewController {
         return act
     }
     //спросить про переход))))))
-    func signOutAction() -> UIAction {
-        let act = UIAction { _ in
-            let vc = OnboardingViewController()
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        return act
+    func signOutAction()  {
+        viewModel.storageService.onboardingOn()
+       let onboarding = OnboardingViewController()
+       if let window = view.window {
+           window.rootViewController = onboarding
+           UIView.transition(
+            with: window,
+            duration: 0.3,
+            options: .transitionCrossDissolve,
+            animations: {},
+            completion: nil
+           )
+       }
     }
     
     func editImageAction() -> UIAction {
@@ -102,6 +128,7 @@ class ProfileScreen: UIViewController {
         }
         return act
     }
+    
     func action() -> UIAction {
         let action = UIAction { _ in
             print("Profile")
@@ -111,7 +138,7 @@ class ProfileScreen: UIViewController {
 }
 
 //MARK: - Extension
-private extension ProfileScreen {
+private extension ProfileViewController {
     
     //MARK: - Set up view
     func setUpView() {
@@ -149,8 +176,6 @@ private extension ProfileScreen {
             
         ])
     }
-    
-   
 }
 
 
