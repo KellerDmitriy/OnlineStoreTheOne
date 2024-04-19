@@ -46,7 +46,7 @@ final class TabBarController: UITabBarController {
             rootViewController: CartsViewController()
         )
         let vc4 = NavBarController(
-            rootViewController: CartsViewController()
+            rootViewController: ProfileScreen()
         )
         
         vc1.title = "Home"
