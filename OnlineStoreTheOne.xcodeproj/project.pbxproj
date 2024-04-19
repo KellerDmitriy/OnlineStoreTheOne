@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53D6CACA2BCF13CA006716BE /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC42BCF13CA006716BE /* Action.swift */; };
-		53D6CACB2BCF13CA006716BE /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC52BCF13CA006716BE /* Label.swift */; };
-		53D6CACC2BCF13CA006716BE /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC62BCF13CA006716BE /* Icon.swift */; };
+		531121E72BD1A99A0018FA37 /* TypeOfProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121E62BD1A99A0018FA37 /* TypeOfProfileScreen.swift */; };
+		531121E92BD1AB990018FA37 /* ButtonWithLabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121E82BD1AB990018FA37 /* ButtonWithLabelFactory.swift */; };
+		531121EB2BD2CF9D0018FA37 /* EditImageScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121EA2BD2CF9D0018FA37 /* EditImageScreen.swift */; };
+		53369BB42BD031B300699323 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53369BB32BD031B300699323 /* LabelFactory.swift */; };
+		53369BB82BD055AF00699323 /* TermsConditionalsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53369BB72BD055AF00699323 /* TermsConditionalsScreen.swift */; };
 		53D6CACD2BCF13CA006716BE /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC72BCF13CA006716BE /* ProfileScreen.swift */; };
-		53D6CACE2BCF13CA006716BE /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC82BCF13CA006716BE /* Button.swift */; };
-		53D6CACF2BCF13CA006716BE /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D6CAC92BCF13CA006716BE /* Image.swift */; };
 		86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */; };
 		E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */; };
 		E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */; };
@@ -48,12 +48,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		53D6CAC42BCF13CA006716BE /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Action.swift; path = OnlineStoreTheOne/Profile/Action.swift; sourceTree = SOURCE_ROOT; };
-		53D6CAC52BCF13CA006716BE /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Label.swift; path = OnlineStoreTheOne/Profile/Label.swift; sourceTree = SOURCE_ROOT; };
-		53D6CAC62BCF13CA006716BE /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Icon.swift; path = OnlineStoreTheOne/Profile/Icon.swift; sourceTree = SOURCE_ROOT; };
+		531121E62BD1A99A0018FA37 /* TypeOfProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfProfileScreen.swift; sourceTree = "<group>"; };
+		531121E82BD1AB990018FA37 /* ButtonWithLabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithLabelFactory.swift; sourceTree = "<group>"; };
+		531121EA2BD2CF9D0018FA37 /* EditImageScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageScreen.swift; sourceTree = "<group>"; };
+		53369BB32BD031B300699323 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
+		53369BB72BD055AF00699323 /* TermsConditionalsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionalsScreen.swift; sourceTree = "<group>"; };
 		53D6CAC72BCF13CA006716BE /* ProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileScreen.swift; path = OnlineStoreTheOne/Profile/ProfileScreen.swift; sourceTree = SOURCE_ROOT; };
-		53D6CAC82BCF13CA006716BE /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Button.swift; path = OnlineStoreTheOne/Profile/Button.swift; sourceTree = SOURCE_ROOT; };
-		53D6CAC92BCF13CA006716BE /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Image.swift; path = OnlineStoreTheOne/Profile/Image.swift; sourceTree = SOURCE_ROOT; };
 		86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -104,12 +104,10 @@
 		53D6CAC32BCF1383006716BE /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				53D6CAC42BCF13CA006716BE /* Action.swift */,
-				53D6CAC82BCF13CA006716BE /* Button.swift */,
-				53D6CAC62BCF13CA006716BE /* Icon.swift */,
-				53D6CAC92BCF13CA006716BE /* Image.swift */,
-				53D6CAC52BCF13CA006716BE /* Label.swift */,
 				53D6CAC72BCF13CA006716BE /* ProfileScreen.swift */,
+				53369BB72BD055AF00699323 /* TermsConditionalsScreen.swift */,
+				531121E62BD1A99A0018FA37 /* TypeOfProfileScreen.swift */,
+				531121EA2BD2CF9D0018FA37 /* EditImageScreen.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -172,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */,
+				53369BB32BD031B300699323 /* LabelFactory.swift */,
+				531121E82BD1AB990018FA37 /* ButtonWithLabelFactory.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -400,30 +400,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
+				531121EB2BD2CF9D0018FA37 /* EditImageScreen.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
 				86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */,
-				53D6CACB2BCF13CA006716BE /* Label.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CardsViewModel.swift in Sources */,
 				E1F1B2612BCC5092001DC54D /* CardsRouter.swift in Sources */,
 				E1F1B2262BCC1852001DC54D /* ViewController.swift in Sources */,
-				53D6CACC2BCF13CA006716BE /* Icon.swift in Sources */,
+				53369BB42BD031B300699323 /* LabelFactory.swift in Sources */,
+				531121E92BD1AB990018FA37 /* ButtonWithLabelFactory.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
+				531121E72BD1A99A0018FA37 /* TypeOfProfileScreen.swift in Sources */,
+				53369BB82BD055AF00699323 /* TermsConditionalsScreen.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CardsViewController.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
-				53D6CACA2BCF13CA006716BE /* Action.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
-				53D6CACE2BCF13CA006716BE /* Button.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
 				53D6CACD2BCF13CA006716BE /* ProfileScreen.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,
 				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
-				53D6CACF2BCF13CA006716BE /* Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
