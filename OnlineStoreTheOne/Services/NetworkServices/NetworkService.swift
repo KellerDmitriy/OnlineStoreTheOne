@@ -35,6 +35,13 @@ final class NetworkService {
         await request(from: .allProducts())
             .mapError(NetworkError.init)
     }
+    
+    /// Получение всех продуктов из сети по категориям.
+    ///
+    func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
+        await request(from: .products(with: category.id))
+            .mapError(NetworkError.init)
+    }
 }
 
 extension NetworkService {
