@@ -21,12 +21,14 @@ extension Endpoint {
     /// Создает конечную точку для получения всех продуктов.
     static func allProducts() -> Self {
         Endpoint.get()
+//            .path("products")
             .path("products")
     }
-    
-    static func products(with categoryID: Int) -> Self {
+    /// Создает конечную точку для получения всех категорий
+    static func allCategories() -> Self {
         Endpoint.get()
-            .path("categories/\(categoryID)")
+            .path("categories")
     }
+
 }
 
