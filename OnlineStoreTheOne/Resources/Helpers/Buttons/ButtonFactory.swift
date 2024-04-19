@@ -52,7 +52,8 @@ final class FilledButtonFactory: ButtonFactory {
             button.setTitleColor(.white, for: .normal)
         case .grayButton:
             button.backgroundColor = Colors.lightGray
-            button.setTitleColor(.black, for: .normal)
+            button.layer.cornerRadius = 12
+            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
         }
         button.titleLabel?.font = UIFont.makeTypography(.medium, size: 14)
         button.addAction(action, for: .touchUpInside)
