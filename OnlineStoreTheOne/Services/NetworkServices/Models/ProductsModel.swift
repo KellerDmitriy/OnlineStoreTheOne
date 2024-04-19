@@ -14,12 +14,12 @@ struct Products: Codable {
     let price: Int
     let description: String?
     let category: Category?
-    let images: [String]?
+    let image: String?
 }
 
 // MARK: - Category
 struct Category: Codable {
-    let id: Int?
+    let id: Int
     let name: String?
     let image: String?
 }

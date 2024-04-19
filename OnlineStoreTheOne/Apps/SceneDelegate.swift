@@ -16,22 +16,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        if isOnboardComplete() {
+        let storageService = StorageService.shared
+        
+//        let navVC = UINavigationController(rootViewController: SearchResultViewController())
+//        window?.rootViewController = navVC
+//        window?.makeKeyAndVisible()
+        
+        if storageService.isOnboardComplete() {
             let tabBarController = TabBarController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            window?.rootViewController = navigationController
+            window?.rootViewController = tabBarController
             window?.makeKeyAndVisible()
         } else {
             let onboardController = OnboardingViewController()
-            let navigationController = UINavigationController(rootViewController: onboardController)
-            window?.rootViewController = navigationController
+            window?.rootViewController = onboardController
             window?.makeKeyAndVisible()
         }
     }
-    
-    func isOnboardComplete() -> Bool {
-        UserDefaults.standard.bool(forKey: "OnboardCompleted")
-    }
-
 }
+
+
 

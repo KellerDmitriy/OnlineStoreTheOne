@@ -10,6 +10,8 @@ import SnapKit
 
 final class OnboardingViewController: UIViewController {
      //MARK: - Private Properties
+    private let storageService = StorageService.shared
+    
     private let imageArray = [
         UIImage(named: "Onboarding1"),
         UIImage(named: "Onboarding2"),
@@ -25,27 +27,46 @@ final class OnboardingViewController: UIViewController {
      //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        view.addSubview(backgroundImageView)
-        
-        backgroundImageView.image = imageArray[index]
-        backgroundImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+        setupViews()
+        setupLayout()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
     }
 
+    //    MARK: - Setup
+    private func setupViews() {
+        view.backgroundColor = .white
+        view.addSubview(backgroundImageView)
+        
+        backgroundImageView.image = imageArray[index]
+    }
+    
+    private func setupLayout() {
+        backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
      //MARK: - Objc Methods
     @objc private func handleTap() {
         index += 1
         guard index < 3 else {
-            UserDefaults.standard.set(true, forKey: "OnboardCompleted")
-            let tabBarController = TabBarController()
-            navigationController?.pushViewController(tabBarController, animated: true)
+           
+            navigateToNextScreen()
             return
         }
         backgroundImageView.image = imageArray[index]
     }
+    
+    func navigateToNextScreen() {
+        storageService.onboardCompleted()
+       let tabBarController = TabBarController()
+       if let window = view.window {
+           window.rootViewController = tabBarController
+           UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {}, completion: nil)
+       }
+   }
 }
+
+
