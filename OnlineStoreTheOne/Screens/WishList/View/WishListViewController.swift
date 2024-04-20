@@ -94,12 +94,11 @@ final class WishListViewController: UIViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         
-        let availableWidth = view.frame.width - Constants.interItemSpacing * 2
-        let availableHeight = view.frame.height - Constants.interItemSpacing * 2
+        let availableWidth = view.frame.width
+        let availableHeight = view.frame.height 
         
-        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 1.8 / view.frame.width)
-        
-        let itemHightDimension = NSCollectionLayoutDimension.fractionalHeight(availableHeight / 1.55 / view.frame.height)
+        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 2 )
+        let itemHightDimension = NSCollectionLayoutDimension.fractionalWidth(availableHeight / 3 / view.frame.height)
         
         let itemSize = NSCollectionLayoutSize(widthDimension: itemWidthDimension, heightDimension: itemHightDimension)
         let item = NSCollectionLayoutItem(layoutSize: itemSize)

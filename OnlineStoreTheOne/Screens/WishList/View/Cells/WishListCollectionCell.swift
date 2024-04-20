@@ -88,8 +88,6 @@ final class WishListCollectionCell: UICollectionViewCell {
     private func setConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(112)
-            
         }
         
         titleLabel.snp.makeConstraints { make in
