@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 
 final class ProductCollectionViewCell: UICollectionViewCell {
+    
+    var addToCartCompletion: (() -> Void)?
+    var addToWishListCompletion: (() -> Void)?
+    
     //MARK: - Private Properties
     private let productImageView: UIImageView = {
         let element = UIImageView()
@@ -34,17 +38,29 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         element.backgroundColor = .clear
         return element
     }()
+    
     private lazy var addToCartButton: UIButton = {
-        let element = UIButton()
-        element.tintColor = .white
-        element.setTitle("Add to cart", for: .normal)
-        element.titleLabel?.font = UIFont.makeTypography(.regular, size: 13)
-        element.backgroundColor = Colors.greenSheen
-        element.layer.cornerRadius = 12
-        element.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
-        return element
+        let filledButtonFactory = FilledButtonFactory(
+            title: "Add to cart",
+            type: .greenButton,
+            action: UIAction { [weak self] _ in
+                self?.addToCartCompletion?()
+            }
+        )
+        return filledButtonFactory.createButton()
     }()
 
+    private lazy var addToWishListButton: UIButton = {
+        let button = UIButton()
+        if let image = UIImage(named: "selectedWishlist") {
+            button.setBackgroundImage(image, for: .normal)
+        }
+        button.addAction(UIAction { [weak self] _ in
+            self?.addToWishListCompletion?()
+        }, for: .touchUpInside)
+        return button
+    }()
+  
     //MARK: - Action
     @objc private func addToCart() {
         
@@ -77,23 +93,36 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         addSubview(titleLabel)
         addSubview(priceLabel)
         addSubview(addToCartButton)
+        addSubview(addToWishListButton)
     }
+    
     private func setConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(112)
         }
+        
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(productImageView.snp.bottom).offset(13)
             make.leading.trailing.equalToSuperview().inset(13)
         }
+        
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
             make.leading.trailing.equalTo(titleLabel)
         }
+        
+        addToWishListButton.snp.makeConstraints { make in
+            make.top.equalTo(priceLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().inset(13)
+            make.bottom.equalToSuperview().inset(10)
+            make.width.equalTo(28)
+        }
+        
         addToCartButton.snp.makeConstraints { make in
             make.top.equalTo(priceLabel.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(13)
+            make.trailing.equalToSuperview().inset(13)
+            make.leading.equalTo(addToWishListButton.snp.trailing).offset(8)
             make.bottom.equalToSuperview().inset(10)
         }
     }
