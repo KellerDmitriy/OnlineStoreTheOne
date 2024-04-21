@@ -8,6 +8,7 @@
 import UIKit
 
 class TermsConditionalsScreen: UIViewController {
+    //MARK: - UI elements
     private lazy var termsTextView: UITextView = {
         let text = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         text.text = termsText
@@ -30,6 +31,7 @@ class TermsConditionalsScreen: UIViewController {
         return button
     }()
     
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -39,18 +41,20 @@ class TermsConditionalsScreen: UIViewController {
         
     }
     
+    //MARK: - Actions
     func back() -> UIAction {
         let act = UIAction { _ in
             self.navigationController?.popViewController(animated: true)
-            
             print("back")
         }
         return act
     }
 }
 
+//MARK: - Extension
 private extension TermsConditionalsScreen {
     
+    //MARK: - Set up view
     func setUpView() {
         view.backgroundColor = .white
         
@@ -58,11 +62,11 @@ private extension TermsConditionalsScreen {
         view.addSubview(termsTextView)
     }
     
+    //MARK: - Set constraint
     func setConstrains() {
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 75),
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            
             
             termsTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
             termsTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -70,19 +74,8 @@ private extension TermsConditionalsScreen {
             termsTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-    
-//    func back() -> UIAction {
-//        let act = UIAction { _ in
-//            self.navigationController?.popViewController(animated: true)
-//            
-//            print("back")
-//        }
-//        return act
-//    }
-    
-   
 }
-
+//сделать красивый текст!
 let termsText = """
 **Terms and Conditions**
 
@@ -136,3 +129,4 @@ The following terms are used in these Terms:
 
 6.1. The Marketplace is not responsible for any loss or damage to Products during delivery
 """
+
