@@ -26,7 +26,7 @@ final class NavBarController: UINavigationController {
     }
 
     func setupNavigationBarWithCustomButtons() {
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: nil)
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: nil)
         backButton.title = "Back"
         navigationItem.leftBarButtonItem = backButton
 

@@ -11,7 +11,7 @@ final class ProfileViewController: UIViewController {
     
     var viewModel = ProfileViewModel()
     //MARK: - UI elements
-    private lazy var profileImage: UIImageView = {
+    var profileImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "ProfileImage")
         image.contentMode = .scaleToFill
@@ -35,7 +35,9 @@ final class ProfileViewController: UIViewController {
     }()
         
     
-    private let userName = NewLabelFactory(text: "DevP", font: .bold, size: 16).createLabel()
+    private lazy var userName: UILabel = {
+        NewLabelFactory(text: "DevP", font: .bold, size: 16).createLabel()
+    }()
     
     private lazy var userMail: UILabel = {
         let label = NewLabelFactory(text: "dev@gmail.com", font: .light, size: 14).createLabel()
@@ -45,29 +47,33 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private lazy var termsButton: UIView = {
-        let button = ButtonLabelFactory(title: "Terms & Conditions", type: .standartButton, name: "ArrowIcon", homeView: view, action: termsAction(), textColor: nil).createButtonWithLabel()
-        return button
-    }()
-    
-    private lazy var typeButton: UIView = {
+    private lazy var termsButton: (UIButton, UILabel, UIView) = {
         let button = ButtonLabelFactory(
-            title: "Type of account",
+            title: "Terms & Conditions",
             type: .standartButton,
             name: "ArrowIcon",
-            homeView: view,
-            action: action(),
+            action: termsAction(),
             textColor: nil)
             .createButtonWithLabel()
         return button
     }()
     
-    private lazy var signOutButton: UIView = {
+    private lazy var typeButton: (UIButton, UILabel, UIView) = {
+        let button = ButtonLabelFactory(
+            title: "Type of account",
+            type: .standartButton,
+            name: "ArrowIcon",
+            action: typeAction(),
+            textColor: nil)
+            .createButtonWithLabel()
+        return button
+    }()
+    
+    private lazy var signOutButton: (UIButton, UILabel, UIView) = {
         let button = ButtonLabelFactory(
             title: "Sign Out",
             type: .standartButton,
             name: "SignOutIcon",
-            homeView: view,
             action: UIAction { [weak self] _ in
                 self?.signOutAction()
             },
@@ -80,21 +86,24 @@ final class ProfileViewController: UIViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 25
-        stack.addArrangedSubview(termsButton)
-        stack.addArrangedSubview(typeButton)
-        stack.addArrangedSubview(signOutButton)
+        stack.addArrangedSubview(termsButton.0)
+        stack.addArrangedSubview(typeButton.0)
+        stack.addArrangedSubview(signOutButton.0)
+
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
-
+   
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setUpView()
         setConstraint()
+        
     }
+    
     
     //MARK: - Actions
     func termsAction() -> UIAction {
@@ -104,36 +113,53 @@ final class ProfileViewController: UIViewController {
         }
         return act
     }
-    //спросить про переход))))))
-    func signOutAction()  {
-        viewModel.storageService.onboardingOn()
-       let onboarding = OnboardingViewController()
-       if let window = view.window {
-           window.rootViewController = onboarding
-           UIView.transition(
-            with: window,
-            duration: 0.3,
-            options: .transitionCrossDissolve,
-            animations: {},
-            completion: nil
-           )
-       }
+    
+    func signOutAction() {
+        let alert = UIAlertController(title: "Alert", message: "Are you sure you want to sign out?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Sign out", style: .destructive) { _ in
+            self.viewModel.storageService.onboardingOn()
+           let onboarding = OnboardingViewController()
+            if let window = self.view.window {
+               window.rootViewController = onboarding
+               UIView.transition(
+                with: window,
+                duration: 0.3,
+                options: .transitionCrossDissolve,
+                animations: {},
+                completion: nil
+               )
+           }
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func editImageAction() -> UIAction {
         let act = UIAction { _ in
             let vc = EditImageScreen()
+            vc.completion = { [ weak self] image in
+                self?.profileImage.image = image
+            }
             vc.modalPresentationStyle = .overFullScreen
             self.present(vc, animated: true, completion: nil)
         }
         return act
     }
     
-    func action() -> UIAction {
-        let action = UIAction { _ in
-            print("Profile")
+    func typeAction() -> UIAction {
+        let act = UIAction { _ in
+            let vc = TypeOfProfileScreen()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        return action
+        return act
+    }
+    
+    func back() -> UIAction {
+        let act = UIAction { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        return act
     }
 }
 
@@ -149,6 +175,12 @@ private extension ProfileViewController {
         view.addSubview(userName)
         view.addSubview(userMail)
         view.addSubview(btnStack)
+        view.addSubview(termsButton.1)
+        view.addSubview(termsButton.2)
+        view.addSubview(typeButton.1)
+        view.addSubview(typeButton.2)
+        view.addSubview(signOutButton.1)
+        view.addSubview(signOutButton.2)
      
     }
     //MARK: - Set constraint
@@ -174,6 +206,20 @@ private extension ProfileViewController {
             btnStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             btnStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
+            termsButton.1.topAnchor.constraint(equalTo: termsButton.0.topAnchor, constant: 20),
+            termsButton.1.leadingAnchor.constraint(equalTo: termsButton.0.leadingAnchor, constant: 20),
+            termsButton.2.topAnchor.constraint(equalTo: termsButton.0.topAnchor, constant: 15.5),
+            termsButton.2.trailingAnchor.constraint(equalTo: termsButton.0.trailingAnchor, constant: -35),
+            
+            typeButton.1.topAnchor.constraint(equalTo: typeButton.0.topAnchor, constant: 20),
+            typeButton.1.leadingAnchor.constraint(equalTo: typeButton.0.leadingAnchor, constant: 20),
+            typeButton.2.topAnchor.constraint(equalTo: typeButton.0.topAnchor, constant: 15.5),
+            typeButton.2.trailingAnchor.constraint(equalTo: typeButton.0.trailingAnchor, constant: -35),
+            
+            signOutButton.1.topAnchor.constraint(equalTo: signOutButton.0.topAnchor, constant: 20),
+            signOutButton.1.leadingAnchor.constraint(equalTo: signOutButton.0.leadingAnchor, constant: 20),
+            signOutButton.2.topAnchor.constraint(equalTo: signOutButton.0.topAnchor, constant: 15.5),
+            signOutButton.2.trailingAnchor.constraint(equalTo: signOutButton.0.trailingAnchor, constant: -35),
         ])
     }
 }

@@ -49,8 +49,8 @@ final class SearchResultViewController: UIViewController {
     //MARK: - Private methods
     private func setupNavigationBar() {
         
-        let searchField = SearchFieldCollectionViewCell()
-        navigationItem.titleView = searchField
+//        let searchField = SearchFieldCollectionViewCell()
+//        navigationItem.titleView = searchField
         
         let cartButton = UIButton()
         cartButton.setImage(UIImage(systemName: "cart"), for: .normal)
@@ -76,7 +76,8 @@ extension SearchResultViewController: UICollectionViewDataSource {
         let product = searchResults[indexPath.item]
         cell.configureCell(image: product.image ?? "", 
                            title: product.title,
-                           price: String(product.price))
+                           price: String(product.price), 
+                           addToWishListCompletion: cartButtonTapped)
         return cell
     }
 }
