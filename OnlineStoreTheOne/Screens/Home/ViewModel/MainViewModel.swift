@@ -13,34 +13,30 @@ final class MainViewModel {
     var categories: [Category] = []
     
     let networkService = NetworkService.shared
+    let storageService = RealmStorageService.shared
     
     func fetchProducts() {
         Task {
-                let result: Result<[Products], NetworkError> = await networkService.fetchAllProducts()
-                
-        case  .success(data) = result {
-                    self.products = data
-            case .failure(error) = result {
-                    print("Failed to fetch data: \(error)")
-                }
+            let result = await networkService.fetchAllProducts()
+            switch result {
+            case .success(let products):
+                self.products = products
+            case .failure(let error):
+                print("Error fetching products: \(error)")
+            }
         }
     }
     
     func fetchCategory() {
         Task {
-            do {
-                let result: Result<[Category], NetworkError> = await networkService.fetchCategory()
-                
-                if case let .success(data) = result {
-                    self.categories = data
-                } else if case let .failure(error) = result {
-                    print("Failed to fetch data: \(error)")
-                }
-            } catch {
-                print("Failed to fetch data: \(error)")
+            let result = await networkService.fetchCategory()
+            
+            switch result {
+            case .success(let categories):
+                self.categories = categories
+            case .failure(let error):
+                print("Error fetching products: \(error)")
             }
         }
     }
-    
-    
 }

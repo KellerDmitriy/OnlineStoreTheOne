@@ -14,7 +14,7 @@ final class HomeViewController: UIViewController {
     var viewModel = MainViewModel()
     
     private let sections = MockData.shared.pageData
-        
+    
     lazy var collectionView: UICollectionView = {
         let collectViewLayout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectViewLayout)
@@ -49,10 +49,10 @@ final class HomeViewController: UIViewController {
     private func setDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
-
+        
     }
     
-
+    
 }
 //MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
@@ -84,20 +84,22 @@ extension HomeViewController: UICollectionViewDataSource {
                                    category: category.name ?? "")
             }
             return cell
-        
+            
         case .products(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
-        
+            
             if indexPath.row < viewModel.products.count {
                 let product = viewModel.products[indexPath.row]
-                cell.configureCell(image: product.images?[0] ?? "",
-                                   title: product.title,
-                                   price: "$\(String(product.price))")
-            } 
+                cell.configureCell(
+                    image: product.images?[0] ?? "",
+                    title: product.title,
+                    price: "$\(String(product.price))",
+                    addToWishListCompletion: viewModel.storageService.createCompletion(with: product))
+            }
             return cell
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
@@ -105,8 +107,8 @@ extension HomeViewController: UICollectionViewDataSource {
             switch section {
             case .searchField(_):
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                                 withReuseIdentifier: "HeaderNavBarMenuView",
-                                                                                 for: indexPath) as! HeaderNavBarMenuView
+                                                                             withReuseIdentifier: "HeaderNavBarMenuView",
+                                                                             for: indexPath) as! HeaderNavBarMenuView
                 header.configureHeader(labelName: section.title)
                 return header
             case .categories(_):
@@ -122,8 +124,8 @@ extension HomeViewController: UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
-
-
+    
+    
     
 }
 
@@ -183,7 +185,7 @@ extension HomeViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                                          heightDimension: .absolute(20)),
                                                        subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
         section.interGroupSpacing = 16
@@ -250,7 +252,7 @@ extension HomeViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.text = ""
     }
-
+    
 }
 //MARK: - PreviewProvider
 struct ContentViewController_Previews: PreviewProvider {

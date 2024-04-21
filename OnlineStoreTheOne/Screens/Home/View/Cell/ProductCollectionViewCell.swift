@@ -62,31 +62,25 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         return button
     }()
   
-    //MARK: - Action
-    @objc private func addToCart() {
-        
-        print("нажата - addToCart")
-    }
     
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        backgroundColor = .white
         backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         layer.cornerRadius = 12
         setupView()
         setConstraints()
-
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     //MARK: - Methods
-    func configureCell(image: String, title: String, price: String) {
+    func configureCell(image: String, title: String, price: String, addToWishListCompletion: @escaping () -> ()) {
         productImageView.kf.setImage(with: URL(string: image))
         titleLabel.text = title
         priceLabel.text = price
+        self.addToWishListCompletion = addToWishListCompletion
     }
     
     private func setupView() {

@@ -28,6 +28,7 @@ extension Endpoint {
     static func allCategories() -> Self {
         Endpoint.get()
             .path("categories")
+    }
     
     /// Создает конечную точку для получения продуктов по категории.
     static func products(with categoryID: Int? = nil) -> Self {

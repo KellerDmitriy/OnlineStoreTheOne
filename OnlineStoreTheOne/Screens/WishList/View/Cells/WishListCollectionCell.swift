@@ -119,16 +119,17 @@ final class WishListCollectionCell: UICollectionViewCell {
             make.leading.trailing.equalTo(titleLabel)
         }
         
-        addToCartButton.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().inset(13)
-            make.trailing.equalTo(addToWishListButton.snp.leading).inset(8)
-            make.bottom.equalToSuperview().inset(10)
-        }
-        
         addToWishListButton.snp.makeConstraints { make in
             make.top.equalTo(priceLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().inset(13)
+            make.bottom.equalToSuperview().inset(10)
+            make.width.equalTo(28)
+        }
+        
+        addToCartButton.snp.makeConstraints { make in
+            make.top.equalTo(priceLabel.snp.bottom).offset(10)
             make.trailing.equalToSuperview().inset(13)
+            make.leading.equalTo(addToWishListButton.snp.trailing).offset(8)
             make.bottom.equalToSuperview().inset(10)
         }
     }
