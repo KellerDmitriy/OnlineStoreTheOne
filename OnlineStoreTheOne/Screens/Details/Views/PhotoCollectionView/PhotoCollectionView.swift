@@ -8,18 +8,17 @@
 import UIKit
 
 final class PhotoCollectionView: UIView {
-    
+    //MARK: - Private Properties
     private lazy var pageIndicator: UIPageControl = {
-        let pc = UIPageControl()
-        pc.translatesAutoresizingMaskIntoConstraints = false
-        pc.layer.cornerRadius = 5
-        pc.backgroundStyle = .prominent
-        pc.addTarget(self, action: #selector(didChangePage(control:)), for: .valueChanged)
-        return pc
-    }()
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.layer.cornerRadius = 5
+        $0.backgroundStyle = .prominent
+        $0.addTarget(self, action: #selector(didChangePage(control:)), for: .valueChanged)
+        return $0
+    }(UIPageControl())
     
     private lazy var collectionView: UICollectionView = {
-       let layout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.itemSize = .init(
@@ -37,13 +36,14 @@ final class PhotoCollectionView: UIView {
         return collection
     }()
     
-    var items: [String] = [] {
+    private var items: [String] = [] {
         didSet {
             pageIndicator.numberOfPages = items.count
             collectionView.reloadData()
         }
     }
     
+    //MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -54,29 +54,28 @@ final class PhotoCollectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Private Methods
     private func setupView() {
         addSubview(collectionView)
         addSubview(pageIndicator)
     }
     
     private func setConstraints() {
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
+        collectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            pageIndicator.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            pageIndicator.centerXAnchor.constraint(equalTo: centerXAnchor)
-        ])
+        pageIndicator.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-8)
+        }
         
-        NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.733)
-        ])
+        snp.makeConstraints {
+            $0.height.equalTo(UIScreen.main.bounds.width * 0.733)
+        }
     }
     
+    //MARK: - Private Objc Methods
     @objc
     private func didChangePage(control: UIPageControl) {
         collectionView.scrollToItem(
@@ -85,14 +84,21 @@ final class PhotoCollectionView: UIView {
             animated: true
         )
     }
+    
+    //MARK: - Public Methods
+    func set(data: [String]) {
+        items = data
+    }
 }
 
+//MARK: - PhotoCollectionView: UICollectionViewDelegate
 extension PhotoCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         pageIndicator.currentPage = indexPath.row
     }
 }
 
+//MARK: - PhotoCollectionView: UICollectionViewDataSource
 extension PhotoCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         items.count

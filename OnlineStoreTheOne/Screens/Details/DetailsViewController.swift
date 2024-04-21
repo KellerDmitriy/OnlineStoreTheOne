@@ -6,14 +6,12 @@
 //
 
 import UIKit
+import Combine
 
-class DetailsViewController: UIViewController {
-    
-    let url = [
-        "https://irecommend.ru/sites/default/files/product-images/89783/cWCQ0wc9M8G3AksvHKWsg.jpg",
-        "https://top-azia.ru/wp-content/uploads/2009/06/oteli-turtsii-otzyvy.95992843.jpg",
-        "https://i2.photo.2gis.com/images/branch/0/30258560076741797_1cd9.jpg"
-    ]
+final class DetailsViewController: UIViewController {
+     //MARK: - Private Properties
+    private let viewModel: DetailsProductViewModel
+    private var cancellables: Set<AnyCancellable> = []
     
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -50,13 +48,42 @@ class DetailsViewController: UIViewController {
         return $0
     }(UIView())
     
+     //MARK: - Lifecycle
+    init(viewModel: DetailsProductViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        photoCollection.items = url
-        
         setupViews()
         setConstraints()
+        bind()
+    }
+    
+     //MARK: - Private Methods
+    private func bind() {
+        viewModel.$title.receive(on: DispatchQueue.main).sink { [weak self] title in
+            self?.productList.setProduct(name: title)
+        }.store(in: &cancellables)
+        
+        viewModel.$price.receive(on: DispatchQueue.main).sink { [weak self] price in
+            self?.productList.setProduct(price: price)
+        }.store(in: &cancellables)
+        
+        viewModel.$description.receive(on: DispatchQueue.main).sink { [weak self] desc in
+            self?.productList.setProductDescription(text: desc ?? "nil")
+        }.store(in: &cancellables)
+        
+        viewModel.$images.receive(on: DispatchQueue.main).sink { [weak self] images in
+            guard let images else { return }
+            self?.photoCollection.set(data: images)
+        }.store(in: &cancellables)
     }
     
     private func setupViews() {
@@ -67,14 +94,11 @@ class DetailsViewController: UIViewController {
 
         mainStackView.addArrangedSubview(photoCollection)
         mainStackView.addArrangedSubview(productList)
-        
         mainStackView.axis = .vertical
         mainStackView.spacing = 16
 
         view.addSubview(buttonStackView)
-        
         [addToCartButton, buyNowButton].forEach(buttonStackView.addArrangedSubview(_:))
-        
         view.addSubview(separatorLine)
     }
     
