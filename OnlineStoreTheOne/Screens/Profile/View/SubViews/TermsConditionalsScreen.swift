@@ -38,14 +38,12 @@ class TermsConditionalsScreen: UIViewController {
         navigationController?.navigationBar.isHidden = true
         setUpView()
         setConstrains()
-        
     }
     
     //MARK: - Actions
     func back() -> UIAction {
         let act = UIAction { _ in
             self.navigationController?.popViewController(animated: true)
-            print("back")
         }
         return act
     }
@@ -77,11 +75,11 @@ private extension TermsConditionalsScreen {
 }
 //сделать красивый текст!
 let termsText = """
-**Terms and Conditions**
+Terms and Conditions
 
 These Terms and Conditions (the «Terms») govern the relationship between the Seller and the Buyer on the Marketplace.
 
-1. **Definitions.**
+1. Definitions.
 
 The following terms are used in these Terms:
 * «Seller» — a legal entity or individual who sells products or services on the Marketplace;
@@ -91,7 +89,7 @@ The following terms are used in these Terms:
 * «Payment» — the process of transferring funds from the Buyer to the Seller for the purchase of Products;
 * «Delivery» — the process of delivering Products from the Seller to the Buyer.
 
-2. **General Terms.**
+2. General Terms.
 
 2.1. The Seller agrees to sell Products in accordance with the terms of the Marketplace. The Buyer agrees to purchase Products in accordance with these Terms.
 
@@ -111,13 +109,13 @@ The following terms are used in these Terms:
 
 3.3. The Buyer must provide accurate and complete payment information.
 
-4. **Delivery Terms.**
+4. Delivery Terms.
 
 4.1. Delivery of Products must be carried out in accordance with the terms of the Marketplace.
 
 4.2. The Seller must provide accurate and complete delivery information.
 
-5. **Refunds and Returns.**
+5. Refunds and Returns.
 
 5.1. The Buyer has the right to return Products within the specified period of time.
 
@@ -125,7 +123,7 @@ The following terms are used in these Terms:
 
 5.3. The Buyer is responsible for the cost of returning Products.
 
-6. **Liability.**
+6. Liability.
 
 6.1. The Marketplace is not responsible for any loss or damage to Products during delivery
 """

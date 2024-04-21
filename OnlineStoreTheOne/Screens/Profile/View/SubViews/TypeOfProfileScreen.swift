@@ -57,8 +57,6 @@ class TypeOfProfileScreen: UIViewController {
     func back() -> UIAction {
         let act = UIAction { _ in
             self.navigationController?.popViewController(animated: true)
-            
-            print("back")
         }
         return act
     }

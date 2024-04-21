@@ -11,7 +11,7 @@ final class ProfileViewController: UIViewController {
     
     var viewModel = ProfileViewModel()
     //MARK: - UI elements
-      var profileImage: UIImageView = {
+    var profileImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "ProfileImage")
         image.contentMode = .scaleToFill
@@ -30,13 +30,14 @@ final class ProfileViewController: UIViewController {
         button.clipsToBounds = true
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 3
-//        button.addTarget(self, action: #selector(avatarEditButtonTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
         
     
-    private let userName = NewLabelFactory(text: "DevP", font: .bold, size: 16).createLabel()
+    private lazy var userName: UILabel = {
+        NewLabelFactory(text: "DevP", font: .bold, size: 16).createLabel()
+    }()
     
     private lazy var userMail: UILabel = {
         let label = NewLabelFactory(text: "dev@gmail.com", font: .light, size: 14).createLabel()
@@ -103,10 +104,6 @@ final class ProfileViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        updatePhoto()
-    }
     
     //MARK: - Actions
     func termsAction() -> UIAction {
@@ -140,11 +137,10 @@ final class ProfileViewController: UIViewController {
     
     func editImageAction() -> UIAction {
         let act = UIAction { _ in
-//            self.imagePicker.showImagePicker(in: self, source: .camera) { image in
-//                self.profileImage.image = image
-////                
-//            }
             let vc = EditImageScreen()
+            vc.completion = { [ weak self] image in
+                self?.profileImage.image = image
+            }
             vc.modalPresentationStyle = .overFullScreen
             self.present(vc, animated: true, completion: nil)
         }
@@ -162,12 +158,9 @@ final class ProfileViewController: UIViewController {
     func back() -> UIAction {
         let act = UIAction { _ in
             self.navigationController?.popViewController(animated: true)
-            
-            print("back")
         }
         return act
     }
-    
 }
 
 //MARK: - Extension
@@ -228,12 +221,6 @@ private extension ProfileViewController {
             signOutButton.2.topAnchor.constraint(equalTo: signOutButton.0.topAnchor, constant: 15.5),
             signOutButton.2.trailingAnchor.constraint(equalTo: signOutButton.0.trailingAnchor, constant: -35),
         ])
-    }
-    
-     func updatePhoto() {
-        profileImage.image = nil
-            
-        
     }
 }
 

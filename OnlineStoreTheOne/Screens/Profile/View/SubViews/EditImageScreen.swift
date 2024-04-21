@@ -9,13 +9,15 @@ import UIKit
 
 class EditImageScreen: UIViewController {
     //MARK: - UI elements
-    var completition: ((UIImage) -> ())?
+    
+    var completion: ((UIImage) -> ())?
+    
     private lazy var changeView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.addBorder()
+        //        view.addBorder()
         return view
     }()
     
@@ -58,6 +60,18 @@ class EditImageScreen: UIViewController {
         return button
     }()
     
+    private lazy var closeButton: UIButton = {
+        let button = UIButton(primaryAction: closeAction())
+        button.setBackgroundImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        button.layer.cornerRadius = 20
+        button.layer.masksToBounds = false
+        button.clipsToBounds = true
+        button.backgroundColor = .white
+        button.tintColor = Colors.lightGray
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var btnStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -65,7 +79,7 @@ class EditImageScreen: UIViewController {
         stack.addArrangedSubview(takePhotoBtn.0)
         stack.addArrangedSubview(choosePhotoBtn.0)
         stack.addArrangedSubview(deletePhotoBtn.0)
-
+        
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -79,14 +93,32 @@ class EditImageScreen: UIViewController {
         setUpView()
         setConstraint()
     }
-
+    
     //MARK: - Actions
     
-    func action() -> UIAction {
-        let act = UIAction { _ in
-            print("edit")
+    func cameraImageAction() -> UIAction {
+        UIAction { [weak self] _ in
+            self?.chooseImage(source: .camera)
         }
-        return act
+    }
+    
+    func chooseImageAction() -> UIAction {
+        UIAction { [weak self] _ in
+            self?.chooseImage(source: .photoLibrary)
+        }
+    }
+    func deleteImageAction() -> UIAction {
+        UIAction { [weak self] _ in
+            let image = UIImage(named: "NoPhoto")
+            self!.completion?(image!)
+            self?.dismiss(animated: true)
+        }
+    }
+    
+    func closeAction() -> UIAction {
+        UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
     }
     
 }
@@ -104,6 +136,7 @@ private extension EditImageScreen {
         view.addSubview(choosePhotoBtn.2)
         view.addSubview(deletePhotoBtn.1)
         view.addSubview(deletePhotoBtn.2)
+        view.addSubview(closeButton)
         
     }
     //MARK: - Set constraint
@@ -136,6 +169,11 @@ private extension EditImageScreen {
             deletePhotoBtn.1.topAnchor.constraint(equalTo: deletePhotoBtn.0.topAnchor, constant: 20),
             deletePhotoBtn.1.leadingAnchor.constraint(equalTo: deletePhotoBtn.2.trailingAnchor, constant: 40),
             
+            closeButton.heightAnchor.constraint(equalToConstant: 40),
+            closeButton.widthAnchor.constraint(equalToConstant: 40),
+            closeButton.topAnchor.constraint(equalTo: changeView.topAnchor, constant: -20),
+            closeButton.leadingAnchor.constraint(equalTo: changeView.trailingAnchor, constant: -20)
+            
         ])
     }
 }
@@ -146,7 +184,7 @@ private extension EditImageScreen {
 //        let height: CGFloat = 0.3
 //        let separator = UIView()
 //        separator.backgroundColor = Colors.red.withAlphaComponent(0.3)
-////        separator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        separator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 //        separator.frame = CGRect(
 //            x: 0,
 //            y: frame.height + 80,
@@ -159,23 +197,17 @@ private extension EditImageScreen {
 
 // MARK: - Protocols for load Image from gallery
 extension EditImageScreen: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    
-    
-    enum ImageLoad: String {
-        case camera = "Камера"
-        case photoLibrary = "Фотогаллерея"
-        case cancel = "Отмена"
-    }
-    
-    
-    func imagePickerController(_ picker: UIImagePickerController, completition: ((UIImage) -> ())?, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            self.completition?(image)
-            ProfileViewController().profileImage.image = image
-            picker.dismiss(animated: true) {
-                
-            }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.originalImage] as? UIImage else {
+            picker.dismiss(animated: true)
+            return
+        }
+        completion?(image)
+        
+        picker.dismiss(animated: true) { [weak self] in
+            self?.dismiss(animated: true)
+            
         }
     }
     
@@ -183,43 +215,13 @@ extension EditImageScreen: UIImagePickerControllerDelegate, UINavigationControll
         picker.dismiss(animated: true)
     }
     
-    private func chooseImage(source: UIImagePickerController.SourceType, completition: ((UIImage) -> ())?) {
+    private func chooseImage(source: UIImagePickerController.SourceType) {
         if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.allowsEditing = true
             imagePicker.sourceType = source
-            self.present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true)
         }
     }
-    
-    func cameraImageAction() -> UIAction {
-        let act = UIAction { _ in
-            self.chooseImage(source: .camera) { image in
-                ProfileViewController().profileImage.image = image
-                self.dismiss(animated: true)
-            }
-        }
-        return act
-    }
-    
-    func chooseImageAction() -> UIAction {
-        let act = UIAction { _ in
-//            self.dismiss(animated: true)
-            self.chooseImage(source: .photoLibrary) { image in
-                            ProfileViewController().profileImage.image = image
-                            self.dismiss(animated: true)
-             }
-        }
-        return act
-    }
-    func deleteImageAction() -> UIAction {
-        let act = UIAction { _ in
-//            print("hello")
-//            ProfileViewController().profileImage.image = nil
-            self.dismiss(animated: true)
-        }
-        return act
-    }
-
 }
