@@ -34,6 +34,7 @@
 		E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6752BD46389009991F3 /* WishListModel.swift */; };
 		E16BB6792BD4DEF6009991F3 /* CartsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6782BD4DEF6009991F3 /* CartsModel.swift */; };
 		E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */; };
+		E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* MainViewModel.swift */; };
 		E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */; };
 		E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */; };
 		E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */; };
@@ -101,6 +102,7 @@
 		E16BB6752BD46389009991F3 /* WishListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListModel.swift; sourceTree = "<group>"; };
 		E16BB6782BD4DEF6009991F3 /* CartsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartsModel.swift; sourceTree = "<group>"; };
 		E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmStorageService + Extension.swift"; sourceTree = "<group>"; };
+		E16BB67F2BD501EC009991F3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -197,7 +199,7 @@
 		BEBA5DAD2BD0621900737686 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				BEBA5DAE2BD0621900737686 /* MainViewModel.swift */,
+				E16BB67F2BD501EC009991F3 /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -323,6 +325,14 @@
 				E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */,
 			);
 			path = RealmService;
+			sourceTree = "<group>";
+		};
+		E16BB67E2BD501D8009991F3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				BEBA5DAE2BD0621900737686 /* MainViewModel.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		E1A2E8302BCCFB4300CC0D64 /* Services */ = {
@@ -451,6 +461,7 @@
 			children = (
 				E1F1B2202BCC1852001DC54D /* OnlineStoreTheOne */,
 				E1F1B21F2BCC1852001DC54D /* Products */,
+				E16BB67E2BD501D8009991F3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -703,6 +714,7 @@
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
+				E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */,
 				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				BEBA5DC52BD0621900737686 /* HomeViewController.swift in Sources */,
