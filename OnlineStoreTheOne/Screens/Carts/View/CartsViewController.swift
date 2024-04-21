@@ -11,7 +11,7 @@ import SnapKit
 final class CartsViewController: UIViewController {
     //    MARK: - UI elements
     private lazy var label: UILabel = {
-    let label = UILabel()
+        let label = UILabel()
         return label
     }()
     
@@ -37,6 +37,7 @@ final class CartsViewController: UIViewController {
         view.backgroundColor = .white
         setupViews()
         setupLayout()
+        setupNavigationBar()
     }
     
     //    MARK: - Setup
@@ -44,6 +45,26 @@ final class CartsViewController: UIViewController {
         navigationItem.title = "Your Cart"
         view.addSubview(tableView)
         view.addSubview(payButton)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .black
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        navigationItem.leftBarButtonItem = backButton
+        
+        let cartButton = CartButton()
+        let cartButtonItem = UIBarButtonItem(customView: cartButton)
+        navigationItem.rightBarButtonItem = cartButtonItem
+        
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     private func setupLayout() {

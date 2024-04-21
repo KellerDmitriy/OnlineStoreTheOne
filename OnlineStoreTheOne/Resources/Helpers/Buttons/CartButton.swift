@@ -106,6 +106,4 @@ private extension CartButton {
             make.centerY.equalToSuperview()
         }
     }
-    
-    
 }

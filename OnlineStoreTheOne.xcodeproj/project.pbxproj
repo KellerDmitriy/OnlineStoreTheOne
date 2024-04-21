@@ -14,7 +14,6 @@
 		531121F22BD2E5EE0018FA37 /* EditImageScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121EA2BD2CF9D0018FA37 /* EditImageScreen.swift */; };
 		86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */; };
 		86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF92BD13C1600FCF45C /* ManagerViewController.swift */; };
-		BEBA5DBC2BD0621900737686 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DAE2BD0621900737686 /* MainViewModel.swift */; };
 		BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB12BD0621900737686 /* ListItem.swift */; };
 		BEBA5DBE2BD0621900737686 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB22BD0621900737686 /* MockData.swift */; };
 		BEBA5DBF2BD0621900737686 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB32BD0621900737686 /* ListSection.swift */; };
@@ -28,7 +27,14 @@
 		E13B33FC2BD2A097007B17FC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E13B33FB2BD2A097007B17FC /* Kingfisher */; };
 		E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */; };
 		E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */; };
-		E16BB66D2BD3972C009991F3 /* AlertController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB66C2BD3972C009991F3 /* AlertController + Extension.swift */; };
+		E16BB66F2BD4616E009991F3 /* RealmStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB66E2BD4616E009991F3 /* RealmStorageService.swift */; };
+		E16BB6722BD461C1009991F3 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E16BB6712BD461C1009991F3 /* Realm */; };
+		E16BB6742BD461C1009991F3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E16BB6732BD461C1009991F3 /* RealmSwift */; };
+		E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6752BD46389009991F3 /* WishListModel.swift */; };
+		E16BB6792BD4DEF6009991F3 /* CartsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6782BD4DEF6009991F3 /* CartsModel.swift */; };
+		E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */; };
+		E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* MainViewModel.swift */; };
+		E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */; };
 		E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */; };
 		E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */; };
 		E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */; };
@@ -92,7 +98,12 @@
 		BEBA5DCA2BD10E6C00737686 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		E16BB66C2BD3972C009991F3 /* AlertController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertController + Extension.swift"; sourceTree = "<group>"; };
+		E16BB66E2BD4616E009991F3 /* RealmStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageService.swift; sourceTree = "<group>"; };
+		E16BB6752BD46389009991F3 /* WishListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListModel.swift; sourceTree = "<group>"; };
+		E16BB6782BD4DEF6009991F3 /* CartsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartsModel.swift; sourceTree = "<group>"; };
+		E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmStorageService + Extension.swift"; sourceTree = "<group>"; };
+		E16BB67F2BD501EC009991F3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController + Extension.swift"; sourceTree = "<group>"; };
 		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -142,6 +153,8 @@
 			files = (
 				E13B33FC2BD2A097007B17FC /* Kingfisher in Frameworks */,
 				E1F1B2662BCC5122001DC54D /* SnapKit in Frameworks */,
+				E16BB6722BD461C1009991F3 /* Realm in Frameworks */,
+				E16BB6742BD461C1009991F3 /* RealmSwift in Frameworks */,
 				E1F1B2682BCC5122001DC54D /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,7 +200,7 @@
 		BEBA5DAD2BD0621900737686 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				BEBA5DAE2BD0621900737686 /* MainViewModel.swift */,
+				E16BB67F2BD501EC009991F3 /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -290,6 +303,39 @@
 			path = SubViews;
 			sourceTree = "<group>";
 		};
+		E16BB6772BD463F9009991F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E16BB6752BD46389009991F3 /* WishListModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E16BB67A2BD4DEFD009991F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E16BB6782BD4DEF6009991F3 /* CartsModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E16BB67B2BD4FB6B009991F3 /* RealmService */ = {
+			isa = PBXGroup;
+			children = (
+				E16BB66E2BD4616E009991F3 /* RealmStorageService.swift */,
+				E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */,
+			);
+			path = RealmService;
+			sourceTree = "<group>";
+		};
+		E16BB67E2BD501D8009991F3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				BEBA5DAE2BD0621900737686 /* MainViewModel.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		E1A2E8302BCCFB4300CC0D64 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				E1D1DC1B2BD06FE30009C2A3 /* StorageService.swift */,
+				E16BB67B2BD4FB6B009991F3 /* RealmService */,
 			);
 			path = StorageServices;
 			sourceTree = "<group>";
@@ -367,6 +414,7 @@
 		E1D1DC322BD071D40009C2A3 /* WishList */ = {
 			isa = PBXGroup;
 			children = (
+				E16BB6772BD463F9009991F3 /* Model */,
 				E1D1DC342BD0721D0009C2A3 /* View */,
 				E1D1DC332BD071FB0009C2A3 /* ViewModel */,
 			);
@@ -414,6 +462,7 @@
 			children = (
 				E1F1B2202BCC1852001DC54D /* OnlineStoreTheOne */,
 				E1F1B21F2BCC1852001DC54D /* Products */,
+				E16BB67E2BD501D8009991F3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -477,9 +526,9 @@
 		E1F1B23C2BCC2934001DC54D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */,
 				E1F1B2422BCC335C001DC54D /* DesignSystem */,
 				E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */,
-				E16BB66C2BD3972C009991F3 /* AlertController + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -512,6 +561,7 @@
 		E1F1B2582BCC4FCA001DC54D /* Carts */ = {
 			isa = PBXGroup;
 			children = (
+				E16BB67A2BD4DEFD009991F3 /* Model */,
 				E1F1B25B2BCC500F001DC54D /* View */,
 				E1F1B25E2BCC5047001DC54D /* ViewModel */,
 			);
@@ -564,6 +614,8 @@
 				E1F1B2652BCC5122001DC54D /* SnapKit */,
 				E1F1B2672BCC5122001DC54D /* SnapKit-Dynamic */,
 				E13B33FB2BD2A097007B17FC /* Kingfisher */,
+				E16BB6712BD461C1009991F3 /* Realm */,
+				E16BB6732BD461C1009991F3 /* RealmSwift */,
 			);
 			productName = OnlineStoreTheOne;
 			productReference = E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */;
@@ -596,6 +648,7 @@
 			packageReferences = (
 				E1F1B2642BCC5122001DC54D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				E13B33FA2BD2A097007B17FC /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E16BB6702BD461C0009991F3 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = E1F1B21F2BCC1852001DC54D /* Products */;
 			projectDirPath = "";
@@ -632,8 +685,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E16BB66D2BD3972C009991F3 /* AlertController + Extension.swift in Sources */,
 				531121F02BD2E5EE0018FA37 /* TermsConditionalsScreen.swift in Sources */,
+				E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */,
 				531121F12BD2E5EE0018FA37 /* TypeOfProfileScreen.swift in Sources */,
 				531121F22BD2E5EE0018FA37 /* EditImageScreen.swift in Sources */,
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
@@ -648,9 +701,11 @@
 				BEBA5DC02BD0621900737686 /* HeaderProductsView.swift in Sources */,
 				E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
+				E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */,
 				86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CartsViewModel.swift in Sources */,
+				E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */,
 				E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */,
 				E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */,
 				BEBA5DBF2BD0621900737686 /* ListSection.swift in Sources */,
@@ -662,6 +717,7 @@
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
+				E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */,
 				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				BEBA5DC52BD0621900737686 /* HomeViewController.swift in Sources */,
@@ -671,15 +727,16 @@
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
 				BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */,
 				E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */,
-				BEBA5DBC2BD0621900737686 /* MainViewModel.swift in Sources */,
 				E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */,
 				531121EF2BD2E5240018FA37 /* LabelFactory.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				BEBA5DCB2BD10E6C00737686 /* SearchResultViewController.swift in Sources */,
+				E16BB66F2BD4616E009991F3 /* RealmStorageService.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,
 				E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */,
 				E1D1DC422BD27AAB0009C2A3 /* Categories.swift in Sources */,
+				E16BB6792BD4DEF6009991F3 /* CartsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,6 +969,14 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		E16BB6702BD461C0009991F3 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		E1F1B2642BCC5122001DC54D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -927,6 +992,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E13B33FA2BD2A097007B17FC /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		E16BB6712BD461C1009991F3 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E16BB6702BD461C0009991F3 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		E16BB6732BD461C1009991F3 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E16BB6702BD461C0009991F3 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		E1F1B2652BCC5122001DC54D /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
