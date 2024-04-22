@@ -18,7 +18,7 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath
         ) as? CartsTableViewCell else { return UITableViewCell() }
         
-        let cart = viewModel.cartProducts[indexPath.item]
+        let cart = viewModel.cartProducts[indexPath.row]
         cell.configureCell(cart)
         return cell
     }
