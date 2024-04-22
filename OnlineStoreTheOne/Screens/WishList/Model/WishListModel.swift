@@ -8,13 +8,11 @@
 import Foundation
 import RealmSwift
 
-final class WishListModel: Object {
+final class WishListModel: Object, StorableItem {
     
     @Persisted var id: Int
     @Persisted var title: String
     @Persisted var price: Int
-    @Persisted var itemDescription: String?
-    @Persisted var category: String?
     @Persisted var images: List<Data>
 }
 

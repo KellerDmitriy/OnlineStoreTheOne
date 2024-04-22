@@ -76,11 +76,18 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     //MARK: - Methods
-    func configureCell(image: String, title: String, price: String, addToWishListCompletion: @escaping () -> ()) {
+    func configureCell(
+        image: String,
+        title: String,
+        price: String,
+        addToWishListCompletion: @escaping () -> (),
+        addToCartCompletion: @escaping () -> ()
+    ) {
         productImageView.kf.setImage(with: URL(string: image))
         titleLabel.text = title
         priceLabel.text = price
         self.addToWishListCompletion = addToWishListCompletion
+        self.addToCartCompletion = addToCartCompletion
     }
     
     private func setupView() {

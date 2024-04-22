@@ -94,7 +94,22 @@ extension HomeViewController: UICollectionViewDataSource {
                     image: product.images?[0] ?? "",
                     title: product.title,
                     price: "$\(String(product.price))",
-                    addToWishListCompletion: viewModel.storageService.createCompletion(with: product))
+                    addToWishListCompletion: viewModel.storageService.createCompletion(with: WishListModel.self, for: product) { result in
+                        switch result {
+                        case .success:
+                            print("Item added/removed from wishlist successfully")
+                        case .failure(let error):
+                            print("Error adding/removing item from wishlist: \(error)")
+                        }
+                    }, addToCartCompletion: viewModel.storageService.createCompletion(with: CartsModel.self, for: product) { result in
+                        switch result {
+                        case .success:
+                            print("Item added from cart successfully")
+                        case .failure(let error):
+                            print("Error adding/removing item from wishlist: \(error)")
+                        }
+                    }
+                )
             }
             return cell
         }

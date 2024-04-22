@@ -8,12 +8,12 @@
 import Foundation
 
 extension RealmStorageService {
-    func createCompletion(with wishList: Products) -> (() -> ()) {
+    func createCompletion<T: StorableItem>(with itemType: T.Type, for product: Products, completion: @escaping (Result<Void, Error>) -> Void) -> (() -> ()) {
         let closure = {
-            if RealmStorageService.shared.isItemSaved(withId: wishList.id) {
-                RealmStorageService.shared.removeFromWishList(wishList.id)
+            if RealmStorageService.shared.isItemSaved(itemType, id: product.id) {
+                RealmStorageService.shared.removeItem(itemType, id: product.id, completion: completion)
             } else {
-                RealmStorageService.shared.addToWishList(wishList)
+                RealmStorageService.shared.addItem(itemType, product, completion: completion)
             }
         }
         return closure

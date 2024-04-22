@@ -8,12 +8,11 @@
 import Foundation
 import RealmSwift
 
-final class CartsModel: Object {
+final class CartsModel: Object, StorableItem {
     
     @Persisted var id: Int
     @Persisted var title: String
     @Persisted var price: Int
-    @Persisted var itemDescription: String?
-    @Persisted var category: String?
+    @Persisted var countProduct: Int 
     @Persisted var images: List<Data>
 }

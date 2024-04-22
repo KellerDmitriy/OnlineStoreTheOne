@@ -16,7 +16,7 @@ final class WishListViewModel {
     
     @Published var wishLists: Results<WishListModel>!
     
-    var filteredWishLists: Results<WishListModel>? 
+    var filteredWishLists: Results<WishListModel>?
     
     var subscription: Set<AnyCancellable> = []
     
@@ -29,7 +29,14 @@ final class WishListViewModel {
     //MARK: - Methods
     
     func removeWishList(at id: Int) {
-        storageService.removeFromWishList(id)
+        storageService.removeItem(WishListModel.self, id: id) { result in
+            switch result {
+            case .success:
+                print("Item removed from cart")
+            case .failure(let error):
+                print("Error removing item from cart: \(error)")
+            }
+        }
     }
-    
 }
+

@@ -9,7 +9,7 @@ import UIKit
 
 extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        viewModel.cartProducts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -18,6 +18,8 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath
         ) as? CartsTableViewCell else { return UITableViewCell() }
         
+        let cart = viewModel.cartProducts[indexPath.row]
+        cell.configureCell(cart)
         return cell
     }
 

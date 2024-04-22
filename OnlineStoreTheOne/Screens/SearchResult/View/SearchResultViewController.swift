@@ -77,7 +77,9 @@ extension SearchResultViewController: UICollectionViewDataSource {
         cell.configureCell(image: product.image ?? "", 
                            title: product.title,
                            price: String(product.price), 
-                           addToWishListCompletion: cartButtonTapped)
+                           addToWishListCompletion: cartButtonTapped,
+                           addToCartCompletion: cartButtonTapped
+        )
         return cell
     }
 }
