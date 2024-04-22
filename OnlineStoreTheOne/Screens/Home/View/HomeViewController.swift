@@ -14,7 +14,7 @@ final class HomeViewController: UIViewController {
     var viewModel = MainViewModel()
     
     private let sections = MockData.shared.pageData
-        
+    
     lazy var collectionView: UICollectionView = {
         let collectViewLayout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectViewLayout)
@@ -30,6 +30,10 @@ final class HomeViewController: UIViewController {
         addViews()
         setupViews()
         setDelegates()
+        
+        viewModel.fetchCategory()
+        viewModel.fetchProducts()
+        collectionView.reloadData()
     }
     
     //MARK: - Private methods
@@ -45,9 +49,10 @@ final class HomeViewController: UIViewController {
     private func setDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        
     }
     
-
+    
 }
 //MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
@@ -66,22 +71,50 @@ extension HomeViewController: UICollectionViewDataSource {
         case .searchField(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchFieldCollectionViewCell", for: indexPath) as?
                     SearchFieldCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.searchTextField.delegate = self
             return cell
-        case .categories(let categories):
+            
+        case .categories(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath) as? CategoryCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.configureCell(image: categories[indexPath.row].image, category: categories[indexPath.row].categories)
+            if indexPath.row < viewModel.categories.count {
+                let category = viewModel.categories[indexPath.row]
+                cell.configureCell(image: category.image ?? "",
+                                   category: category.name ?? "")
+            }
             return cell
-
-        case .products(let products):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as?
-                    ProductCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.configureCell(image: products[indexPath.row].image, title: products[indexPath.row].title, price: products[indexPath.row].price)
+        case .products(_):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
+            
+            if indexPath.row < viewModel.products.count {
+                let product = viewModel.products[indexPath.row]
+                cell.configureCell(
+                    image: product.images?[0] ?? "",
+                    title: product.title,
+                    price: "$\(String(product.price))",
+                    addToWishListCompletion: viewModel.storageService.createCompletion(with: WishListModel.self, for: product) { result in
+                        switch result {
+                        case .success:
+                            print("Item added/removed from wishlist successfully")
+                        case .failure(let error):
+                            print("Error adding/removing item from wishlist: \(error)")
+                        }
+                    }, addToCartCompletion: viewModel.storageService.createCompletion(with: CartsModel.self, for: product) { result in
+                        switch result {
+                        case .success:
+                            print("Item added from cart successfully")
+                        case .failure(let error):
+                            print("Error adding/removing item from wishlist: \(error)")
+                        }
+                    }
+                )
+            }
             return cell
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
@@ -89,8 +122,8 @@ extension HomeViewController: UICollectionViewDataSource {
             switch section {
             case .searchField(_):
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                                 withReuseIdentifier: "HeaderNavBarMenuView",
-                                                                                 for: indexPath) as! HeaderNavBarMenuView
+                                                                             withReuseIdentifier: "HeaderNavBarMenuView",
+                                                                             for: indexPath) as! HeaderNavBarMenuView
                 header.configureHeader(labelName: section.title)
                 return header
             case .categories(_):
@@ -106,8 +139,8 @@ extension HomeViewController: UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
-
-
+    
+    
     
 }
 
@@ -167,7 +200,7 @@ extension HomeViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                                          heightDimension: .absolute(20)),
                                                        subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
         section.interGroupSpacing = 16
@@ -214,7 +247,28 @@ extension HomeViewController {
     }
     
 }
-
+//MARK: - UITextFieldDelegate
+extension HomeViewController: UITextFieldDelegate {
+    
+    //TODO: - доделать методы
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let searchResultsVC = SearchResultViewController()
+        searchResultsVC.searchResults = viewModel.products
+        self.navigationController?.pushViewController(searchResultsVC, animated: true)
+        
+        if let searchText = textField.text {
+            print("Введенный текст: \(searchText)")
+        }
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.text = ""
+    }
+    
+}
 //MARK: - PreviewProvider
 struct ContentViewController_Previews: PreviewProvider {
     static var previews: some View {

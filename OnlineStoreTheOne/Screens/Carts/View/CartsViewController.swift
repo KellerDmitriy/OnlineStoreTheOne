@@ -9,14 +9,19 @@ import UIKit
 import SnapKit
 
 final class CartsViewController: UIViewController {
-    //    MARK: - Outlets
+    var viewModel = CartsViewModel()
+    
+    //    MARK: - UI elements
     private lazy var label: UILabel = {
-    let label = UILabel()
+        let label = UILabel()
         return label
     }()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(CartsTableViewCell.self, forCellReuseIdentifier: CartsTableViewCell.cellID)
         return tableView
     }()
     
@@ -26,23 +31,60 @@ final class CartsViewController: UIViewController {
             type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.payButtonTap()
+                let vc = PaymentSucessView()
+                if let presentationController = vc.presentationController as? UISheetPresentationController {
+                    presentationController.detents = [.medium()]
+                    self?.present(vc, animated: true)
+                }
             }
         )
         return filledButtonFactory.createButton()
     }()
-    
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupViews()
         setupLayout()
+        setupNavigationBar()
+        observeCartProducts()
     }
+    
+    // MARK: - Data Observing
+       private func observeCartProducts() {
+           viewModel.$cartProducts
+               .receive(on: DispatchQueue.main)
+               .sink { [weak self] _ in
+                   self?.tableView.reloadData()
+               }
+               .store(in: &viewModel.subscription)
+       }
     
     //    MARK: - Setup
     private func setupViews() {
+        navigationItem.title = "Your Cart"
         view.addSubview(tableView)
         view.addSubview(payButton)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .black
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        navigationItem.leftBarButtonItem = backButton
+        
+        let cartButton = CartButton()
+        let cartButtonItem = UIBarButtonItem(customView: cartButton)
+        navigationItem.rightBarButtonItem = cartButtonItem
+        
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     private func setupLayout() {

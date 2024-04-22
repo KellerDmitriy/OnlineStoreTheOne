@@ -14,6 +14,8 @@ final class StorageService {
     
     enum UserDefaultKeys {
         static let onboardCompleted = "OnboardCompleted"
+        static let searchText = "SavedSearchText"
+        static let wishListID = "SavedWishListID"
     }
     
     // MARK: - Initialization
@@ -28,4 +30,45 @@ final class StorageService {
         userDefaults.bool(forKey: UserDefaultKeys.onboardCompleted)
     }
     
+    func onboardingOn() {
+        userDefaults.set(false, forKey: UserDefaultKeys.onboardCompleted)
+    }
+    
+    // MARK: - SavedWishListID
+    func saveWishListID(id: Int) {
+        var wishListIDs = getWishListIDs()
+        if !wishListIDs.contains(id) {
+            wishListIDs.append(id)
+            userDefaults.set(wishListIDs, forKey: UserDefaultKeys.wishListID)
+        }
+    }
+
+    func deleteWishListID(id: Int) {
+        var wishListIDs = getWishListIDs()
+        if let index = wishListIDs.firstIndex(of: id) {
+            wishListIDs.remove(at: index)
+            userDefaults.set(wishListIDs, forKey: UserDefaultKeys.wishListID)
+        }
+    }
+
+    func getWishListIDs() -> [Int] {
+        if let wishListIDs = userDefaults.object(forKey: UserDefaultKeys.wishListID) as? [Int] {
+            return wishListIDs
+        } else {
+            return []
+        }
+    }
+    
+    // MARK: - SavedSearchText
+    func saveSearchText() {
+        userDefaults.set(true, forKey: UserDefaultKeys.searchText)
+    }
+    
+    func getSearchedText() -> [String] {
+        if let savedSearchTexts = userDefaults.object(forKey: UserDefaultKeys.searchText) as? [String] {
+            return savedSearchTexts
+        } else {
+            return []
+        }
+    }
 }

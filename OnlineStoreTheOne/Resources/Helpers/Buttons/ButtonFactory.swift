@@ -43,7 +43,7 @@ final class FilledButtonFactory: ButtonFactory {
     func createButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 4
         button.translatesAutoresizingMaskIntoConstraints = false
         
         switch type {
@@ -53,6 +53,7 @@ final class FilledButtonFactory: ButtonFactory {
         case .grayButton:
             button.backgroundColor = Colors.lightGray
             button.setTitleColor(.black, for: .normal)
+            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
         }
         button.titleLabel?.font = UIFont.makeTypography(.medium, size: 14)
         button.addAction(action, for: .touchUpInside)

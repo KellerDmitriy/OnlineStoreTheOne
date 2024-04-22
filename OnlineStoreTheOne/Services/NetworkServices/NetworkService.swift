@@ -35,6 +35,29 @@ final class NetworkService {
         await request(from: .allProducts())
             .mapError(NetworkError.init)
     }
+    
+    var category = "https://api.escuelajs.co/api/v1/categories"
+    
+    func fetchCategory() async -> Result<[Category], NetworkError> {
+        await request(from: .allCategories())
+            .mapError(NetworkError.init)
+    }
+    
+//    /// Получение всех продуктов из сети по категориям.
+//    func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
+//        await request(from: .products(with: category.id))
+//            .mapError(NetworkError.init)
+//    }
+    /// Получение всех продуктов из сети по категориям.
+    func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
+        await request(from: .products(with: category.id))
+            .mapError(NetworkError.init)
+    }
+    /// Получение всех продуктов из сети по категориям.
+    func fetchProducts(for id: Int) async -> Result<Products, NetworkError> {
+        await request(from: .products(for: id))
+            .mapError(NetworkError.init)
+    }
 }
 
 extension NetworkService {
@@ -45,6 +68,13 @@ extension NetworkService {
     /// - Parameter endpoint: Endpoint для выполнения запроса.
     /// - Returns: Результат выполнения запроса с декодированными данными или ошибкой сети.
     func request<T: Decodable>(from endpoint: Endpoint) async -> Result<T, Error> {
+       print(await Result
+        .success(endpoint)
+        .map(\.urlRequest)
+        .asyncMap(session.data)
+        .flatMap(unwrapResponse)
+        .decode(T.self, decoder: decoder)
+       )
         return await Result
              .success(endpoint)
              .map(\.urlRequest)

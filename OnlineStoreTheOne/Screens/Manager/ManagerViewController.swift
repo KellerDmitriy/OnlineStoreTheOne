@@ -81,7 +81,7 @@ final class ManagerViewController: UIViewController {
             buttonsStackView.addArrangedSubview(button)
         }
         
-        navigationController?.navigationBar.addBottomBorder(height: 0.5)
+        navigationController?.navigationBar.addBottomBorder()
         title = "Manager Screen"
     }
     
