@@ -10,7 +10,7 @@ import UIKit
 /// Протокол `ButtonWithLabelFactory`, описывающий фабрику для создания кнопок.
 protocol ButtonWithLabelFactory {
     /// Создает новую кнопку.
-    func createButtonWithLabel() -> UIView
+    func createButtonWithLabel() -> (UIButton, UILabel, UIView)
 }
 
 enum TypeButtonWithLabel {
@@ -25,11 +25,9 @@ final class ButtonLabelFactory: ButtonWithLabelFactory {
     let type: TypeButtonWithLabel
     /// Название картинки
     let name: String
-    ///  Вью, на которую будет добавлять кнопка
-    let homeView: UIView
     /// Действие кнопки
     let action: UIAction
-    
+    /// Цвет текста
     let textColor: UIColor?
 
     /// Инициализирует фабрику для создания заполненных кнопок с заданными параметрами.
@@ -37,21 +35,19 @@ final class ButtonLabelFactory: ButtonWithLabelFactory {
     ///   - title: Текст лейбла.
     ///   - type: Тип кнопки.
     ///   - name: Имя картинки на кнопке
-    ///   - homeView: Вью, на которую будет добавляться кнопка
     ///   - action: Действие кнопки
-
-    init(title: String, type: TypeButtonWithLabel, name: String, homeView: UIView, action: UIAction, textColor: UIColor?) {
+    ///   - textColor: Цвет текста
+    init(title: String, type: TypeButtonWithLabel, name: String, action: UIAction, textColor: UIColor?) {
         self.title = title
         self.type = type
         self.name = name
-        self.homeView = homeView
         self.action = action
         self.textColor = textColor
     }
     
     /// Создает новую заполненную кнопку с лейблом с заданными параметрами.
     /// - Returns: Новая заполненная кнопка с лейблом.
-    func createButtonWithLabel() -> UIView {
+    func createButtonWithLabel() -> (UIButton, UILabel, UIView) {
         
         let button = UIButton(type: .system)
         let label = UILabel()
@@ -67,7 +63,7 @@ final class ButtonLabelFactory: ButtonWithLabelFactory {
         
         button.addAction(action, for: .touchUpInside)
         button.backgroundColor = Colors.lightGray
-      
+        button.makeSystem(button)
         label.text = title
         label.textColor = Colors.gray
         
@@ -79,54 +75,18 @@ final class ButtonLabelFactory: ButtonWithLabelFactory {
         switch type {
         case .imageEditButtons:
             button.layer.cornerRadius = 5
-            label.font = UIFont.makeTypography(.bold, size: 14)
+            label.font = UIFont.makeTypography(.bold, size: 16)
             label.textColor = textColor
-            
-            superView.addSubview(button)
-            superView.addSubview(label)
-            superView.addSubview(view)
-            
-            NSLayoutConstraint.activate([
-                superView.heightAnchor.constraint(equalToConstant: 50),
-                superView.widthAnchor.constraint(equalToConstant: homeView.frame.width),
-
-                button.heightAnchor.constraint(equalToConstant: 56),
-                button.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 0),
-                button.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: 0),
-                
-                label.topAnchor.constraint(equalTo: button.topAnchor, constant: 20),
-                label.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 20),
-                
-                view.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -40),
-                view.topAnchor.constraint(equalTo: button.topAnchor, constant: 15),
-            ])
-            
+            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+//
         case .standartButton:
             button.layer.cornerRadius = 12
             label.font = UIFont.makeTypography(.bold, size: 16)
             label.textColor = Colors.gray
-            
-            superView.addSubview(button)
-            superView.addSubview(label)
-            superView.addSubview(view)
-            
-            NSLayoutConstraint.activate([
-                superView.heightAnchor.constraint(equalToConstant: 56),
-                superView.widthAnchor.constraint(equalToConstant: homeView.frame.width),
-
-                button.heightAnchor.constraint(equalToConstant: 56),
-                button.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 0),
-                button.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: 0),
-                
-                label.topAnchor.constraint(equalTo: button.topAnchor, constant: 20),
-                label.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 20),
-                
-                view.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -40),
-                view.topAnchor.constraint(equalTo: button.topAnchor, constant: 15),
-            ])
+            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
         }
         
-        return superView
+        return (button, label, view)
        
     }
 }
