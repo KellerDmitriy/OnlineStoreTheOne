@@ -31,11 +31,15 @@ final class CartsViewController: UIViewController {
             type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.payButtonTap()
+                let vc = PaymentSucessView()
+                if let presentationController = vc.presentationController as? UISheetPresentationController {
+                    presentationController.detents = [.medium()]
+                    self?.present(vc, animated: true)
+                }
             }
         )
         return filledButtonFactory.createButton()
     }()
-    
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()

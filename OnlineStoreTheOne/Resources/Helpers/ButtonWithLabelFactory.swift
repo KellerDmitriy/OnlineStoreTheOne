@@ -54,7 +54,6 @@ final class ButtonLabelFactory: ButtonWithLabelFactory {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
         let image = UIImage(named: name)
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 40))
-        let superView = UIView()
         
         /// Настройки вью с картинкой
         imageView.image = image
@@ -67,7 +66,6 @@ final class ButtonLabelFactory: ButtonWithLabelFactory {
         label.text = title
         label.textColor = Colors.gray
         
-        superView.translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         view.translatesAutoresizingMaskIntoConstraints = false
