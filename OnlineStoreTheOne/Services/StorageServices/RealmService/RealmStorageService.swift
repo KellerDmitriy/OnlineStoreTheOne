@@ -23,11 +23,16 @@ final class RealmStorageService {
         }
     }
     
-    // MARK: - CRUD for WishList
+    // MARK: - CRUD Operations
     
-    func addToWishList(_ wishList: Products) {
-        guard let imageUrlString = wishList.images?.first, let imageUrl = URL(string: imageUrlString) else {
-            print("No image URL found")
+    func isItemSaved<T: Object>(_ itemType: T.Type, id: Int) -> Bool {
+        let itemsWithId = realm.objects(itemType).filter("id = %@", id)
+        return !itemsWithId.isEmpty
+    }
+    
+    func addItem<T: Object>(_ itemType: T.Type, _ item: Products, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let imageUrlString = item.images?.first, let imageUrl = URL(string: imageUrlString) else {
+            completion(.failure(StorageError.noImageURLFound))
             return
         }
         
@@ -35,54 +40,48 @@ final class RealmStorageService {
             switch result {
             case .success(let imageResult):
                 if let imageData = imageResult.image.pngData() {
-                    let wishListModel = WishListModel()
-                    wishListModel.id = wishList.id
-                    wishListModel.title = wishList.title
-                    wishListModel.price = wishList.price
-                    wishListModel.itemDescription = wishList.description
-                    wishListModel.category = wishList.category?.name
-                    wishListModel.images.append(imageData)
-                    
                     do {
                         try self.realm.write {
-                            self.realm.add(wishListModel)
+                            let newItem = T()
+                            if var newItem = newItem as? StorableItem {
+                                newItem.id = item.id
+                                newItem.title = item.title
+                                newItem.price = item.price
+                                newItem.images.append(imageData)
+                                self.realm.add(newItem)
+                                completion(.success(()))
+                            } else {
+                                completion(.failure(StorageError.invalidItemType))
+                            }
                         }
-                        print("Successfully added to wishlist")
                     } catch {
-                        print("Error adding to wishlist: \(error)")
+                        completion(.failure(error))
                     }
                 } else {
-                    print("Failed to convert image to data")
+                    completion(.failure(StorageError.imageConversionFailed))
                 }
             case .failure(let error):
-                print("Failed to retrieve image: \(error)")
+                completion(.failure(error))
             }
         }
     }
+       
+       func removeItem<T: Object>(_ itemType: T.Type, id: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+           do {
+               guard let item = realm.object(ofType: itemType, forPrimaryKey: id) else {
+                   completion(.failure(StorageError.itemNotFound))
+                   return
+               }
+               try realm.write {
+                   realm.delete(item)
+                   completion(.success(()))
+               }
+           } catch {
+               completion(.failure(error))
+           }
+       }
+       
     
-    func removeFromWishList(_ wishListId: Int) {
-        do {
-            guard let wishListModel = realm.object(ofType: WishListModel.self, forPrimaryKey: wishListId) else {
-                print("WishListModel with id \(wishListId) not found.")
-                return
-            }
-            try realm.write {
-                realm.delete(wishListModel)
-            }
-        } catch {
-            print("Error removing from wishlist: \(error)")
-        }
-    }
-    
-    
-    
-    // MARK: - CRUD for WishList
-    
-    func addToCart(_ carts: [CartsModel]) {
-        write {
-            realm.add(carts)
-        }
-    }
     
     // MARK: - Write
     private func write(completion: () -> Void) {
@@ -93,11 +92,5 @@ final class RealmStorageService {
         } catch {
             print(error)
         }
-    }
-    
-    // MARK: - isItemSaved
-    func isItemSaved(withId id: Int) -> Bool {
-        let itemsWithId = realm.objects(WishListModel.self).filter("id = %@", id)
-        return !itemsWithId.isEmpty
     }
 }

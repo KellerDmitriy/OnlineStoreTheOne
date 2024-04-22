@@ -38,16 +38,15 @@ final class WishListViewController: UIViewController {
         
         viewModel.$wishLists
             .sink { [weak self] _ in
-                Task {
+                DispatchQueue.main.async {
                     self?.collectionView.reloadData()
                 }
             }
             .store(in: &viewModel.subscription)
         
-        
     }
    
-    func addToCartTap() {
+    @objc func addToCartTap() {
         let viewControllerToPresent = CartsViewController()
         let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
         navigationController.modalPresentationStyle = .fullScreen
@@ -120,7 +119,9 @@ final class WishListViewController: UIViewController {
         navigationItem.searchController = searchController
         
         let cartButton = CartButton()
+        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
+        
         navigationItem.rightBarButtonItem = cartButtonItem
     }
 }

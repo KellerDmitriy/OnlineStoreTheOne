@@ -35,6 +35,8 @@
 		E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */; };
 		E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* MainViewModel.swift */; };
 		E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */; };
+		E16BB6842BD5ABCA009991F3 /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6832BD5ABCA009991F3 /* StorageError.swift */; };
+		E16BB6862BD5B3DA009991F3 /* RealmModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6852BD5B3DA009991F3 /* RealmModelProtocol.swift */; };
 		E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */; };
 		E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */; };
 		E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */; };
@@ -104,6 +106,8 @@
 		E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmStorageService + Extension.swift"; sourceTree = "<group>"; };
 		E16BB67F2BD501EC009991F3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController + Extension.swift"; sourceTree = "<group>"; };
+		E16BB6832BD5ABCA009991F3 /* StorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageError.swift; sourceTree = "<group>"; };
+		E16BB6852BD5B3DA009991F3 /* RealmModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModelProtocol.swift; sourceTree = "<group>"; };
 		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E1A2E8322BCCFEE200CC0D64 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		E1A2E8342BCCFF0B00CC0D64 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -322,8 +326,10 @@
 		E16BB67B2BD4FB6B009991F3 /* RealmService */ = {
 			isa = PBXGroup;
 			children = (
+				E16BB6872BD5B589009991F3 /* Model */,
 				E16BB66E2BD4616E009991F3 /* RealmStorageService.swift */,
 				E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */,
+				E16BB6832BD5ABCA009991F3 /* StorageError.swift */,
 			);
 			path = RealmService;
 			sourceTree = "<group>";
@@ -334,6 +340,14 @@
 				BEBA5DAE2BD0621900737686 /* MainViewModel.swift */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		E16BB6872BD5B589009991F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E16BB6852BD5B3DA009991F3 /* RealmModelProtocol.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		E1A2E8302BCCFB4300CC0D64 /* Services */ = {
@@ -397,8 +411,8 @@
 		E1D1DC1D2BD06FEA0009C2A3 /* StorageServices */ = {
 			isa = PBXGroup;
 			children = (
-				E1D1DC1B2BD06FE30009C2A3 /* StorageService.swift */,
 				E16BB67B2BD4FB6B009991F3 /* RealmService */,
+				E1D1DC1B2BD06FE30009C2A3 /* StorageService.swift */,
 			);
 			path = StorageServices;
 			sourceTree = "<group>";
@@ -690,6 +704,7 @@
 				531121F12BD2E5EE0018FA37 /* TypeOfProfileScreen.swift in Sources */,
 				531121F22BD2E5EE0018FA37 /* EditImageScreen.swift in Sources */,
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
+				E16BB6842BD5ABCA009991F3 /* StorageError.swift in Sources */,
 				BEBA5DC12BD0621900737686 /* CategoryCollectionViewCell.swift in Sources */,
 				BEBA5DC42BD0621900737686 /* ProductCollectionViewCell.swift in Sources */,
 				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
@@ -715,6 +730,7 @@
 				E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */,
 				86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */,
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
+				E16BB6862BD5B3DA009991F3 /* RealmModelProtocol.swift in Sources */,
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */,

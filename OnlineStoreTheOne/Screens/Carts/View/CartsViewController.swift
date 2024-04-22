@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class CartsViewController: UIViewController {
+    var viewModel = CartsViewModel()
+    
     //    MARK: - UI elements
     private lazy var label: UILabel = {
         let label = UILabel()
@@ -17,6 +19,9 @@ final class CartsViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(CartsTableViewCell.self, forCellReuseIdentifier: CartsTableViewCell.cellID)
         return tableView
     }()
     
@@ -38,7 +43,18 @@ final class CartsViewController: UIViewController {
         setupViews()
         setupLayout()
         setupNavigationBar()
+        observeCartProducts()
     }
+    
+    // MARK: - Data Observing
+       private func observeCartProducts() {
+           viewModel.$cartProducts
+               .receive(on: DispatchQueue.main)
+               .sink { [weak self] _ in
+                   self?.tableView.reloadData()
+               }
+               .store(in: &viewModel.subscription)
+       }
     
     //    MARK: - Setup
     private func setupViews() {
