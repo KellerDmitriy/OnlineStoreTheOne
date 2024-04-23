@@ -17,7 +17,7 @@ struct Endpoint {
     
     /// Путь запроса.
     private let path: String
-    
+                       
     /// Параметры запроса.
     private let queryItems: [URLQueryItem]
     
@@ -68,6 +68,7 @@ struct Endpoint {
         }
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
+        print(request)
         return request
     }
 }

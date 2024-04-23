@@ -12,9 +12,9 @@ final class NavBarController: UINavigationController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupNavigationBarAppearance()
-        setupNavigationBarWithCustomButtons()
+//
+//        setupNavigationBarAppearance()
+//        setupNavigationBarWithCustomButtons()
     }
 
     // MARK: - Customization Methods

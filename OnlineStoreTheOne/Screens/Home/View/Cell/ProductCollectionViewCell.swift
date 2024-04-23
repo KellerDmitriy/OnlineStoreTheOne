@@ -55,7 +55,6 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        backgroundColor = .white
         backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         layer.cornerRadius = 12
         setupView()
@@ -67,8 +66,18 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     //MARK: - Methods
-    func configureCell(image: String, title: String, price: String) {
-        productImageView.kf.setImage(with: URL(string: image))
+//    func configureCell(image: String, title: String, price: String) {
+//        productImageView.kf.setImage(with: URL(string: image))
+//        titleLabel.text = title
+//        priceLabel.text = price
+//    }
+
+    func configureCell(image: String?, title: String, price: String) {
+        if let imageUrlString = image, let imageUrl = URL(string: imageUrlString) {
+            productImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder_image"))
+        } else {
+            productImageView.image = UIImage(named: "ps4")
+        }
         titleLabel.text = title
         priceLabel.text = price
     }

@@ -31,9 +31,16 @@ final class HomeViewController: UIViewController {
         setupViews()
         setDelegates()
         
+        ///замыкание для обновления интерфейса
+        viewModel.dataUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        
         viewModel.fetchCategory()
         viewModel.fetchProducts()
-        collectionView.reloadData()
+
     }
     
     //MARK: - Private methods
@@ -90,7 +97,7 @@ extension HomeViewController: UICollectionViewDataSource {
         
             if indexPath.row < viewModel.products.count {
                 let product = viewModel.products[indexPath.row]
-                cell.configureCell(image: product.images?[0] ?? "",
+                cell.configureCell(image: product.image ?? "",
                                    title: product.title,
                                    price: "$\(String(product.price))")
             } 
@@ -122,14 +129,17 @@ extension HomeViewController: UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
-
-
-    
 }
 
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let category = viewModel.categories[safe: indexPath.row] {
+            ///получаем продукты для выбранной категории
+            viewModel.getData(id: category.id)
+            collectionView.reloadData()
+        }
+    }
 }
 
 //MARK: - AddViews
@@ -233,25 +243,27 @@ extension HomeViewController {
 //MARK: - UITextFieldDelegate
 extension HomeViewController: UITextFieldDelegate {
     
-    //TODO: - доделать методы
+    //TODO: - 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        let searchResultsVC = SearchResultViewController()
-        searchResultsVC.searchResults = viewModel.products
-        self.navigationController?.pushViewController(searchResultsVC, animated: true)
+        textField.resignFirstResponder()
         
         if let searchText = textField.text {
-            print("Введенный текст: \(searchText)")
+            viewModel.fetchSearchProducts(searchText)
+            
+            let searchResultsVC = SearchResultViewController()
+            searchResultsVC.searchResults = viewModel.products
+            self.navigationController?.pushViewController(searchResultsVC, animated: true)
         }
-        textField.resignFirstResponder()
         return true
     }
+    
+    
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.text = ""
     }
-
 }
+
 //MARK: - PreviewProvider
 struct ContentViewController_Previews: PreviewProvider {
     static var previews: some View {
