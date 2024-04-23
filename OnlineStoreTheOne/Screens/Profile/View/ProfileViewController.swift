@@ -149,8 +149,15 @@ final class ProfileViewController: UIViewController {
     
     func typeAction() -> UIAction {
         let act = UIAction { _ in
-            let vc = TypeOfAccountViewController()
+            let vc = TypeOfProfileScreen()
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+        return act
+    }
+    
+    func back() -> UIAction {
+        let act = UIAction { _ in
+            self.navigationController?.popViewController(animated: true)
         }
         return act
     }

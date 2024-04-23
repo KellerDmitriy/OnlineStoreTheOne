@@ -12,9 +12,9 @@ final class NavBarController: UINavigationController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupNavigationBarAppearance()
-        setupNavigationBarWithCustomButtons()
+//
+//        setupNavigationBarAppearance()
+//        setupNavigationBarWithCustomButtons()
     }
 
     // MARK: - Customization Methods
@@ -22,12 +22,12 @@ final class NavBarController: UINavigationController {
         navigationBar.barTintColor = .white
         navigationBar.tintColor = .black
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-//        navigationBar.addBottomBorder()
+        navigationBar.addBottomBorder()
     }
 
     func setupNavigationBarWithCustomButtons() {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: nil)
-        backButton.title = ""
+        backButton.title = "Back"
         navigationItem.leftBarButtonItem = backButton
 
         let cartButton = CartButton()
