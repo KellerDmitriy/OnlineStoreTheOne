@@ -7,7 +7,8 @@
 
 import UIKit
 
-class TypeOfProfileScreen: UIViewController {
+final class TypeOfAccountViewController: UIViewController {
+    
     //MARK: - UI elements
     private lazy var managerButton: (UIButton, UILabel, UIView) = {
         let button = ButtonLabelFactory(
@@ -34,33 +35,17 @@ class TypeOfProfileScreen: UIViewController {
         return button
     }()
     
-    lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.addAction(self.back(), for: .touchUpInside)
-        button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
-        button.tintColor = Colors.darkArsenic
-        button.heightAnchor.constraint(equalToConstant: 26).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 26).isActive = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.navigationBar.isHidden = true
+
         setUpView()
         setConstraint()
-    
+        navigationItem.title = "Type of Account"
+        navigationController?.setupNavigationBar()
     }
     //MARK: - Actions
-    func back() -> UIAction {
-        let act = UIAction { _ in
-            self.navigationController?.popViewController(animated: true)
-        }
-        return act
-    }
-    
+
     func managerBtnTapped() -> UIAction {
         let act = UIAction { _ in
             self.managerButton.0.backgroundColor = Colors.greenSheen
@@ -89,7 +74,7 @@ class TypeOfProfileScreen: UIViewController {
 }
 
 //MARK: - Extension
-private extension TypeOfProfileScreen {
+private extension TypeOfAccountViewController {
     //MARK: - Set up view
     func setUpView() {
         view.backgroundColor = .white
@@ -103,13 +88,10 @@ private extension TypeOfProfileScreen {
         view.addSubview(userButton.2)
         view.sendSubviewToBack(userButton.2)
         
-        view.addSubview(backButton)
     }
     //MARK: - Set constraint
     func setConstraint() {
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             managerButton.0.heightAnchor.constraint(equalToConstant: 56),
             managerButton.0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
