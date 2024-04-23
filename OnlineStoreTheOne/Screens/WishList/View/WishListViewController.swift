@@ -38,15 +38,20 @@ final class WishListViewController: UIViewController {
         
         viewModel.$wishLists
             .sink { [weak self] _ in
-                Task {
+                DispatchQueue.main.async {
                     self?.collectionView.reloadData()
                 }
             }
             .store(in: &viewModel.subscription)
-
-        viewModel.getData(id: 100)
+        
     }
-           
+   
+    @objc func addToCartTap() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
+    }
     
     // MARK: - UI Setup
     private func setupUI() {
@@ -76,6 +81,7 @@ final class WishListViewController: UIViewController {
     }
     
     private func addCollectionViewConstraints() {
+        
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.topAnchor)
             make.leading.equalTo(view).offset(Constants.horizontalSpacing)
@@ -86,10 +92,10 @@ final class WishListViewController: UIViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         
-        let availableWidth = view.frame.width -  Constants.interItemSpacing * 2
-        let availableHeight = view.frame.height -  Constants.interItemSpacing * 3
+        let availableWidth = view.frame.width
+        let availableHeight = view.frame.height 
         
-        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 2 / view.frame.width)
+        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 2 )
         let itemHightDimension = NSCollectionLayoutDimension.fractionalWidth(availableHeight / 3 / view.frame.height)
         
         let itemSize = NSCollectionLayoutSize(widthDimension: itemWidthDimension, heightDimension: itemHightDimension)
@@ -104,11 +110,19 @@ final class WishListViewController: UIViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
+    
     // MARK: - Navigation
     private func setupNavigation() {
         configureSearchController()
+        navigationController?.navigationBar.tintColor = .black
 //        navigationController?.setupNavigationBar()
         navigationItem.searchController = searchController
+        
+        let cartButton = CartButton()
+        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
+        let cartButtonItem = UIBarButtonItem(customView: cartButton)
+        
+        navigationItem.rightBarButtonItem = cartButtonItem
     }
 }
 
@@ -120,10 +134,11 @@ extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        viewModel.filteredWishLists = viewModel.wishLists.filter { product in
-            product.title.lowercased().contains(searchText.lowercased())
-        }
-        collectionView.reloadData()
+//        guard var filteredWishLists = viewModel.filteredWishLists else { return }
+//        filteredWishLists = viewModel.wishLists. { product in
+//            product.title.lowercased().contains(searchText.lowercased())
+//        }
+//        collectionView.reloadData()
     }
 
     func textFieldShouldClear(_ textField: UITextField) -> Bool {

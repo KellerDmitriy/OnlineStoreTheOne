@@ -42,11 +42,11 @@ final class TabBarController: UITabBarController {
         let vc2 = NavBarController(
             rootViewController: WishListViewController()
         )
-        let vc3 = NavBarController(
-            rootViewController: CartsViewController()
+        let vc3 = UINavigationController(
+            rootViewController: ManagerViewController()
         )
-        let vc4 = NavBarController(
-            rootViewController: CartsViewController()
+        let vc4 = UINavigationController(
+            rootViewController: ProfileViewController()
         )
         
         vc1.title = "Home"

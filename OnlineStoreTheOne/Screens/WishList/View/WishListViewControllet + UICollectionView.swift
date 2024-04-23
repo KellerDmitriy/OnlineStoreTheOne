@@ -20,6 +20,10 @@ extension WishListViewController: UICollectionViewDataSource {
         
         let wishList = viewModel.wishLists[indexPath.item]
         cell.configureCell(wishList)
+        
+        cell.addToCartCompletion = { [weak self] in
+            self?.addToCartTap()
+        }
         return cell
     }
 }

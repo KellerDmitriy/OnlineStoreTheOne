@@ -19,16 +19,16 @@ final class MainViewModel {
     var dataUpdated: (() -> Void)?
     
     let networkService = NetworkService.shared
+    let storageService = RealmStorageService.shared
     
     func fetchProducts() {
         Task {
-            let result: Result<[Products], NetworkError> = await networkService.fetchAllProducts()
-            
-            if case let .success(data) = result {
-                self.products = data
-                dataUpdated?()
-            } else if case let .failure(error) = result {
-                print("Failed to fetch data: \(error)")
+            let result = await networkService.fetchAllProducts()
+            switch result {
+            case .success(let products):
+                self.products = products
+            case .failure(let error):
+                print("Error fetching products: \(error)")
             }
         }
     }
@@ -57,7 +57,7 @@ final class MainViewModel {
 
     func fetchSearchProducts(_ title: String) {
         Task {
-            let result: Result<[Products], NetworkError> = await networkService.fetchSearchProducts(by: title)
+            let result = await networkService.fetchSearchProducts(by: title)
             
             switch result {
             case .success(let data):
@@ -71,16 +71,15 @@ final class MainViewModel {
 
     func fetchCategory() {
         Task {
-            let result: Result<[Category], NetworkError> = await networkService.fetchAllCategory()
+            let result = await networkService.fetchCategory()
             
-            if case let .success(data) = result {
-                self.categories = data
-                dataUpdated?()
-            } else if case let .failure(error) = result {
-                print("Failed to fetch data: \(error)")
+            switch result {
+            case .success(let categories):
+                self.categories = categories
+            case .failure(let error):
+                print("Error fetching products: \(error)")
             }
         }
     }
-
 }
 

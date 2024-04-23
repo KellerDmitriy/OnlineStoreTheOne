@@ -15,6 +15,7 @@ struct Products: Codable {
     let description: String?
     let category: Category?
     let image: String?
+    let images: [String]?
 }
 
 // MARK: - Category

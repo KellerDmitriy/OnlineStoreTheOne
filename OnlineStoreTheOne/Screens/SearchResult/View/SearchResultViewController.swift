@@ -12,12 +12,12 @@ import SwiftUI
 final class SearchResultViewController: UIViewController {
     // MARK: - Properties
     
-    var searchResults = [Products(id: 1, title: "Product 1", price: 10, description: "Description 1", category: nil, image: "tv"),
-                         Products(id: 2, title: "Product 2", price: 20, description: "Description 2", category: nil, image: "airpoods"),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4"),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug"),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4"),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug"),
+    var searchResults = [Products(id: 1, title: "Product 1", price: 10, description: "Description 1", category: nil, image: "tv", images: ["tv"]),
+                         Products(id: 2, title: "Product 2", price: 20, description: "Description 2", category: nil, image: "airpoods", images: ["airpoods"]),
+                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4", images: ["ps4"]),
+                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug", images: ["mug"]),
+                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4", images: ["ps4"]),
+                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug", images: ["mug"]),
     ]
     
     // MARK: - UI Components
@@ -76,7 +76,10 @@ extension SearchResultViewController: UICollectionViewDataSource {
         let product = searchResults[indexPath.item]
         cell.configureCell(image: product.image ?? "", 
                            title: product.title,
-                           price: "$\(String(product.price))")
+                           price: String(product.price), 
+                           addToWishListCompletion: cartButtonTapped,
+                           addToCartCompletion: cartButtonTapped
+        )
         return cell
     }
 }

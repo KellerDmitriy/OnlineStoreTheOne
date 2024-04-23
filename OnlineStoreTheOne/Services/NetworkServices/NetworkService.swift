@@ -37,10 +37,22 @@ final class NetworkService {
     }
     /// Получение всех категорий 
     func fetchAllCategory() async -> Result<[Category], NetworkError> {
-        await request(from: .allCategory())
+        await request(from: .allCategories())
             .mapError(NetworkError.init)
     }
     
+    var category = "https://api.escuelajs.co/api/v1/categories"
+    
+    func fetchCategory() async -> Result<[Category], NetworkError> {
+        await request(from: .allCategories())
+            .mapError(NetworkError.init)
+    }
+    
+//    /// Получение всех продуктов из сети по категориям.
+//    func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
+//        await request(from: .products(with: category.id))
+//            .mapError(NetworkError.init)
+//    }
     /// Получение всех продуктов из сети по категориям.
     func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
         await request(from: .products(with: category.id))
@@ -51,6 +63,7 @@ final class NetworkService {
         await request(from: .products(for: id))
             .mapError(NetworkError.init)
     }
+    
     /// Получение всех продуктов из сети по категориям.
     func fetchSearchProducts(by title: String) async -> Result<[Products], NetworkError> {
         await request(from: .products(for: title))

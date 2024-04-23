@@ -7,29 +7,36 @@
 
 import Foundation
 import Combine
+import RealmSwift
 
 final class WishListViewModel {
+    //MARK:  Properties
     let networkService = NetworkService.shared
+    let storageService = RealmStorageService.shared
     
-    @Published var wishLists: [Products] = []
-    var filteredWishLists: [Products] = []
+    @Published var wishLists: Results<WishListModel>!
+    
+    var filteredWishLists: Results<WishListModel>?
     
     var subscription: Set<AnyCancellable> = []
     
+    //MARK: - Init
     init() {
-        
+        wishLists = storageService.realm.objects(WishListModel.self)
     }
     
-    public func getData(id: Int) {
-        Task {
-            let result = await networkService.fetchProducts(for: id)
+    
+    //MARK: - Methods
+    
+    func removeWishList(at id: Int) {
+        storageService.removeItem(WishListModel.self, id: id) { result in
             switch result {
-            case .success(let products):
-                self.wishLists = [products]
+            case .success:
+                print("Item removed from cart")
             case .failure(let error):
-                print("Error fetching products: \(error)")
-                
+                print("Error removing item from cart: \(error)")
             }
         }
     }
 }
+

@@ -12,6 +12,9 @@ final class WishListCollectionCell: UICollectionViewCell {
     //MARK: - cellID
     static let cellID = String(describing: WishListCollectionCell.self)
     
+    var addToCartCompletion: (() -> Void)?
+    var addToWishListCompletion: (() -> Void)?
+    
     //MARK: - Private Properties
     private let productImageView: UIImageView = {
         let element = UIImageView()
@@ -21,6 +24,7 @@ final class WishListCollectionCell: UICollectionViewCell {
         element.layer.masksToBounds = true
         return element
     }()
+    
     private let titleLabel: UILabel = {
         let element = UILabel()
         element.textColor = .black
@@ -29,6 +33,7 @@ final class WishListCollectionCell: UICollectionViewCell {
         element.backgroundColor = .clear
         return element
     }()
+    
     private let priceLabel: UILabel = {
         let element = UILabel()
         element.textColor = .black
@@ -37,29 +42,37 @@ final class WishListCollectionCell: UICollectionViewCell {
         element.backgroundColor = .clear
         return element
     }()
+    
     private lazy var addToCartButton: UIButton = {
-        let element = UIButton()
-        element.tintColor = .white
-        element.setTitle("Add to cart", for: .normal)
-        element.titleLabel?.font = UIFont.makeTypography(.regular, size: 13)
-        element.backgroundColor = Colors.greenSheen
-        element.layer.cornerRadius = 12
-        element.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
-        return element
+        let filledButtonFactory = FilledButtonFactory(
+            title: "Add to cart",
+            type: .greenButton,
+            action: UIAction { [weak self] _ in
+                self?.addToCartCompletion?()
+            }
+        )
+        return filledButtonFactory.createButton()
     }()
     
-    //MARK: - Action
-    @objc private func addToCart() {
-        
-        print("нажата - addToCart")
-    }
+    private lazy var addToWishListButton: UIButton = {
+        let button = UIButton()
+        if let image = UIImage(named: "selectedWishlist") {
+            button.setBackgroundImage(image, for: .normal)
+        }
+        button.addAction(UIAction { [weak self] _ in
+            self?.addToWishListCompletion?()
+        }, for: .touchUpInside)
+        return button
+    }()
+  
+    
     
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         layer.cornerRadius = 12
-        setupView()
+        setupViews()
         setConstraints()
         
     }
@@ -67,29 +80,31 @@ final class WishListCollectionCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     //MARK: - Methods
-    func configureCell(_ wishModel: Products) {
-        if let imageUrlString = wishModel.image, let imageUrl = URL(string: imageUrlString) {
-            print(imageUrl)
-            productImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder_image"))
+    func configureCell(_ wishModel: WishListModel) {
+        titleLabel.text = wishModel.title
+        priceLabel.text = String("\(wishModel.price)")
+        
+        if let imageData = wishModel.images.first {
+            productImageView.image = UIImage(data: imageData)
         } else {
             productImageView.image = UIImage(named: "ps4")
         }
-        titleLabel.text = wishModel.title
-        priceLabel.text = String("\(wishModel.price)")
     }
     
-    private func setupView() {
+    //MARK: - Setup Views
+    private func setupViews() {
         addSubview(productImageView)
         addSubview(titleLabel)
         addSubview(priceLabel)
         addSubview(addToCartButton)
+        addSubview(addToWishListButton)
     }
+    
     private func setConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(112)
-            
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -102,11 +117,18 @@ final class WishListCollectionCell: UICollectionViewCell {
             make.leading.trailing.equalTo(titleLabel)
         }
         
+        addToWishListButton.snp.makeConstraints { make in
+            make.top.equalTo(priceLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().inset(13)
+            make.bottom.equalToSuperview().inset(10)
+            make.width.equalTo(28)
+        }
+        
         addToCartButton.snp.makeConstraints { make in
             make.top.equalTo(priceLabel.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(13)
+            make.trailing.equalToSuperview().inset(13)
+            make.leading.equalTo(addToWishListButton.snp.trailing).offset(8)
             make.bottom.equalToSuperview().inset(10)
         }
     }
-    
 }

@@ -14,7 +14,7 @@ final class HomeViewController: UIViewController {
     var viewModel = MainViewModel()
     
     private let sections = MockData.shared.pageData
-        
+    
     lazy var collectionView: UICollectionView = {
         let collectViewLayout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectViewLayout)
@@ -23,6 +23,7 @@ final class HomeViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,10 +57,8 @@ final class HomeViewController: UIViewController {
     private func setDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
-
     }
-    
-
+  
 }
 //MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
@@ -91,37 +90,58 @@ extension HomeViewController: UICollectionViewDataSource {
                                    category: category.name ?? "")
             }
             return cell
-        
+            
         case .products(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
-        
+            
             if indexPath.row < viewModel.products.count {
                 let product = viewModel.products[indexPath.row]
-                cell.configureCell(image: product.image ?? "",
-                                   title: product.title,
-                                   price: "$\(String(product.price))")
-            } 
+                cell.configureCell(
+                    image: product.images?[0] ?? "",
+                    title: product.title,
+                    price: "$\(String(product.price))",
+                    addToWishListCompletion: viewModel.storageService.createCompletion(with: WishListModel.self, for: product) { result in
+                        switch result {
+                        case .success:
+                            print("Item added/removed from wishlist successfully")
+                        case .failure(let error):
+                            print("Error adding/removing item from wishlist: \(error)")
+                        }
+                    }, addToCartCompletion: viewModel.storageService.createCompletion(with: CartsModel.self, for: product) { result in
+                        switch result {
+                        case .success:
+                            print("Item added from cart successfully")
+                        case .failure(let error):
+                            print("Error adding/removing item from wishlist: \(error)")
+                        }
+                    }
+                )
+            }
             return cell
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let section = sections[indexPath.section]
             switch section {
             case .searchField(_):
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                                 withReuseIdentifier: "HeaderNavBarMenuView",
-                                                                                 for: indexPath) as! HeaderNavBarMenuView
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "HeaderNavBarMenuView",
+                    for: indexPath
+                ) as! HeaderNavBarMenuView
                 header.configureHeader(labelName: section.title)
                 return header
             case .categories(_):
                 fallthrough
             case .products(_):
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                             withReuseIdentifier: "HeaderProductsView",
-                                                                             for: indexPath) as! HeaderProductsView
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "HeaderProductsView",
+                    for: indexPath
+                ) as! HeaderProductsView
                 header.configureHeader(labelName: section.title)
                 return header
             }
@@ -129,16 +149,16 @@ extension HomeViewController: UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
+  
 }
 
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let category = viewModel.categories[safe: indexPath.row] {
+        let category = viewModel.categories[indexPath.row]
             ///получаем продукты для выбранной категории
             viewModel.getData(id: category.id)
             collectionView.reloadData()
-        }
     }
 }
 
@@ -174,11 +194,13 @@ extension HomeViewController {
         }
     }
     
-    private func createLayoutSection(group: NSCollectionLayoutGroup,
-                                     behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
-                                     interGroupSpacing: CGFloat,
-                                     supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
-                                     contentInsets: Bool) -> NSCollectionLayoutSection {
+    private func createLayoutSection(
+        group: NSCollectionLayoutGroup,
+        behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
+        interGroupSpacing: CGFloat,
+        supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
+        contentInsets: Bool) -> NSCollectionLayoutSection {
+            
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = behavior
         section.interGroupSpacing = interGroupSpacing
@@ -188,12 +210,18 @@ extension HomeViewController {
     }
     
     private func createSearchFieldSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                                                                         heightDimension: .absolute(20)),
-                                                       subitems: [item])
-
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(20)),
+                subitems: [item]
+        )
+        
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
         section.interGroupSpacing = 16
@@ -203,26 +231,39 @@ extension HomeViewController {
         
     }
     private func createCategorySection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(57),
-                                                                         heightDimension: .absolute(61)),
-                                                       subitems: [item])
-        let section = createLayoutSection(group: group,
-                                          behavior: .continuous,
-                                          interGroupSpacing: 16,
-                                          supplementaryItems: [],
-                                          contentInsets: false)
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+            widthDimension: .absolute(57),
+            heightDimension: .absolute(61)),
+            subitems: [item]
+        )
+        let section = createLayoutSection(
+            group: group,
+            behavior: .continuous,
+            interGroupSpacing: 16,
+            supplementaryItems: [],
+            contentInsets: false
+        )
         section.contentInsets = .init(top: 0, leading: 16, bottom: 32, trailing: 16)
         return section
     }
     
     private func createProductSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(349),
-                                                                         heightDimension: .absolute(217)),
-                                                       subitems: [item])
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(0.5),
+                heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(
+                widthDimension: .absolute(349),
+                heightDimension: .absolute(217)),
+                subitems: [item]
+        )
         group.interItemSpacing = .fixed(16)
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
@@ -257,8 +298,6 @@ extension HomeViewController: UITextFieldDelegate {
         return true
     }
     
-    
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.text = ""
     }
@@ -271,6 +310,7 @@ struct ContentViewController_Previews: PreviewProvider {
             .edgesIgnoringSafeArea(.all)
     }
 }
+
 struct ContentViewController: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = HomeViewController
