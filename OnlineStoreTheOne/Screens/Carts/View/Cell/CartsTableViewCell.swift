@@ -17,41 +17,46 @@ final class CartsTableViewCell: UITableViewCell {
     var addToWishListCompletion: (() -> Void)?
     
     //MARK: - Private Properties
+    
+    lazy var cartsContentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.borderColor = Colors.lightGray.cgColor
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let productImageView: UIImageView = {
-        let element = UIImageView()
-        element.contentMode = .scaleAspectFill
-        element.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        element.layer.cornerRadius = 12
-        element.layer.masksToBounds = true
-        return element
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
-    private let titleLabel: UILabel = {
-        let element = UILabel()
-        element.textColor = .black
-        element.font = UIFont.makeTypography(.regular, size: 12)
-        element.textAlignment = .left
-        element.backgroundColor = .clear
-        return element
+
+    private lazy var titleLabel: UILabel = {
+        NewLabelFactory(text: "", font: .regular, color: .black, size: 14).createLabel()
     }()
     
-    private let priceLabel: UILabel = {
-        let element = UILabel()
-        element.textColor = .black
-        element.font = UIFont.makeTypography(.semiBold, size: 14)
-        element.textAlignment = .left
-        element.backgroundColor = .clear
-        return element
+    private lazy var priceLabel: UILabel = {
+        NewLabelFactory(text: "", font: .semiBold, color: .black, size: 14).createLabel()
     }()
+    
     
     //MARK: - Init
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+        setConstraints()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Methods
@@ -68,24 +73,41 @@ final class CartsTableViewCell: UITableViewCell {
     
     //MARK: - Setup Views
     private func setupViews() {
-        addSubview(productImageView)
-        addSubview(titleLabel)
-        addSubview(priceLabel)
+        addSubview(cartsContentView)
+        cartsContentView.addSubview(productImageView)
+        cartsContentView.addSubview(titleLabel)
+        cartsContentView.addSubview(priceLabel)
     }
     
     private func setConstraints() {
+        cartsContentView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalToSuperview().inset(Constants.verticalSpacing)
+        }
+        
         productImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(Constants.horizontalSpacing)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(Constants.wightImage)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(productImageView.snp.bottom).offset(13)
-            make.leading.trailing.equalToSuperview().inset(13)
+            make.top.equalToSuperview().offset(Constants.verticalSpacing)
+            make.leading.equalTo(productImageView.snp.trailing).offset(Constants.horizontalSpacing)
         }
         
         priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
-            make.leading.trailing.equalTo(titleLabel)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.bottomSpacing)
+            make.leading.equalTo(productImageView.snp.trailing).offset(Constants.horizontalSpacing)
         }
+    }
+}
+
+// MARK: - Constants
+extension CartsTableViewCell {
+    struct Constants {
+        static let horizontalSpacing: CGFloat = 8
+        static let verticalSpacing: CGFloat = 8
+        static let wightImage: CGFloat = 100
+        static let bottomSpacing: CGFloat = 40
     }
 }

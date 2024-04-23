@@ -43,7 +43,7 @@ final class RealmStorageService {
                     do {
                         try self.realm.write {
                             let newItem = T()
-                            if var newItem = newItem as? StorableItem {
+                            if let newItem = newItem as? StorableItem {
                                 newItem.id = item.id
                                 newItem.title = item.title
                                 newItem.price = item.price
