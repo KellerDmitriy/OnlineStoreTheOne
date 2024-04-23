@@ -40,6 +40,7 @@ final class NewLabelFactory: LabelFactory {
         label.text = text
         label.font = UIFont.makeTypography(font, size: size)
         label.textColor = Colors.gray
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints  = false
         return label
     }

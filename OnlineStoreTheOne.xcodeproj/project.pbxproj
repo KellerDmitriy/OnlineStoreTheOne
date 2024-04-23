@@ -12,6 +12,7 @@
 		531121F02BD2E5EE0018FA37 /* TermsConditionalsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53369BB72BD055AF00699323 /* TermsConditionalsScreen.swift */; };
 		531121F12BD2E5EE0018FA37 /* TypeOfAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121E62BD1A99A0018FA37 /* TypeOfAccountViewController.swift */; };
 		531121F22BD2E5EE0018FA37 /* EditImageScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121EA2BD2CF9D0018FA37 /* EditImageScreen.swift */; };
+		534848A42BD69C2300162CE6 /* PaymentSucessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534848A32BD69C2300162CE6 /* PaymentSucessView.swift */; };
 		86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */; };
 		86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF92BD13C1600FCF45C /* ManagerViewController.swift */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
@@ -93,6 +94,7 @@
 		531121EC2BD2E5240018FA37 /* ButtonWithLabelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonWithLabelFactory.swift; path = OnlineStoreTheOne/Resources/Helpers/ButtonWithLabelFactory.swift; sourceTree = SOURCE_ROOT; };
 		531121ED2BD2E5240018FA37 /* LabelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelFactory.swift; path = OnlineStoreTheOne/Resources/Helpers/LabelFactory.swift; sourceTree = SOURCE_ROOT; };
 		53369BB72BD055AF00699323 /* TermsConditionalsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionalsScreen.swift; sourceTree = "<group>"; };
+		534848A32BD69C2300162CE6 /* PaymentSucessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSucessView.swift; sourceTree = "<group>"; };
 		86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		86490FF92BD13C1600FCF45C /* ManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerViewController.swift; sourceTree = "<group>"; };
 		86C474FD2BD507820070E3D8 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +184,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		534848A22BD69AA100162CE6 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				534848A32BD69C2300162CE6 /* PaymentSucessView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		53D6CAC32BCF1383006716BE /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,6 +661,7 @@
 			children = (
 				E1F1B2592BCC4FE2001DC54D /* CartsViewController.swift */,
 				E1D1DC202BD0710F0009C2A3 /* CartsViewController + UITableView.swift */,
+				534848A22BD69AA100162CE6 /* SubViews */,
 				E1D1DC262BD0713F0009C2A3 /* Cell */,
 			);
 			path = View;
@@ -790,6 +801,7 @@
 				E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */,
 				86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
+				534848A42BD69C2300162CE6 /* PaymentSucessView.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CartsViewModel.swift in Sources */,
 				E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */,
 				E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */,
