@@ -18,7 +18,7 @@ final class CartsTableViewCell: UITableViewCell {
     
     //MARK: - Private Properties
     
-    lazy var cartsContentView: UIView = {
+    private lazy var cartsContentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
@@ -27,6 +27,8 @@ final class CartsTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private var checkMarkButton = CheckMarkButton()
     
     private let productImageView: UIImageView = {
         let view = UIImageView()
@@ -74,6 +76,7 @@ final class CartsTableViewCell: UITableViewCell {
     //MARK: - Setup Views
     private func setupViews() {
         addSubview(cartsContentView)
+        cartsContentView.addSubview(checkMarkButton)
         cartsContentView.addSubview(productImageView)
         cartsContentView.addSubview(titleLabel)
         cartsContentView.addSubview(priceLabel)
@@ -84,8 +87,13 @@ final class CartsTableViewCell: UITableViewCell {
             make.top.leading.trailing.bottom.equalToSuperview().inset(Constants.verticalSpacing)
         }
         
-        productImageView.snp.makeConstraints { make in
+        checkMarkButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(Constants.horizontalSpacing)
+            make.trailing.equalTo(productImageView.snp.leading).inset(Constants.horizontalSpacing)
+        }
+        
+        productImageView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.width.equalTo(Constants.wightImage)
         }
