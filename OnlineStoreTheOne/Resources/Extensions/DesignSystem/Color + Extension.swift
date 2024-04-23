@@ -15,7 +15,9 @@ enum Colors {
     public static let red = UIColor(hex: "#D65B5B")
     public static let yellow = UIColor(hex: "#F79008")
     public static let green = UIColor(hex: "#12B6A")
-    
+    public static let grayBackgroundAuth = UIColor(hex: "#FBFBFB")
+    public static let grayBorderAuth = UIColor(hex: "#EDEDED")
+    public static let grayPlaceholderAuth = UIColor(hex: "#7C7C7B")
 }
 
 extension UIColor {

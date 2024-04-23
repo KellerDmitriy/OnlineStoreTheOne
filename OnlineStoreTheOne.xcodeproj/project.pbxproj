@@ -17,6 +17,13 @@
 		86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF92BD13C1600FCF45C /* ManagerViewController.swift */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
 		86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */; };
+		86EDFF0F2BD80F4900CD9F81 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF0E2BD80F4900CD9F81 /* LoginViewController.swift */; };
+		86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */; };
+		86EDFF142BD80F7000CD9F81 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF132BD80F7000CD9F81 /* CustomTextField.swift */; };
+		86EDFF162BD80F7C00CD9F81 /* InputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF152BD80F7C00CD9F81 /* InputContainerView.swift */; };
+		86EDFF1C2BD83BA700CD9F81 /* TypeAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF1B2BD83BA700CD9F81 /* TypeAccountViewController.swift */; };
+		86EDFF1F2BD842B700CD9F81 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF1E2BD842B700CD9F81 /* LoginViewModel.swift */; };
+		86EDFF212BD84BCF00CD9F81 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF202BD84BCF00CD9F81 /* RegistrationViewModel.swift */; };
 		BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB12BD0621900737686 /* ListItem.swift */; };
 		BEBA5DBE2BD0621900737686 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB22BD0621900737686 /* MockData.swift */; };
 		BEBA5DBF2BD0621900737686 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB32BD0621900737686 /* ListSection.swift */; };
@@ -107,6 +114,13 @@
 		86C475072BD50DB20070E3D8 /* IdentifiableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableCell.swift; sourceTree = "<group>"; };
 		86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
 		86C475102BD5B4B40070E3D8 /* DetailsProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsProductViewModel.swift; sourceTree = "<group>"; };
+		86EDFF0E2BD80F4900CD9F81 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		86EDFF132BD80F7000CD9F81 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		86EDFF152BD80F7C00CD9F81 /* InputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContainerView.swift; sourceTree = "<group>"; };
+		86EDFF1B2BD83BA700CD9F81 /* TypeAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAccountViewController.swift; sourceTree = "<group>"; };
+		86EDFF1E2BD842B700CD9F81 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		86EDFF202BD84BCF00CD9F81 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		BEBA5DAE2BD0621900737686 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		BEBA5DB12BD0621900737686 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		BEBA5DB22BD0621900737686 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -265,6 +279,36 @@
 			isa = PBXGroup;
 			children = (
 				86C475102BD5B4B40070E3D8 /* DetailsProductViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		86EDFF0D2BD80F2C00CD9F81 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				86EDFF1D2BD842A000CD9F81 /* ViewModel */,
+				86EDFF122BD80F6200CD9F81 /* Views */,
+				86EDFF0E2BD80F4900CD9F81 /* LoginViewController.swift */,
+				86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */,
+				86EDFF1B2BD83BA700CD9F81 /* TypeAccountViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		86EDFF122BD80F6200CD9F81 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				86EDFF132BD80F7000CD9F81 /* CustomTextField.swift */,
+				86EDFF152BD80F7C00CD9F81 /* InputContainerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		86EDFF1D2BD842A000CD9F81 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				86EDFF1E2BD842B700CD9F81 /* LoginViewModel.swift */,
+				86EDFF202BD84BCF00CD9F81 /* RegistrationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -592,6 +636,7 @@
 		E1F1B23A2BCC2629001DC54D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				86EDFF0D2BD80F2C00CD9F81 /* Auth */,
 				86490FF22BCE9B3F00FCF45C /* Onboarding */,
 				E1F1B2692BCC6B4B001DC54D /* TabBar */,
 				BEBA5DAC2BD0621900737686 /* Home */,
@@ -792,6 +837,7 @@
 				E16BB69A2BD65592009991F3 /* IdentifiableCell.swift in Sources */,
 				E16BB6962BD65218009991F3 /* PhotoCollectionView.swift in Sources */,
 				E16BB6952BD65203009991F3 /* DetailsProductViewModel.swift in Sources */,
+				86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */,
 				531121F02BD2E5EE0018FA37 /* TermsConditionalViewController.swift in Sources */,
 				E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */,
 				531121F12BD2E5EE0018FA37 /* TypeOfAccountViewController.swift in Sources */,
@@ -799,8 +845,10 @@
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
 				E16BB6842BD5ABCA009991F3 /* StorageError.swift in Sources */,
 				BEBA5DC12BD0621900737686 /* CategoryCollectionViewCell.swift in Sources */,
+				86EDFF1C2BD83BA700CD9F81 /* TypeAccountViewController.swift in Sources */,
 				86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */,
 				BEBA5DC42BD0621900737686 /* ProductCollectionViewCell.swift in Sources */,
+				86EDFF162BD80F7C00CD9F81 /* InputContainerView.swift in Sources */,
 				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
 				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
@@ -808,6 +856,7 @@
 				E16BB6982BD654B6009991F3 /* PhotoCell.swift in Sources */,
 				86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */,
 				E1D1DC252BD071290009C2A3 /* CartsTableViewCell.swift in Sources */,
+				86EDFF1F2BD842B700CD9F81 /* LoginViewModel.swift in Sources */,
 				BEBA5DC22BD0621900737686 /* HeaderNavBarMenuView.swift in Sources */,
 				BEBA5DC02BD0621900737686 /* HeaderProductsView.swift in Sources */,
 				E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */,
@@ -829,9 +878,11 @@
 				86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */,
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
 				E16BB6862BD5B3DA009991F3 /* RealmModelProtocol.swift in Sources */,
+				86EDFF212BD84BCF00CD9F81 /* RegistrationViewModel.swift in Sources */,
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */,
+				86EDFF0F2BD80F4900CD9F81 /* LoginViewController.swift in Sources */,
 				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				BEBA5DC52BD0621900737686 /* HomeViewController.swift in Sources */,
@@ -842,6 +893,7 @@
 				BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */,
 				E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */,
 				E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */,
+				86EDFF142BD80F7000CD9F81 /* CustomTextField.swift in Sources */,
 				531121EF2BD2E5240018FA37 /* LabelFactory.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				BEBA5DCB2BD10E6C00737686 /* SearchResultViewController.swift in Sources */,
