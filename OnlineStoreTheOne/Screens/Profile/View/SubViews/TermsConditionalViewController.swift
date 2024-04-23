@@ -1,5 +1,5 @@
 //
-//  TermsConditionalsScreen.swift
+//  TermsConditionalViewController.swift
 //  OnlineStoreTheOne
 //
 //  Created by Дарья Большакова on 17.04.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TermsConditionalsScreen: UIViewController {
+final class TermsConditionalViewController: UIViewController {
     //MARK: - UI elements
     private lazy var termsTextView: UITextView = {
         let text = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
@@ -18,52 +18,34 @@ class TermsConditionalsScreen: UIViewController {
         return text
     }()
     
-    lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.addAction(self.back(), for: .touchUpInside)
-        button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
-        button.tintColor = Colors.darkArsenic
-        button.heightAnchor.constraint(equalToConstant: 26).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 26).isActive = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.navigationBar.isHidden = true
+
         setUpView()
         setConstrains()
         applyAttributedText()
     }
-    
-    //MARK: - Actions
-    func back() -> UIAction {
-        let act = UIAction { _ in
-            self.navigationController?.popViewController(animated: true)
-        }
-        return act
-    }
 }
 
 //MARK: - Extension
-private extension TermsConditionalsScreen {
+private extension TermsConditionalViewController {
     
     //MARK: - Set up view
     func setUpView() {
         view.backgroundColor = .white
         
-        view.addSubview(backButton)
         view.addSubview(termsTextView)
+        
+        navigationItem.title = "Terms & Conditional"
+        navigationController?.setupNavigationBar()
+        navigationController?.navigationBar.addBottomBorder()
+        
     }
     
     //MARK: - Set constraint
     func setConstrains() {
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             termsTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
             termsTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -73,7 +55,7 @@ private extension TermsConditionalsScreen {
     }
 }
 
-private extension TermsConditionalsScreen {
+private extension TermsConditionalViewController {
     // MARK: - Setting up the text layout
     func applyAttributedText() {
         let paragraphStyle = NSMutableParagraphStyle()
@@ -82,7 +64,7 @@ private extension TermsConditionalsScreen {
         var sections = getTranslatedStrings()
         
         let attributedText = NSMutableAttributedString()
-
+        
         for section in sections {
             
             let titleFont = UIFont.makeTypography(.bold, size: 17)
