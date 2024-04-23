@@ -133,6 +133,7 @@ extension HomeViewController: UICollectionViewDataSource {
                     for: indexPath
                 ) as! HeaderNavBarMenuView
                 header.configureHeader(labelName: section.title)
+                header.cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
                 return header
             case .categories(_):
                 fallthrough
@@ -176,6 +177,14 @@ extension HomeViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
+    
+    @objc func addToCartTap() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
 }
 //MARK: - Create Layout
 extension HomeViewController {
