@@ -102,13 +102,17 @@ final class ProfileViewController: UIViewController {
         setUpView()
         setConstraint()
         
+        navigationItem.title = "Profile"
+        navigationController?.setupNavigationBar()
+        navigationController?.navigationBar.addBottomBorder()
+        
     }
     
     
     //MARK: - Actions
     func termsAction() -> UIAction {
         let act = UIAction { _ in
-            let vc = TermsConditionalsScreen()
+            let vc = TermsConditionalViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }
         return act
@@ -137,7 +141,7 @@ final class ProfileViewController: UIViewController {
     
     func editImageAction() -> UIAction {
         let act = UIAction { _ in
-            let vc = EditImageScreen()
+            let vc = EditImageViewController()
             vc.completion = { [ weak self] image in
                 self?.profileImage.image = image
             }
@@ -149,15 +153,8 @@ final class ProfileViewController: UIViewController {
     
     func typeAction() -> UIAction {
         let act = UIAction { _ in
-            let vc = TypeOfProfileScreen()
+            let vc = TypeOfAccountViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }
-        return act
-    }
-    
-    func back() -> UIAction {
-        let act = UIAction { _ in
-            self.navigationController?.popViewController(animated: true)
         }
         return act
     }
