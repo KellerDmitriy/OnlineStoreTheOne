@@ -16,9 +16,9 @@
 		86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */; };
 		86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF92BD13C1600FCF45C /* ManagerViewController.swift */; };
 		868A9A4F2BD9366E00476776 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 868A9A4E2BD9366E00476776 /* FirebaseStorage */; };
+		868A9A502BD949A400476776 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF0E2BD80F4900CD9F81 /* LoginViewController.swift */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
 		86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */; };
-		86EDFF0F2BD80F4900CD9F81 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF0E2BD80F4900CD9F81 /* LoginViewController.swift */; };
 		86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */; };
 		86EDFF142BD80F7000CD9F81 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF132BD80F7000CD9F81 /* CustomTextField.swift */; };
 		86EDFF162BD80F7C00CD9F81 /* InputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF152BD80F7C00CD9F81 /* InputContainerView.swift */; };
@@ -938,6 +938,7 @@
 				BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */,
 				E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */,
 				E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */,
+				868A9A502BD949A400476776 /* LoginViewController.swift in Sources */,
 				86EDFF142BD80F7000CD9F81 /* CustomTextField.swift in Sources */,
 				531121EF2BD2E5240018FA37 /* LabelFactory.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
