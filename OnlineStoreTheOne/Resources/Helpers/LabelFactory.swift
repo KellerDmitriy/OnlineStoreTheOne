@@ -19,17 +19,19 @@ final class NewLabelFactory: LabelFactory {
     let text: String
     /// Шрифт текста.
     let font: FontType
+    /// Цвет текста.
+    let color: UIColor
     /// Размер текста.
     let size: CGFloat
-    
     /// Инициализирует фабрику для создания лэйбла с заданными параметрами.
     /// - Parameters:
     ///   - text: Текст лэйбла.
     ///   - font: Шрифт текста.
     ///   - size: Размер текста.
-    init(text: String, font: FontType, size: CGFloat) {
+    init(text: String, font: FontType, color: UIColor? = nil, size: CGFloat) {
         self.text = text
         self.font = font
+        self.color = color ?? Colors.gray
         self.size = size
     }
     
@@ -39,7 +41,7 @@ final class NewLabelFactory: LabelFactory {
         let label = UILabel()
         label.text = text
         label.font = UIFont.makeTypography(font, size: size)
-        label.textColor = Colors.gray
+        label.textColor = color
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints  = false
         return label

@@ -21,7 +21,6 @@ extension Endpoint {
     /// Создает конечную точку для получения всех продуктов.
     static func allProducts() -> Self {
         Endpoint.get()
-//            .path("products")
             .path("products")
     }
     /// Создает конечную точку для получения всех категорий
@@ -46,6 +45,11 @@ extension Endpoint {
         Endpoint.get()
             .path("products/\(id)")
     }
-
+    
+    /// Создает конечную точку для получения продуктов по названию
+    static func products(for title: String) -> Self {
+        Endpoint.get()
+            .path("products/\(title)")
+    }
 }
 

@@ -1,5 +1,5 @@
 //
-//  EditImageScreen.swift
+//  EditImageViewController.swift
 //  OnlineStoreTheOne
 //
 //  Created by Дарья Большакова on 19.04.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditImageScreen: UIViewController {
+final class EditImageViewController: UIViewController {
     //MARK: - UI elements
     
     var completion: ((UIImage) -> ())?
@@ -93,7 +93,11 @@ class EditImageScreen: UIViewController {
         setUpView()
         setConstraint()
     }
-    
+       
+}
+
+//MARK: - Extension
+private extension EditImageViewController {
     //MARK: - Actions
     
     func cameraImageAction() -> UIAction {
@@ -120,11 +124,6 @@ class EditImageScreen: UIViewController {
             self?.dismiss(animated: true)
         }
     }
-    
-}
-
-//MARK: - Extension
-private extension EditImageScreen {
     //MARK: - Set up view
     func setUpView() {
         view.addSubview(changeView)
@@ -196,7 +195,7 @@ private extension EditImageScreen {
 //}
 
 // MARK: - Protocols for load Image from gallery
-extension EditImageScreen: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else {

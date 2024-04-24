@@ -1,5 +1,5 @@
 //
-//  PaymentSucessView.swift
+//  PaymentSuccessView.swift
 //  OnlineStoreTheOne
 //
 //  Created by Дарья Большакова on 22.04.2024.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-class PaymentSucessView: UIViewController {
+final class PaymentSuccessView: UIViewController {
     //MARK: - UI elements
     
-    private lazy var sucessImage: UIImageView = {
+    private lazy var successImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "PaymentSucessIcon")
         image.contentMode = .scaleToFill
@@ -83,13 +83,13 @@ class PaymentSucessView: UIViewController {
 }
 
 //MARK: - Extension
-private extension PaymentSucessView {
+private extension PaymentSuccessView {
     
     //MARK: - Set up view
     func setUpView() {
         view.backgroundColor = .white
         
-        view.addSubview(sucessImage)
+        view.addSubview(successImage)
         view.addSubview(congratsLabel)
         view.addSubview(miniLabel)
         view.addSubview(pdfButton.0)
@@ -101,12 +101,12 @@ private extension PaymentSucessView {
     //MARK: - Set constraint
     func setConstraint() {
         NSLayoutConstraint.activate([
-            sucessImage.heightAnchor.constraint(equalToConstant: 150),
-            sucessImage.widthAnchor.constraint(equalToConstant: 150),
-            sucessImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            sucessImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            successImage.heightAnchor.constraint(equalToConstant: 150),
+            successImage.widthAnchor.constraint(equalToConstant: 150),
+            successImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
+            successImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            congratsLabel.topAnchor.constraint(equalTo: sucessImage.bottomAnchor, constant: 10),
+            congratsLabel.topAnchor.constraint(equalTo: successImage.bottomAnchor, constant: 10),
             congratsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 55),
             congratsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -55),
             
