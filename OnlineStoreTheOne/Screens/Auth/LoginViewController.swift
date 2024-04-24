@@ -32,12 +32,10 @@ final class LoginViewController: UIViewController {
         textField: CustomTextField(placeholder: "Password", type: .password)
     )
     
-    private let loginButton = FilledButtonFactory(
+    private lazy var loginButton = FilledButtonFactory(
         title: "Log In",
         type: .greenButton,
-        action: UIAction(handler: { _ in
-            print("Log In Button Tapped")
-        })
+        action: loginUserAction()
     ).createButton()
     
     private lazy var loginStackView: UIStackView = {
@@ -117,6 +115,25 @@ final class LoginViewController: UIViewController {
         }
     }
     
+    private func loginUserAction() -> UIAction {
+        let action = UIAction { [weak self] _ in
+            guard let self else { return }
+            
+            guard
+                let email = viewModel.email,
+                let password = viewModel.password
+            else { return }
+            AuthService.shared.logUserIn(with: email, password: password) { result, error in
+                if let error {
+                    print("Error login user: \(error)")
+                } else {
+                    print("User successfully login!")
+                }
+            }
+        }
+        return action
+    }
+    
     @objc private func handleShowSignUp() {
         let controller = RegistrationViewController()
         navigationController?.pushViewController(controller, animated: true)
@@ -135,6 +152,7 @@ final class LoginViewController: UIViewController {
 
 extension LoginViewController: AuthenticationControllerProtocol {
     func checkFormStatus() {
+        print(viewModel.formIsValid)
         if viewModel.formIsValid {
             loginButton.isEnabled = true
             loginButton.backgroundColor = Colors.greenSheen

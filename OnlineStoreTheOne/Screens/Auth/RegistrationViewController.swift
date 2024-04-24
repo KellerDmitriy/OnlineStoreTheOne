@@ -80,9 +80,7 @@ final class RegistrationViewController: UIViewController {
     private lazy var signUpButton = FilledButtonFactory(
         title: "Sign Up",
         type: .greenButton,
-        action: UIAction(handler: { _ in
-            print("Sign Up Button Tapped")
-        })
+        action: registerUserAction()
     ).createButton()
     
     private lazy var accountStackView: UIStackView = {
@@ -115,6 +113,30 @@ final class RegistrationViewController: UIViewController {
         
         setupViews()
         setConstraints()
+    }
+    
+    private func registerUserAction() -> UIAction {
+        let action = UIAction { [weak self] _ in
+            guard let self else { return }
+            
+            guard
+                let login = viewModel.login,
+                let email = viewModel.email,
+                let password = viewModel.password,
+                let type = viewModel.type
+            else { return }
+            
+            let credentials = RegistrationCredentials(
+                login: login,
+                email: email,
+                password: password,
+                type: type
+            )
+            
+            AuthService.shared.registerUser(with: credentials)
+            dismiss(animated: true)
+        }
+        return action
     }
     
     private func setupViews() {

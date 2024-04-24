@@ -21,5 +21,6 @@ struct RegistrationViewModel: AuthenticationProtocol {
         && login?.isEmpty == false
         && password == confirmPassword
         && type?.isEmpty == false
+        && email?.isValidEmail == true
     }
 }
