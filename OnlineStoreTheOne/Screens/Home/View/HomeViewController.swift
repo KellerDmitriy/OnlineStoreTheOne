@@ -11,7 +11,7 @@ import SwiftUI
 
 final class HomeViewController: UIViewController {
     //MARK: - Properties
-    var viewModel = MainViewModel()
+    var viewModel = HomeViewModel()
     
     private let sections = MockData.shared.pageData
     
@@ -41,7 +41,7 @@ final class HomeViewController: UIViewController {
         
         viewModel.fetchCategory()
         viewModel.fetchProducts()
-
+        
     }
     
     //MARK: - Private methods
@@ -58,7 +58,7 @@ final class HomeViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-  
+    
 }
 //MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
@@ -133,6 +133,7 @@ extension HomeViewController: UICollectionViewDataSource {
                     for: indexPath
                 ) as! HeaderNavBarMenuView
                 header.configureHeader(labelName: section.title)
+                header.cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
                 return header
             case .categories(_):
                 fallthrough
@@ -149,16 +150,41 @@ extension HomeViewController: UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
-  
+    
+    //MARK: - Action
+    @objc private func cartButtonTapped() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
+        
+    }
+    
 }
 
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let category = viewModel.categories[indexPath.row]
+        
+        let section = sections[indexPath.section]
+        switch section {
+            
+        case .searchField(_):
+#warning("добавить логику")
+        case .categories(_):
+            let category = viewModel.categories[indexPath.row]
             ///получаем продукты для выбранной категории
             viewModel.getData(id: category.id)
             collectionView.reloadData()
+        case .products(_):
+            let selectedProduct = viewModel.products[indexPath.item]
+            let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id)
+            
+            let detailViewController = DetailsViewController(viewModel: detailViewModel)
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+            
+        }
+        
     }
 }
 
@@ -201,13 +227,13 @@ extension HomeViewController {
         supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
         contentInsets: Bool) -> NSCollectionLayoutSection {
             
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = behavior
-        section.interGroupSpacing = interGroupSpacing
-        section.boundarySupplementaryItems = supplementaryItems
-        section.supplementariesFollowContentInsets = contentInsets
-        return section
-    }
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = behavior
+            section.interGroupSpacing = interGroupSpacing
+            section.boundarySupplementaryItems = supplementaryItems
+            section.supplementariesFollowContentInsets = contentInsets
+            return section
+        }
     
     private func createSearchFieldSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
@@ -219,7 +245,7 @@ extension HomeViewController {
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(20)),
-                subitems: [item]
+            subitems: [item]
         )
         
         let section = NSCollectionLayoutSection(group: group)
@@ -239,7 +265,7 @@ extension HomeViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
             widthDimension: .absolute(57),
             heightDimension: .absolute(61)),
-            subitems: [item]
+                                                       subitems: [item]
         )
         let section = createLayoutSection(
             group: group,
@@ -262,7 +288,7 @@ extension HomeViewController {
             layoutSize: .init(
                 widthDimension: .absolute(349),
                 heightDimension: .absolute(217)),
-                subitems: [item]
+            subitems: [item]
         )
         group.interItemSpacing = .fixed(16)
         let section = NSCollectionLayoutSection(group: group)

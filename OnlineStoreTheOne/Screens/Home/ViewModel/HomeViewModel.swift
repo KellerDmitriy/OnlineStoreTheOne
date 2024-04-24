@@ -1,5 +1,5 @@
 //
-//  MainViewModel.swift
+//  HomeViewModel.swift
 //  OnlineStoreTheOne
 //
 //  Created by Иван Семенов on 19.04.2024.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol MainViewModelDelegate: AnyObject {
+protocol HomeViewModelDelegate: AnyObject {
     func dataUpdated()
 }
 
-final class MainViewModel {
+final class HomeViewModel {
     
     var products: [Products] = []
     var categories: [Category] = []
