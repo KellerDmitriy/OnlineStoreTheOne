@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class EditImageViewController: UIViewController {
     //MARK: - UI elements
@@ -203,6 +204,11 @@ extension EditImageViewController: UIImagePickerControllerDelegate, UINavigation
             return
         }
         completion?(image)
+        
+        if let user = Auth.auth().currentUser {
+            let userId = user.uid
+            AuthService.shared.uploadUserImage(userId: userId, image: image)
+        }
         
         picker.dismiss(animated: true) { [weak self] in
             self?.dismiss(animated: true)

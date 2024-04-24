@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class ProfileViewController: UIViewController {
     
@@ -33,7 +34,7 @@ final class ProfileViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-        
+    
     
     private lazy var userName: UILabel = {
         NewLabelFactory(text: "DevP", font: .bold, size: 16).createLabel()
@@ -81,7 +82,7 @@ final class ProfileViewController: UIViewController {
             .createButtonWithLabel()
         return button
     }()
-
+    
     private lazy var btnStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -89,12 +90,12 @@ final class ProfileViewController: UIViewController {
         stack.addArrangedSubview(termsButton.0)
         stack.addArrangedSubview(typeButton.0)
         stack.addArrangedSubview(signOutButton.0)
-
+        
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
-   
+    
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +107,7 @@ final class ProfileViewController: UIViewController {
         navigationController?.setupNavigationBar()
         navigationController?.navigationBar.addBottomBorder()
         
+        fetchUser()
     }
     
     
@@ -122,17 +124,23 @@ final class ProfileViewController: UIViewController {
         let alert = UIAlertController(title: "Alert", message: "Are you sure you want to sign out?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Sign out", style: .destructive) { _ in
             self.viewModel.storageService.onboardingOn()
-           let onboarding = OnboardingViewController()
+            let onboarding = OnboardingViewController()
             if let window = self.view.window {
-               window.rootViewController = onboarding
-               UIView.transition(
-                with: window,
-                duration: 0.3,
-                options: .transitionCrossDissolve,
-                animations: {},
-                completion: nil
-               )
-           }
+                window.rootViewController = onboarding
+                UIView.transition(
+                    with: window,
+                    duration: 0.3,
+                    options: .transitionCrossDissolve,
+                    animations: {},
+                    completion: nil
+                )
+            }
+            
+            do {
+                try Auth.auth().signOut()
+            } catch let error {
+                print(error.localizedDescription)
+            }
         })
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -158,6 +166,25 @@ final class ProfileViewController: UIViewController {
         }
         return act
     }
+    
+     //MARK: - Private Methods
+    private func fetchUser() {
+        if let user = Auth.auth().currentUser {
+            let userId = user.uid
+            
+            AuthService.shared.fetchUser(userId: userId) { [weak self] user in
+                guard let user, let self else { return }
+                userName.text = user.login
+                userMail.text = user.email
+
+                if user.profileImageURL.isEmpty {
+                    profileImage.image = UIImage(named: "ProfileImage")
+                } else {
+                    profileImage.kf.setImage(with: URL(string: user.profileImageURL))
+                }
+            }
+        }
+    }
 }
 
 //MARK: - Extension
@@ -178,7 +205,7 @@ private extension ProfileViewController {
         view.addSubview(typeButton.2)
         view.addSubview(signOutButton.1)
         view.addSubview(signOutButton.2)
-     
+        
     }
     //MARK: - Set constraint
     func setConstraint() {
