@@ -45,7 +45,7 @@ final class WishListViewController: UIViewController {
             .store(in: &viewModel.subscription)
         
     }
-   
+    
     @objc func addToCartTap() {
         let viewControllerToPresent = CartsViewController()
         let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
@@ -56,7 +56,7 @@ final class WishListViewController: UIViewController {
     // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .white
-
+        
         setupNavigation()
         setupCollectionView()
     }
@@ -92,11 +92,11 @@ final class WishListViewController: UIViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         
-        let availableWidth = view.frame.width
-        let availableHeight = view.frame.height 
+        let availableWidth = view.frame.width -  Constants.interItemSpacing
+        let availableHeight = view.frame.height -  Constants.interItemSpacing
         
-        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 2 )
-        let itemHightDimension = NSCollectionLayoutDimension.fractionalWidth(availableHeight / 3 / view.frame.height)
+        let itemWidthDimension = NSCollectionLayoutDimension.fractionalWidth(availableWidth / 2 / view.frame.width)
+        let itemHightDimension = NSCollectionLayoutDimension.fractionalWidth(availableHeight / 1.5 / view.frame.height)
         
         let itemSize = NSCollectionLayoutSize(widthDimension: itemWidthDimension, heightDimension: itemHightDimension)
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -115,9 +115,10 @@ final class WishListViewController: UIViewController {
     private func setupNavigation() {
         configureSearchController()
         navigationController?.navigationBar.tintColor = .black
-//        navigationController?.setupNavigationBar()
+        navigationController?.setupNavigationBar()
         navigationItem.searchController = searchController
         
+        navigationItem.title = "Your WishList"
         let cartButton = CartButton()
         cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
@@ -128,28 +129,28 @@ final class WishListViewController: UIViewController {
 
 // MARK: - UISearchResultsUpdating, TextFieldDelegate
 extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
-
+    
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text ?? "")
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-//        guard var filteredWishLists = viewModel.filteredWishLists else { return }
-//        filteredWishLists = viewModel.wishLists. { product in
-//            product.title.lowercased().contains(searchText.lowercased())
-//        }
-//        collectionView.reloadData()
+        //        guard var filteredWishLists = viewModel.filteredWishLists else { return }
+        //        filteredWishLists = viewModel.wishLists. { product in
+        //            product.title.lowercased().contains(searchText.lowercased())
+        //        }
+        //        collectionView.reloadData()
     }
-
+    
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         searchController.isActive = false
         return true
     }
-
+    
     private func configureSearchController() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchTextField.delegate = self
-
+        
         searchController.searchBar.placeholder = "Search title..."
     }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 
 final class HomeViewController: UIViewController {
     //MARK: - Properties
-    var viewModel = MainViewModel()
+    var viewModel = HomeViewModel()
     
     private let sections = MockData.shared.pageData
     
@@ -23,6 +23,7 @@ final class HomeViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
+    
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +32,16 @@ final class HomeViewController: UIViewController {
         setupViews()
         setDelegates()
         
+        ///замыкание для обновления интерфейса
+        viewModel.dataUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        
         viewModel.fetchCategory()
         viewModel.fetchProducts()
-        collectionView.reloadData()
+        
     }
     
     //MARK: - Private methods
@@ -49,9 +57,7 @@ final class HomeViewController: UIViewController {
     private func setDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        
     }
-    
     
 }
 //MARK: - UICollectionViewDataSource
@@ -121,17 +127,22 @@ extension HomeViewController: UICollectionViewDataSource {
             let section = sections[indexPath.section]
             switch section {
             case .searchField(_):
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                             withReuseIdentifier: "HeaderNavBarMenuView",
-                                                                             for: indexPath) as! HeaderNavBarMenuView
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "HeaderNavBarMenuView",
+                    for: indexPath
+                ) as! HeaderNavBarMenuView
                 header.configureHeader(labelName: section.title)
+                header.cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
                 return header
             case .categories(_):
                 fallthrough
             case .products(_):
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                             withReuseIdentifier: "HeaderProductsView",
-                                                                             for: indexPath) as! HeaderProductsView
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "HeaderProductsView",
+                    for: indexPath
+                ) as! HeaderProductsView
                 header.configureHeader(labelName: section.title)
                 return header
             }
@@ -140,13 +151,41 @@ extension HomeViewController: UICollectionViewDataSource {
         }
     }
     
-    
+    //MARK: - Action
+    @objc private func cartButtonTapped() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
+        
+    }
     
 }
 
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let section = sections[indexPath.section]
+        switch section {
+            
+        case .searchField(_):
+#warning("добавить логику")
+        case .categories(_):
+            let category = viewModel.categories[indexPath.row]
+            ///получаем продукты для выбранной категории
+            viewModel.getData(id: category.id)
+            collectionView.reloadData()
+        case .products(_):
+            let selectedProduct = viewModel.products[indexPath.item]
+            let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id)
+            
+            let detailViewController = DetailsViewController(viewModel: detailViewModel)
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+            
+        }
+        
+    }
 }
 
 //MARK: - AddViews
@@ -163,6 +202,14 @@ extension HomeViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
+    
+    @objc func addToCartTap() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
 }
 //MARK: - Create Layout
 extension HomeViewController {
@@ -181,25 +228,33 @@ extension HomeViewController {
         }
     }
     
-    private func createLayoutSection(group: NSCollectionLayoutGroup,
-                                     behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
-                                     interGroupSpacing: CGFloat,
-                                     supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
-                                     contentInsets: Bool) -> NSCollectionLayoutSection {
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = behavior
-        section.interGroupSpacing = interGroupSpacing
-        section.boundarySupplementaryItems = supplementaryItems
-        section.supplementariesFollowContentInsets = contentInsets
-        return section
-    }
+    private func createLayoutSection(
+        group: NSCollectionLayoutGroup,
+        behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
+        interGroupSpacing: CGFloat,
+        supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
+        contentInsets: Bool) -> NSCollectionLayoutSection {
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = behavior
+            section.interGroupSpacing = interGroupSpacing
+            section.boundarySupplementaryItems = supplementaryItems
+            section.supplementariesFollowContentInsets = contentInsets
+            return section
+        }
     
     private func createSearchFieldSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                                                                         heightDimension: .absolute(20)),
-                                                       subitems: [item])
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(20)),
+            subitems: [item]
+        )
         
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
@@ -210,26 +265,39 @@ extension HomeViewController {
         
     }
     private func createCategorySection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(57),
-                                                                         heightDimension: .absolute(61)),
-                                                       subitems: [item])
-        let section = createLayoutSection(group: group,
-                                          behavior: .continuous,
-                                          interGroupSpacing: 16,
-                                          supplementaryItems: [],
-                                          contentInsets: false)
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+            widthDimension: .absolute(57),
+            heightDimension: .absolute(61)),
+                                                       subitems: [item]
+        )
+        let section = createLayoutSection(
+            group: group,
+            behavior: .continuous,
+            interGroupSpacing: 16,
+            supplementaryItems: [],
+            contentInsets: false
+        )
         section.contentInsets = .init(top: 0, leading: 16, bottom: 32, trailing: 16)
         return section
     }
     
     private func createProductSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(349),
-                                                                         heightDimension: .absolute(217)),
-                                                       subitems: [item])
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(0.5),
+                heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(
+                widthDimension: .absolute(349),
+                heightDimension: .absolute(217)),
+            subitems: [item]
+        )
         group.interItemSpacing = .fixed(16)
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
@@ -250,25 +318,25 @@ extension HomeViewController {
 //MARK: - UITextFieldDelegate
 extension HomeViewController: UITextFieldDelegate {
     
-    //TODO: - доделать методы
+    //TODO: - 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        let searchResultsVC = SearchResultViewController()
-        searchResultsVC.searchResults = viewModel.products
-        self.navigationController?.pushViewController(searchResultsVC, animated: true)
+        textField.resignFirstResponder()
         
         if let searchText = textField.text {
-            print("Введенный текст: \(searchText)")
+            viewModel.fetchSearchProducts(searchText)
+            
+            let searchResultsVC = SearchResultViewController()
+            searchResultsVC.searchResults = viewModel.products
+            self.navigationController?.pushViewController(searchResultsVC, animated: true)
         }
-        textField.resignFirstResponder()
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.text = ""
     }
-    
 }
+
 //MARK: - PreviewProvider
 struct ContentViewController_Previews: PreviewProvider {
     static var previews: some View {
@@ -276,6 +344,7 @@ struct ContentViewController_Previews: PreviewProvider {
             .edgesIgnoringSafeArea(.all)
     }
 }
+
 struct ContentViewController: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = HomeViewController
