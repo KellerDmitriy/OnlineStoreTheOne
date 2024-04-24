@@ -31,13 +31,14 @@ final class HeaderNavBarMenuView: UICollectionReusableView {
         element.tintColor = .black
         return element
     }()
+    
     lazy var cartButton: UIButton = {
         let element = UIButton()
         element.tintColor = .black
         element.setBackgroundImage(UIImage(systemName: "cart"), for: .normal)
-//        element.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
         return element
     }()
+    
     private lazy var bellButton: UIButton = {
         let element = UIButton()
         element.tintColor = .black
@@ -46,13 +47,11 @@ final class HeaderNavBarMenuView: UICollectionReusableView {
         return element
     }()
     //MARK: - Action
-    @objc private func cartButtonTapped() {
-        print("нажата - Cart")
-        
-    }
+
     @objc private func bellButtonTapped() {
         print("нажата - Bell")
     }
+    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)

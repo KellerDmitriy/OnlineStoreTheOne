@@ -38,7 +38,7 @@
 		E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6752BD46389009991F3 /* WishListModel.swift */; };
 		E16BB6792BD4DEF6009991F3 /* CartsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6782BD4DEF6009991F3 /* CartsModel.swift */; };
 		E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */; };
-		E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* MainViewModel.swift */; };
+		E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */; };
 		E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */; };
 		E16BB6842BD5ABCA009991F3 /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6832BD5ABCA009991F3 /* StorageError.swift */; };
 		E16BB6862BD5B3DA009991F3 /* RealmModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6852BD5B3DA009991F3 /* RealmModelProtocol.swift */; };
@@ -128,7 +128,7 @@
 		E16BB6752BD46389009991F3 /* WishListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListModel.swift; sourceTree = "<group>"; };
 		E16BB6782BD4DEF6009991F3 /* CartsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartsModel.swift; sourceTree = "<group>"; };
 		E16BB67C2BD4FB97009991F3 /* RealmStorageService + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmStorageService + Extension.swift"; sourceTree = "<group>"; };
-		E16BB67F2BD501EC009991F3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController + Extension.swift"; sourceTree = "<group>"; };
 		E16BB6832BD5ABCA009991F3 /* StorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageError.swift; sourceTree = "<group>"; };
 		E16BB6852BD5B3DA009991F3 /* RealmModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModelProtocol.swift; sourceTree = "<group>"; };
@@ -286,7 +286,7 @@
 		BEBA5DAD2BD0621900737686 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				E16BB67F2BD501EC009991F3 /* MainViewModel.swift */,
+				E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -326,7 +326,6 @@
 			children = (
 				BEBA5DB42BD0621900737686 /* Cell */,
 				BEBA5DBB2BD0621900737686 /* HomeViewController.swift */,
-				BEBA5DFD2BD788A000737686 /* HomeViewController + Extension.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -839,7 +838,7 @@
 				E16BB6862BD5B3DA009991F3 /* RealmModelProtocol.swift in Sources */,
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
-				E16BB6802BD501EC009991F3 /* MainViewModel.swift in Sources */,
+				E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */,
 				E14BC4192BD860E70026103A /* CountButton.swift in Sources */,
 				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,

@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 final class DetailsViewController: UIViewController {
-     //MARK: - Private Properties
+    //MARK: - Private Properties
     private let viewModel: DetailsProductViewModel
     private var cancellables: Set<AnyCancellable> = []
     
@@ -33,7 +33,7 @@ final class DetailsViewController: UIViewController {
             print("Buy Now Button Tapped")
         })
     ).createButton()
-
+    
     private lazy var buttonStackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .horizontal
@@ -48,7 +48,7 @@ final class DetailsViewController: UIViewController {
         return $0
     }(UIView())
     
-     //MARK: - Lifecycle
+    //MARK: - Lifecycle
     init(viewModel: DetailsProductViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -63,10 +63,11 @@ final class DetailsViewController: UIViewController {
         
         setupViews()
         setConstraints()
+        setupNavigation()
         bind()
     }
     
-     //MARK: - Private Methods
+    //MARK: - Private Methods
     private func bind() {
         viewModel.$title.receive(on: DispatchQueue.main).sink { [weak self] title in
             self?.productList.setProduct(name: title)
@@ -91,12 +92,12 @@ final class DetailsViewController: UIViewController {
         [scrollView, mainStackView, buttonStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         view.addSubview(scrollView)
         scrollView.addSubview(mainStackView)
-
+        
         mainStackView.addArrangedSubview(photoCollection)
         mainStackView.addArrangedSubview(productList)
         mainStackView.axis = .vertical
         mainStackView.spacing = 16
-
+        
         view.addSubview(buttonStackView)
         [addToCartButton, buyNowButton].forEach(buttonStackView.addArrangedSubview(_:))
         view.addSubview(separatorLine)
@@ -133,5 +134,27 @@ final class DetailsViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(1)
         }
+    }
+}
+
+// MARK: - Setup Navigation
+private extension DetailsViewController {
+    func setupNavigation() {
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.setupNavigationBar()
+        
+        navigationItem.title = "Details product"
+        let cartButton = CartButton()
+        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
+        let cartButtonItem = UIBarButtonItem(customView: cartButton)
+        
+        navigationItem.rightBarButtonItem = cartButtonItem
+    }
+    
+    @objc func addToCartTap() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
