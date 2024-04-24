@@ -12,4 +12,5 @@ struct RegistrationCredentials {
     let email: String
     let password: String
     let type: String
+    let profileImageURL: String
 }

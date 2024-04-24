@@ -5,6 +5,7 @@
 //  Created by Келлер Дмитрий on 14.04.2024.
 //
 import UIKit
+import FirebaseAuth
 
 final class TabBarController: UITabBarController {
     
@@ -12,10 +13,10 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        authenticateUser()
         configureTabBarAppearance()
         setupViewControllers()
     }
-    
     
     // MARK: - private methods
     private func configureTabBarAppearance() {
@@ -66,5 +67,20 @@ final class TabBarController: UITabBarController {
         
         tabBar.tintColor = .black
         setViewControllers([vc1, vc2, vc3, vc4], animated: true)
+    }
+    
+    private func authenticateUser() {
+        if Auth.auth().currentUser?.uid == nil {
+            presentLoginScreen()
+        }
+    }
+    
+    private func presentLoginScreen() {
+        DispatchQueue.main.async {
+            let controller = LoginViewController()
+            let navController = UINavigationController(rootViewController: controller)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: true)
+        }
     }
 }

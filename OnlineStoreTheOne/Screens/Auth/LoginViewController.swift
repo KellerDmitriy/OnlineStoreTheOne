@@ -13,8 +13,7 @@ protocol AuthenticationControllerProtocol {
 
 final class LoginViewController: UIViewController {
     
-    var viewModel = LoginViewModel()
-    
+     //MARK: - Private Properties
     private lazy var logoImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = UIImage(named: "logo")
@@ -62,13 +61,18 @@ final class LoginViewController: UIViewController {
         return $0
     }(UIButton(type: .system))
     
+     //MARK: - Public Properties
+    var viewModel = LoginViewModel()
+    
+     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         setupViews()
         setConstraints()
     }
     
+     //MARK: - Private Methods
     private func setupViews() {
         view.backgroundColor = .white
         [
@@ -127,13 +131,14 @@ final class LoginViewController: UIViewController {
                 if let error {
                     print("Error login user: \(error)")
                 } else {
-                    print("User successfully login!")
+                    self.dismiss(animated: true)
                 }
             }
         }
         return action
     }
     
+     //MARK: - @Objc Private Methods
     @objc private func handleShowSignUp() {
         let controller = RegistrationViewController()
         navigationController?.pushViewController(controller, animated: true)
@@ -147,12 +152,11 @@ final class LoginViewController: UIViewController {
         }
         checkFormStatus()
     }
-
 }
 
+ //MARK: - LoginViewController: AuthenticationControllerProtocol
 extension LoginViewController: AuthenticationControllerProtocol {
     func checkFormStatus() {
-        print(viewModel.formIsValid)
         if viewModel.formIsValid {
             loginButton.isEnabled = true
             loginButton.backgroundColor = Colors.greenSheen

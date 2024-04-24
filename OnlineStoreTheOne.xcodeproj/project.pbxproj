@@ -15,6 +15,7 @@
 		534848A42BD69C2300162CE6 /* PaymentSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534848A32BD69C2300162CE6 /* PaymentSuccessView.swift */; };
 		86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */; };
 		86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF92BD13C1600FCF45C /* ManagerViewController.swift */; };
+		868A9A4F2BD9366E00476776 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 868A9A4E2BD9366E00476776 /* FirebaseStorage */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
 		86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */; };
 		86EDFF0F2BD80F4900CD9F81 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF0E2BD80F4900CD9F81 /* LoginViewController.swift */; };
@@ -200,6 +201,7 @@
 			files = (
 				E13B33FC2BD2A097007B17FC /* Kingfisher in Frameworks */,
 				E18A560C2BD7BFF300E34777 /* FirebaseAuth in Frameworks */,
+				868A9A4F2BD9366E00476776 /* FirebaseStorage in Frameworks */,
 				E1F1B2662BCC5122001DC54D /* SnapKit in Frameworks */,
 				E16BB6722BD461C1009991F3 /* Realm in Frameworks */,
 				E16BB6742BD461C1009991F3 /* RealmSwift in Frameworks */,
@@ -243,6 +245,13 @@
 				86490FF92BD13C1600FCF45C /* ManagerViewController.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		868A9A4D2BD9366E00476776 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		86C474FC2BD5076C0070E3D8 /* Details */ = {
@@ -623,6 +632,7 @@
 				E1F1B2202BCC1852001DC54D /* OnlineStoreTheOne */,
 				E1F1B21F2BCC1852001DC54D /* Products */,
 				E16BB67E2BD501D8009991F3 /* Recovered References */,
+				868A9A4D2BD9366E00476776 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -787,6 +797,7 @@
 				E18A560B2BD7BFF300E34777 /* FirebaseAuth */,
 				E18A560D2BD7BFF300E34777 /* FirebaseAuthCombine-Community */,
 				E18A560F2BD7BFF300E34777 /* FirebaseFirestore */,
+				868A9A4E2BD9366E00476776 /* FirebaseStorage */,
 			);
 			productName = OnlineStoreTheOne;
 			productReference = E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */;
@@ -1190,6 +1201,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		868A9A4E2BD9366E00476776 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E18A560A2BD7BFF300E34777 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		E13B33FB2BD2A097007B17FC /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E13B33FA2BD2A097007B17FC /* XCRemoteSwiftPackageReference "Kingfisher" */;

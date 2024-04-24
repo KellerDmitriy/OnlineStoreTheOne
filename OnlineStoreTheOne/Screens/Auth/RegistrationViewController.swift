@@ -8,9 +8,7 @@
 import UIKit
 
 final class RegistrationViewController: UIViewController {
-    
-    var viewModel = RegistrationViewModel()
-    
+     //MARK: - Private properties
     private let singUpLabel: UILabel = {
         $0.text = "Sign Up"
         $0.font = .makeTypography(.bold, size: 18)
@@ -107,7 +105,10 @@ final class RegistrationViewController: UIViewController {
         return $0
     }(UIButton(type: .system))
     
+     //MARK: - Public properties
+    var viewModel = RegistrationViewModel()
     
+     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,6 +116,7 @@ final class RegistrationViewController: UIViewController {
         setConstraints()
     }
     
+     //MARK: - Private Methods
     private func registerUserAction() -> UIAction {
         let action = UIAction { [weak self] _ in
             guard let self else { return }
@@ -130,9 +132,9 @@ final class RegistrationViewController: UIViewController {
                 login: login,
                 email: email,
                 password: password,
-                type: type
+                type: type,
+                profileImageURL: ""
             )
-            
             AuthService.shared.registerUser(with: credentials)
             dismiss(animated: true)
         }
@@ -212,6 +214,7 @@ final class RegistrationViewController: UIViewController {
         
     }
     
+     //MARK: - @Objc Private Methods
     @objc private func handleShowLogin() {
         navigationController?.popViewController(animated: true)
     }
@@ -233,9 +236,9 @@ final class RegistrationViewController: UIViewController {
     }
 }
 
+ //MARK: - RegistrationViewController: AuthenticationControllerProtocol
 extension RegistrationViewController: AuthenticationControllerProtocol {
     func checkFormStatus() {
-        print(viewModel.formIsValid)
         if viewModel.formIsValid {
             signUpButton.isEnabled = true
             signUpButton.backgroundColor = Colors.greenSheen

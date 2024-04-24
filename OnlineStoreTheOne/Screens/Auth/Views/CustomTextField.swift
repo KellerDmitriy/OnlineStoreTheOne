@@ -109,8 +109,6 @@ final class CustomTextField: UITextField, UITextFieldDelegate {
     
     @objc private func textFieldDidChange() {
         textChanged?(self.text)
-        
-        print(self.text)
         passwordToggleButton.isHidden = self.text?.isEmpty ?? false
     }
 }
