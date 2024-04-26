@@ -28,9 +28,7 @@
 		86EDFF242BD90F1F00CD9F81 /* RegistrationCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF232BD90F1F00CD9F81 /* RegistrationCredentials.swift */; };
 		86EDFF272BD91F7600CD9F81 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF262BD91F7600CD9F81 /* AuthService.swift */; };
 		86EDFF292BD926C800CD9F81 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF282BD926C800CD9F81 /* String+Extension.swift */; };
-		BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB12BD0621900737686 /* ListItem.swift */; };
-		BEBA5DBE2BD0621900737686 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB22BD0621900737686 /* MockData.swift */; };
-		BEBA5DBF2BD0621900737686 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB32BD0621900737686 /* ListSection.swift */; };
+		BEBA5DBE2BD0621900737686 /* SectionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB22BD0621900737686 /* SectionsData.swift */; };
 		BEBA5DC02BD0621900737686 /* HeaderProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB52BD0621900737686 /* HeaderProductsView.swift */; };
 		BEBA5DC12BD0621900737686 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB62BD0621900737686 /* CategoryCollectionViewCell.swift */; };
 		BEBA5DC22BD0621900737686 /* HeaderNavBarMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA5DB72BD0621900737686 /* HeaderNavBarMenuView.swift */; };
@@ -83,6 +81,7 @@
 		E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */; };
 		E1D1DC422BD27AAB0009C2A3 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC412BD27AAB0009C2A3 /* Categories.swift */; };
 		E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */; };
+		E1E2B4CA2BDBD98300D72CF7 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22A2BCC1853001DC54D /* Assets.xcassets */; };
@@ -131,9 +130,7 @@
 		86EDFF232BD90F1F00CD9F81 /* RegistrationCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCredentials.swift; sourceTree = "<group>"; };
 		86EDFF262BD91F7600CD9F81 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		86EDFF282BD926C800CD9F81 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		BEBA5DB12BD0621900737686 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
-		BEBA5DB22BD0621900737686 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
-		BEBA5DB32BD0621900737686 /* ListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
+		BEBA5DB22BD0621900737686 /* SectionsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsData.swift; sourceTree = "<group>"; };
 		BEBA5DB52BD0621900737686 /* HeaderProductsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderProductsView.swift; sourceTree = "<group>"; };
 		BEBA5DB62BD0621900737686 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEBA5DB72BD0621900737686 /* HeaderNavBarMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderNavBarMenuView.swift; sourceTree = "<group>"; };
@@ -176,6 +173,7 @@
 		E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionCell.swift; sourceTree = "<group>"; };
 		E1D1DC412BD27AAB0009C2A3 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionView.swift"; sourceTree = "<group>"; };
+		E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -379,9 +377,7 @@
 		BEBA5DB02BD0621900737686 /* Compositional Layout */ = {
 			isa = PBXGroup;
 			children = (
-				BEBA5DB12BD0621900737686 /* ListItem.swift */,
-				BEBA5DB32BD0621900737686 /* ListSection.swift */,
-				BEBA5DB22BD0621900737686 /* MockData.swift */,
+				BEBA5DB22BD0621900737686 /* SectionsData.swift */,
 			);
 			path = "Compositional Layout";
 			sourceTree = "<group>";
@@ -411,33 +407,18 @@
 		BEBA5DC62BD10AB200737686 /* SearchResult */ = {
 			isa = PBXGroup;
 			children = (
-				BEBA5DC72BD10AE200737686 /* Model */,
 				BEBA5DC82BD10AEB00737686 /* View */,
-				BEBA5DC92BD10B0900737686 /* ViewModel */,
 			);
 			path = SearchResult;
-			sourceTree = "<group>";
-		};
-		BEBA5DC72BD10AE200737686 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		BEBA5DC82BD10AEB00737686 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				BEBA5DCA2BD10E6C00737686 /* SearchResultViewController.swift */,
+				E1E2B4CB2BDBD98800D72CF7 /* ViewModel */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		BEBA5DC92BD10B0900737686 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E16BB6652BD30CA4009991F3 /* View */ = {
@@ -631,6 +612,14 @@
 				E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		E1E2B4CB2BDBD98800D72CF7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E1F1B2152BCC1852001DC54D = {
@@ -916,9 +905,8 @@
 				E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */,
 				E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */,
 				E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */,
-				BEBA5DBF2BD0621900737686 /* ListSection.swift in Sources */,
 				86EDFF272BD91F7600CD9F81 /* AuthService.swift in Sources */,
-				BEBA5DBE2BD0621900737686 /* MockData.swift in Sources */,
+				BEBA5DBE2BD0621900737686 /* SectionsData.swift in Sources */,
 				E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */,
@@ -935,9 +923,9 @@
 				BEBA5DC52BD0621900737686 /* HomeViewController.swift in Sources */,
 				BEBA5DC32BD0621900737686 /* SearchFieldCollectionViewCell.swift in Sources */,
 				531121EE2BD2E5240018FA37 /* ButtonWithLabelFactory.swift in Sources */,
+				E1E2B4CA2BDBD98300D72CF7 /* SearchResultViewModel.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
-				BEBA5DBD2BD0621900737686 /* ListItem.swift in Sources */,
 				E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */,
 				E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */,
 				868A9A502BD949A400476776 /* LoginViewController.swift in Sources */,

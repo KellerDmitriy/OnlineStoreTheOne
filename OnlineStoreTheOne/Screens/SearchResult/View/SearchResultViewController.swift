@@ -11,21 +11,14 @@ import SwiftUI
 
 final class SearchResultViewController: UIViewController {
     // MARK: - Properties
-    
-    var searchResults = [Products(id: 1, title: "Product 1", price: 10, description: "Description 1", category: nil, image: "tv", images: ["tv"]),
-                         Products(id: 2, title: "Product 2", price: 20, description: "Description 2", category: nil, image: "airpoods", images: ["airpoods"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4", images: ["ps4"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug", images: ["mug"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4", images: ["ps4"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug", images: ["mug"]),
-    ]
+    let viewModel = SearchResultViewModel()
     
     // MARK: - UI Components
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) in
             return self.createProductSection()
         }
-        let collectionView = UICollectionView(frame: .zero, 
+        let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
@@ -38,46 +31,94 @@ final class SearchResultViewController: UIViewController {
     }()
     
     // MARK: - Init
+    init(searchText: String) {
+        super.init(nibName: nil, bundle: nil)
+        if !searchText.isEmpty {
+            viewModel.fetchSearchProducts(searchText)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
         addViews()
         setupNavigationBar()
-        collectionView.reloadData()
+        observeProducts()
         
     }
+    
+    // MARK: - Data Observing
+    private func observeProducts() {
+        viewModel.$searchedProducts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            .store(in: &viewModel.subscription)
+    }
+    
     //MARK: - Private methods
     private func setupNavigationBar() {
+        navigationController?.setupNavigationBar()
+        navigationController?.navigationBar.addBottomBorder()
         
-//        let searchField = SearchFieldCollectionViewCell()
-//        navigationItem.titleView = searchField
+        let searchField = SearchFieldCollectionViewCell()
+        navigationItem.titleView = searchField
         
-        let cartButton = UIButton()
-        cartButton.setImage(UIImage(systemName: "cart"), for: .normal)
-        cartButton.tintColor = .black
-        cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
+        let cartButton = CartButton()
+        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartBarButtonItem = UIBarButtonItem(customView: cartButton)
         
         navigationItem.rightBarButtonItem = cartBarButtonItem
+        
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        navigationItem.leftBarButtonItem = backButton
     }
-    @objc private func cartButtonTapped() {
-        print("нажата - Cart")
+    
+    @objc func addToCartTap() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
     }
+    
+    private func cartButtonTapped(_ product: Products) {
+        viewModel.addToCarts(product: product)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
 }
+
+
 // MARK: - UICollectionViewDataSource
 extension SearchResultViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResults.count
+        return viewModel.searchedProducts.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let product = searchResults[indexPath.item]
-        cell.configureCell(image: product.image ?? "", 
+        let product = viewModel.searchedProducts[indexPath.item]
+        cell.configureCell(image: product.image ?? "",
                            title: product.title,
                            price: String(product.price),
-                           addToCartCompletion: cartButtonTapped
+                           addToCartCompletion: { [weak self] in
+            self?.cartButtonTapped(product) }
         )
         return cell
     }
@@ -87,31 +128,43 @@ extension SearchResultViewController: UICollectionViewDataSource {
 extension SearchResultViewController: UICollectionViewDelegate {
     
 }
+
 //MARK: - AddViews
 extension SearchResultViewController {
     private func addViews() {
+        view.backgroundColor = .white
         view.addSubview(collectionView)
         addConstraints()
     }
+    
     private func addConstraints() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
 }
+
 //MARK: - Create Layout
 extension SearchResultViewController {
     private func createProductSection() -> NSCollectionLayoutSection {
         ///хедер
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .estimated(30))
-        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                              elementKind: UICollectionView.elementKindSectionHeader,
-                                                                              alignment: .top)
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(349),
-                                                                         heightDimension: .absolute(217)),
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(30)
+        )
+        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
+        let item = NSCollectionLayoutItem(layoutSize:
+                .init(
+                    widthDimension: .fractionalWidth(0.5),
+                    heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize:
+                .init(
+                    widthDimension: .absolute(349),
+                    heightDimension: .absolute(217)),
                                                        subitems: [item])
         group.interItemSpacing = .fixed(16)
         let section = NSCollectionLayoutSection(group: group)
@@ -140,7 +193,6 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-    
 //MARK: - PreviewProvider
 struct SearchContentViewController_Previews: PreviewProvider {
     static var previews: some View {
@@ -149,13 +201,12 @@ struct SearchContentViewController_Previews: PreviewProvider {
     }
 }
 struct SearchContentViewController: UIViewControllerRepresentable {
-
+    
     typealias UIViewControllerType = SearchResultViewController
-
+    
     func makeUIViewController(context: Context) -> UIViewControllerType {
-        return SearchResultViewController()
+        return SearchResultViewController(searchText: "")
     }
-
+    
     func updateUIViewController(_ uiViewController: SearchResultViewController, context: Context) {}
 }
-

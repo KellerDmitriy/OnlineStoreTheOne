@@ -31,7 +31,12 @@ final class RealmStorageService {
     }
     
     func addItem<T: Object>(_ itemType: T.Type, _ item: Products, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let imageUrlString = item.images?.first, let imageUrl = URL(string: imageUrlString) else {
+        guard let imageUrlString = item.images?.first else {
+            completion(.failure(StorageError.noImageURLFound))
+            return
+        }
+        
+        guard let imageUrl = correctedURL(from: imageUrlString) else {
             completion(.failure(StorageError.noImageURLFound))
             return
         }
@@ -65,23 +70,37 @@ final class RealmStorageService {
             }
         }
     }
-       
-       func removeItem<T: Object>(_ itemType: T.Type, id: Int, completion: @escaping (Result<Void, Error>) -> Void) {
-           do {
-               guard let item = realm.object(ofType: itemType, forPrimaryKey: id) else {
-                   completion(.failure(StorageError.itemNotFound))
-                   return
-               }
-               try realm.write {
-                   realm.delete(item)
-                   completion(.success(()))
-               }
-           } catch {
-               completion(.failure(error))
-           }
-       }
-       
     
+    func removeItem<T: Object>(_ itemType: T.Type, id: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+        do {
+            guard let item = realm.object(ofType: itemType, forPrimaryKey: id) else {
+                completion(.failure(StorageError.itemNotFound))
+                return
+            }
+            try realm.write {
+                realm.delete(item)
+                completion(.success(()))
+            }
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
+    // MARK: - correctedURL
+    func correctedURL(from urlString: String) -> URL? {
+        let trimmed = urlString
+            .data(using: .utf8)
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) }
+            .flatMap { $0 as? [String] }
+            .flatMap(\.first)
+            .flatMap(URL.init)
+        
+        if let trimmedUrl = trimmed {
+            return trimmedUrl
+        } else {
+            return URL(string: urlString)
+        }
+    }
     
     // MARK: - Write
     private func write(completion: () -> Void) {

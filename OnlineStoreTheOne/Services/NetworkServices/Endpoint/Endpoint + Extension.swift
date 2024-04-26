@@ -44,6 +44,7 @@ extension Endpoint {
     /// Создает конечную точку для получения продуктов по названию
     static func searchProducts(with searchText: String) -> Self {
         Endpoint.get()
+            .path("products")
             .queryItems {
                 URLQueryItem(name: "title", value: searchText)
             }

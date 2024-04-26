@@ -32,12 +32,7 @@ final class HeaderNavBarMenuView: UICollectionReusableView {
         return element
     }()
     
-    lazy var cartButton: UIButton = {
-        let element = UIButton()
-        element.tintColor = .black
-        element.setBackgroundImage(UIImage(systemName: "cart"), for: .normal)
-        return element
-    }()
+    lazy var cartButton = CartButton()
     
     private lazy var bellButton: UIButton = {
         let element = UIButton()

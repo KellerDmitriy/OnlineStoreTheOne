@@ -5,14 +5,16 @@
 //  Created by Иван Семенов on 19.04.2024.
 //
 
+
 import Foundation
 import Combine
 
 final class HomeViewModel: ObservableObject {
     
-    var categories: [Category] = []
-    
+    @Published var isLoading: Bool = true
+    @Published var categories: [Category] = []
     @Published var products: [Products] = []
+    @Published var searchedProducts: [Products] = []
     @Published var searchText = ""
     
     var subscription: Set<AnyCancellable> = []
@@ -22,39 +24,43 @@ final class HomeViewModel: ObservableObject {
     
     //MARK: - Init
     init() {
-
+        observe()
+ 
     }
     
     //MARK: - Observe Methods
-    func observe() {
+    private func observe() {
         $searchText
             .sink {  searchText in
             }
             .store(in: &subscription)
-        
     }
     
     //MARK: - Fetch Methods
-        func fetchProducts(for categoryID: Int?) {
-            Task {
-                let result = await networkService.fetchProducts(with: categoryID)
-                switch result {
-                case .success(let products):
-                    self.products = products
-                case .failure(let error):
-                    print("Error fetching products: \(error)")
+    func fetchData() {
+        Task {
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { [weak self] in
+                     self?.fetchProducts(for: nil)
                 }
+                group.addTask { [weak self] in
+                     self?.fetchCategory()
+                }
+                
+                await group.waitForAll()
+                self.isLoading = false
             }
         }
+    }
     
-    func fetchSearchProducts(_ searchText: String) {
+    func fetchProducts(for categoryID: Int?) {
         Task {
-            let result = await networkService.fetchSearchProducts(searchText)
+            let result = await networkService.fetchProducts(with: categoryID)
             switch result {
             case .success(let products):
                 self.products = products
             case .failure(let error):
-                print("Failed to fetch products: \(error)")
+                print("Error fetching products: \(error)")
             }
         }
     }

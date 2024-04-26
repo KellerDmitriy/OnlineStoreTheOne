@@ -13,7 +13,7 @@ final class HomeViewController: UIViewController {
     //MARK: - Properties
     var viewModel = HomeViewModel()
     
-    let sections = MockData.shared.pageData
+    let sections = SectionsData.shared.sections
     
     lazy var collectionView: UICollectionView = {
         let collectViewLayout = UICollectionViewLayout()
@@ -31,8 +31,9 @@ final class HomeViewController: UIViewController {
         addViews()
         setupViews()
         setDelegates()
-        viewModel.fetchCategory()
-        collectionView.reloadData()
+        
+        viewModel.fetchData()
+        
         observeProducts()
     }
     
@@ -68,7 +69,7 @@ final class HomeViewController: UIViewController {
         case UICollectionView.elementKindSectionHeader:
             let section = sections[indexPath.section]
             switch section {
-            case .searchField(_):
+            case .searchField:
                 let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: "HeaderNavBarMenuView",
@@ -77,9 +78,9 @@ final class HomeViewController: UIViewController {
                 header.configureHeader(labelName: section.title)
                 header.cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
                 return header
-            case .categories(_):
+            case .categories:
                 fallthrough
-            case .products(_):
+            case .products:
                 let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: "HeaderProductsView",
@@ -129,11 +130,11 @@ extension HomeViewController {
             guard let self = self else { return nil }
             let section = self.sections[sectionIndex]
             switch section {
-            case .searchField(_):
+            case .searchField:
                 return self.createSearchFieldSection()
-            case .categories(_):
+            case .categories:
                 return self.createCategorySection()
-            case .products(_):
+            case .products:
                 return self.createProductSection()
             }
         }

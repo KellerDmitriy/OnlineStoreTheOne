@@ -15,19 +15,31 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        sections[section].count
+        guard section >= 0 && section <= sections.count else {
+            return 0
+        }
+
+        let currentSection = sections[section]
+        switch currentSection {
+            case .searchField:
+                return 1
+            case .categories:
+                return viewModel.categories.count
+            case .products:
+                return viewModel.products.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch sections[indexPath.section] {
             
-        case .searchField(_):
+        case .searchField:
             let cell: SearchFieldCollectionViewCell = collectionView.dequeueCell(indexPath)
             
             cell.searchTextField.delegate = self
             return cell
             
-        case .categories(_):
+        case .categories:
             let cell: CategoryCollectionViewCell = collectionView.dequeueCell(indexPath)
             
             if indexPath.row < viewModel.categories.count {
@@ -37,7 +49,7 @@ extension HomeViewController: UICollectionViewDataSource {
             }
             return cell
             
-        case .products(_):
+        case .products:
             let cell: ProductCollectionViewCell = collectionView.dequeueCell(indexPath)
             
             if indexPath.row < viewModel.products.count {
@@ -62,15 +74,15 @@ extension HomeViewController: UICollectionViewDelegate {
         let section = sections[indexPath.section]
         switch section {
             
-        case .searchField(_):
-#warning("добавить логику")
-        case .categories(_):
+        case .searchField: break
+
+        case .categories:
             let category = viewModel.categories[indexPath.row]
             viewModel.fetchProducts(for: category.id)
             
             collectionView.reloadData()
     
-        case .products(_):
+        case .products:
             let selectedProduct = viewModel.products[indexPath.row]
             let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id)
             
@@ -90,16 +102,12 @@ extension HomeViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         if let searchText = textField.text {
-            viewModel.fetchSearchProducts(searchText)
+            let searchResultsVC = SearchResultViewController(searchText: searchText)
             
-            let searchResultsVC = SearchResultViewController()
-            searchResultsVC.searchResults = viewModel.products
-            self.navigationController?.pushViewController(searchResultsVC, animated: true)
+            let navigationController = UINavigationController(rootViewController: searchResultsVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true, completion: nil)
         }
         return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.text = ""
     }
 }

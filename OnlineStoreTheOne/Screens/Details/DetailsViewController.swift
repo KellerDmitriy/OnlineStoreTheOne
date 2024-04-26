@@ -20,16 +20,17 @@ final class DetailsViewController: UIViewController {
     private lazy var addToCartButton = FilledButtonFactory(
         title: "Add to Cart",
         type: .greenButton,
-        action: UIAction(handler: { _ in
-            print("Add To Cart Button Tapped")
+        action: UIAction(handler: { [weak self] _ in
+            self?.cartButtonTap()
+            
         })
     ).createButton()
     
     private lazy var buyNowButton = FilledButtonFactory(
         title: "Buy Now",
         type: .grayButton,
-        action: UIAction(handler: { _ in
-            print("Buy Now Button Tapped")
+        action: UIAction(handler: { [weak self] _ in
+            self?.payButtonTap()
         })
     ).createButton()
     
@@ -65,7 +66,11 @@ final class DetailsViewController: UIViewController {
         setupNavigation()
         bind()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    //MARK: - Private Methods
     private func bind() {
         viewModel.$product
             .receive(on: DispatchQueue.main)
@@ -140,7 +145,15 @@ private extension DetailsViewController {
     }
     
     func cartButtonTap() {
-        viewModel.addToCart()
+        viewModel.storageService
+            .addItem(CartsModel.self, viewModel.product) { result in
+            switch result {
+            case .success:
+                print("Item added from cart successfully")
+            case .failure(let error):
+                print("Error adding/removing item from wishlist: \(error)")
+            }
+        }
     }
     
     func setupNavigation() {
