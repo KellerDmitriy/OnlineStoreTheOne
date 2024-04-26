@@ -82,6 +82,7 @@
 		E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */; };
 		E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */; };
 		E1D1DC422BD27AAB0009C2A3 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC412BD27AAB0009C2A3 /* Categories.swift */; };
+		E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22A2BCC1853001DC54D /* Assets.xcassets */; };
@@ -175,6 +176,7 @@
 		E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WishListViewControllet + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionCell.swift; sourceTree = "<group>"; };
 		E1D1DC412BD27AAB0009C2A3 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
+		E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 			children = (
 				BEBA5DB42BD0621900737686 /* Cell */,
 				BEBA5DBB2BD0621900737686 /* HomeViewController.swift */,
+				E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -882,6 +885,7 @@
 				86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */,
 				531121F02BD2E5EE0018FA37 /* TermsConditionalViewController.swift in Sources */,
 				E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */,
+				E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */,
 				531121F12BD2E5EE0018FA37 /* TypeOfAccountViewController.swift in Sources */,
 				531121F22BD2E5EE0018FA37 /* EditImageViewController.swift in Sources */,
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,

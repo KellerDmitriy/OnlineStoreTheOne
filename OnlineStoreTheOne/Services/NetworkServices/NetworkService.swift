@@ -31,42 +31,28 @@ final class NetworkService {
     
     /// Получение всех продуктов из сети.
     /// - Returns: Результат выполнения запроса с массивом продуктов или ошибкой сети.
-    func fetchAllProducts() async -> Result<[Products], NetworkError> {
-        await request(from: .allProducts())
-            .mapError(NetworkError.init)
-    }
+
     /// Получение всех категорий 
-    func fetchAllCategory() async -> Result<[Category], NetworkError> {
+    func fetchAllCategories() async -> Result<[Category], NetworkError> {
         await request(from: .allCategories())
             .mapError(NetworkError.init)
     }
-    
-    var category = "https://api.escuelajs.co/api/v1/categories"
-    
-    func fetchCategory() async -> Result<[Category], NetworkError> {
-        await request(from: .allCategories())
-            .mapError(NetworkError.init)
-    }
-    
-//    /// Получение всех продуктов из сети по категориям.
-//    func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
-//        await request(from: .products(with: category.id))
-//            .mapError(NetworkError.init)
-//    }
+
     /// Получение всех продуктов из сети по категориям.
     func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
         await request(from: .products(with: category.id))
             .mapError(NetworkError.init)
     }
-    /// Получение всех продуктов из сети по категориям.
-    func fetchProducts(for id: Int) async -> Result<Products, NetworkError> {
-        await request(from: .products(for: id))
+    
+    /// Получение одного продукта из сети по ключу.
+    func fetchSingleProduct(for id: Int) async -> Result<Products, NetworkError> {
+        await request(from: .singleProduct(for: id))
             .mapError(NetworkError.init)
     }
     
-    /// Получение всех продуктов из сети по категориям.
-    func fetchSearchProducts(by title: String) async -> Result<[Products], NetworkError> {
-        await request(from: .products(for: title))
+    /// Получение продуктов по названию
+    func fetchSearchProducts(_ searchText: String) async -> Result<[Products], NetworkError> {
+        await request(from: .searchProducts(with: searchText))
             .mapError(NetworkError.init)
     }
 }

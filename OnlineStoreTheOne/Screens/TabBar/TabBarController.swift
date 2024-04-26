@@ -13,7 +13,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authenticateUser()
+//        authenticateUser()
         configureTabBarAppearance()
         setupViewControllers()
     }

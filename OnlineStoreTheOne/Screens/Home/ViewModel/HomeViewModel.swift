@@ -12,7 +12,7 @@ protocol HomeViewModelDelegate: AnyObject {
 }
 
 final class HomeViewModel {
-    
+    //MARK:  Properties
     var products: [Products] = []
     var categories: [Category] = []
     
@@ -21,17 +21,13 @@ final class HomeViewModel {
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
-    func fetchProducts() {
-        Task {
-            let result = await networkService.fetchAllProducts()
-            switch result {
-            case .success(let products):
-                self.products = products
-            case .failure(let error):
-                print("Error fetching products: \(error)")
-            }
-        }
+    //MARK: - Init
+    init() {
+        
     }
+    //MARK: - Fetch Methods
+    
+    
     public func getData(id: Int) {
         ///получение категории по  идентификатору
         guard let category = categories.first(where: { $0.id == id }) else {
@@ -41,7 +37,7 @@ final class HomeViewModel {
         ///запрос продуктов для выбранной категории
         fetchProducts(for: category)
     }
-
+    
     func fetchProducts(for category: Category) {
         Task {
             let result: Result<[Products], NetworkError> = await networkService.fetchProducts(with: category)
@@ -54,11 +50,10 @@ final class HomeViewModel {
             }
         }
     }
-
-    func fetchSearchProducts(_ title: String) {
+    
+    func fetchSearchProducts(_ searchText: String) {
         Task {
-            let result = await networkService.fetchSearchProducts(by: title)
-            
+            let result = await networkService.fetchSearchProducts(searchText)
             switch result {
             case .success(let data):
                 self.products = data
@@ -68,10 +63,10 @@ final class HomeViewModel {
             }
         }
     }
-
+    
     func fetchCategory() {
         Task {
-            let result = await networkService.fetchCategory()
+            let result = await networkService.fetchAllCategories()
             
             switch result {
             case .success(let categories):
@@ -81,5 +76,16 @@ final class HomeViewModel {
             }
         }
     }
+    
+    //MARK: - Storage Methods
+    func addToCarts(product: Products) {
+        storageService.addItem(CartsModel.self, product) { result in
+            switch result {
+            case .success:
+                print("Item added from cart successfully")
+            case .failure(let error):
+                print("Error adding product to cart: \(error)")
+            }
+        }
+    }
 }
-

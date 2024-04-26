@@ -11,7 +11,6 @@ import Combine
 final class DetailsViewController: UIViewController {
     //MARK: - Private Properties
     private let viewModel: DetailsProductViewModel
-    private var cancellables: Set<AnyCancellable> = []
     
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -67,24 +66,16 @@ final class DetailsViewController: UIViewController {
         bind()
     }
     
-    //MARK: - Private Methods
     private func bind() {
-        viewModel.$title.receive(on: DispatchQueue.main).sink { [weak self] title in
-            self?.productList.setProduct(name: title)
-        }.store(in: &cancellables)
-        
-        viewModel.$price.receive(on: DispatchQueue.main).sink { [weak self] price in
-            self?.productList.setProduct(price: price)
-        }.store(in: &cancellables)
-        
-        viewModel.$description.receive(on: DispatchQueue.main).sink { [weak self] desc in
-            self?.productList.setProductDescription(text: desc ?? "nil")
-        }.store(in: &cancellables)
-        
-        viewModel.$images.receive(on: DispatchQueue.main).sink { [weak self] images in
-            guard let images else { return }
-            self?.photoCollection.set(data: images)
-        }.store(in: &cancellables)
+        viewModel.$product
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] product in
+                self?.productList.setProduct(name: product.title)
+                self?.productList.setProduct(price: "$ \(product.price)")
+                self?.productList.setProductDescription(text: product.description ?? "nil")
+                self?.photoCollection.set(data: product.images ?? [""])
+            }
+            .store(in: &viewModel.cancellables)
     }
     
     private func setupViews() {
@@ -137,18 +128,43 @@ final class DetailsViewController: UIViewController {
     }
 }
 
-// MARK: - Setup Navigation
+// MARK: - Setup Navigation & Actions
 private extension DetailsViewController {
+    //    MARK: - Actions
+    func payButtonTap() {
+        let vc = PaymentSuccessView()
+        if let presentationController = vc.presentationController as? UISheetPresentationController {
+            presentationController.detents = [.medium()]
+            self.present(vc, animated: true)
+        }
+    }
+    
+    func cartButtonTap() {
+        viewModel.addToCart()
+    }
+    
     func setupNavigation() {
-        navigationController?.navigationBar.tintColor = .black
         navigationController?.setupNavigationBar()
-        
+        navigationController?.navigationBar.addBottomBorder()
         navigationItem.title = "Details product"
+        
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        navigationItem.leftBarButtonItem = backButton
+        
         let cartButton = CartButton()
         cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
-        
         navigationItem.rightBarButtonItem = cartButtonItem
+        
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func addToCartTap() {

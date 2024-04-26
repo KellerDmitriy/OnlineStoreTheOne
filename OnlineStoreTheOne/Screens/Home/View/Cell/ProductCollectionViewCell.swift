@@ -12,13 +12,12 @@ import Kingfisher
 final class ProductCollectionViewCell: UICollectionViewCell {
     
     var addToCartCompletion: (() -> Void)?
-    var addToWishListCompletion: (() -> Void)?
     
     //MARK: - Private Properties
     private let productImageView: UIImageView = {
         let element = UIImageView()
         element.contentMode = .scaleAspectFill
-        element.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]     
+        element.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         element.layer.cornerRadius = 12
         element.layer.masksToBounds = true
         return element
@@ -50,18 +49,6 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         )
         return filledButtonFactory.createButton()
     }()
-
-    private lazy var addToWishListButton: UIButton = {
-        let button = UIButton()
-        if let image = UIImage(named: "selectedWishlist") {
-            button.setBackgroundImage(image, for: .normal)
-        }
-        button.addAction(UIAction { [weak self] _ in
-            self?.addToWishListCompletion?()
-        }, for: .touchUpInside)
-        return button
-    }()
-  
     
     //MARK: - Init
     override init(frame: CGRect) {
@@ -75,18 +62,35 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        productImageView.image = nil
+        titleLabel.text = nil
+        priceLabel.text = nil
+        addToCartCompletion = nil
+    }
+    
     //MARK: - Methods
     func configureCell(
         image: String,
         title: String,
         price: String,
-        addToWishListCompletion: @escaping () -> (),
         addToCartCompletion: @escaping () -> ()
     ) {
-        productImageView.kf.setImage(with: URL(string: image))
+        let trimmed = image
+            .data(using: .utf8)
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) }
+            .flatMap { $0 as? [String] }
+            .flatMap(\.first)
+            .flatMap(URL.init)
+        
+        if let trimmedUrl = trimmed {
+            productImageView.kf.setImage(with: trimmedUrl)
+        } else {
+            productImageView.kf.setImage(with: URL(string: image))
+        }
         titleLabel.text = title
         priceLabel.text = price
-        self.addToWishListCompletion = addToWishListCompletion
         self.addToCartCompletion = addToCartCompletion
     }
     
@@ -95,7 +99,6 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         addSubview(titleLabel)
         addSubview(priceLabel)
         addSubview(addToCartButton)
-        addSubview(addToWishListButton)
     }
     
     private func setConstraints() {
@@ -114,21 +117,12 @@ final class ProductCollectionViewCell: UICollectionViewCell {
             make.leading.trailing.equalTo(titleLabel)
         }
         
-        addToWishListButton.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().inset(13)
-            make.bottom.equalToSuperview().inset(10)
-            make.width.equalTo(28)
-        }
-        
         addToCartButton.snp.makeConstraints { make in
             make.top.equalTo(priceLabel.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().inset(13)
-            make.leading.equalTo(addToWishListButton.snp.trailing).offset(8)
+            make.leading.trailing.equalToSuperview().inset(13)
             make.bottom.equalToSuperview().inset(10)
         }
     }
-
 }
 
 

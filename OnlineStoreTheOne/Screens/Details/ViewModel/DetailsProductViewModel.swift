@@ -8,13 +8,11 @@
 import Foundation
 import Combine
 
-final class DetailsProductViewModel {
-    @Published var title: String = ""
-    @Published var price: String = ""
-    @Published var description: String? = ""
-    @Published var images: [String]? = []
+final class DetailsProductViewModel: ObservableObject {
+    @Published var product = Products.placeholder
     
-    private var cancellables: Set<AnyCancellable> = []
+    var cancellables: Set<AnyCancellable> = []
+    let storageService = RealmStorageService.shared
     
     init(productId: Int) {
         fetchProductDetails(productId: productId)
@@ -22,20 +20,25 @@ final class DetailsProductViewModel {
     
     private func fetchProductDetails(productId: Int) {
         Task {
-            let result = await NetworkService.shared.fetchProducts(for: productId)
+            let result = await NetworkService.shared.fetchSingleProduct(for: productId)
             switch result {
             case .success(let model):
-                updateProperties(model: model)
+                self.product = model
             case .failure(let error):
                 print("Error fetching products: \(error)")
             }
         }
     }
     
-    private func updateProperties(model: Products) {
-        title = model.title
-        price = "$ \(model.price)"
-        description = model.description
-        images = model.images
+    //MARK: - Storage Methods
+    func addToCart() {
+        storageService.addItem(CartsModel.self, product) { result in
+            switch result {
+            case .success:
+                print("Item added from cart successfully")
+            case .failure(let error):
+                print("Error adding/removing item from wishlist: \(error)")
+            }
+        }
     }
 }

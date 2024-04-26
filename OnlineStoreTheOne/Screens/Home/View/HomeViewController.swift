@@ -13,7 +13,7 @@ final class HomeViewController: UIViewController {
     //MARK: - Properties
     var viewModel = HomeViewModel()
     
-    private let sections = MockData.shared.pageData
+    let sections = MockData.shared.pageData
     
     lazy var collectionView: UICollectionView = {
         let collectViewLayout = UICollectionViewLayout()
@@ -40,15 +40,15 @@ final class HomeViewController: UIViewController {
         }
         
         viewModel.fetchCategory()
-        viewModel.fetchProducts()
+        viewModel.fetchProducts(for: .init(id: 1, name: "", image: ""))
         
     }
     
     //MARK: - Private methods
     private func setupViews() {
-        collectionView.register(SearchFieldCollectionViewCell.self, forCellWithReuseIdentifier: "SearchFieldCollectionViewCell")
-        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: "CategoryCollectionViewCell")
-        collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: "ProductCollectionViewCell")
+        collectionView.register(SearchFieldCollectionViewCell.self)
+        collectionView.register(CategoryCollectionViewCell.self)
+        collectionView.register(ProductCollectionViewCell.self)
         collectionView.register(HeaderNavBarMenuView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderNavBarMenuView")
         collectionView.register(HeaderProductsView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderProductsView")
         collectionView.collectionViewLayout = createLayout()
@@ -59,68 +59,7 @@ final class HomeViewController: UIViewController {
         collectionView.dataSource = self
     }
     
-}
-//MARK: - UICollectionViewDataSource
-extension HomeViewController: UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        sections.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        sections[section].count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch sections[indexPath.section] {
-            
-        case .searchField(_):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchFieldCollectionViewCell", for: indexPath) as?
-                    SearchFieldCollectionViewCell else { return UICollectionViewCell() }
-            
-            cell.searchTextField.delegate = self
-            return cell
-            
-        case .categories(_):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath) as? CategoryCollectionViewCell else { return UICollectionViewCell() }
-            
-            if indexPath.row < viewModel.categories.count {
-                let category = viewModel.categories[indexPath.row]
-                cell.configureCell(image: category.image ?? "",
-                                   category: category.name ?? "")
-            }
-            return cell
-            
-        case .products(_):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else { return UICollectionViewCell() }
-            
-            if indexPath.row < viewModel.products.count {
-                let product = viewModel.products[indexPath.row]
-                cell.configureCell(
-                    image: product.images?[0] ?? "",
-                    title: product.title,
-                    price: "$\(String(product.price))",
-                    addToWishListCompletion: viewModel.storageService.createCompletion(with: WishListModel.self, for: product) { result in
-                        switch result {
-                        case .success:
-                            print("Item added/removed from wishlist successfully")
-                        case .failure(let error):
-                            print("Error adding/removing item from wishlist: \(error)")
-                        }
-                    }, addToCartCompletion: viewModel.storageService.createCompletion(with: CartsModel.self, for: product) { result in
-                        switch result {
-                        case .success:
-                            print("Item added from cart successfully")
-                        case .failure(let error):
-                            print("Error adding/removing item from wishlist: \(error)")
-                        }
-                    }
-                )
-            }
-            return cell
-        }
-    }
-    
+    //MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
@@ -152,39 +91,15 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     //MARK: - Action
+    func addToCartButtonTapped(_ product: Products) {
+        viewModel.addToCarts(product: product)
+    }
+    
     @objc private func cartButtonTapped() {
         let viewControllerToPresent = CartsViewController()
         let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
         navigationController.modalPresentationStyle = .fullScreen
         self.present(navigationController, animated: true, completion: nil)
-        
-    }
-    
-}
-
-//MARK: - UICollectionViewDelegate
-extension HomeViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let section = sections[indexPath.section]
-        switch section {
-            
-        case .searchField(_):
-#warning("добавить логику")
-        case .categories(_):
-            let category = viewModel.categories[indexPath.row]
-            ///получаем продукты для выбранной категории
-            viewModel.getData(id: category.id)
-            collectionView.reloadData()
-        case .products(_):
-            let selectedProduct = viewModel.products[indexPath.item]
-            let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id)
-            
-            let detailViewController = DetailsViewController(viewModel: detailViewModel)
-            self.navigationController?.pushViewController(detailViewController, animated: true)
-            
-        }
-        
     }
 }
 
@@ -202,15 +117,8 @@ extension HomeViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
-    @objc func addToCartTap() {
-        let viewControllerToPresent = CartsViewController()
-        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true, completion: nil)
-    }
-    
 }
+
 //MARK: - Create Layout
 extension HomeViewController {
     private func createLayout() -> UICollectionViewCompositionalLayout {
@@ -314,27 +222,6 @@ extension HomeViewController {
               alignment: .top)
     }
     
-}
-//MARK: - UITextFieldDelegate
-extension HomeViewController: UITextFieldDelegate {
-    
-    //TODO: - 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        
-        if let searchText = textField.text {
-            viewModel.fetchSearchProducts(searchText)
-            
-            let searchResultsVC = SearchResultViewController()
-            searchResultsVC.searchResults = viewModel.products
-            self.navigationController?.pushViewController(searchResultsVC, animated: true)
-        }
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.text = ""
-    }
 }
 
 //MARK: - PreviewProvider
