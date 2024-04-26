@@ -39,8 +39,8 @@ final class NetworkService {
     }
 
     /// Получение всех продуктов из сети по категориям.
-    func fetchProducts(with category: Category) async -> Result<[Products], NetworkError> {
-        await request(from: .products(with: category.id))
+    func fetchProducts(with categoryID: Int?) async -> Result<[Products], NetworkError> {
+        await request(from: .products(with: categoryID))
             .mapError(NetworkError.init)
     }
     

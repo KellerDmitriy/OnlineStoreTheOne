@@ -6,58 +6,53 @@
 //
 
 import Foundation
+import Combine
 
-protocol HomeViewModelDelegate: AnyObject {
-    func dataUpdated()
-}
-
-final class HomeViewModel {
-    //MARK:  Properties
-    var products: [Products] = []
+final class HomeViewModel: ObservableObject {
+    
     var categories: [Category] = []
     
-    var dataUpdated: (() -> Void)?
+    @Published var products: [Products] = []
+    @Published var searchText = ""
+    
+    var subscription: Set<AnyCancellable> = []
     
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
     //MARK: - Init
     init() {
+
+    }
+    
+    //MARK: - Observe Methods
+    func observe() {
+        $searchText
+            .sink {  searchText in
+            }
+            .store(in: &subscription)
         
     }
+    
     //MARK: - Fetch Methods
-    
-    
-    public func getData(id: Int) {
-        ///получение категории по  идентификатору
-        guard let category = categories.first(where: { $0.id == id }) else {
-            print("Category with id \(id) not found")
-            return
-        }
-        ///запрос продуктов для выбранной категории
-        fetchProducts(for: category)
-    }
-    
-    func fetchProducts(for category: Category) {
-        Task {
-            let result: Result<[Products], NetworkError> = await networkService.fetchProducts(with: category)
-            
-            if case let .success(data) = result {
-                self.products = data
-                dataUpdated?()
-            } else if case let .failure(error) = result {
-                print("Failed to fetch data: \(error)")
+        func fetchProducts(for categoryID: Int?) {
+            Task {
+                let result = await networkService.fetchProducts(with: categoryID)
+                switch result {
+                case .success(let products):
+                    self.products = products
+                case .failure(let error):
+                    print("Error fetching products: \(error)")
+                }
             }
         }
-    }
     
     func fetchSearchProducts(_ searchText: String) {
         Task {
             let result = await networkService.fetchSearchProducts(searchText)
             switch result {
-            case .success(let data):
-                self.products = data
-                dataUpdated?()
+            case .success(let products):
+                self.products = products
             case .failure(let error):
                 print("Failed to fetch products: \(error)")
             }
@@ -67,7 +62,6 @@ final class HomeViewModel {
     func fetchCategory() {
         Task {
             let result = await networkService.fetchAllCategories()
-            
             switch result {
             case .success(let categories):
                 self.categories = categories

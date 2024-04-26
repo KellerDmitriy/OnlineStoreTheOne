@@ -59,7 +59,6 @@ extension HomeViewController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let section = sections[indexPath.section]
         switch section {
             
@@ -67,8 +66,10 @@ extension HomeViewController: UICollectionViewDelegate {
 #warning("добавить логику")
         case .categories(_):
             let category = viewModel.categories[indexPath.row]
-            viewModel.getData(id: category.id)
+            viewModel.fetchProducts(for: category.id)
             
+            collectionView.reloadData()
+    
         case .products(_):
             let selectedProduct = viewModel.products[indexPath.row]
             let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id)

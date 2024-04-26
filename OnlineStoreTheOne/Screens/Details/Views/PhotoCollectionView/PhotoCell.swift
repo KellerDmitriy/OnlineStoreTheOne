@@ -38,7 +38,18 @@ final class PhotoCell: UICollectionViewCell {
     }
     
     func configure(with url: String) {
-        guard let url = URL(string: url) else { return }
-        imageView.kf.setImage(with: url)
+        let trimmed = url
+            .data(using: .utf8)
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) }
+            .flatMap { $0 as? [String] }
+            .flatMap(\.first)
+            .flatMap(URL.init)
+        
+        if let trimmedUrl = trimmed {
+            imageView.kf.setImage(with: trimmedUrl)
+        } else {
+            guard let url = URL(string: url) else { return }
+            imageView.kf.setImage(with: url)
+        }
     }
 }

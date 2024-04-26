@@ -31,17 +31,20 @@ final class HomeViewController: UIViewController {
         addViews()
         setupViews()
         setDelegates()
-        
-        ///замыкание для обновления интерфейса
-        viewModel.dataUpdated = { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
-        
         viewModel.fetchCategory()
-        viewModel.fetchProducts(for: .init(id: 1, name: "", image: ""))
-        
+        collectionView.reloadData()
+        observeProducts()
+    }
+    
+    // MARK: - Data Observing
+    private func observeProducts() {
+        viewModel.$products
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            .store(in: &viewModel.subscription)
     }
     
     //MARK: - Private methods
@@ -181,7 +184,7 @@ extension HomeViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
             widthDimension: .absolute(57),
             heightDimension: .absolute(61)),
-                                                       subitems: [item]
+            subitems: [item]
         )
         let section = createLayoutSection(
             group: group,
