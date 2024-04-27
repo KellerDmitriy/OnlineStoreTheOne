@@ -36,23 +36,25 @@ final class CartsViewModel {
         }
     }
     
+    func deleteAllProducts() {
+        storageService.deleteAllProducts(CartsModel.self)
+     }
+    
     func incrementCountProduct(for id: Int) {
         guard let cartProduct = cartProducts.first(where: { $0.id == id }) else { return }
         let newCount = cartProduct.countProduct + 1
-        storageService.updateItem(CartsModel.self, id: id) { item in
-            item?.countProduct = newCount
-        }
+        updateItem(for: id, newCount: newCount)
     }
     
     func decrementCountProduct(for id: Int) {
         guard let cartProduct = cartProducts.first(where: { $0.id == id }) else { return }
         let newCount = max(cartProduct.countProduct - 1, 0)
+        updateItem(for: id, newCount: newCount)
+    }
+    
+    private func updateItem(for id: Int, newCount: Int) {
         storageService.updateItem(CartsModel.self, id: id) { item in
             item?.countProduct = newCount
         }
     }
-    
-    func deleteAllProducts() {
-         storageService.deleteCarts()
-     }
 }

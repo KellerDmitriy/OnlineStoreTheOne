@@ -25,11 +25,6 @@ final class RealmStorageService {
     
     // MARK: - CRUD Operations
     
-    func isItemSaved<T: Object>(_ itemType: T.Type, id: Int) -> Bool {
-        let itemsWithId = realm.objects(itemType).filter("id = %@", id)
-        return itemsWithId.isEmpty
-    }
-    
     func addItem<T: Object>(_ itemType: T.Type, _ item: Products, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let imageUrlString = item.images?.first else {
             completion(.failure(StorageError.noImageURLFound))
@@ -45,25 +40,16 @@ final class RealmStorageService {
             switch result {
             case .success(let imageResult):
                 if let imageData = imageResult.image.pngData() {
-                    do {
-                        try self.realm.write {
-                            let newItem = T()
-                            if let newItem = newItem as? StorableItem {
-                                newItem.id = item.id
-                                newItem.title = item.title
-                                newItem.price = item.price
-                                newItem.images.append(imageData)
-                                self.realm.add(newItem)
-                                completion(.success(()))
-                            } else {
-                                completion(.failure(StorageError.invalidItemType))
-                            }
+                    self.write {
+                        let newItem = T()
+                        if let newItem = newItem as? StorableItem {
+                            newItem.id = item.id
+                            newItem.title = item.title
+                            newItem.price = item.price
+                            newItem.images.append(imageData)
+                            self.realm.add(newItem)
                         }
-                    } catch {
-                        completion(.failure(error))
                     }
-                } else {
-                    completion(.failure(StorageError.imageConversionFailed))
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -72,39 +58,31 @@ final class RealmStorageService {
     }
     
     func updateItem<T: Object>(_ itemType: T.Type, id: Int, updateBlock: @escaping (T?) -> Void) {
-        do {
-            guard let item = realm.object(ofType: itemType, forPrimaryKey: id) else {
-                print("Item not found")
-                return
-            }
-            try realm.write {
-                updateBlock(item)
-            }
-        } catch {
-            print("Error updating item: \(error)")
+        guard let item = realm.objects(itemType).filter("id == %@", id).first else {
+            print("Item not found")
+            return
+        }
+        self.write {
+            updateBlock(item)
         }
     }
     
-    func deleteCarts() {
-            try! realm.write {
-                let allCarts = realm.objects(CartsModel.self)
-                realm.delete(allCarts)
-            }
-        }
-
-    
     func removeItem<T: Object>(_ itemType: T.Type, id: Int, completion: @escaping (Result<Void, Error>) -> Void) {
-        do {
-            guard let item = realm.object(ofType: itemType, forPrimaryKey: id) else {
+        guard let item = realm.objects(itemType).filter("id == %@", id).first else {
                 completion(.failure(StorageError.itemNotFound))
                 return
             }
-            try realm.write {
-                realm.delete(item)
-                completion(.success(()))
-            }
-        } catch {
-            completion(.failure(error))
+        write {
+            realm.delete(item)
+            completion(.success(()))
+        }
+    }
+    
+    func deleteAllProducts<T: Object>(_ itemType: T.Type) {
+        write {
+            let allProducts = realm.objects(itemType)
+            realm.delete(allProducts)
+
         }
     }
     
@@ -125,7 +103,7 @@ final class RealmStorageService {
     }
     
     // MARK: - Write
-    private func write(completion: () -> Void) {
+     func write(completion: () -> Void) {
         do {
             try realm.write {
                 completion()

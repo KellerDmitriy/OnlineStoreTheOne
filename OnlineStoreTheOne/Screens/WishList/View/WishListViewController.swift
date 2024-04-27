@@ -67,6 +67,7 @@ final class WishListViewController: UIViewController {
         registerCollectionViewCells()
         addCollectionViewConstraints()
     }
+    
     private func configureCollectionView(with layout: UICollectionViewLayout) {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
@@ -114,7 +115,7 @@ final class WishListViewController: UIViewController {
     // MARK: - Navigation
     private func setupNavigation() {
         configureSearchController()
-        navigationController?.navigationBar.tintColor = .black
+
         navigationController?.setupNavigationBar()
         navigationItem.searchController = searchController
         

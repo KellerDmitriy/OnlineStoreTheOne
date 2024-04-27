@@ -83,11 +83,11 @@ final class DetailsViewController: UIViewController {
     }
     
     private func changeToWishListButton() {
-        viewModel.$isFavorite
+        viewModel.$isSaved
             .receive(on: DispatchQueue.main)
         
-            .sink { [weak self] isFavorite in
-                self?.setToAddToWishListButton(isFavorite)
+            .sink { [weak self] isSaved in
+                self?.setToAddToWishListButton(isSaved)
             }
             .store(in: &viewModel.cancellables)
     }
@@ -106,6 +106,25 @@ final class DetailsViewController: UIViewController {
         view.addSubview(buttonStackView)
         [addToCartButton, buyNowButton].forEach(buttonStackView.addArrangedSubview(_:))
         view.addSubview(separatorLine)
+    }
+    
+    private func setupNavigation() {
+        navigationController?.setupNavigationBar()
+        navigationController?.navigationBar.addBottomBorder()
+        navigationItem.title = "Details product"
+        
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        navigationItem.leftBarButtonItem = backButton
+        
+        let cartButton = CartButton()
+        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
+        let cartButtonItem = UIBarButtonItem(customView: cartButton)
+        navigationItem.rightBarButtonItem = cartButtonItem
     }
     
     private func setConstraints() {
@@ -142,7 +161,7 @@ final class DetailsViewController: UIViewController {
     }
 }
 
-// MARK: - Setup Navigation & Actions
+// MARK: - Actions
 private extension DetailsViewController {
     //    MARK: - Actions
     func payButtonTap() {
@@ -154,53 +173,27 @@ private extension DetailsViewController {
     }
     
     func cartButtonTap() {
-        viewModel.storageService
-            .addItem(CartsModel.self, viewModel.product) { result in
-            switch result {
-            case .success:
-                print("Item added from cart successfully")
-            case .failure(let error):
-                print("Error adding/removing item from wishlist: \(error)")
-            }
-        }
+        viewModel.addToCart()
     }
     
-    private func actionForAddToWishListButtonTap() {
+    func actionForAddToWishListButtonTap() {
         productList.addToWishListButton.addAction(UIAction { [weak self] _ in
-            self?.addToWishListButtonTap() },
+            self?.addToWishListButtonTap()
+        },
             for: .touchUpInside)
     }
     
-    private func addToWishListButtonTap () {
+    func addToWishListButtonTap () {
         viewModel.favoriteButtonPressed()
     }
     
-    private func setToAddToWishListButton(_ status: Bool) {
-        let image = status ? UIImage(named: "Wishlist") : UIImage(named: "selectedWishlist")
+    func setToAddToWishListButton(_ status: Bool) {
+        let image = status ? UIImage(named: "selectedWishlist") : UIImage(named: "Wishlist")
         productList.addToWishListButton.setImage(image, for: .normal)
     }
     
-    func setupNavigation() {
-        navigationController?.setupNavigationBar()
-        navigationController?.navigationBar.addBottomBorder()
-        navigationItem.title = "Details product"
-        
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        navigationItem.leftBarButtonItem = backButton
-        
-        let cartButton = CartButton()
-        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
-        let cartButtonItem = UIBarButtonItem(customView: cartButton)
-        navigationItem.rightBarButtonItem = cartButtonItem
-        
-    }
     
-    @objc private func backButtonTapped() {
+    @objc func backButtonTapped() {
         navigationController?.dismiss(animated: true, completion: nil)
     }
     

@@ -80,6 +80,7 @@
 		E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */; };
 		E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */; };
 		E1D1DC422BD27AAB0009C2A3 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC412BD27AAB0009C2A3 /* Categories.swift */; };
+		E1D91A102BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D91A0F2BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift */; };
 		E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */; };
 		E1E2B4CA2BDBD98300D72CF7 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
@@ -172,6 +173,7 @@
 		E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WishListViewControllet + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionCell.swift; sourceTree = "<group>"; };
 		E1D1DC412BD27AAB0009C2A3 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
+		E1D91A0F2BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultViewController + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,7 +264,6 @@
 			children = (
 				86C4750F2BD5B4990070E3D8 /* ViewModel */,
 				86C474FF2BD509DE0070E3D8 /* Views */,
-				86C474FD2BD507820070E3D8 /* DetailsViewController.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -270,6 +271,7 @@
 		86C474FF2BD509DE0070E3D8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				86C474FD2BD507820070E3D8 /* DetailsViewController.swift */,
 				86C475092BD52E990070E3D8 /* ProductListView */,
 				86C475002BD509E50070E3D8 /* PhotoCollectionView */,
 			);
@@ -417,6 +419,7 @@
 			isa = PBXGroup;
 			children = (
 				BEBA5DCA2BD10E6C00737686 /* SearchResultViewController.swift */,
+				E1D91A0F2BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -930,6 +933,7 @@
 				E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */,
 				868A9A502BD949A400476776 /* LoginViewController.swift in Sources */,
 				86EDFF142BD80F7000CD9F81 /* CustomTextField.swift in Sources */,
+				E1D91A102BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift in Sources */,
 				531121EF2BD2E5240018FA37 /* LabelFactory.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				BEBA5DCB2BD10E6C00737686 /* SearchResultViewController.swift in Sources */,
