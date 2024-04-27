@@ -36,6 +36,12 @@ extension WishListViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension WishListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        let selectedWishList = viewModel.wishLists[indexPath.item]
+        let detailViewModel = DetailsProductViewModel(productId: selectedWishList.id)
+        let detailViewController = DetailsViewController(viewModel: detailViewModel)
+        let navigationController = UINavigationController(rootViewController: detailViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
+

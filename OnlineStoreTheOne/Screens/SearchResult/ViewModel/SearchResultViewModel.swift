@@ -18,21 +18,21 @@ final class SearchResultViewModel: ObservableObject {
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
-    //MARK: - Init
-    init() {
-        observe()
-    }
-    
-    //MARK: - Observe Methods
-    private func observe() {
-        $searchText
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-            .removeDuplicates()
-            .sink { [weak self] searchText in
-                self?.fetchSearchProducts(searchText)
-            }
-            .store(in: &subscription)
-    }
+//    //MARK: - Init
+//    init() {
+//        observe()
+//    }
+//    
+//    //MARK: - Observe Methods
+//    private func observe() {
+//        $searchText
+//            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+//            .removeDuplicates()
+//            .sink { [weak self] searchText in
+//                self?.fetchSearchProducts(searchText)
+//            }
+//            .store(in: &subscription)
+//    }
     
     //MARK: - Fetch Methods
     func fetchSearchProducts(_ searchText: String) {

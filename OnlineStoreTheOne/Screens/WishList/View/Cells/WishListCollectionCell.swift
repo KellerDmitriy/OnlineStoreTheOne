@@ -84,7 +84,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     //MARK: - Methods
     func configureCell(_ wishModel: WishListModel) {
         titleLabel.text = wishModel.title
-        priceLabel.text = String("\(wishModel.price)")
+        priceLabel.text = String("$\(wishModel.price)")
         
         if let imageData = wishModel.images.first {
             productImageView.image = UIImage(data: imageData)
@@ -105,6 +105,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     private func setConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(112)
         }
         
         titleLabel.snp.makeConstraints { make in
