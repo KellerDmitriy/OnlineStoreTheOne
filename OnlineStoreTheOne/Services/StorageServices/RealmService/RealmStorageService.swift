@@ -27,7 +27,7 @@ final class RealmStorageService {
     
     func isItemSaved<T: Object>(_ itemType: T.Type, id: Int) -> Bool {
         let itemsWithId = realm.objects(itemType).filter("id = %@", id)
-        return !itemsWithId.isEmpty
+        return itemsWithId.isEmpty
     }
     
     func addItem<T: Object>(_ itemType: T.Type, _ item: Products, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -70,6 +70,28 @@ final class RealmStorageService {
             }
         }
     }
+    
+    func updateItem<T: Object>(_ itemType: T.Type, id: Int, updateBlock: @escaping (T?) -> Void) {
+        do {
+            guard let item = realm.object(ofType: itemType, forPrimaryKey: id) else {
+                print("Item not found")
+                return
+            }
+            try realm.write {
+                updateBlock(item)
+            }
+        } catch {
+            print("Error updating item: \(error)")
+        }
+    }
+    
+    func deleteCarts() {
+            try! realm.write {
+                let allCarts = realm.objects(CartsModel.self)
+                realm.delete(allCarts)
+            }
+        }
+
     
     func removeItem<T: Object>(_ itemType: T.Type, id: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         do {

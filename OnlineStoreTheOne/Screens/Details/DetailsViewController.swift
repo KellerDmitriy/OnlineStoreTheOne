@@ -64,12 +64,11 @@ final class DetailsViewController: UIViewController {
         setupViews()
         setConstraints()
         setupNavigation()
+        actionForAddToWishListButtonTap()
         bind()
+        changeToWishListButton()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
+    
     //MARK: - Private Methods
     private func bind() {
         viewModel.$product
@@ -79,6 +78,16 @@ final class DetailsViewController: UIViewController {
                 self?.productList.setProduct(price: "$ \(product.price)")
                 self?.productList.setProductDescription(text: product.description ?? "nil")
                 self?.photoCollection.set(data: product.images ?? [""])
+            }
+            .store(in: &viewModel.cancellables)
+    }
+    
+    private func changeToWishListButton() {
+        viewModel.$isFavorite
+            .receive(on: DispatchQueue.main)
+        
+            .sink { [weak self] isFavorite in
+                self?.setToAddToWishListButton(isFavorite)
             }
             .store(in: &viewModel.cancellables)
     }
@@ -154,6 +163,21 @@ private extension DetailsViewController {
                 print("Error adding/removing item from wishlist: \(error)")
             }
         }
+    }
+    
+    private func actionForAddToWishListButtonTap() {
+        productList.addToWishListButton.addAction(UIAction { [weak self] _ in
+            self?.addToWishListButtonTap() },
+            for: .touchUpInside)
+    }
+    
+    private func addToWishListButtonTap () {
+        viewModel.favoriteButtonPressed()
+    }
+    
+    private func setToAddToWishListButton(_ status: Bool) {
+        let image = status ? UIImage(named: "Wishlist") : UIImage(named: "selectedWishlist")
+        productList.addToWishListButton.setImage(image, for: .normal)
     }
     
     func setupNavigation() {

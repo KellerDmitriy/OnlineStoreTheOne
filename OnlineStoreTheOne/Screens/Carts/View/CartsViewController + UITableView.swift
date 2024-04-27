@@ -20,7 +20,32 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cart = viewModel.cartProducts[indexPath.row]
         cell.configureCell(cart)
+        
+        cell.counterActionButton.plusButton.addAction(UIAction { [weak self] _ in
+            self?.plusButtonTap(id: cart.id)
+        }, for: .touchUpInside)
+        
+        cell.counterActionButton.minusButton.addAction(UIAction { [weak self] _ in
+            self?.plusButtonTap(id: cart.id)
+        }, for: .touchUpInside)
+        
+        cell.counterActionButton.trashButton.addAction(UIAction { [weak self] _ in
+            self?.plusButtonTap(id: cart.id)
+        }, for: .touchUpInside)
+        
         return cell
     }
-
+    
+//    MARK: - Action
+    func plusButtonTap(id: Int) {
+       viewModel.incrementCountProduct(for: id)
+    }
+    
+    func minusButtonTap(id: Int) {
+        viewModel.decrementCountProduct(for: id)
+    }
+    
+    func trashButtonTap(id: Int) {
+        viewModel.removeFromCart(id)
+    }
 }

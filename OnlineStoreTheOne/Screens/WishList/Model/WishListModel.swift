@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 
 final class WishListModel: Object, StorableItem {
-    
     @Persisted var id: Int
+    @Persisted var isSelected: Bool
     @Persisted var title: String
     @Persisted var price: Int
     @Persisted var images: List<Data>

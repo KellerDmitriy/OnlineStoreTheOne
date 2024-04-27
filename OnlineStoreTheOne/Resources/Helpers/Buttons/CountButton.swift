@@ -6,64 +6,92 @@
 //
 
 import UIKit
+import SnapKit
 
-final class CountButton: UIView {
+final class CounterActionButton: UIView {
     
-    var isCounter: Int = 0 {
+    var count: Int = 0 {
         didSet {
-            
+            countLabel.text = "\(count)"
+            updateTrashButtonState()
         }
     }
     
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        let width: CGFloat = 20
-        view.frame.size = CGSize(width: width, height: width/2)
-        view.layer.cornerRadius = 5
-        view.backgroundColor = .clear
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private let configuration = UIImage.SymbolConfiguration(pointSize: 25, weight: .ultraLight)
+    
+    // UI elements
+    private lazy var countLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .black
+        label.text = "\(count)"
+        return label
     }()
     
-private lazy var minusButton: UIButton = {
-    let button = UIButton()
-    button.layer.cornerRadius = 15
-    button.layer.borderColor = Colors.lightGray.cgColor
-    button.layer.borderWidth = 1
-    button.titleLabel?.text = "-"
-    button.tintColor = .darkGray
-    button.backgroundColor = .white
-    button.snp.makeConstraints { make in
-        make.height.equalTo(30)
-        make.width.equalTo(30)
-    }
-    return button
-}()
-
-    private lazy var plusButton: UIButton = {
+    lazy var minusButton: UIButton = {
         let button = UIButton()
-        button.layer.cornerRadius = 15
-        button.layer.borderColor = Colors.lightGray.cgColor
-        button.layer.borderWidth = 1
-        button.titleLabel?.text = "-"
-        button.tintColor = .darkGray
-        button.backgroundColor = .white
-        button.snp.makeConstraints { make in
-            make.height.equalTo(30)
-            make.width.equalTo(30)
-        }
+        button.setImage(UIImage(
+            systemName: "minus.circle",
+            withConfiguration: configuration)?
+            .withTintColor(Colors.gray, renderingMode: .alwaysOriginal), for: .normal)
         return button
     }()
     
-    override func awakeFromNib() {
-        minusButton.addTarget(self, action:#selector(minusButtonTap(sender:)), for: UIControl.Event.touchUpInside)
+    lazy var plusButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(
+            systemName: "plus.circle",
+            withConfiguration: configuration)?
+            .withTintColor(Colors.gray, renderingMode: .alwaysOriginal), for: .normal)
+        return button
+    }()
     
+    lazy var trashButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(
+            systemName: "trash.circle",
+            withConfiguration: configuration)?
+            .withTintColor(Colors.gray, renderingMode: .alwaysOriginal), for: .normal)
+        return button
+    }()
+    
+    private let countStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 5
+        stack.alignment = .center
+        stack.distribution = .fill
+        return stack
+    }()
+    
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setConstraints()
     }
     
-    @objc func minusButtonTap(sender: UIButton) {
-        if sender == self {
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
 
+    }
+
+    
+    // MARK: - Private methods
+    private func setupViews() {
+        [minusButton, countLabel, plusButton, trashButton]
+            .forEach{ countStack.addArrangedSubview($0) }
+        addSubview(countStack)
+    }
+    
+    private func setConstraints() {
+        countStack.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
+        
+    }
+    
+    private func updateTrashButtonState() {
+        trashButton.isEnabled = count > 0
     }
 }

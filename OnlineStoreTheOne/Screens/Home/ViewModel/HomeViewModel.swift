@@ -25,7 +25,6 @@ final class HomeViewModel: ObservableObject {
     //MARK: - Init
     init() {
         observe()
- 
     }
     
     //MARK: - Observe Methods

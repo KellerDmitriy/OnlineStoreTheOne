@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// Сервис для выполнения сетевых запросов.
 final class NetworkService {
     

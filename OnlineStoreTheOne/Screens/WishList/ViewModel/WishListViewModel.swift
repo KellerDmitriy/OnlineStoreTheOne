@@ -25,7 +25,6 @@ final class WishListViewModel {
         wishLists = storageService.realm.objects(WishListModel.self)
     }
     
-    
     //MARK: - Methods
     
     func removeWishList(at id: Int) {

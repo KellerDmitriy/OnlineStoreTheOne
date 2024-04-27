@@ -407,6 +407,7 @@
 		BEBA5DC62BD10AB200737686 /* SearchResult */ = {
 			isa = PBXGroup;
 			children = (
+				E1E2B4CB2BDBD98800D72CF7 /* ViewModel */,
 				BEBA5DC82BD10AEB00737686 /* View */,
 			);
 			path = SearchResult;
@@ -416,7 +417,6 @@
 			isa = PBXGroup;
 			children = (
 				BEBA5DCA2BD10E6C00737686 /* SearchResultViewController.swift */,
-				E1E2B4CB2BDBD98800D72CF7 /* ViewModel */,
 			);
 			path = View;
 			sourceTree = "<group>";

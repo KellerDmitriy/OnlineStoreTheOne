@@ -10,11 +10,12 @@ import Combine
 
 final class DetailsProductViewModel: ObservableObject {
     @Published var product = Products.placeholder
-    
+    @Published var isFavorite: Bool
     var cancellables: Set<AnyCancellable> = []
     let storageService = RealmStorageService.shared
     
     init(productId: Int) {
+        self.isFavorite = storageService.isItemSaved(WishListModel.self, id: productId)
         fetchProductDetails(productId: productId)
     }
     
@@ -40,5 +41,27 @@ final class DetailsProductViewModel: ObservableObject {
                 print("Error adding/removing item from wishlist: \(error)")
             }
         }
+    }
+    
+    func favoriteButtonPressed() {
+        isFavorite.toggle()
+
+        isFavorite
+        ? storageService.addItem(WishListModel.self, product, completion: { result in
+            switch result {
+            case .success:
+                print("Item added from WishList successfully")
+            case .failure(let error):
+                print("Error adding item from wishlist: \(error)")
+            }
+        })
+        : storageService.removeItem(WishListModel.self, id: product.id, completion: { result in
+            switch result {
+            case .success:
+                print("Item remove from WishList successfully")
+            case .failure(let error):
+                print("Error adding item from wishlist: \(error)")
+            }
+        })
     }
 }

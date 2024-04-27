@@ -30,6 +30,17 @@ final class SearchResultViewController: UIViewController {
         return collectionView
     }()
     
+    lazy var searchTextField: UITextField = {
+        let element = UITextField()
+        element.placeholder = NSLocalizedString("Search here ...", comment: "")
+        element.backgroundColor = .clear
+        element.textAlignment = .left
+        element.font = UIFont.makeTypography(.regular, size: 13)
+        element.autocapitalizationType = .words
+        element.returnKeyType = .search
+        return element
+    }()
+    
     // MARK: - Init
     init(searchText: String) {
         super.init(nibName: nil, bundle: nil)
