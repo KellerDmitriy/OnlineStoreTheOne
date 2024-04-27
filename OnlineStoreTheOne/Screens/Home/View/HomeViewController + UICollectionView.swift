@@ -107,6 +107,7 @@ extension HomeViewController: UITextFieldDelegate {
             navigationController.modalPresentationStyle = .fullScreen
             self.present(navigationController, animated: true, completion: nil)
         }
+        textField.text = ""
         return true
     }
 }

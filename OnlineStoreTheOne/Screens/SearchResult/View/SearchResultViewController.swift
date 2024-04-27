@@ -11,6 +11,7 @@ import SwiftUI
 
 final class SearchResultViewController: UIViewController {
     // MARK: - Properties
+    var searchText: String
     let viewModel = SearchResultViewModel()
     
     // MARK: - UI Components
@@ -31,6 +32,7 @@ final class SearchResultViewController: UIViewController {
     
     // MARK: - Init
     init(searchText: String) {
+        self.searchText = searchText
         super.init(nibName: nil, bundle: nil)
         if !searchText.isEmpty {
             viewModel.fetchSearchProducts(searchText)
@@ -182,7 +184,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderProductsView", for: indexPath) as! HeaderProductsView
-        headerView.configureHeader(labelName: "Search result for ")
+        headerView.configureHeader(labelName: "Search result for \(searchText)")
         return headerView
     }
 }

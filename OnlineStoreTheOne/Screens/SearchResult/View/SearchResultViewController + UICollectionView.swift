@@ -17,9 +17,9 @@ extension SearchResultViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         let product = viewModel.searchedProducts[indexPath.item]
-        cell.configureCell(image: product.image ?? "",
+        cell.configureCell(image: product.images?.first ?? "",
                            title: product.title,
-                           price: String(product.price),
+                           price: "$\(String(product.price))",
                            addToCartCompletion: { [weak self] in
             self?.cartButtonTapped(product) }
         )
@@ -34,4 +34,15 @@ extension SearchResultViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedProduct = viewModel.searchedProducts[indexPath.row]
+        let detailVM = DetailsProductViewModel(productId: selectedProduct.id)
+        
+        let detailVC = DetailsViewController(viewModel: detailVM)
+        let navigationController = UINavigationController(rootViewController: detailVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true)
+    }
 }
+
