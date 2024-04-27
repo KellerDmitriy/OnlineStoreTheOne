@@ -41,11 +41,15 @@ final class WishListViewModel {
         }
     }
     
-    func removeWishList(at id: Int) {
+    func removeWishList(at id: Int, completion: @escaping () -> Void) {
         storageService.removeItem(WishListModel.self, id: id) { result in
             switch result {
             case .success:
                 print("Item removed from cart")
+                DispatchQueue.main.async {
+                    self.wishLists = self.storageService.realm.objects(WishListModel.self)
+                    completion()
+                }
             case .failure(let error):
                 print("Error removing item from cart: \(error)")
             }

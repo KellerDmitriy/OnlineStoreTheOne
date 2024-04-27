@@ -68,7 +68,7 @@ final class SearchResultViewController: UIViewController {
     private func setupNavigationBar() {
         navigationController?.setupNavigationBar()
         navigationController?.navigationBar.addBottomBorder()
-        setSearchBar()
+//        setSearchBar()
         let cartButton = CartButton()
         cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartBarButtonItem = UIBarButtonItem(customView: cartButton)

@@ -26,7 +26,9 @@ extension WishListViewController: UICollectionViewDataSource {
         }
         
         cell.removeFromWishListCompletion = { [weak self] in
-            self?.viewModel.removeWishList(at: wishList.id)
+            self?.viewModel.removeWishList(at: wishList.id) {
+                collectionView.reloadData()
+            }
         }
         
         return cell
