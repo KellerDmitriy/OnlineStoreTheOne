@@ -9,50 +9,62 @@ import UIKit
 
 final class ManagerViewController: UIViewController {
     
-    private let addNewProductButton = FilledButtonFactory(
+    private lazy var addNewProductButton = FilledButtonFactory(
         title: "Add New Product",
         type: .greenButton,
-        action: UIAction(handler: { _ in
+        action: UIAction(handler: { [weak self] _ in
+            let vc = AddNewProductViewController()
+            self?.navigationController?.pushViewController(vc, animated: true)
             print("Add New Product Button Tapped")
         })
     ).createButton()
     
-    private let updateProductButton = FilledButtonFactory(
+    private lazy var updateProductButton = FilledButtonFactory(
         title: "Update Product",
         type: .greenButton,
-        action: UIAction(handler: { _ in
+        action: UIAction(handler: { [weak self] _ in
+            let vc = UpdateProductViewController()
+            self?.navigationController?.pushViewController(vc, animated: true)
             print("Update  Product Button Tapped")
         })
     ).createButton()
     
-    private let deleteProductButton = FilledButtonFactory(
+    private lazy var deleteProductButton = FilledButtonFactory(
         title: "Delete Product",
         type: .greenButton,
-        action: UIAction(handler: { _ in
+        action: UIAction(handler: { [weak self] _ in
+            let vc = DeleteProductViewController()
+            self?.navigationController?.pushViewController(vc, animated: true)
             print("Delete Product Button Tapped")
         })
     ).createButton()
     
-    private let createCategoryButton = FilledButtonFactory(
+    private lazy var createCategoryButton = FilledButtonFactory(
         title: "Create Category",
         type: .greenButton,
-        action: UIAction(handler: { _ in
+        action: UIAction(handler: { [weak self] _ in
+            let vc = AddNewCategoryViewController()
+            self?.navigationController?.pushViewController(vc, animated: true)
             print("Create Category Button Tapped")
         })
     ).createButton()
     
-    private let updateCategoryButton = FilledButtonFactory(
+    private lazy var updateCategoryButton = FilledButtonFactory(
         title: "Update Category",
         type: .greenButton,
-        action: UIAction(handler: { _ in
+        action: UIAction(handler: { [weak self] _ in
+            let vc = UpdateCategoryViewController()
+            self?.navigationController?.pushViewController(vc, animated: true)
             print("Update Category Button Tapped")
         })
     ).createButton()
     
-    private let deleteCategoryButton = FilledButtonFactory(
+    private lazy var deleteCategoryButton = FilledButtonFactory(
         title: "Delete Category",
         type: .greenButton,
-        action: UIAction(handler: { _ in
+        action: UIAction(handler: { [weak self] _ in
+            let vc = DeleteCategoryViewController()
+            self?.navigationController?.pushViewController(vc, animated: true)
             print("Delete Category Button Tapped")
         })
     ).createButton()
