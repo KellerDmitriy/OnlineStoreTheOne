@@ -22,8 +22,13 @@ extension WishListViewController: UICollectionViewDataSource {
         cell.configureCell(wishList)
         
         cell.addToCartCompletion = { [weak self] in
-            self?.addToCartTap()
+            self?.viewModel.addToCart()
         }
+        
+        cell.removeFromWishListCompletion = { [weak self] in
+            self?.viewModel.removeWishList(at: wishList.id)
+        }
+        
         return cell
     }
 }

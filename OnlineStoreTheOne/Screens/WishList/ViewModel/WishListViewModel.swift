@@ -16,6 +16,8 @@ final class WishListViewModel {
     
     @Published var wishLists: Results<WishListModel>!
     
+    @Published var product = Products.placeholder
+    
     var filteredWishLists: Results<WishListModel>?
     
     var subscription: Set<AnyCancellable> = []
@@ -26,6 +28,18 @@ final class WishListViewModel {
     }
     
     //MARK: - Methods
+    
+    //MARK: - Storage Methods
+    func addToCart() {
+        storageService.addItem(CartsModel.self, product) { result in
+            switch result {
+            case .success:
+                print("Item added from WishList successfully")
+            case .failure(let error):
+                print("Error adding/removing item from wishlist: \(error)")
+            }
+        }
+    }
     
     func removeWishList(at id: Int) {
         storageService.removeItem(WishListModel.self, id: id) { result in

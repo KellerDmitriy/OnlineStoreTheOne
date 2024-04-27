@@ -26,7 +26,7 @@ final class CartsTableViewCell: UITableViewCell {
         return view
     }()
     
-    private var checkMarkButton = CheckMarkButton()
+    lazy var checkMarkButton = CheckMarkButton()
     
     private let productImageView: UIImageView = {
         let view = UIImageView()
@@ -66,7 +66,7 @@ final class CartsTableViewCell: UITableViewCell {
     }
     
     //MARK: - Methods
-    func configureCell(_ cartModel: CartsModel) {
+    func configureCell(_ cartModel: CartsModel, onTrashTapped: @escaping () -> ()) {
         titleLabel.text = cartModel.title
         priceLabel.text = String("$\(cartModel.price)")
         
@@ -76,6 +76,8 @@ final class CartsTableViewCell: UITableViewCell {
             productImageView.image = UIImage(named: "ps4")
         }
         counterActionButton.count = cartModel.countProduct
+        checkMarkButton.isChecked = cartModel.isSelected
+        counterActionButton.onTrashTapped = onTrashTapped
     }
     
     //MARK: - Setup Views

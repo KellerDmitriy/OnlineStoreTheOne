@@ -12,14 +12,16 @@ final class DetailsProductViewModel: ObservableObject {
     // MARK: - Properties
     @Published var product = Products.placeholder
     @Published var isSaved: Bool
-    
+
     var cancellables: Set<AnyCancellable> = []
+    
+    let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
     // MARK: - Init
     init(productId: Int) {
         self.isSaved = storageService.isItemSaved(WishListModel.self, id: productId)
-        
+       
         fetchProductDetails(productId: productId)
     }
     
@@ -35,7 +37,7 @@ final class DetailsProductViewModel: ObservableObject {
     // MARK: -  Fetch Methods
     private func fetchProductDetails(productId: Int) {
         Task {
-            let result = await NetworkService.shared.fetchSingleProduct(for: productId)
+            let result = await networkService.fetchSingleProduct(for: productId)
             switch result {
             case .success(let model):
                 self.product = model

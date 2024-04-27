@@ -13,8 +13,10 @@ final class CartsViewModel {
     //MARK:  Properties
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
-    
+
     @Published var cartProducts: Results<CartsModel>!
+    @Published var isSelect = true
+    
     
     var subscription: Set<AnyCancellable> = []
     
@@ -38,23 +40,27 @@ final class CartsViewModel {
     
     func deleteAllProducts() {
         storageService.deleteAllProducts(CartsModel.self)
-     }
-    
-    func incrementCountProduct(for id: Int) {
-        guard let cartProduct = cartProducts.first(where: { $0.id == id }) else { return }
-        let newCount = cartProduct.countProduct + 1
-        updateItem(for: id, newCount: newCount)
     }
     
-    func decrementCountProduct(for id: Int) {
-        guard let cartProduct = cartProducts.first(where: { $0.id == id }) else { return }
-        let newCount = max(cartProduct.countProduct - 1, 0)
-        updateItem(for: id, newCount: newCount)
+    func checkSelected(for id: Int) {
+        isSelect.toggle()
+        guard cartProducts.first(where: { $0.id == id }) != nil else { return }
+        updateItem(for: id, newValue: isSelect)
     }
     
-    private func updateItem(for id: Int, newCount: Int) {
+    func updateItemCount(for id: Int, newCount: Int) {
+        updateItem(for: id, newValue: newCount)
+    }
+    
+    func updateItem<T>(for id: Int, newValue: T) {
         storageService.updateItem(CartsModel.self, id: id) { item in
-            item?.countProduct = newCount
+            if let item = item {
+                if let newValue = newValue as? Int {
+                    item.countProduct = newValue
+                } else if let newValue = newValue as? Bool {
+                    item.isSelected = newValue
+                }
+            }
         }
     }
 }

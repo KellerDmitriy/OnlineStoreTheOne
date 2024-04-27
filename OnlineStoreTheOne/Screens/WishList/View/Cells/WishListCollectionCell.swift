@@ -13,7 +13,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     static let cellID = String(describing: WishListCollectionCell.self)
     
     var addToCartCompletion: (() -> Void)?
-    var addToWishListCompletion: (() -> Void)?
+    var removeFromWishListCompletion: (() -> Void)?
     
     //MARK: - Private Properties
     private let productImageView: UIImageView = {
@@ -60,7 +60,7 @@ final class WishListCollectionCell: UICollectionViewCell {
             button.setBackgroundImage(image, for: .normal)
         }
         button.addAction(UIAction { [weak self] _ in
-            self?.addToWishListCompletion?()
+            self?.removeFromWishListCompletion?()
         }, for: .touchUpInside)
         return button
     }()

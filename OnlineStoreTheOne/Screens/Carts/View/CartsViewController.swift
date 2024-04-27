@@ -68,7 +68,7 @@ final class CartsViewController: UIViewController {
         
         setupNavigationBar()
         observeCartProducts()
-       
+        changeToWishListButton()
     }
     
     // MARK: - Data Observing
@@ -80,6 +80,16 @@ final class CartsViewController: UIViewController {
                }
                .store(in: &viewModel.subscription)
        }
+    private func changeToWishListButton() {
+//        viewModel.$isSelect
+//            .receive(on: DispatchQueue.main)
+//        
+//            .sink {
+//       
+//             
+//            }
+//            .store(in: &viewModel.subscription)
+    }
     
     //    MARK: - Setup
     private func setupViews() {
@@ -182,7 +192,7 @@ final class CartsViewController: UIViewController {
         }
     }
     
-    //    MARK: - Methods
+    //    MARK: - Action
     private func payButtonTap() {
         let vc = PaymentSuccessView()
         if let presentationController = vc.presentationController as? UISheetPresentationController {

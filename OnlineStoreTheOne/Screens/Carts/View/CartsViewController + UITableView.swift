@@ -17,33 +17,27 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: CartsTableViewCell.cellID,
             for: indexPath
         ) as? CartsTableViewCell else { return UITableViewCell() }
-        
-        let cart = viewModel.cartProducts[indexPath.row]
-        cell.configureCell(cart)
-        
-        cell.counterActionButton.plusButton.addAction(UIAction { [weak self] _ in
-            self?.plusButtonTap(id: cart.id)
-        }, for: .touchUpInside)
-        
-        cell.counterActionButton.minusButton.addAction(UIAction { [weak self] _ in
-            self?.plusButtonTap(id: cart.id)
-        }, for: .touchUpInside)
-        
-        cell.counterActionButton.trashButton.addAction(UIAction { [weak self] _ in
-            self?.plusButtonTap(id: cart.id)
-        }, for: .touchUpInside)
-        
+         
+        let cart: CartsModel = viewModel.cartProducts[indexPath.row]
+        cell.configureCell(
+            cart,
+            onTrashTapped: { [weak self] in
+                guard let self = self else { return }
+               
+                    self.trashButtonTap(id: cart.id)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+               
+            }
+        )
         return cell
     }
     
-//    MARK: - Action
-    func plusButtonTap(id: Int) {
-       viewModel.incrementCountProduct(for: id)
+    //    MARK: - Action
+    
+    func checkMarkButtonTap(id: Int) {
+        viewModel.checkSelected(for: id)
     }
     
-    func minusButtonTap(id: Int) {
-        viewModel.decrementCountProduct(for: id)
-    }
     
     func trashButtonTap(id: Int) {
         viewModel.removeFromCart(id)

@@ -9,18 +9,8 @@ import UIKit
 
 final class CheckMarkButton: UIButton {
     
-    var isChecked: Bool = false {
-        didSet {
-            if isChecked {
-                self.checkMarkButton.backgroundColor = Colors.greenSheen
-                self.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-            } else {
-                self.checkMarkButton.backgroundColor = .white
-                self.setImage(UIImage(systemName: "square"), for: .normal)
-            }
-        }
-    }
-    
+    var isChecked: Bool = true
+  
     private lazy var checkMarkButton: UIButton = {
         let button = UIButton()
         let height: CGFloat = 25
@@ -36,14 +26,20 @@ final class CheckMarkButton: UIButton {
         super.init(frame: frame)
         setupViews()
         setConstraints()
-        addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
         setConstraints()
-        addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func buttonTapped() {
+        isChecked.toggle()
+        let image = isChecked ? UIImage(named: "checkmark.square") : UIImage(named: "square")
+        checkMarkButton.setImage(image, for: .normal)
     }
     
     private func setupViews() {
@@ -54,10 +50,6 @@ final class CheckMarkButton: UIButton {
         checkMarkButton.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-    }
-    
-    @objc private func buttonClicked() {
-        isChecked.toggle()
     }
 }
 

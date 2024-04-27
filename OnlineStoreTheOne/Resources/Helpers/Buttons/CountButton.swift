@@ -9,11 +9,12 @@ import UIKit
 import SnapKit
 
 final class CounterActionButton: UIView {
-    
-    var count: Int = 0 {
+    //MARK: - Public Properties
+    var onTrashTapped: (() -> Void)?
+  
+    var count: Int = 1 {
         didSet {
             countLabel.text = "\(count)"
-            updateTrashButtonState()
         }
     }
     
@@ -69,13 +70,12 @@ final class CounterActionButton: UIView {
         super.init(frame: frame)
         setupViews()
         setConstraints()
+        setupActions()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-
     }
-
     
     // MARK: - Private methods
     private func setupViews() {
@@ -88,10 +88,26 @@ final class CounterActionButton: UIView {
         countStack.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
     }
     
-    private func updateTrashButtonState() {
-        trashButton.isEnabled = count > 0
+    private func setupActions() {
+        minusButton.addTarget(self, action: #selector(decrementCount), for: .touchUpInside)
+        plusButton.addTarget(self, action: #selector(incrementCount), for: .touchUpInside)
+        trashButton.addTarget(self, action: #selector(trashButtonTap), for: .touchUpInside)
     }
+    
+    @objc private func decrementCount() {
+        if count >= 1 {
+            count -= 1
+        }
+    }
+    
+    @objc private func incrementCount() {
+        count += 1
+    }
+    
+    @objc private func trashButtonTap() {
+        onTrashTapped?()
+    }
+    
 }
