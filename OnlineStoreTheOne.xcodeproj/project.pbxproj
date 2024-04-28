@@ -17,6 +17,19 @@
 		86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF92BD13C1600FCF45C /* ManagerViewController.swift */; };
 		868A9A4F2BD9366E00476776 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 868A9A4E2BD9366E00476776 /* FirebaseStorage */; };
 		868A9A502BD949A400476776 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF0E2BD80F4900CD9F81 /* LoginViewController.swift */; };
+		86BC2D282BDCF8A0003BF895 /* AddNewProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D272BDCF8A0003BF895 /* AddNewProductViewController.swift */; };
+		86BC2D2B2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D2A2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift */; };
+		86BC2D2D2BDD0429003BF895 /* CustomViewWithPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D2C2BDD0429003BF895 /* CustomViewWithPicker.swift */; };
+		86BC2D2F2BDD11F0003BF895 /* BaseManagersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D2E2BDD11F0003BF895 /* BaseManagersViewController.swift */; };
+		86BC2D312BDD159A003BF895 /* ContainerManagersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D302BDD159A003BF895 /* ContainerManagersView.swift */; };
+		86BC2D332BDD189F003BF895 /* CustomManagersTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D322BDD189F003BF895 /* CustomManagersTextView.swift */; };
+		86BC2D372BDD2003003BF895 /* CustomSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D362BDD2003003BF895 /* CustomSearchTextField.swift */; };
+		86BC2D3A2BDD3154003BF895 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D392BDD3154003BF895 /* UIViewController+Extension.swift */; };
+		86BC2D432BDD5596003BF895 /* UpdateProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D422BDD5596003BF895 /* UpdateProductViewController.swift */; };
+		86BC2D452BDD55BE003BF895 /* DeleteProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D442BDD55BE003BF895 /* DeleteProductViewController.swift */; };
+		86BC2D472BDD55FE003BF895 /* AddNewCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D462BDD55FE003BF895 /* AddNewCategoryViewController.swift */; };
+		86BC2D492BDD5663003BF895 /* UpdateCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D482BDD5663003BF895 /* UpdateCategoryViewController.swift */; };
+		86BC2D4D2BDD56AE003BF895 /* DeleteCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
 		86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */; };
 		86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */; };
@@ -114,6 +127,19 @@
 		534848A32BD69C2300162CE6 /* PaymentSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessView.swift; sourceTree = "<group>"; };
 		86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		86490FF92BD13C1600FCF45C /* ManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerViewController.swift; sourceTree = "<group>"; };
+		86BC2D272BDCF8A0003BF895 /* AddNewProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewProductViewController.swift; sourceTree = "<group>"; };
+		86BC2D2A2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewWithOutPicker.swift; sourceTree = "<group>"; };
+		86BC2D2C2BDD0429003BF895 /* CustomViewWithPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewWithPicker.swift; sourceTree = "<group>"; };
+		86BC2D2E2BDD11F0003BF895 /* BaseManagersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseManagersViewController.swift; sourceTree = "<group>"; };
+		86BC2D302BDD159A003BF895 /* ContainerManagersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerManagersView.swift; sourceTree = "<group>"; };
+		86BC2D322BDD189F003BF895 /* CustomManagersTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomManagersTextView.swift; sourceTree = "<group>"; };
+		86BC2D362BDD2003003BF895 /* CustomSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchTextField.swift; sourceTree = "<group>"; };
+		86BC2D392BDD3154003BF895 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		86BC2D422BDD5596003BF895 /* UpdateProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProductViewController.swift; sourceTree = "<group>"; };
+		86BC2D442BDD55BE003BF895 /* DeleteProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductViewController.swift; sourceTree = "<group>"; };
+		86BC2D462BDD55FE003BF895 /* AddNewCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryViewController.swift; sourceTree = "<group>"; };
+		86BC2D482BDD5663003BF895 /* UpdateCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCategoryViewController.swift; sourceTree = "<group>"; };
+		86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCategoryViewController.swift; sourceTree = "<group>"; };
 		86C474FD2BD507820070E3D8 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		86C475032BD50CF10070E3D8 /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
 		86C475052BD50D8B0070E3D8 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -245,6 +271,7 @@
 		86490FF82BD13BF800FCF45C /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				86BC2D252BDCF10A003BF895 /* Subscreens */,
 				86490FF92BD13C1600FCF45C /* ManagerViewController.swift */,
 			);
 			path = Manager;
@@ -255,6 +282,81 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		86BC2D252BDCF10A003BF895 /* Subscreens */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D292BDCFB57003BF895 /* Subviews */,
+				86BC2D412BDD556D003BF895 /* DeleteCategory */,
+				86BC2D402BDD5566003BF895 /* UpdateCategory */,
+				86BC2D3F2BDD555B003BF895 /* AddNewCategory */,
+				86BC2D3E2BDD5552003BF895 /* DeleteProduct */,
+				86BC2D3D2BDD5548003BF895 /* UpdateProduct */,
+				86BC2D262BDCF11A003BF895 /* AddNewProduct */,
+			);
+			name = Subscreens;
+			sourceTree = "<group>";
+		};
+		86BC2D262BDCF11A003BF895 /* AddNewProduct */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D272BDCF8A0003BF895 /* AddNewProductViewController.swift */,
+			);
+			name = AddNewProduct;
+			sourceTree = "<group>";
+		};
+		86BC2D292BDCFB57003BF895 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D2A2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift */,
+				86BC2D2C2BDD0429003BF895 /* CustomViewWithPicker.swift */,
+				86BC2D2E2BDD11F0003BF895 /* BaseManagersViewController.swift */,
+				86BC2D302BDD159A003BF895 /* ContainerManagersView.swift */,
+				86BC2D322BDD189F003BF895 /* CustomManagersTextView.swift */,
+				86BC2D362BDD2003003BF895 /* CustomSearchTextField.swift */,
+			);
+			name = Subviews;
+			sourceTree = "<group>";
+		};
+		86BC2D3D2BDD5548003BF895 /* UpdateProduct */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D422BDD5596003BF895 /* UpdateProductViewController.swift */,
+			);
+			name = UpdateProduct;
+			sourceTree = "<group>";
+		};
+		86BC2D3E2BDD5552003BF895 /* DeleteProduct */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D442BDD55BE003BF895 /* DeleteProductViewController.swift */,
+			);
+			name = DeleteProduct;
+			sourceTree = "<group>";
+		};
+		86BC2D3F2BDD555B003BF895 /* AddNewCategory */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D462BDD55FE003BF895 /* AddNewCategoryViewController.swift */,
+			);
+			name = AddNewCategory;
+			sourceTree = "<group>";
+		};
+		86BC2D402BDD5566003BF895 /* UpdateCategory */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D482BDD5663003BF895 /* UpdateCategoryViewController.swift */,
+			);
+			name = UpdateCategory;
+			sourceTree = "<group>";
+		};
+		86BC2D412BDD556D003BF895 /* DeleteCategory */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */,
+			);
+			name = DeleteCategory;
 			sourceTree = "<group>";
 		};
 		86C474FC2BD5076C0070E3D8 /* Details */ = {
@@ -702,6 +804,7 @@
 				86C475072BD50DB20070E3D8 /* IdentifiableCell.swift */,
 				E18A56062BD7A24800E34777 /* UINavigationController + Extension.swift */,
 				86EDFF282BD926C800CD9F81 /* String+Extension.swift */,
+				86BC2D392BDD3154003BF895 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -869,12 +972,14 @@
 				E16BB69A2BD65592009991F3 /* IdentifiableCell.swift in Sources */,
 				E16BB6962BD65218009991F3 /* PhotoCollectionView.swift in Sources */,
 				E16BB6952BD65203009991F3 /* DetailsProductViewModel.swift in Sources */,
+				86BC2D4D2BDD56AE003BF895 /* DeleteCategoryViewController.swift in Sources */,
 				86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */,
 				531121F02BD2E5EE0018FA37 /* TermsConditionalViewController.swift in Sources */,
 				E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */,
 				E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */,
 				531121F12BD2E5EE0018FA37 /* TypeOfAccountViewController.swift in Sources */,
 				531121F22BD2E5EE0018FA37 /* EditImageViewController.swift in Sources */,
+				86BC2D282BDCF8A0003BF895 /* AddNewProductViewController.swift in Sources */,
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
 				E16BB6842BD5ABCA009991F3 /* StorageError.swift in Sources */,
 				BEBA5DC12BD0621900737686 /* CategoryCollectionViewCell.swift in Sources */,
@@ -882,14 +987,21 @@
 				86EDFF1C2BD83BA700CD9F81 /* TypeAccountViewController.swift in Sources */,
 				86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */,
 				BEBA5DC42BD0621900737686 /* ProductCollectionViewCell.swift in Sources */,
+				86BC2D2B2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift in Sources */,
+				86BC2D312BDD159A003BF895 /* ContainerManagersView.swift in Sources */,
 				86EDFF162BD80F7C00CD9F81 /* InputContainerView.swift in Sources */,
+				86BC2D372BDD2003003BF895 /* CustomSearchTextField.swift in Sources */,
+				86BC2D452BDD55BE003BF895 /* DeleteProductViewController.swift in Sources */,
+				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
 				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
+				86BC2D472BDD55FE003BF895 /* AddNewCategoryViewController.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E16BB6982BD654B6009991F3 /* PhotoCell.swift in Sources */,
 				86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */,
 				E1D1DC252BD071290009C2A3 /* CartsTableViewCell.swift in Sources */,
 				86EDFF1F2BD842B700CD9F81 /* LoginViewModel.swift in Sources */,
+				86BC2D3A2BDD3154003BF895 /* UIViewController+Extension.swift in Sources */,
 				BEBA5DC22BD0621900737686 /* HeaderNavBarMenuView.swift in Sources */,
 				E14BC4142BD834B40026103A /* CheckMarkButton.swift in Sources */,
 				BEBA5DC02BD0621900737686 /* HeaderProductsView.swift in Sources */,
@@ -902,20 +1014,25 @@
 				534848A42BD69C2300162CE6 /* PaymentSuccessView.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CartsViewModel.swift in Sources */,
 				E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */,
+				86BC2D2D2BDD0429003BF895 /* CustomViewWithPicker.swift in Sources */,
 				E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */,
 				E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */,
 				86EDFF272BD91F7600CD9F81 /* AuthService.swift in Sources */,
-				BEBA5DBE2BD0621900737686 /* SectionsData.swift in Sources */,
+				BEBA5DBE2BD0621900737686 /* MockData.swift in Sources */,
+				86BC2D2F2BDD11F0003BF895 /* BaseManagersViewController.swift in Sources */,
 				E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */,
 				86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */,
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
+				86BC2D492BDD5663003BF895 /* UpdateCategoryViewController.swift in Sources */,
 				E16BB6862BD5B3DA009991F3 /* RealmModelProtocol.swift in Sources */,
 				86EDFF212BD84BCF00CD9F81 /* RegistrationViewModel.swift in Sources */,
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
+				86BC2D332BDD189F003BF895 /* CustomManagersTextView.swift in Sources */,
 				E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */,
+				86BC2D432BDD5596003BF895 /* UpdateProductViewController.swift in Sources */,
 				E14BC4192BD860E70026103A /* CountButton.swift in Sources */,
 				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,

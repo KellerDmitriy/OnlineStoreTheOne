@@ -18,6 +18,7 @@ enum Colors {
     public static let grayBackgroundAuth = UIColor(hex: "#FBFBFB")
     public static let grayBorderAuth = UIColor(hex: "#EDEDED")
     public static let grayPlaceholderAuth = UIColor(hex: "#7C7C7B")
+    public static let placeholderManagerFields = UIColor(hex: "#F0F2F1")
 }
 
 extension UIColor {
