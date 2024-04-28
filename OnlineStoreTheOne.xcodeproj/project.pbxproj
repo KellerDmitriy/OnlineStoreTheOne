@@ -30,6 +30,7 @@
 		86BC2D472BDD55FE003BF895 /* AddNewCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D462BDD55FE003BF895 /* AddNewCategoryViewController.swift */; };
 		86BC2D492BDD5663003BF895 /* UpdateCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D482BDD5663003BF895 /* UpdateCategoryViewController.swift */; };
 		86BC2D4D2BDD56AE003BF895 /* DeleteCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */; };
+		86BC2D552BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D542BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
 		86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */; };
 		86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */; };
@@ -140,6 +141,7 @@
 		86BC2D462BDD55FE003BF895 /* AddNewCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryViewController.swift; sourceTree = "<group>"; };
 		86BC2D482BDD5663003BF895 /* UpdateCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCategoryViewController.swift; sourceTree = "<group>"; };
 		86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCategoryViewController.swift; sourceTree = "<group>"; };
+		86BC2D542BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewWithPickerViewModel.swift; sourceTree = "<group>"; };
 		86C474FD2BD507820070E3D8 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		86C475032BD50CF10070E3D8 /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
 		86C475052BD50D8B0070E3D8 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 		86BC2D252BDCF10A003BF895 /* Subscreens */ = {
 			isa = PBXGroup;
 			children = (
+				86BC2D532BDE5B18003BF895 /* ViewModels */,
 				86BC2D292BDCFB57003BF895 /* Subviews */,
 				86BC2D412BDD556D003BF895 /* DeleteCategory */,
 				86BC2D402BDD5566003BF895 /* UpdateCategory */,
@@ -358,6 +361,14 @@
 				86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */,
 			);
 			name = DeleteCategory;
+			sourceTree = "<group>";
+		};
+		86BC2D532BDE5B18003BF895 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D542BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift */,
+			);
+			name = ViewModels;
 			sourceTree = "<group>";
 		};
 		86C474FC2BD5076C0070E3D8 /* Details */ = {
@@ -1003,6 +1014,7 @@
 				86BC2D452BDD55BE003BF895 /* DeleteProductViewController.swift in Sources */,
 				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
+				86BC2D552BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift in Sources */,
 				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
 				86BC2D472BDD55FE003BF895 /* AddNewCategoryViewController.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,

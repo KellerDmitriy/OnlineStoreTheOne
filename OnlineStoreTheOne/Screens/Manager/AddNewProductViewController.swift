@@ -7,16 +7,43 @@
 
 import UIKit
 
-class AddNewProductViewController: BaseManagersViewController {
+final class AddNewProductViewController: UIViewController {
 
-    let productView = ContainerManagersView(type: .addNewProduct)
-    let scrollView = UIScrollView()
-    let mainStackView = UIStackView()
+    private let productView = ContainerManagersView(type: .addNewProduct)
+    private let scrollView = UIScrollView()
+    private let mainStackView = UIStackView()
+    
+    private lazy var saveButton = FilledButtonFactory(
+        title: "Save",
+        type: .greenButton,
+        action: UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            print("Save Button Tapped")
+        })
+    ).createButton()
+    
+    private lazy var cancelButton = FilledButtonFactory(
+        title: "Cancel",
+        type: .grayButton,
+        action: UIAction(handler: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+            print("Cancel Button Tapped")
+        })
+    ).createButton()
+    
+    private lazy var buttonsStackView: UIStackView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .horizontal
+        $0.spacing = 30
+        $0.distribution = .fillEqually
+        return $0
+    }(UIStackView())
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        fetchCategories()
         setupViews()
+        setConstraints()
     }
 
     private func setupViews() {
@@ -29,6 +56,13 @@ class AddNewProductViewController: BaseManagersViewController {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.addArrangedSubview(productView)
         productView.translatesAutoresizingMaskIntoConstraints = false
+        
+        navigationItem.hidesBackButton = true
+        view.addSubview(buttonsStackView)
+        [saveButton, cancelButton].forEach { button in
+            button.titleLabel?.font = UIFont.makeTypography(.medium, size: 16)
+            buttonsStackView.addArrangedSubview(button)
+        }
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -47,5 +81,27 @@ class AddNewProductViewController: BaseManagersViewController {
         }
         
         hideKeyboardWhenTappedAround()
+    }
+    
+    private func setConstraints() {
+        buttonsStackView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
+    }
+    
+    private func fetchCategories() {
+        Task {
+            let result = await NetworkService.shared.fetchCategory()
+            switch result {
+            case .success(let success):
+                productView.setData(success)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
     }
 }

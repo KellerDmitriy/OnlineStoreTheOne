@@ -27,7 +27,7 @@ final class ContainerManagersView: UIView {
     private let searchField = CustomSearchTextField()
     private let titleField = CustomViewWithOutPicker(with: "Title")
     private let priceField = CustomViewWithOutPicker(with: "Price")
-    private let categoryField = CustomViewWithPicker()
+    private let categoryField = CustomViewWithPicker(viewModel: .init(categoryList: []))
     private let descriptionTextView = CustomManagersTextView(with: "Description")
     private let imageOneTextView = CustomManagersTextView(with: "Image 1")
     private let imageTwoTextView = CustomManagersTextView(with: "Image 2")
@@ -92,5 +92,15 @@ final class ContainerManagersView: UIView {
         stackView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(20)
         }
+    }
+    
+    func setData(_ data: [Category]) {
+        categoryField.viewModel.separateCategories(data)
+    }
+    
+    func getCategoryId() -> Int? {
+        guard let name = categoryField.currentText else { return nil }
+        let id = categoryField.viewModel.getCategoryId(name)
+        return id
     }
 }

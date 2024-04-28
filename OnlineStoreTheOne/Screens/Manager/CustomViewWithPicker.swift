@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
-    var handle: ((String) -> Void)?
-    
+    let viewModel: CustomViewWithPickerViewModel
+    private var subscriptions: Set<AnyCancellable> = []
     private let containerView = UIView()
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +29,7 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         return $0
     }(UILabel())
     
-    lazy var textField: UITextField = {
+    private lazy var textField: UITextField = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.borderStyle = .roundedRect
         $0.layer.cornerRadius = 8
@@ -44,10 +45,12 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         return $0
     }(UIImageView())
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: CustomViewWithPickerViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setupViews()
         setConstraints()
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -57,6 +60,18 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
     private let pickerView = UIPickerView()
     
     private var data: [String] = []
+    
+    var currentText: String? {
+        textField.text
+    }
+    
+    private func bind() {
+        viewModel.$categoryList.sink { [weak self] newData in
+            guard let self else { return }
+            data = newData
+            pickerView.reloadAllComponents()
+        }.store(in: &subscriptions)
+    }
     
     private func setupViews() {
         addSubview(containerView)
@@ -124,6 +139,5 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         textField.text = data[row]
-        handle?(textField.text ?? "")
     }
 }
