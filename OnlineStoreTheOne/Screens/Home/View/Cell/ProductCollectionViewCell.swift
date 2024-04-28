@@ -42,7 +42,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     private lazy var addToCartButton: UIButton = {
         let filledButtonFactory = FilledButtonFactory(
             title: "Add to cart",
-            type: .greenButton,
+            type: .greenButtonMini,
             action: UIAction { [weak self] _ in
                 self?.addToCartCompletion?()
             }

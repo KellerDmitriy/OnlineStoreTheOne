@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 import RealmSwift
 
 final class WishListViewModel {
@@ -14,17 +13,38 @@ final class WishListViewModel {
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
-    @Published var wishLists: Results<WishListModel>!
-    var product = Products.placeholder
-    var filteredWishLists: Results<WishListModel>?
-    var subscription: Set<AnyCancellable> = []
+    var wishListKeys: Observable<[Int]> = Observable([])
+    var products: Observable<[Products]> = Observable([])
+    
+    var filteredWishLists: Observable<[WishListModel]> = Observable([])
     
     //MARK: - Init
     init() {
-        wishLists = storageService.realm.objects(WishListModel.self)
+        wishListKeys.value = storageService.realm.objects(WishListModel.self).map { $0.id }
     }
     
-    //MARK: - Methods
+    private func observeProducts() {
+        wishListKeys.bind { [weak self] _ in
+            guard let self = self else { return }
+            self.fetchProducts()
+        }
+    }
+    
+    func fetchProducts() {
+        for wishListKey in self.wishListKeys.value {
+            Task {
+                let result = await self.networkService.fetchSingleProduct(for: wishListKey)
+                switch result {
+                case .success(let product):
+                    DispatchQueue.main.async {
+                        self.products.value.append(product)
+                    }
+                case .failure(let error):
+                    print("Error fetching product: \(error)")
+                }
+            }
+        }
+    }
     
     //MARK: - Storage Methods
     func addToCart(_ product: Products) {
@@ -38,32 +58,22 @@ final class WishListViewModel {
         }
     }
     
-    func convertToProducts(from wishList: WishListModel) -> Products {
-        let product = Products(
-            id: wishList.id,
-            title: wishList.title,
-            price: wishList.price,
-            description: nil,
-            category: nil,
-            image: nil,
-            images: wishList.images.map { $0.base64EncodedString() }
-        )
-        return product
-    }
     
+    //MARK: - Storage Methods
     func removeWishList(at id: Int, completion: @escaping () -> Void) {
-        storageService.removeItem(WishListModel.self, id: id) { result in
+        storageService.removeItem(WishListModel.self, id: id) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success:
-                print("Item removed from cart")
-                DispatchQueue.main.async {
-                    self.wishLists = self.storageService.realm.objects(WishListModel.self)
-                    completion()
-                }
+                print("Item removed from WishList")
+                self.wishListKeys.value = self.storageService.realm.objects(WishListModel.self).map { $0.id }
+                if let index = self.products.value.firstIndex(where: { $0.id == id }) {
+                       self.products.value.remove(at: index)
+                   }
+                completion()
             case .failure(let error):
                 print("Error removing item from cart: \(error)")
             }
         }
     }
 }
-

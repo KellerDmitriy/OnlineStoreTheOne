@@ -82,14 +82,21 @@ final class WishListCollectionCell: UICollectionViewCell {
     }
     
     //MARK: - Methods
-    func configureCell(_ wishModel: WishListModel) {
+    func configureCell(_ wishModel: Products) {
         titleLabel.text = wishModel.title
         priceLabel.text = String("$\(wishModel.price)")
         
-        if let imageData = wishModel.images.first {
-            productImageView.image = UIImage(data: imageData)
+        let trimmed = wishModel.images?.first?
+            .data(using: .utf8)
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) }
+            .flatMap { $0 as? [String] }
+            .flatMap(\.first)
+            .flatMap(URL.init)
+        
+        if let trimmedUrl = trimmed {
+            productImageView.kf.setImage(with: trimmedUrl)
         } else {
-            productImageView.image = UIImage(named: "ps4")
+            productImageView.kf.setImage(with: URL(string: wishModel.images?.first ?? ""))
         }
     }
     

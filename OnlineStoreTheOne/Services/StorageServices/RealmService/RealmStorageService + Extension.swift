@@ -14,5 +14,13 @@ extension RealmStorageService {
         let itemId = realm.objects(itemType).filter("id = %@", id)
         return !itemId.isEmpty
     }
-
+    
+    func addWishList(_ productId: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+        write {
+             let newItem = WishListModel()
+                newItem.id = productId
+                self.realm.add(newItem)
+                completion(.success(()))
+        }
+    }
 }

@@ -35,18 +35,19 @@ final class WishListViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         observeProducts()
-
+        viewModel.fetchProducts()
+        
     }
     
     // MARK: - Data Observing
     private func observeProducts() {
-        viewModel.$wishLists
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+        viewModel.products.bind { [weak self] _ in
+            DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
-            .store(in: &viewModel.subscription)
+        }
     }
+    
     
     // MARK: - Actions
     @objc func addToCartTap() {
@@ -57,6 +58,12 @@ final class WishListViewController: UIViewController {
     }
     
     // MARK: - UI Setup
+    func animateCollectionView() {
+        UIView.transition(with: collectionView, duration: 0.9, options: .transitionCrossDissolve, animations: {
+            self.collectionView.reloadData()
+        }, completion: nil)
+    }
+    
     private func setupUI() {
         view.backgroundColor = .white
         
@@ -139,11 +146,10 @@ extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        //        guard var filteredWishLists = viewModel.filteredWishLists else { return }
-        //        filteredWishLists = viewModel.wishLists. { product in
-        //            product.title.lowercased().contains(searchText.lowercased())
-        //        }
-        //        collectionView.reloadData()
+        let filteredProducts = viewModel.products.value.filter { product in
+            product.title.lowercased().contains(searchText.lowercased())
+        }
+        collectionView.reloadData()
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {

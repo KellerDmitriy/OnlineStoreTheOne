@@ -10,6 +10,8 @@ import Foundation
 import Combine
 
 final class HomeViewModel: ObservableObject {
+    @Published var productsError: Error?
+    @Published var categoriesError: Error?
     
     @Published var isLoading: Bool = true
     @Published var categories: [Category] = []
@@ -59,7 +61,7 @@ final class HomeViewModel: ObservableObject {
             case .success(let products):
                 self.products = products
             case .failure(let error):
-                print("Error fetching products: \(error)")
+                self.productsError = error
             }
         }
     }
@@ -71,7 +73,7 @@ final class HomeViewModel: ObservableObject {
             case .success(let categories):
                 self.categories = categories
             case .failure(let error):
-                print("Error fetching products: \(error)")
+                self.categoriesError = error
             }
         }
     }

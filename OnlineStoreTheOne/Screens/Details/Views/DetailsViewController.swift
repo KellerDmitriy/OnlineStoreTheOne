@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import AlertKit
 
 final class DetailsViewController: UIViewController {
     //MARK: - Private Properties
@@ -180,16 +181,20 @@ private extension DetailsViewController {
         productList.addToWishListButton.addAction(UIAction { [weak self] _ in
             self?.addToWishListButtonTap()
         },
-            for: .touchUpInside)
+        for: .touchUpInside)
     }
     
     func addToWishListButtonTap () {
         viewModel.favoriteButtonPressed()
+        viewModel.isSaved
+        ? AlertKitAPI.present(title: "Saved to wish list", subtitle: nil, icon: .heart, style: .iOS17AppleMusic, haptic: .success)
+        : AlertKitAPI.present(title: "Deleted from wish list", subtitle: nil, icon: .error, style: .iOS17AppleMusic, haptic: .success)
     }
     
     func setToAddToWishListButton(_ status: Bool) {
         let image = status ? UIImage(named: "selectedWishlist") : UIImage(named: "Wishlist")
         productList.addToWishListButton.setImage(image, for: .normal)
+        
     }
     
     

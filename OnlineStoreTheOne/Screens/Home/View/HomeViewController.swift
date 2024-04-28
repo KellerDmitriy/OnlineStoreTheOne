@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SwiftUI
+import AlertKit
 
 final class HomeViewController: UIViewController {
     //MARK: - Properties
@@ -35,6 +36,7 @@ final class HomeViewController: UIViewController {
         viewModel.fetchData()
         
         observeProducts()
+        observeError()
     }
     
     // MARK: - Data Observing
@@ -46,6 +48,31 @@ final class HomeViewController: UIViewController {
                 self.collectionView.reloadData()
             }
             .store(in: &viewModel.subscription)
+    }
+    
+    
+    private func observeError() {
+            viewModel.$productsError
+                .compactMap { $0 }
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] error in
+                    guard let self = self else { return }
+                    self.showAlertError(error: error)
+                }
+                .store(in: &viewModel.subscription)
+
+            viewModel.$categoriesError
+                .compactMap { $0 }
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] error in
+                    guard let self = self else { return }
+                    self.showAlertError(error: error)
+                }
+                .store(in: &viewModel.subscription)
+        }
+
+    func showAlertError(error: Error) {
+        AlertKitAPI.present(title: "Error", subtitle: "\(error)", icon: .error, style: .iOS16AppleMusic, haptic: .error)
     }
     
     //MARK: - Private methods
