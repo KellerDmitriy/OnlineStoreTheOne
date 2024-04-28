@@ -18,9 +18,36 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath
         ) as? CartsTableViewCell else { return UITableViewCell() }
         
-        let cart = viewModel.cartProducts[indexPath.row]
-        cell.configureCell(cart)
+        let cart: CartsModel = viewModel.cartProducts[indexPath.row]
+        cell.configureCell(
+            cart,
+            onTrashTapped: { [weak self] in
+                guard let self = self else { return }
+                
+                self.trashButtonTap(id: cart.id)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+            }, 
+            countDidChange: { [weak self] count in
+                self?.updateCount(cart.id, newCount: count)
+            }
+        )
         return cell
     }
-
+    
+    //    MARK: - Action
+    
+    func checkMarkButtonTap(id: Int) {
+        viewModel.checkSelected(for: id)
+    }
+    
+    
+    func trashButtonTap(id: Int) {
+        viewModel.removeFromCart(id)
+    }
+    
+    func updateCount(_ productID: Int, newCount: Int) {
+        viewModel.productCount = newCount
+        viewModel.updateItemCount(for: productID, newCount: newCount)
+    }
 }

@@ -18,11 +18,6 @@ extension Endpoint {
     /// Создает конечную точку для HTTP PUT запроса.
     static func put() -> Endpoint { Endpoint(method: .PUT) }
     
-    /// Создает конечную точку для получения всех продуктов.
-    static func allProducts() -> Self {
-        Endpoint.get()
-            .path("products")
-    }
     /// Создает конечную точку для получения всех категорий
     static func allCategories() -> Self {
         Endpoint.get()
@@ -30,26 +25,29 @@ extension Endpoint {
     }
     
     /// Создает конечную точку для получения продуктов по категории.
-    static func products(with categoryID: Int? = nil) -> Self {
-        if let categoryID = categoryID {
-            return Endpoint.get()
-                .path("categories/\(categoryID)/products")
-        } else {
-            return Endpoint.get()
-                .path("categories/products")
+    static func products(with categoryID: Int?) -> Self {
+            if let categoryID = categoryID {
+                return Endpoint.get()
+                    .path("categories/\(categoryID)/products")
+            } else {
+                return Endpoint.get()
+                    .path("products")
+            }
         }
-    }
     
     /// Создает конечную точку для получения продуктов по Id(для WishList).
-    static func products(for id: Int) -> Self {
+    static func singleProduct(for id: Int) -> Self {
         Endpoint.get()
             .path("products/\(id)")
     }
     
     /// Создает конечную точку для получения продуктов по названию
-    static func products(for title: String) -> Self {
+    static func searchProducts(with searchText: String) -> Self {
         Endpoint.get()
-            .path("products/\(title)")
+            .path("products")
+            .queryItems {
+                URLQueryItem(name: "title", value: searchText)
+            }
     }
 }
 

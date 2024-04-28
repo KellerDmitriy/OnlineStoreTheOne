@@ -33,19 +33,22 @@ final class WishListViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
-        
-        viewModel.$wishLists
-            .sink { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                }
-            }
-            .store(in: &viewModel.subscription)
-        
+        observeProducts()
+
     }
     
+    // MARK: - Data Observing
+    private func observeProducts() {
+        viewModel.$wishLists
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
+            .store(in: &viewModel.subscription)
+    }
+    
+    // MARK: - Actions
     @objc func addToCartTap() {
         let viewControllerToPresent = CartsViewController()
         let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
@@ -67,6 +70,7 @@ final class WishListViewController: UIViewController {
         registerCollectionViewCells()
         addCollectionViewConstraints()
     }
+    
     private func configureCollectionView(with layout: UICollectionViewLayout) {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
@@ -114,7 +118,7 @@ final class WishListViewController: UIViewController {
     // MARK: - Navigation
     private func setupNavigation() {
         configureSearchController()
-        navigationController?.navigationBar.tintColor = .black
+        
         navigationController?.setupNavigationBar()
         navigationItem.searchController = searchController
         

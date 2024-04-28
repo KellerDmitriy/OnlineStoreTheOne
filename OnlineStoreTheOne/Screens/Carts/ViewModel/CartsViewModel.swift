@@ -15,12 +15,29 @@ final class CartsViewModel {
     let storageService = RealmStorageService.shared
     
     @Published var cartProducts: Results<CartsModel>!
+    @Published var isSelect = true
+    @Published var productCount = 1
     
     var subscription: Set<AnyCancellable> = []
     
     //MARK: - Init
     init() {
         cartProducts = storageService.realm.objects(CartsModel.self)
+    }
+    
+    //MARK: - Observe Methods
+    private func observe() {
+//        $isSelect
+//            .sink { [weak self] isSelect in
+//                self?.updateIsSelectedInCart(isSelected: isSelect)
+//            }
+//            .store(in: &subscription)
+//        
+//        $productCount
+//            .sink { [weak self] count in
+//                self?.updateProductCountInCart(count: count)
+//            }
+//            .store(in: &subscription)
     }
     
     //MARK: - Methods
@@ -36,4 +53,29 @@ final class CartsViewModel {
         }
     }
     
+    func deleteAllProducts() {
+        storageService.deleteAllProducts(CartsModel.self)
+    }
+    
+    func checkSelected(for id: Int) {
+        isSelect.toggle()
+        guard cartProducts.first(where: { $0.id == id }) != nil else { return }
+        updateItem(for: id, newValue: isSelect)
+    }
+    
+    func updateItemCount(for id: Int, newCount: Int) {
+        updateItem(for: id, newValue: newCount)
+    }
+    
+    func updateItem<T>(for id: Int, newValue: T) {
+        storageService.updateItem(CartsModel.self, id: id) { item in
+            if let item = item {
+                if let newValue = newValue as? Int {
+                    item.countProduct = newValue
+                } else if let newValue = newValue as? Bool {
+                    item.isSelected = newValue
+                }
+            }
+        }
+    }
 }

@@ -13,7 +13,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     static let cellID = String(describing: WishListCollectionCell.self)
     
     var addToCartCompletion: (() -> Void)?
-    var addToWishListCompletion: (() -> Void)?
+    var removeFromWishListCompletion: (() -> Void)?
     
     //MARK: - Private Properties
     private let productImageView: UIImageView = {
@@ -60,7 +60,7 @@ final class WishListCollectionCell: UICollectionViewCell {
             button.setBackgroundImage(image, for: .normal)
         }
         button.addAction(UIAction { [weak self] _ in
-            self?.addToWishListCompletion?()
+            self?.removeFromWishListCompletion?()
         }, for: .touchUpInside)
         return button
     }()
@@ -84,7 +84,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     //MARK: - Methods
     func configureCell(_ wishModel: WishListModel) {
         titleLabel.text = wishModel.title
-        priceLabel.text = String("\(wishModel.price)")
+        priceLabel.text = String("$\(wishModel.price)")
         
         if let imageData = wishModel.images.first {
             productImageView.image = UIImage(data: imageData)
@@ -105,6 +105,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     private func setConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(112)
         }
         
         titleLabel.snp.makeConstraints { make in

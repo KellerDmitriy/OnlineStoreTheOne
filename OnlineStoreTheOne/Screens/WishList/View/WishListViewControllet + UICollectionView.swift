@@ -22,8 +22,16 @@ extension WishListViewController: UICollectionViewDataSource {
         cell.configureCell(wishList)
         
         cell.addToCartCompletion = { [weak self] in
-            self?.addToCartTap()
+           let product =  self?.viewModel.convertToProducts(from: wishList)
+            self?.viewModel.addToCart((product ?? self?.viewModel.product)!)
         }
+        
+        cell.removeFromWishListCompletion = { [weak self] in
+            self?.viewModel.removeWishList(at: wishList.id) {
+                collectionView.reloadData()
+            }
+        }
+        
         return cell
     }
 }
@@ -31,6 +39,12 @@ extension WishListViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension WishListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        let selectedWishList = viewModel.wishLists[indexPath.item]
+        let detailViewModel = DetailsProductViewModel(productId: selectedWishList.id)
+        let detailViewController = DetailsViewController(viewModel: detailViewModel)
+        let navigationController = UINavigationController(rootViewController: detailViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
+

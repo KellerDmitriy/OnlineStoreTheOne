@@ -18,9 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let storageService = StorageService.shared
         
-//        let navVC = UINavigationController(rootViewController: HomeViewController())
-//        window?.rootViewController = navVC
-//        window?.makeKeyAndVisible()
         
         if storageService.isOnboardComplete() {
             let tabBarController = TabBarController()

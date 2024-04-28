@@ -11,7 +11,6 @@ import Combine
 final class DetailsViewController: UIViewController {
     //MARK: - Private Properties
     private let viewModel: DetailsProductViewModel
-    private var cancellables: Set<AnyCancellable> = []
     
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -21,16 +20,17 @@ final class DetailsViewController: UIViewController {
     private lazy var addToCartButton = FilledButtonFactory(
         title: "Add to Cart",
         type: .greenButton,
-        action: UIAction(handler: { _ in
-            print("Add To Cart Button Tapped")
+        action: UIAction(handler: { [weak self] _ in
+            self?.cartButtonTap()
+            
         })
     ).createButton()
     
     private lazy var buyNowButton = FilledButtonFactory(
         title: "Buy Now",
         type: .grayButton,
-        action: UIAction(handler: { _ in
-            print("Buy Now Button Tapped")
+        action: UIAction(handler: { [weak self] _ in
+            self?.payButtonTap()
         })
     ).createButton()
     
@@ -64,27 +64,32 @@ final class DetailsViewController: UIViewController {
         setupViews()
         setConstraints()
         setupNavigation()
+        actionForAddToWishListButtonTap()
         bind()
+        changeToWishListButton()
     }
     
     //MARK: - Private Methods
     private func bind() {
-        viewModel.$title.receive(on: DispatchQueue.main).sink { [weak self] title in
-            self?.productList.setProduct(name: title)
-        }.store(in: &cancellables)
+        viewModel.$product
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] product in
+                self?.productList.setProduct(name: product.title)
+                self?.productList.setProduct(price: "$ \(product.price)")
+                self?.productList.setProductDescription(text: product.description ?? "nil")
+                self?.photoCollection.set(data: product.images ?? [""])
+            }
+            .store(in: &viewModel.cancellables)
+    }
+    
+    private func changeToWishListButton() {
+        viewModel.$isSaved
+            .receive(on: DispatchQueue.main)
         
-        viewModel.$price.receive(on: DispatchQueue.main).sink { [weak self] price in
-            self?.productList.setProduct(price: price)
-        }.store(in: &cancellables)
-        
-        viewModel.$description.receive(on: DispatchQueue.main).sink { [weak self] desc in
-            self?.productList.setProductDescription(text: desc ?? "nil")
-        }.store(in: &cancellables)
-        
-        viewModel.$images.receive(on: DispatchQueue.main).sink { [weak self] images in
-            guard let images else { return }
-            self?.photoCollection.set(data: images)
-        }.store(in: &cancellables)
+            .sink { [weak self] isSaved in
+                self?.setToAddToWishListButton(isSaved)
+            }
+            .store(in: &viewModel.cancellables)
     }
     
     private func setupViews() {
@@ -101,6 +106,25 @@ final class DetailsViewController: UIViewController {
         view.addSubview(buttonStackView)
         [addToCartButton, buyNowButton].forEach(buttonStackView.addArrangedSubview(_:))
         view.addSubview(separatorLine)
+    }
+    
+    private func setupNavigation() {
+        navigationController?.setupNavigationBar()
+        navigationController?.navigationBar.addBottomBorder()
+        navigationItem.title = "Details product"
+        
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        navigationItem.leftBarButtonItem = backButton
+        
+        let cartButton = CartButton()
+        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
+        let cartButtonItem = UIBarButtonItem(customView: cartButton)
+        navigationItem.rightBarButtonItem = cartButtonItem
     }
     
     private func setConstraints() {
@@ -137,18 +161,40 @@ final class DetailsViewController: UIViewController {
     }
 }
 
-// MARK: - Setup Navigation
+// MARK: - Actions
 private extension DetailsViewController {
-    func setupNavigation() {
-        navigationController?.navigationBar.tintColor = .black
-        navigationController?.setupNavigationBar()
-        
-        navigationItem.title = "Details product"
-        let cartButton = CartButton()
-        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
-        let cartButtonItem = UIBarButtonItem(customView: cartButton)
-        
-        navigationItem.rightBarButtonItem = cartButtonItem
+    //    MARK: - Actions
+    func payButtonTap() {
+        let vc = PaymentSuccessView()
+        if let presentationController = vc.presentationController as? UISheetPresentationController {
+            presentationController.detents = [.medium()]
+            self.present(vc, animated: true)
+        }
+    }
+    
+    func cartButtonTap() {
+        viewModel.addToCart()
+    }
+    
+    func actionForAddToWishListButtonTap() {
+        productList.addToWishListButton.addAction(UIAction { [weak self] _ in
+            self?.addToWishListButtonTap()
+        },
+            for: .touchUpInside)
+    }
+    
+    func addToWishListButtonTap () {
+        viewModel.favoriteButtonPressed()
+    }
+    
+    func setToAddToWishListButton(_ status: Bool) {
+        let image = status ? UIImage(named: "selectedWishlist") : UIImage(named: "Wishlist")
+        productList.addToWishListButton.setImage(image, for: .normal)
+    }
+    
+    
+    @objc func backButtonTapped() {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func addToCartTap() {

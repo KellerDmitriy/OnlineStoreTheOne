@@ -16,3 +16,5 @@ extension IdentifiableCell {
 }
 
 extension UICollectionViewCell: IdentifiableCell {}
+
+

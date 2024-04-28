@@ -5,25 +5,56 @@
 //  Created by Иван Семенов on 19.04.2024.
 //
 
+
 import Foundation
+import Combine
 
-protocol HomeViewModelDelegate: AnyObject {
-    func dataUpdated()
-}
-
-final class HomeViewModel {
+final class HomeViewModel: ObservableObject {
     
-    var products: [Products] = []
-    var categories: [Category] = []
+    @Published var isLoading: Bool = true
+    @Published var categories: [Category] = []
+    @Published var products: [Products] = []
+    @Published var searchedProducts: [Products] = []
+    @Published var searchText = ""
     
-    var dataUpdated: (() -> Void)?
+    var subscription: Set<AnyCancellable> = []
     
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
-    func fetchProducts() {
+    //MARK: - Init
+    init() {
+        observe()
+    }
+    
+    //MARK: - Observe Methods
+    private func observe() {
+        $searchText
+            .sink {  searchText in
+            }
+            .store(in: &subscription)
+    }
+    
+    //MARK: - Fetch Methods
+    func fetchData() {
         Task {
-            let result = await networkService.fetchAllProducts()
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { [weak self] in
+                     self?.fetchProducts(for: nil)
+                }
+                group.addTask { [weak self] in
+                     self?.fetchCategory()
+                }
+                
+                await group.waitForAll()
+                self.isLoading = false
+            }
+        }
+    }
+    
+    func fetchProducts(for categoryID: Int?) {
+        Task {
+            let result = await networkService.fetchProducts(with: categoryID)
             switch result {
             case .success(let products):
                 self.products = products
@@ -32,47 +63,10 @@ final class HomeViewModel {
             }
         }
     }
-    public func getData(id: Int) {
-        ///получение категории по  идентификатору
-        guard let category = categories.first(where: { $0.id == id }) else {
-            print("Category with id \(id) not found")
-            return
-        }
-        ///запрос продуктов для выбранной категории
-        fetchProducts(for: category)
-    }
-
-    func fetchProducts(for category: Category) {
-        Task {
-            let result: Result<[Products], NetworkError> = await networkService.fetchProducts(with: category)
-            
-            if case let .success(data) = result {
-                self.products = data
-                dataUpdated?()
-            } else if case let .failure(error) = result {
-                print("Failed to fetch data: \(error)")
-            }
-        }
-    }
-
-    func fetchSearchProducts(_ title: String) {
-        Task {
-            let result = await networkService.fetchSearchProducts(by: title)
-            
-            switch result {
-            case .success(let data):
-                self.products = data
-                dataUpdated?()
-            case .failure(let error):
-                print("Failed to fetch products: \(error)")
-            }
-        }
-    }
-
+    
     func fetchCategory() {
         Task {
-            let result = await networkService.fetchCategory()
-            
+            let result = await networkService.fetchAllCategories()
             switch result {
             case .success(let categories):
                 self.categories = categories
@@ -81,5 +75,16 @@ final class HomeViewModel {
             }
         }
     }
+    
+    //MARK: - Storage Methods
+    func addToCarts(product: Products) {
+        storageService.addItem(CartsModel.self, product) { result in
+            switch result {
+            case .success:
+                print("Item added from cart successfully")
+            case .failure(let error):
+                print("Error adding product to cart: \(error)")
+            }
+        }
+    }
 }
-

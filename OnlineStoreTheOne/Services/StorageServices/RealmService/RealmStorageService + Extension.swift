@@ -6,16 +6,13 @@
 //
 
 import Foundation
+import RealmSwift
 
 extension RealmStorageService {
-    func createCompletion<T: StorableItem>(with itemType: T.Type, for product: Products, completion: @escaping (Result<Void, Error>) -> Void) -> (() -> ()) {
-        let closure = {
-            if RealmStorageService.shared.isItemSaved(itemType, id: product.id) {
-                RealmStorageService.shared.removeItem(itemType, id: product.id, completion: completion)
-            } else {
-                RealmStorageService.shared.addItem(itemType, product, completion: completion)
-            }
-        }
-        return closure
+    
+    func isItemSaved<T: Object>(_ itemType: T.Type, id: Int) -> Bool {
+        let itemId = realm.objects(itemType).filter("id = %@", id)
+        return !itemId.isEmpty
     }
+
 }

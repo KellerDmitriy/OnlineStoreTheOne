@@ -11,108 +11,156 @@ import SwiftUI
 
 final class SearchResultViewController: UIViewController {
     // MARK: - Properties
-    
-    var searchResults = [Products(id: 1, title: "Product 1", price: 10, description: "Description 1", category: nil, image: "tv", images: ["tv"]),
-                         Products(id: 2, title: "Product 2", price: 20, description: "Description 2", category: nil, image: "airpoods", images: ["airpoods"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4", images: ["ps4"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug", images: ["mug"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "ps4", images: ["ps4"]),
-                         Products(id: 3, title: "Product 3", price: 30, description: "Description 3", category: nil, image: "mug", images: ["mug"]),
-    ]
+    var searchText: String
+    let viewModel = SearchResultViewModel()
     
     // MARK: - UI Components
+    let searchField = SearchFieldCollectionViewCell()
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) in
             return self.createProductSection()
         }
-        let collectionView = UICollectionView(frame: .zero, 
+        let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: "ProductCollectionViewCell")
-        collectionView.register(HeaderProductsView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderProductsView")
         return collectionView
     }()
     
+    
     // MARK: - Init
+    init(searchText: String) {
+        self.searchText = searchText
+        super.init(nibName: nil, bundle: nil)
+        if !searchText.isEmpty {
+            viewModel.fetchSearchProducts(searchText)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        addViews()
+        
+        setupCollectionView()
         setupNavigationBar()
-        collectionView.reloadData()
+        observeProducts()
         
     }
+    
+    // MARK: - Data Observing
+    private func observeProducts() {
+        viewModel.$searchedProducts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            .store(in: &viewModel.subscription)
+    }
+    
     //MARK: - Private methods
     private func setupNavigationBar() {
-        
-//        let searchField = SearchFieldCollectionViewCell()
-//        navigationItem.titleView = searchField
-        
-        let cartButton = UIButton()
-        cartButton.setImage(UIImage(systemName: "cart"), for: .normal)
-        cartButton.tintColor = .black
-        cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
+        navigationController?.setupNavigationBar()
+        navigationController?.navigationBar.addBottomBorder()
+//        setSearchBar()
+        let cartButton = CartButton()
+        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartBarButtonItem = UIBarButtonItem(customView: cartButton)
         
-        navigationItem.rightBarButtonItem = cartBarButtonItem
-    }
-    @objc private func cartButtonTapped() {
-        print("нажата - Cart")
-    }
-}
-// MARK: - UICollectionViewDataSource
-extension SearchResultViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResults.count
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCollectionViewCell", for: indexPath) as? ProductCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        let product = searchResults[indexPath.item]
-        cell.configureCell(image: product.image ?? "", 
-                           title: product.title,
-                           price: String(product.price), 
-                           addToWishListCompletion: cartButtonTapped,
-                           addToCartCompletion: cartButtonTapped
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
         )
-        return cell
+        
+        navigationItem.rightBarButtonItem = cartBarButtonItem
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    private func setSearchBar() {
+        let frame = CGRect(x: 40, y: 0, width: 450, height: 44)
+        let titleView = UIView(frame: frame)
+        searchField.frame = frame
+        titleView.addSubview(searchField)
+        navigationItem.titleView = titleView
+        searchField.searchTextField.delegate = self
+    }
+    
+    //MARK: - Actions
+    func cartButtonTapped(_ product: Products) {
+         viewModel.addToCarts(product: product)
+     }
+    
+    @objc func addToCartTap() {
+        let viewControllerToPresent = CartsViewController()
+        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 
-// MARK: - UICollectionViewDelegate
-extension SearchResultViewController: UICollectionViewDelegate {
-    
-}
 //MARK: - AddViews
 extension SearchResultViewController {
-    private func addViews() {
+    
+    private func setupCollectionView() {
+        view.backgroundColor = .white
         view.addSubview(collectionView)
         addConstraints()
+        registerCells()
+        setDelegate()
     }
+    
+    private func registerCells() {
+        collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: "ProductCollectionViewCell")
+        collectionView.register(HeaderProductsView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderProductsView")
+    }
+    
+    private func setDelegate() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
     private func addConstraints() {
+
+        searchField.translatesAutoresizingMaskIntoConstraints = false
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
 }
+
 //MARK: - Create Layout
 extension SearchResultViewController {
     private func createProductSection() -> NSCollectionLayoutSection {
         ///хедер
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .estimated(30))
-        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                              elementKind: UICollectionView.elementKindSectionHeader,
-                                                                              alignment: .top)
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(349),
-                                                                         heightDimension: .absolute(217)),
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(30)
+        )
+        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
+        let item = NSCollectionLayoutItem(layoutSize:
+                .init(
+                    widthDimension: .fractionalWidth(0.5),
+                    heightDimension: .fractionalHeight(1))
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize:
+                .init(
+                    widthDimension: .absolute(349),
+                    heightDimension: .absolute(217)),
                                                        subitems: [item])
         group.interItemSpacing = .fixed(16)
         let section = NSCollectionLayoutSection(group: group)
@@ -136,27 +184,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderProductsView", for: indexPath) as! HeaderProductsView
-        headerView.configureHeader(labelName: "Search result for ")
+        headerView.configureHeader(labelName: "Search result for \(searchText)")
         return headerView
     }
 }
-
-    
-//MARK: - PreviewProvider
-struct SearchContentViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchContentViewController()
-            .edgesIgnoringSafeArea(.all)
-    }
-}
-struct SearchContentViewController: UIViewControllerRepresentable {
-
-    typealias UIViewControllerType = SearchResultViewController
-
-    func makeUIViewController(context: Context) -> UIViewControllerType {
-        return SearchResultViewController()
-    }
-
-    func updateUIViewController(_ uiViewController: SearchResultViewController, context: Context) {}
-}
-

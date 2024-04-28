@@ -9,6 +9,7 @@ import UIKit
 
 final class ProductListView: UIView {
     //MARK: - Private Methods
+    
     private let productContainerView = UIView()
     private lazy var productNameLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -35,17 +36,13 @@ final class ProductListView: UIView {
         return $0
     }(UIStackView())
     
-    private lazy var addToWishListButton: UIButton = {
-        let action = UIAction { _ in
-            self.addToWishListButton.image(for: .normal) == UIImage(named: "Wishlist") ?
-            self.addToWishListButton.setImage(UIImage(named: "selectedWishlist"), for: .normal) :
-            self.addToWishListButton.setImage(UIImage(named: "Wishlist"), for: .normal)
-        }
+    lazy var addToWishListButton: UIButton = {
+
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.layer.cornerRadius = 23
         $0.backgroundColor = Colors.gray.withAlphaComponent(0.1)
         $0.setImage(UIImage(named: "Wishlist"), for: .normal)
-        $0.addAction(action, for: .touchUpInside)
+      
         return $0
     }(UIButton(type: .system))
     

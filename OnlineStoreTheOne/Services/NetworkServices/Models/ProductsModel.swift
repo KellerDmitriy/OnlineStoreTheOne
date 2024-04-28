@@ -16,6 +16,19 @@ struct Products: Codable {
     let category: Category?
     let image: String?
     let images: [String]?
+    
+    static var placeholder: Self {
+        return Products(
+            id: 1,
+            title: "",
+            price: 2,
+            description: "",
+            category: Category.init(
+                id: 2, name: "", image: ""),
+            image: "",
+            images: [""]
+        )
+    }
 }
 
 // MARK: - Category

@@ -9,48 +9,51 @@ import UIKit
 
 final class CheckMarkButton: UIButton {
     
-    var isChecked: Bool = false {
+    var isChecked: Bool = true {
         didSet {
-            if isChecked == true {
-                self.checkMarkView.backgroundColor = Colors.greenSheen
-                self.setImage(
-                    UIImage(named: "CheckMark"),
-                    for: .selected
-                )
-            } else {
-                self.checkMarkView.backgroundColor = .white
-                self.setImage(
-                    nil,
-                    for: .normal
-                )
-            }
+            isChecked
+            ? self.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+            : self.setImage(UIImage(systemName: "square"), for: .normal)
+            self.tintColor = isChecked ? Colors.greenSheen : Colors.gray
         }
     }
-    
-    private lazy var checkMarkView: UIView = {
-        let view = UIView()
-        let height: CGFloat = 20
-        view.frame.size = CGSize(width: height, height: height)
-        view.layer.borderColor = Colors.lightGray.cgColor
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 5
-        view.backgroundColor = .white
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+
+    private lazy var checkMarkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.tintColor = Colors.gray
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
-    override func awakeFromNib() {
-        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControl.Event.touchUpInside)
-        self.isChecked = false
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+        setConstraints()
+    
     }
     
-    @objc func buttonClicked(sender: UIButton) {
-        if sender == self {
-            isChecked.toggle()
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupViews()
+        setConstraints()
+    }
+    
+    @objc private func buttonTapped() {
+        isChecked.toggle()
+    }
+    
+    private func setupViews() {
+        addSubview(checkMarkButton)
+    }
+    
+    private func setConstraints() {
+        checkMarkButton.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }
-
 
 
