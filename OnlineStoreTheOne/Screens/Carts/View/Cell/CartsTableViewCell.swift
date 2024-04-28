@@ -66,7 +66,10 @@ final class CartsTableViewCell: UITableViewCell {
     }
     
     //MARK: - Methods
-    func configureCell(_ cartModel: CartsModel, onTrashTapped: @escaping () -> ()) {
+    func configureCell(_ cartModel: CartsModel, 
+                       onTrashTapped: @escaping () -> (),
+     countDidChange: @escaping ((Int) -> Void))
+    {
         titleLabel.text = cartModel.title
         priceLabel.text = String("$\(cartModel.price)")
         
@@ -75,9 +78,12 @@ final class CartsTableViewCell: UITableViewCell {
         } else {
             productImageView.image = UIImage(named: "ps4")
         }
+        
         counterActionButton.count = cartModel.countProduct
         checkMarkButton.isChecked = cartModel.isSelected
+        
         counterActionButton.onTrashTapped = onTrashTapped
+        counterActionButton.countDidChange = countDidChange
     }
     
     //MARK: - Setup Views

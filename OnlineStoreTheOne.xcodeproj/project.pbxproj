@@ -75,7 +75,6 @@
 		E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC2E2BD071B30009C2A3 /* WishListViewController.swift */; };
 		E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC302BD071BA0009C2A3 /* WishListViewModel.swift */; };
 		E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */; };
-		E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC372BD1132E0009C2A3 /* NavBarController.swift */; };
 		E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC392BD24FC10009C2A3 /* CartButton.swift */; };
 		E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */; };
 		E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */; };
@@ -168,7 +167,6 @@
 		E1D1DC2E2BD071B30009C2A3 /* WishListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
 		E1D1DC302BD071BA0009C2A3 /* WishListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewModel.swift; sourceTree = "<group>"; };
 		E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
-		E1D1DC372BD1132E0009C2A3 /* NavBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarController.swift; sourceTree = "<group>"; };
 		E1D1DC392BD24FC10009C2A3 /* CartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartButton.swift; sourceTree = "<group>"; };
 		E1D1DC3C2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WishListViewControllet + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionCell.swift; sourceTree = "<group>"; };
@@ -546,7 +544,6 @@
 			isa = PBXGroup;
 			children = (
 				E1D1DC3B2BD2624B0009C2A3 /* Buttons */,
-				E1D1DC372BD1132E0009C2A3 /* NavBarController.swift */,
 				531121ED2BD2E5240018FA37 /* LabelFactory.swift */,
 			);
 			path = Helpers;
@@ -886,7 +883,6 @@
 				86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */,
 				BEBA5DC42BD0621900737686 /* ProductCollectionViewCell.swift in Sources */,
 				86EDFF162BD80F7C00CD9F81 /* InputContainerView.swift in Sources */,
-				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
 				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,

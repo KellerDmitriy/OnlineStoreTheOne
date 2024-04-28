@@ -15,11 +15,8 @@ final class WishListViewModel {
     let storageService = RealmStorageService.shared
     
     @Published var wishLists: Results<WishListModel>!
-    
-    @Published var product = Products.placeholder
-    
+    var product = Products.placeholder
     var filteredWishLists: Results<WishListModel>?
-    
     var subscription: Set<AnyCancellable> = []
     
     //MARK: - Init
@@ -30,7 +27,7 @@ final class WishListViewModel {
     //MARK: - Methods
     
     //MARK: - Storage Methods
-    func addToCart() {
+    func addToCart(_ product: Products) {
         storageService.addItem(CartsModel.self, product) { result in
             switch result {
             case .success:
@@ -39,6 +36,19 @@ final class WishListViewModel {
                 print("Error adding/removing item from wishlist: \(error)")
             }
         }
+    }
+    
+    func convertToProducts(from wishList: WishListModel) -> Products {
+        let product = Products(
+            id: wishList.id,
+            title: wishList.title,
+            price: wishList.price,
+            description: nil,
+            category: nil,
+            image: nil,
+            images: wishList.images.map { $0.base64EncodedString() }
+        )
+        return product
     }
     
     func removeWishList(at id: Int, completion: @escaping () -> Void) {

@@ -13,16 +13,31 @@ final class CartsViewModel {
     //MARK:  Properties
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
-
+    
     @Published var cartProducts: Results<CartsModel>!
     @Published var isSelect = true
-    
+    @Published var productCount = 1
     
     var subscription: Set<AnyCancellable> = []
     
     //MARK: - Init
     init() {
         cartProducts = storageService.realm.objects(CartsModel.self)
+    }
+    
+    //MARK: - Observe Methods
+    private func observe() {
+//        $isSelect
+//            .sink { [weak self] isSelect in
+//                self?.updateIsSelectedInCart(isSelected: isSelect)
+//            }
+//            .store(in: &subscription)
+//        
+//        $productCount
+//            .sink { [weak self] count in
+//                self?.updateProductCountInCart(count: count)
+//            }
+//            .store(in: &subscription)
     }
     
     //MARK: - Methods

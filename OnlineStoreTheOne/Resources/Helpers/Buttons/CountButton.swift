@@ -11,10 +11,12 @@ import SnapKit
 final class CounterActionButton: UIView {
     //MARK: - Public Properties
     var onTrashTapped: (() -> Void)?
-  
+    var countDidChange: ((Int) -> Void)?
+    
     var count: Int = 1 {
         didSet {
             countLabel.text = "\(count)"
+            countDidChange?(count)
         }
     }
     
@@ -97,7 +99,7 @@ final class CounterActionButton: UIView {
     }
     
     @objc private func decrementCount() {
-        if count >= 1 {
+        if count >= 2 {
             count -= 1
         }
     }
