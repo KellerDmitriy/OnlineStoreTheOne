@@ -16,6 +16,7 @@ final class SearchResultViewController: UIViewController {
     
     // MARK: - UI Components
     let searchField = SearchFieldCollectionViewCell()
+    let cartButton = CartButton()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) in

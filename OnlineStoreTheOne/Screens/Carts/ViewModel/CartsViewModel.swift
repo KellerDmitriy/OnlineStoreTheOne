@@ -26,6 +26,7 @@ final class CartsViewModel {
     //MARK: - Init
     init() {
         observeCartProducts()
+        getProductsFromCart() 
     }
     
     //MARK: - Observe Methods

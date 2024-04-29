@@ -43,6 +43,7 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchCategory()
         viewModel.fetchProducts(for: viewModel.selectedCategory)
+        viewModel.getProductsFromCart()
     }
     
     // MARK: - Data Observing
@@ -62,27 +63,37 @@ final class HomeViewController: UIViewController {
                 self.collectionView.reloadData()
             }
             .store(in: &viewModel.subscription)
+        
+        viewModel.$productCount
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                let header = HeaderNavBarMenuView()
+                header.cartButton.count = viewModel.productCount
+            }
+            .store(in: &viewModel.subscription)
+        
     }
     
     
     private func observeError() {
-            viewModel.$productsError
-                .compactMap { $0 }
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] error in
-                    guard let self = self else { return }
-                    self.showAlertError(error: error)
-                }
-                .store(in: &viewModel.subscription)
-
-            viewModel.$categoriesError
-                .compactMap { $0 }
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] error in
-                    guard let self = self else { return }
-                    self.showAlertError(error: error)
-                }
-                .store(in: &viewModel.subscription)
+        viewModel.$productsError
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                self.showAlertError(error: error)
+            }
+            .store(in: &viewModel.subscription)
+        
+        viewModel.$categoriesError
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                self.showAlertError(error: error)
+            }
+            .store(in: &viewModel.subscription)
         
         viewModel.$isLoading
             .compactMap { $0 }
@@ -92,8 +103,8 @@ final class HomeViewController: UIViewController {
                 self.collectionView.reloadData()
             }
             .store(in: &viewModel.subscription)
-        }
-
+    }
+    
     func showAlertError(error: Error) {
         AlertKitAPI.present(title: "Error", subtitle: "\(error)", icon: .error, style: .iOS16AppleMusic, haptic: .error)
     }
@@ -126,6 +137,7 @@ final class HomeViewController: UIViewController {
                     for: indexPath
                 ) as! HeaderNavBarMenuView
                 header.configureHeader(labelName: section.title)
+                
                 header.cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
                 return header
             case .categories:
@@ -235,7 +247,7 @@ extension HomeViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
             widthDimension: .absolute(57),
             heightDimension: .absolute(61)),
-            subitems: [item]
+                                                       subitems: [item]
         )
         let section = createLayoutSection(
             group: group,
