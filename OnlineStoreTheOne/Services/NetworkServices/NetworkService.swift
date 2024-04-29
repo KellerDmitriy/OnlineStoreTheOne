@@ -152,3 +152,98 @@ extension NetworkService {
         }
     }
 }
+
+//extension NetworkService {
+//    func createProduct(product: Product) async -> Result<Void, NetworkError> {
+//        let endpoint = Endpoint.createProduct()
+//        return await sendRequest(to: endpoint, with: product)
+//    }
+//
+//    private func sendRequest<T: Encodable>(to endpoint: Endpoint, with body: T) async -> Result<Void, NetworkError> {
+//        do {
+//            var request = endpoint.urlRequest
+//            request.httpMethod = "POST"
+//            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//            request.httpBody = try JSONEncoder().encode(body)
+//
+//            let (_, response) = try await URLSession.shared.data(for: request)
+//            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 else {
+//                throw NetworkError.invalidResponse
+//            }
+//            return .success(())
+//        } catch {
+//            return .failure(NetworkError.noData)
+//        }
+//    }
+//}
+
+extension NetworkService {
+    func createProduct(product: Product) async -> Result<MyProductResponse, NetworkError> {
+        let endpoint = Endpoint.createProduct()
+        return await sendRequest(to: endpoint, with: product)
+    }
+
+    private func sendRequest<T: Encodable, U: Decodable>(to endpoint: Endpoint, with body: T) async -> Result<U, NetworkError> {
+        do {
+            var request = endpoint.urlRequest
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONEncoder().encode(body)
+
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 else {
+                throw NetworkError.invalidResponse
+            }
+            let decodedResponse = try decoder.decode(U.self, from: data)
+            return .success(decodedResponse)
+        } catch {
+            return .failure(NetworkError.noData)
+        }
+    }
+}
+
+extension NetworkService {
+    func updateProduct(id: Int, updateData: ProductUpdate) async -> Result<Void, NetworkError> {
+        let endpoint = Endpoint.updateProduct(id: id)
+        return await sendRequest(to: endpoint, with: updateData)
+    }
+
+    private func sendRequest<T: Encodable>(to endpoint: Endpoint, with body: T) async -> Result<Void, NetworkError> {
+        do {
+            var request = endpoint.urlRequest
+            request.httpMethod = "PUT"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONEncoder().encode(body)
+
+            let (_, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return .failure(.invalidResponse)
+            }
+            return .success(())
+        } catch {
+            return .failure(NetworkError.noData)
+        }
+    }
+}
+
+extension NetworkService {
+    func deleteProductById(_ id: Int) async -> Result<Void, NetworkError> {
+        let endpoint = Endpoint.deleteProduct(id: id)
+        return await sendRequest(to: endpoint)
+    }
+
+    private func sendRequest(to endpoint: Endpoint) async -> Result<Void, NetworkError> {
+        do {
+            var request = endpoint.urlRequest
+            request.httpMethod = "DELETE"
+            
+            let (_, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return .failure(.invalidResponse)
+            }
+            return .success(())
+        } catch {
+            return .failure(NetworkError.noData)
+        }
+    }
+}

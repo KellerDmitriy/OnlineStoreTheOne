@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 enum ContainerType {
     case addNewProduct, addNewCategory
@@ -14,6 +15,19 @@ enum ContainerType {
 }
 
 final class ContainerManagersView: UIView {
+    
+    enum Action {
+        case titleField(String)
+        case priceField(String)
+        case categoryField(String)
+        case descriptionView(String)
+        case imageOneView(String)
+        case imageTwoView(String)
+        case imageThreeView(String)
+        case searchView(String)
+    }
+    
+    let actionPublisher = PassthroughSubject<Action, Never>()
     
     private let type: ContainerType
     private let containerView = UIView()
@@ -38,6 +52,7 @@ final class ContainerManagersView: UIView {
         super.init(frame: .zero)
         setupViews()
         setConstraints()
+        setupActions()
     }
     
     required init?(coder: NSCoder) {
@@ -94,13 +109,62 @@ final class ContainerManagersView: UIView {
         }
     }
     
+    private func setupActions() {
+        titleField.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.titleField(text))
+        }
+        
+        priceField.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.priceField(text))
+        }
+        
+        categoryField.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.categoryField(text))
+        }
+        
+        descriptionTextView.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.descriptionView(text))
+        }
+        
+        imageOneTextView.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.imageOneView(text))
+        }
+        
+        imageTwoTextView.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.imageTwoView(text))
+        }
+        
+        imageThreeTextView.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.imageThreeView(text))
+        }
+        
+        searchField.textChanged = { [weak self] text in
+            guard let self, let text else { return }
+            actionPublisher.send(.searchView(text))
+        }
+    }
+    
     func setData(_ data: [Category]) {
         categoryField.viewModel.separateCategories(data)
     }
     
-    func getCategoryId() -> Int? {
-        guard let name = categoryField.currentText else { return nil }
+    func getCategoryId(_ name: String) -> Int? {
         let id = categoryField.viewModel.getCategoryId(name)
         return id
+    }
+    
+    func setTextOnTitleField(_ text: String) {
+        titleField.setText(text)
+    }
+    
+    func setTextOnPriceField(_ text: String) {
+        priceField.setText(text)
     }
 }

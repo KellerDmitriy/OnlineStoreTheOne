@@ -57,6 +57,7 @@ final class CustomSearchTextField: UITextField {
 extension CustomSearchTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textChanged?(self.text)
+        print(text)
         resignFirstResponder()
         return true
     }

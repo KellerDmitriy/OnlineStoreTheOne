@@ -9,6 +9,8 @@ import UIKit
 
 final class CustomManagersTextView: UIView {
     
+    var textChanged: ((String?) -> Void)?
+    
     private let containerView = UIView()
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -78,6 +80,8 @@ extension CustomManagersTextView: UITextViewDelegate {
         textView.snp.updateConstraints {
             $0.height.equalTo(max(40, textView.contentHeight))
         }
+        
+        textChanged?(textView.text)
     }
 }
 

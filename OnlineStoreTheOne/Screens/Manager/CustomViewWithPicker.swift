@@ -10,6 +10,8 @@ import Combine
 
 final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
+    var textChanged: ((String?) -> Void)?
+    
     let viewModel: CustomViewWithPickerViewModel
     private var subscriptions: Set<AnyCancellable> = []
     private let containerView = UIView()
@@ -35,6 +37,7 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
         $0.layer.borderColor = Colors.placeholderManagerFields.cgColor
+        $0.addTarget(self, action: #selector(didTextChanged), for: .editingDidEnd)
         return $0
     }(UITextField())
     
@@ -123,6 +126,10 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
     
     @objc func dismissKeyboard() {
         textField.resignFirstResponder()
+    }
+    
+    @objc private func didTextChanged() {
+        textChanged?(textField.text)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

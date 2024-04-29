@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 class UpdateProductViewController: UIViewController {
-
+    
+    let viewModel = UpdateProductViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
+    
     private let productView = ContainerManagersView(type: .updateProduct)
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -17,6 +21,11 @@ class UpdateProductViewController: UIViewController {
         title: "Save",
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            Task {
+                await self.updateProduct()
+            }
+            navigationController?.popViewController(animated: true)
             print("Save Button Tapped")
         })
     ).createButton()
@@ -43,6 +52,30 @@ class UpdateProductViewController: UIViewController {
 
         setupViews()
         setConstraints()
+        
+        productView.actionPublisher.sink { [weak self] action in
+            guard let self else { return }
+            switch action {
+            case .titleField(let title):
+                viewModel.title = title
+            case .priceField(let price):
+                viewModel.price = Int(price)
+            case .categoryField(_):
+                break
+            case .descriptionView(_):
+                break
+            case .imageOneView(_):
+                break
+            case .imageTwoView(_):
+                break
+            case .imageThreeView(_):
+                break
+            case .searchView(let text):
+                Task {
+                    await self.findProductByTitle(text)
+                }
+            }
+        }.store(in: &subscriptions)
     }
 
     private func setupViews() {
@@ -90,5 +123,35 @@ class UpdateProductViewController: UIViewController {
         }
         
         [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
+    }
+    
+   private func findProductByTitle(_ title: String) async {
+        let result = await NetworkService.shared.fetchAllProducts()
+        switch result {
+        case .success(let products):
+            let filteredProducts = products.filter { $0.title.lowercased().contains(title.lowercased()) }
+            if let firstProduct = filteredProducts.first {
+                print("Найден продукт: \(firstProduct.title) с ID: \(firstProduct.id)")
+                productView.setTextOnTitleField(firstProduct.title)
+                productView.setTextOnPriceField("\(firstProduct.price)")
+                viewModel.id = firstProduct.id
+            } else {
+                print("Продукт с названием '\(title)' не найден.")
+            }
+        case .failure(let error):
+            print("Ошибка при запросе продуктов: \(error)")
+        }
+    }
+    
+    private func updateProduct() async {
+        guard let id = viewModel.id, let updateProduct = viewModel.productUpdate else { return }
+        
+        let result = await NetworkService.shared.updateProduct(id: id, updateData: updateProduct)
+        switch result {
+            case .success():
+                print("Product successfully updated.")
+            case .failure(let error):
+                print("Error updating product: \(error)")
+            }
     }
 }

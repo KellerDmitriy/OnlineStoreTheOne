@@ -9,6 +9,8 @@ import UIKit
 
 final class CustomViewWithOutPicker: UIView {
     
+    var textChanged: ((String?) -> Void)?
+    
     private let containerView = UIView()
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -31,6 +33,7 @@ final class CustomViewWithOutPicker: UIView {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = Colors.placeholderManagerFields.cgColor
         $0.clearButtonMode = .whileEditing
+        $0.addTarget(self, action: #selector(didTextChanged), for: .editingDidEnd)
         return $0
     }(UITextField())
     
@@ -70,5 +73,13 @@ final class CustomViewWithOutPicker: UIView {
         label.snp.makeConstraints {
             $0.centerY.equalToSuperview()
         }
+    }
+    
+    func setText(_ text: String) {
+        textField.text = text
+    }
+    
+    @objc private func didTextChanged() {
+        textChanged?(textField.text)
     }
 }

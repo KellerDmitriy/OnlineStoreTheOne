@@ -20,7 +20,6 @@
 		86BC2D282BDCF8A0003BF895 /* AddNewProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D272BDCF8A0003BF895 /* AddNewProductViewController.swift */; };
 		86BC2D2B2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D2A2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift */; };
 		86BC2D2D2BDD0429003BF895 /* CustomViewWithPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D2C2BDD0429003BF895 /* CustomViewWithPicker.swift */; };
-		86BC2D2F2BDD11F0003BF895 /* BaseManagersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D2E2BDD11F0003BF895 /* BaseManagersViewController.swift */; };
 		86BC2D312BDD159A003BF895 /* ContainerManagersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D302BDD159A003BF895 /* ContainerManagersView.swift */; };
 		86BC2D332BDD189F003BF895 /* CustomManagersTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D322BDD189F003BF895 /* CustomManagersTextView.swift */; };
 		86BC2D372BDD2003003BF895 /* CustomSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D362BDD2003003BF895 /* CustomSearchTextField.swift */; };
@@ -31,6 +30,11 @@
 		86BC2D492BDD5663003BF895 /* UpdateCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D482BDD5663003BF895 /* UpdateCategoryViewController.swift */; };
 		86BC2D4D2BDD56AE003BF895 /* DeleteCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */; };
 		86BC2D552BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D542BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift */; };
+		86BC2D572BDE6489003BF895 /* AddNewProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D562BDE6489003BF895 /* AddNewProductViewModel.swift */; };
+		86BC2D5A2BDE7151003BF895 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D592BDE7151003BF895 /* Product.swift */; };
+		86BC2D5C2BDE860F003BF895 /* UpdateProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D5B2BDE860F003BF895 /* UpdateProductViewModel.swift */; };
+		86BC2D5E2BDE8C4C003BF895 /* ProductUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D5D2BDE8C4C003BF895 /* ProductUpdate.swift */; };
+		86BC2D602BDEBA81003BF895 /* DeleteProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D5F2BDEBA81003BF895 /* DeleteProductViewModel.swift */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
 		86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */; };
 		86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */; };
@@ -131,7 +135,6 @@
 		86BC2D272BDCF8A0003BF895 /* AddNewProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewProductViewController.swift; sourceTree = "<group>"; };
 		86BC2D2A2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewWithOutPicker.swift; sourceTree = "<group>"; };
 		86BC2D2C2BDD0429003BF895 /* CustomViewWithPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewWithPicker.swift; sourceTree = "<group>"; };
-		86BC2D2E2BDD11F0003BF895 /* BaseManagersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseManagersViewController.swift; sourceTree = "<group>"; };
 		86BC2D302BDD159A003BF895 /* ContainerManagersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerManagersView.swift; sourceTree = "<group>"; };
 		86BC2D322BDD189F003BF895 /* CustomManagersTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomManagersTextView.swift; sourceTree = "<group>"; };
 		86BC2D362BDD2003003BF895 /* CustomSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchTextField.swift; sourceTree = "<group>"; };
@@ -142,6 +145,11 @@
 		86BC2D482BDD5663003BF895 /* UpdateCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCategoryViewController.swift; sourceTree = "<group>"; };
 		86BC2D4C2BDD56AE003BF895 /* DeleteCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCategoryViewController.swift; sourceTree = "<group>"; };
 		86BC2D542BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewWithPickerViewModel.swift; sourceTree = "<group>"; };
+		86BC2D562BDE6489003BF895 /* AddNewProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewProductViewModel.swift; sourceTree = "<group>"; };
+		86BC2D592BDE7151003BF895 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		86BC2D5B2BDE860F003BF895 /* UpdateProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProductViewModel.swift; sourceTree = "<group>"; };
+		86BC2D5D2BDE8C4C003BF895 /* ProductUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductUpdate.swift; sourceTree = "<group>"; };
+		86BC2D5F2BDEBA81003BF895 /* DeleteProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductViewModel.swift; sourceTree = "<group>"; };
 		86C474FD2BD507820070E3D8 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		86C475032BD50CF10070E3D8 /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
 		86C475052BD50D8B0070E3D8 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -290,6 +298,7 @@
 		86BC2D252BDCF10A003BF895 /* Subscreens */ = {
 			isa = PBXGroup;
 			children = (
+				86BC2D582BDE7149003BF895 /* Model */,
 				86BC2D532BDE5B18003BF895 /* ViewModels */,
 				86BC2D292BDCFB57003BF895 /* Subviews */,
 				86BC2D412BDD556D003BF895 /* DeleteCategory */,
@@ -315,7 +324,6 @@
 			children = (
 				86BC2D2A2BDCFBBA003BF895 /* CustomViewWithOutPicker.swift */,
 				86BC2D2C2BDD0429003BF895 /* CustomViewWithPicker.swift */,
-				86BC2D2E2BDD11F0003BF895 /* BaseManagersViewController.swift */,
 				86BC2D302BDD159A003BF895 /* ContainerManagersView.swift */,
 				86BC2D322BDD189F003BF895 /* CustomManagersTextView.swift */,
 				86BC2D362BDD2003003BF895 /* CustomSearchTextField.swift */,
@@ -367,8 +375,20 @@
 			isa = PBXGroup;
 			children = (
 				86BC2D542BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift */,
+				86BC2D562BDE6489003BF895 /* AddNewProductViewModel.swift */,
+				86BC2D5B2BDE860F003BF895 /* UpdateProductViewModel.swift */,
+				86BC2D5F2BDEBA81003BF895 /* DeleteProductViewModel.swift */,
 			);
 			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		86BC2D582BDE7149003BF895 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				86BC2D592BDE7151003BF895 /* Product.swift */,
+				86BC2D5D2BDE8C4C003BF895 /* ProductUpdate.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		86C474FC2BD5076C0070E3D8 /* Details */ = {
@@ -1011,12 +1031,14 @@
 				86BC2D312BDD159A003BF895 /* ContainerManagersView.swift in Sources */,
 				86EDFF162BD80F7C00CD9F81 /* InputContainerView.swift in Sources */,
 				86BC2D372BDD2003003BF895 /* CustomSearchTextField.swift in Sources */,
+				86BC2D5E2BDE8C4C003BF895 /* ProductUpdate.swift in Sources */,
 				86BC2D452BDD55BE003BF895 /* DeleteProductViewController.swift in Sources */,
 				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
 				86BC2D552BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift in Sources */,
 				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
 				86BC2D472BDD55FE003BF895 /* AddNewCategoryViewController.swift in Sources */,
+				86BC2D5C2BDE860F003BF895 /* UpdateProductViewModel.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E16BB6982BD654B6009991F3 /* PhotoCell.swift in Sources */,
 				86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */,
@@ -1027,6 +1049,7 @@
 				E14BC4142BD834B40026103A /* CheckMarkButton.swift in Sources */,
 				BEBA5DC02BD0621900737686 /* HeaderProductsView.swift in Sources */,
 				E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */,
+				86BC2D572BDE6489003BF895 /* AddNewProductViewModel.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
 				E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */,
 				86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */,
@@ -1035,13 +1058,13 @@
 				534848A42BD69C2300162CE6 /* PaymentSuccessView.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CartsViewModel.swift in Sources */,
 				E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */,
+				86BC2D5A2BDE7151003BF895 /* Product.swift in Sources */,
 				86BC2D2D2BDD0429003BF895 /* CustomViewWithPicker.swift in Sources */,
 				E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */,
 				E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */,
 				BEBA5DBF2BD0621900737686 /* ListSection.swift in Sources */,
 				86EDFF272BD91F7600CD9F81 /* AuthService.swift in Sources */,
 				BEBA5DBE2BD0621900737686 /* MockData.swift in Sources */,
-				86BC2D2F2BDD11F0003BF895 /* BaseManagersViewController.swift in Sources */,
 				E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */,
@@ -1054,6 +1077,7 @@
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				86BC2D332BDD189F003BF895 /* CustomManagersTextView.swift in Sources */,
 				E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */,
+				86BC2D602BDEBA81003BF895 /* DeleteProductViewModel.swift in Sources */,
 				86BC2D432BDD5596003BF895 /* UpdateProductViewController.swift in Sources */,
 				E14BC4192BD860E70026103A /* CountButton.swift in Sources */,
 				E1D1DC1C2BD06FE30009C2A3 /* StorageService.swift in Sources */,
