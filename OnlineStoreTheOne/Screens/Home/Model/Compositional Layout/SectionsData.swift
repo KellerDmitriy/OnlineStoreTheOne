@@ -19,14 +19,15 @@ enum HomeSection: Int, Hashable {
         case .categories:
             return ""
         case .products:
-            return NSLocalizedString("Products", comment: "")
+            return SectionsData.shared.selectedCategoryTitle
         }
     }
 }
 
 struct SectionsData {
     
-    static let shared = SectionsData()
+    static var shared = SectionsData()
+    var selectedCategoryTitle: String = "Products"
     
     let sections: [HomeSection] = [
         .searchField,

@@ -73,14 +73,17 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
         switch section {
-            
         case .searchField: break
-
         case .categories:
             let category = viewModel.categories[indexPath.row]
             viewModel.updateCategory(category.id)
-      
-    
+            
+            SectionsData.shared.selectedCategoryTitle = category.name ?? ""
+            
+            if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
+                collectionView.deselectItem(at: selectedIndexPath, animated: true)
+            }
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         case .products:
             let selectedProduct = viewModel.products[indexPath.row]
             let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id)
@@ -92,6 +95,7 @@ extension HomeViewController: UICollectionViewDelegate {
         }
     }
 }
+
 
 //MARK: - UITextFieldDelegate
 extension HomeViewController: UITextFieldDelegate {

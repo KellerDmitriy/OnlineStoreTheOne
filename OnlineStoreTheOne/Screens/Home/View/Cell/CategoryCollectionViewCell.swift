@@ -27,6 +27,15 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         element.backgroundColor = .clear
         return element
     }()
+    
+    private let selectedBorderWidth: CGFloat = 2
+    private let selectedBorderColor: UIColor = Colors.greenSheen
+    
+    override var isSelected: Bool {
+        didSet {
+            updateCellSelection()
+        }
+    }
 
     //MARK: - Init
     override init(frame: CGRect) {
@@ -40,9 +49,13 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     }
     //MARK: - Methods
     func configureCell(image: String, category: String) {
-//        categoryImageView.image = UIImage(named: image)
         categoryImageView.kf.setImage(with: URL(string: image))
         nameLabel.text = category
+    }
+    
+    private func updateCellSelection() {
+        layer.borderWidth = isSelected ? selectedBorderWidth : 0
+        layer.borderColor = isSelected ? selectedBorderColor.cgColor : UIColor.clear.cgColor
     }
     
     private func setupView() {

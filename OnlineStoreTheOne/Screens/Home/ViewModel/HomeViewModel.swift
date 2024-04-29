@@ -5,7 +5,7 @@
 //  Created by Иван Семенов on 19.04.2024.
 //
 
-
+import UIKit
 import Foundation
 import Combine
 
@@ -13,7 +13,7 @@ final class HomeViewModel: ObservableObject {
     @Published var productsError: Error?
     @Published var categoriesError: Error?
     
-    @Published var isLoading: Bool = true
+    @Published var isLoading: Bool = true       
     @Published var categories: [Category] = []
     @Published var products: [Products] = []
     @Published var searchedProducts: [Products] = []
@@ -114,3 +114,4 @@ extension HomeViewModel {
         return uniqueCategories
     }
 }
+
