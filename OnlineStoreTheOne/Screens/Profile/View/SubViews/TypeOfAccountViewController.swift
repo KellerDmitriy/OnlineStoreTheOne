@@ -6,6 +6,12 @@
 //
 
 import UIKit
+import FirebaseAuth
+
+enum TypeOfAccount: String {
+    case manager = "Manager"
+    case user = "User"
+}
 
 final class TypeOfAccountViewController: UIViewController {
     //MARK: - UI elements
@@ -43,35 +49,62 @@ final class TypeOfAccountViewController: UIViewController {
         navigationItem.title = "Type of Account"
         navigationController?.setupNavigationBar()
         navigationController?.navigationBar.addBottomBorder()
+        setupButtons()
     }
 }
 
 //MARK: - Extension
 private extension TypeOfAccountViewController {
     
+    private func setupButtons() {
+        if let type = UserDefaults.standard.object(forKey: "accountType") as? String {
+            switch type {
+            case TypeOfAccount.manager.rawValue:
+                self.managerButton.0.backgroundColor = Colors.greenSheen
+                self.managerButton.1.textColor = .white
+                self.view.bringSubviewToFront(self.managerButton.2)
+                
+                self.userButton.0.backgroundColor = Colors.lightGray
+                self.userButton.1.textColor = Colors.darkArsenic
+                self.view.sendSubviewToBack(self.userButton.2)
+            case TypeOfAccount.user.rawValue:
+                self.managerButton.0.backgroundColor = Colors.lightGray
+                self.managerButton.1.textColor = Colors.darkArsenic
+                self.view.sendSubviewToBack(self.managerButton.2)
+                
+                self.userButton.0.backgroundColor = Colors.greenSheen
+                self.userButton.1.textColor = .white
+                self.view.bringSubviewToFront(self.userButton.2)
+            default:
+                break
+            }
+        }
+        
+    }
+    
+    private func updateAccount(type: String) {
+        if let user = Auth.auth().currentUser {
+            AuthService.shared.changeAccountType(userId: user.uid, type: type)
+        }
+    }
+    
     //MARK: -  Action
     func managerBtnTapped() -> UIAction {
-        let act = UIAction { _ in
-            self.managerButton.0.backgroundColor = Colors.greenSheen
-            self.managerButton.1.textColor = .white
-            self.view.bringSubviewToFront(self.managerButton.2)
-            
-            self.userButton.0.backgroundColor = Colors.lightGray
-            self.userButton.1.textColor = Colors.darkArsenic
-            self.view.sendSubviewToBack(self.userButton.2)
+        let act = UIAction { [weak self] _ in
+            let type = TypeOfAccount.manager.rawValue
+            self?.updateAccount(type: type)
+            UserDefaults.standard.set(type, forKey: "accountType")
+            self?.setupButtons()
         }
         return act
     }
     
     func userBtnTapped() -> UIAction {
-        let act = UIAction { _ in
-            self.managerButton.0.backgroundColor = Colors.lightGray
-            self.managerButton.1.textColor = Colors.darkArsenic
-            self.view.sendSubviewToBack(self.managerButton.2)
-            
-            self.userButton.0.backgroundColor = Colors.greenSheen
-            self.userButton.1.textColor = .white
-            self.view.bringSubviewToFront(self.userButton.2)
+        let act = UIAction { [weak self] _ in
+            let type = TypeOfAccount.user.rawValue
+            self?.updateAccount(type: type)
+            UserDefaults.standard.set("User", forKey: "accountType")
+            self?.setupButtons()
         }
         return act
     }
