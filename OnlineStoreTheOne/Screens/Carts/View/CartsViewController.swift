@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class CartsViewController: UIViewController {
-    var viewModel = CartsViewModel()
+    var viewModel: CartsViewModel!
     
     //    MARK: - UI elements
     private lazy var locationTitleLabel: UILabel = {
@@ -63,6 +63,7 @@ final class CartsViewController: UIViewController {
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = CartsViewModel()
         view.backgroundColor = .white
         setupViews()
         setupLayout()
@@ -72,6 +73,11 @@ final class CartsViewController: UIViewController {
         observeCartProducts()
         changeToWishListButton()
        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getProductsFromCart()
     }
     
     // MARK: - Data Observing

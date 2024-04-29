@@ -12,18 +12,17 @@ final class DetailsProductViewModel: ObservableObject {
     // MARK: - Properties
     @Published var product = Products.placeholder
     @Published var isSaved: Bool
-    //    @Published var isCart: Bool
+    @Published var isCart: Bool
     
     var cancellables: Set<AnyCancellable> = []
     
     let networkService = NetworkService.shared
-    
-    let storageService = StorageService.shared
+    let storageService = RealmStorageService.shared
     
     // MARK: - Init
     init(productId: Int) {
-        self.isSaved = storageService.isItemSaved(productId)
-        //        self.isCart = storageService.isItemSaved(CartsModel.self, id: productId)
+        self.isSaved = storageService.isItemSaved(WishListModel.self, id: productId)
+        self.isCart = storageService.isItemSaved(CartsModel.self, id: productId)
         
         fetchProductDetails(productId: productId)
     }
@@ -51,23 +50,36 @@ final class DetailsProductViewModel: ObservableObject {
     }
     
     //MARK: - Storage Methods
-    //    func addToCart() {
-    //        storageService.addItem(CartsModel.self, product) { result in
-    //            switch result {
-    //            case .success:
-    //                print("Item added from cart successfully")
-    //            case .failure(let error):
-    //                print("Error adding/removing item from wishlist: \(error)")
-    //            }
-    //        }
-    //    }
+    func addToCart() {
+        storageService.addItem(CartsModel.self, product) { result in
+            switch result {
+            case .success:
+                print("Item added from cart successfully")
+            case .failure(let error):
+                print("Error adding/removing item from wishlist: \(error)")
+            }
+        }
+    }
     
     func addToWishList() {
-        storageService.saveWishListID(id: product.id)
+        storageService.addWishList(product.id) { result in
+            switch result {
+            case .success:
+                print("Item added from WishList successfully")
+            case .failure(let error):
+                print("Error adding/removing item from wishlist: \(error)")
+            }
+        }
     }
     
     func removeFromWishList() {
-        storageService.deleteWishListID(product.id)
-        
+        storageService.removeItem(WishListModel.self, id: product.id) { result in
+            switch result {
+            case .success:
+                print("Item remove from WishList successfully")
+            case .failure(let error):
+                print("Error adding item from wishlist: \(error)")
+            }
+        }
     }
 }

@@ -24,7 +24,12 @@ extension RealmStorageService {
         }
     }
     
-    func loadWishListFromRealm() -> Results<WishListModel> {
+
+    func getWishListFromRealm() -> Results<WishListModel> {
         realm.objects(WishListModel.self)
+    }
+    
+    func getCartFromRealm() -> Results<CartsModel> {
+        realm.objects(CartsModel.self)
     }
 }

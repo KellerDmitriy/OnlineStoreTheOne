@@ -7,28 +7,29 @@
 
 import Foundation
 import Combine
+import RealmSwift
 
 final class WishListViewModel {
     let networkService = NetworkService.shared
-    let storageService = StorageService.shared
+//    let storageService = StorageService.shared
     let realmStorageService = RealmStorageService.shared
     
     @Published var wishList: [Products] = []
     @Published var filteredWishList: [Products] = []
-    @Published var wishListKeys: [Int] = []
+    
+    @Published var wishListKeys: Results<WishListModel>!
     
     var subscription: Set<AnyCancellable> = []
     
     init() {
-//        getWishListIDs()
         observeProducts()
     }
     
     private func observeProducts() {
         $wishListKeys
             .sink { [weak self] wishListKeys in
-                wishListKeys.forEach { id in
-                    self?.fetchProducts(wishListKey: id)
+                wishListKeys?.forEach { wishList in
+                    self?.fetchProducts(wishListKey: wishList.id)
                 }
             }
             .store(in: &subscription)
@@ -46,16 +47,7 @@ final class WishListViewModel {
             }
         }
     }
-    
-    func getWishListIDs() {
-        wishListKeys = storageService.getWishListIDs()
-    }
-    
-    func removeWishList(at id: Int) {
-        storageService.deleteWishListID(id)
-        wishList.removeAll { $0.id == id }
-    }
-    
+
     //MARK: - Storage Methods
     func addToCart(_ product: Products) {
         realmStorageService.addItem(CartsModel.self, product) { result in
@@ -68,4 +60,19 @@ final class WishListViewModel {
         }
     }
     
+    func getWishListIDs() {
+        wishListKeys = realmStorageService.getWishListFromRealm()
+    }
+    
+    func removeWishList(at id: Int) {
+        realmStorageService.removeItem(WishListModel.self, id: id) { result in
+            switch result {
+            case .success:
+                print("Item removed from cart")
+            case .failure(let error):
+                print("Error removing item from cart: \(error)")
+            }
+        }
+        wishList.removeAll { $0.id == id }
+    }
 }
