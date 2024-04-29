@@ -71,8 +71,6 @@ final class CartsViewController: UIViewController {
         
         setupNavigationBar()
         observeCartProducts()
-        changeToWishListButton()
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
