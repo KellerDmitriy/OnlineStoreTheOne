@@ -136,6 +136,7 @@ final class RegistrationViewController: UIViewController {
                 profileImageURL: ""
             )
             AuthService.shared.registerUser(with: credentials)
+            UserDefaults.standard.set(type, forKey: "accountType")
             dismiss(animated: true)
         }
         return action
