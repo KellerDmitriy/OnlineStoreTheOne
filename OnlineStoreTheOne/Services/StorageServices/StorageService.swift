@@ -42,8 +42,13 @@ final class StorageService {
             userDefaults.set(wishListIDs, forKey: UserDefaultKeys.wishListID)
         }
     }
-
-    func deleteWishListID(id: Int) {
+    
+    func isItemSaved(_ id: Int) -> Bool {
+        let wishListIds = userDefaults.array(forKey: UserDefaultKeys.wishListID) as? [Int] ?? []
+        return wishListIds.contains(id)
+    }
+    
+    func deleteWishListID(_ id: Int) {
         var wishListIDs = getWishListIDs()
         if let index = wishListIDs.firstIndex(of: id) {
             wishListIDs.remove(at: index)

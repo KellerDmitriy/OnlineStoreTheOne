@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import AlertKit
 
 final class WishListViewController: UIViewController {
-    
-    var viewModel = WishListViewModel()
+    var viewModel: WishListViewModel!
     
     //MARK: Private properties
     private var searchBarIsEmpty: Bool {
@@ -17,7 +17,7 @@ final class WishListViewController: UIViewController {
         return text.isEmpty
     }
     
-    private var isFiltering: Bool {
+    var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
     
@@ -33,21 +33,37 @@ final class WishListViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+       viewModel = WishListViewModel()
+        
         setupUI()
-        observeProducts()
-
+        observeViewModelChanges()
     }
     
-    // MARK: - Data Observing
-    private func observeProducts() {
-        viewModel.$wishLists
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getWishListIDs()
+    }
+    
+    // MARK: - ViewModel Observing
+    private func observeViewModelChanges() {
+        viewModel.$wishList
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.collectionView.reloadData()
+                self?.animateCollectionView()
+            }
+            .store(in: &viewModel.subscription)
+        
+        viewModel.$filteredWishList
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.animateCollectionView()
             }
             .store(in: &viewModel.subscription)
     }
     
+
+    
+
     // MARK: - Actions
     @objc func addToCartTap() {
         let viewControllerToPresent = CartsViewController()
@@ -57,11 +73,28 @@ final class WishListViewController: UIViewController {
     }
     
     // MARK: - UI Setup
+    
+    func animateCollectionView() {
+        UIView.transition(with: collectionView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.collectionView.reloadData()
+        }, completion: nil)
+    }
+    
     private func setupUI() {
         view.backgroundColor = .white
         
         setupNavigation()
         setupCollectionView()
+        setupSearchController()
+    }
+    
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Products"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     private func setupCollectionView() {
@@ -129,33 +162,22 @@ final class WishListViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = cartButtonItem
     }
-}
-
-// MARK: - UISearchResultsUpdating, TextFieldDelegate
-extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text ?? "")
-    }
-    
-    private func filterContentForSearchText(_ searchText: String) {
-        //        guard var filteredWishLists = viewModel.filteredWishLists else { return }
-        //        filteredWishLists = viewModel.wishLists. { product in
-        //            product.title.lowercased().contains(searchText.lowercased())
-        //        }
-        //        collectionView.reloadData()
-    }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        searchController.isActive = false
-        return true
-    }
     
     private func configureSearchController() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchTextField.delegate = self
         
         searchController.searchBar.placeholder = "Search title..."
+    }
+}
+
+// MARK: - UISearchResultsUpdating, TextFieldDelegate
+extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text ?? ""
+        viewModel.filteredWishList = viewModel.wishList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        collectionView.reloadData()
     }
 }
 

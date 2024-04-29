@@ -25,7 +25,7 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let self = self else { return }
                 
                 self.trashButtonTap(id: cart.id)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadData()
                 
             }, 
             countDidChange: { [weak self] count in
@@ -51,3 +51,4 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
         viewModel.updateItemCount(for: productID, newCount: newCount)
     }
 }
+

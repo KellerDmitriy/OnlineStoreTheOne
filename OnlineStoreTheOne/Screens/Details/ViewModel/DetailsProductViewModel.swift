@@ -12,7 +12,8 @@ final class DetailsProductViewModel: ObservableObject {
     // MARK: - Properties
     @Published var product = Products.placeholder
     @Published var isSaved: Bool
-
+    @Published var isCart: Bool
+    
     var cancellables: Set<AnyCancellable> = []
     
     let networkService = NetworkService.shared
@@ -21,7 +22,8 @@ final class DetailsProductViewModel: ObservableObject {
     // MARK: - Init
     init(productId: Int) {
         self.isSaved = storageService.isItemSaved(WishListModel.self, id: productId)
-       
+        self.isCart = storageService.isItemSaved(CartsModel.self, id: productId)
+        
         fetchProductDetails(productId: productId)
     }
     
@@ -60,7 +62,7 @@ final class DetailsProductViewModel: ObservableObject {
     }
     
     func addToWishList() {
-        storageService.addItem(WishListModel.self, product) { result in
+        storageService.addWishList(product.id) { result in
             switch result {
             case .success:
                 print("Item added from WishList successfully")

@@ -9,7 +9,6 @@ import Foundation
 import RealmSwift
 
 final class CartsModel: Object, StorableItem {
-    @Persisted var value = UUID()
     @Persisted var id: Int
     @Persisted var title: String
     @Persisted var price: Int

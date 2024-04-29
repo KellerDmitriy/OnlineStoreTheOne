@@ -10,12 +10,16 @@ import Foundation
 import Combine
 
 final class HomeViewModel: ObservableObject {
+    @Published var productsError: Error?
+    @Published var categoriesError: Error?
     
     @Published var isLoading: Bool = true
     @Published var categories: [Category] = []
     @Published var products: [Products] = []
     @Published var searchedProducts: [Products] = []
     @Published var searchText = ""
+    
+    @Published var selectedCategory: Int = 1
     
     var subscription: Set<AnyCancellable> = []
     
@@ -33,23 +37,17 @@ final class HomeViewModel: ObservableObject {
             .sink {  searchText in
             }
             .store(in: &subscription)
+        
+        $selectedCategory
+            .sink { [weak self] categoryId in
+                self?.fetchProducts(for: categoryId)
+            }
+            .store(in: &subscription)
     }
     
     //MARK: - Fetch Methods
-    func fetchData() {
-        Task {
-            await withTaskGroup(of: Void.self) { group in
-                group.addTask { [weak self] in
-                     self?.fetchProducts(for: nil)
-                }
-                group.addTask { [weak self] in
-                     self?.fetchCategory()
-                }
-                
-                await group.waitForAll()
-                self.isLoading = false
-            }
-        }
+    func updateCategory(_ id: Int) {
+        selectedCategory = id
     }
     
     func fetchProducts(for categoryID: Int?) {
@@ -58,20 +56,24 @@ final class HomeViewModel: ObservableObject {
             switch result {
             case .success(let products):
                 self.products = products
+                self.isLoading = false
             case .failure(let error):
-                print("Error fetching products: \(error)")
+                self.productsError = error
             }
         }
     }
+    
     
     func fetchCategory() {
         Task {
             let result = await networkService.fetchAllCategories()
             switch result {
             case .success(let categories):
-                self.categories = categories
+                let filteredCategories = filterCategories(categories)
+                let uniqueCategories = filterUniqueCategories(filteredCategories)
+                self.categories = uniqueCategories
             case .failure(let error):
-                print("Error fetching products: \(error)")
+                self.categoriesError = error
             }
         }
     }
@@ -86,5 +88,29 @@ final class HomeViewModel: ObservableObject {
                 print("Error adding product to cart: \(error)")
             }
         }
+    }
+}
+
+//MARK: - Helper Methods
+extension HomeViewModel {
+    func filterCategories(_ categories: [Category]) -> [Category] {
+        return categories.filter { category in
+            if let name = category.name, let imageURL = category.image, name != "New Category" {
+                return name.count <= 15
+            }
+            return false
+        }
+    }
+
+    func filterUniqueCategories(_ categories: [Category]) -> [Category] {
+        var uniqueCategories: [Category] = []
+        var seenNames: Set<String> = Set()
+        for category in categories {
+            if let name = category.name, !seenNames.contains(name) {
+                uniqueCategories.append(category)
+                seenNames.insert(name)
+            }
+        }
+        return uniqueCategories
     }
 }

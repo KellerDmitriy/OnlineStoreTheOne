@@ -64,19 +64,12 @@ extension NetworkService {
     /// - Parameter endpoint: Endpoint для выполнения запроса.
     /// - Returns: Результат выполнения запроса с декодированными данными или ошибкой сети.
     func request<T: Decodable>(from endpoint: Endpoint) async -> Result<T, Error> {
-       print(await Result
-        .success(endpoint)
-        .map(\.urlRequest)
-        .asyncMap(session.data)
-        .flatMap(unwrapResponse)
-        .decode(T.self, decoder: decoder)
-       )
-        return await Result
-             .success(endpoint)
-             .map(\.urlRequest)
-             .asyncMap(session.data)
-             .flatMap(unwrapResponse)
-             .decode(T.self, decoder: decoder)
+        await Result
+            .success(endpoint)
+            .map(\.urlRequest)
+            .asyncMap(session.data)
+            .flatMap(unwrapResponse)
+            .decode(T.self, decoder: decoder)
     }
     
     // MARK: - Response Handling

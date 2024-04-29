@@ -32,11 +32,8 @@ extension UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "Ok", style: .default)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
         
         alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
         present(alert, animated: true)
     }
 }

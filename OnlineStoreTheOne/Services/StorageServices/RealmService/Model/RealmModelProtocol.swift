@@ -12,5 +12,6 @@ protocol StorableItem: Object {
     var id: Int { get set }
     var title: String { get set }
     var price: Int { get set }
+    var countProduct: Int { get set }
     var images: List<Data> { get set }
 }

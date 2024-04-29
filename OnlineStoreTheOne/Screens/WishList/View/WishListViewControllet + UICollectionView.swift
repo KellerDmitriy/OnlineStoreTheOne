@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import AlertKit
 
 // MARK: - UICollectionViewDataSource
+
 extension WishListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.wishLists.count
+        return  isFiltering ? viewModel.filteredWishList.count : viewModel.wishList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -18,20 +20,19 @@ extension WishListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let wishList = viewModel.wishLists[indexPath.item]
-        cell.configureCell(wishList)
+        let product = isFiltering
+        ? viewModel.filteredWishList[indexPath.item] 
+        : viewModel.wishList[indexPath.item]
+        
+        cell.configureCell(product)
         
         cell.addToCartCompletion = { [weak self] in
-           let product =  self?.viewModel.convertToProducts(from: wishList)
-            self?.viewModel.addToCart((product ?? self?.viewModel.product)!)
+            self?.viewModel.addToCart(product)
         }
         
         cell.removeFromWishListCompletion = { [weak self] in
-            self?.viewModel.removeWishList(at: wishList.id) {
-                collectionView.reloadData()
-            }
+            self?.viewModel.removeWishList(at: product.id)
         }
-        
         return cell
     }
 }
@@ -39,7 +40,10 @@ extension WishListViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension WishListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedWishList = viewModel.wishLists[indexPath.item]
+        let selectedWishList = isFiltering
+        ? viewModel.filteredWishList[indexPath.item]
+        : viewModel.wishList[indexPath.item]
+        
         let detailViewModel = DetailsProductViewModel(productId: selectedWishList.id)
         let detailViewController = DetailsViewController(viewModel: detailViewModel)
         let navigationController = UINavigationController(rootViewController: detailViewController)
@@ -47,4 +51,5 @@ extension WishListViewController: UICollectionViewDelegate {
         self.present(navigationController, animated: true, completion: nil)
     }
 }
+
 

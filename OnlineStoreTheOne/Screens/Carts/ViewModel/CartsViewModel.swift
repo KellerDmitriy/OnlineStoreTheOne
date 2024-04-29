@@ -40,7 +40,11 @@ final class CartsViewModel {
 //            .store(in: &subscription)
     }
     
-    //MARK: - Methods
+    //MARK: - Storage Methods
+    
+    func getProductsFromCart() {
+        storageService.getCartFromRealm()
+    }
     
     func removeFromCart(_ id: Int) {
         storageService.removeItem(CartsModel.self, id: id) { result in

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class CartsViewController: UIViewController {
-    var viewModel = CartsViewModel()
+    var viewModel: CartsViewModel!
     
     //    MARK: - UI elements
     private lazy var locationTitleLabel: UILabel = {
@@ -31,6 +31,8 @@ final class CartsViewController: UIViewController {
     private lazy var totalPriceLabel: UILabel = {
         NewLabelFactory(text: "100 $", font: .extraBold, color: .black, size: 16).createLabel()
     }()
+    
+    let cartButton = CartButton()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -61,6 +63,7 @@ final class CartsViewController: UIViewController {
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = CartsViewModel()
         view.backgroundColor = .white
         setupViews()
         setupLayout()
@@ -69,14 +72,21 @@ final class CartsViewController: UIViewController {
         setupNavigationBar()
         observeCartProducts()
         changeToWishListButton()
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getProductsFromCart()
     }
     
     // MARK: - Data Observing
        private func observeCartProducts() {
            viewModel.$cartProducts
                .receive(on: DispatchQueue.main)
-               .sink { [weak self] _ in
+               .sink { [weak self] carts in
                    self?.tableView.reloadData()
+                   self?.cartButton.count = carts?.count ?? 0
                }
                .store(in: &viewModel.subscription)
        }
@@ -126,7 +136,7 @@ final class CartsViewController: UIViewController {
         )
         navigationItem.leftBarButtonItem = backButton
         
-        let cartButton = CartButton()
+        
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
         navigationItem.rightBarButtonItem = cartButtonItem
         

@@ -93,11 +93,12 @@
 		E1D1DC3F2BD273CA0009C2A3 /* WishListCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */; };
 		E1D1DC422BD27AAB0009C2A3 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1DC412BD27AAB0009C2A3 /* Categories.swift */; };
 		E1D91A102BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D91A0F2BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift */; };
+		E1D91A122BDE54D00031B413 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1D91A112BDE54D00031B413 /* Assets.xcassets */; };
+		E1D91A152BDE66300031B413 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = E1D91A142BDE66300031B413 /* AlertKit */; };
 		E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */; };
 		E1E2B4CA2BDBD98300D72CF7 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
-		E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22A2BCC1853001DC54D /* Assets.xcassets */; };
 		E1F1B22E2BCC1853001DC54D /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22D2BCC1853001DC54D /* Base */; };
 		E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B23D2BCC2992001DC54D /* UIFont + Extension.swift */; };
 		E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B23F2BCC2E18001DC54D /* Color + Extension.swift */; };
@@ -198,12 +199,12 @@
 		E1D1DC3E2BD273CA0009C2A3 /* WishListCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionCell.swift; sourceTree = "<group>"; };
 		E1D1DC412BD27AAB0009C2A3 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		E1D91A0F2BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultViewController + UICollectionView.swift"; sourceTree = "<group>"; };
+		E1D91A112BDE54D00031B413 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E1F1B22A2BCC1853001DC54D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1F1B22D2BCC1853001DC54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1F1B22F2BCC1853001DC54D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1F1B23D2BCC2992001DC54D /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
@@ -230,6 +231,7 @@
 			files = (
 				E13B33FC2BD2A097007B17FC /* Kingfisher in Frameworks */,
 				E18A560C2BD7BFF300E34777 /* FirebaseAuth in Frameworks */,
+				E1D91A152BDE66300031B413 /* AlertKit in Frameworks */,
 				868A9A4F2BD9366E00476776 /* FirebaseStorage in Frameworks */,
 				E1F1B2662BCC5122001DC54D /* SnapKit in Frameworks */,
 				E16BB6722BD461C1009991F3 /* Realm in Frameworks */,
@@ -785,10 +787,10 @@
 		E1F1B23B2BCC2634001DC54D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E1D91A112BDE54D00031B413 /* Assets.xcassets */,
 				E1A2E8492BCDB90D00CC0D64 /* Helpers */,
 				E1F1B23C2BCC2934001DC54D /* Extensions */,
 				E1F1B2412BCC32B9001DC54D /* Fonts */,
-				E1F1B22A2BCC1853001DC54D /* Assets.xcassets */,
 				E1F1B22C2BCC1853001DC54D /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -897,6 +899,7 @@
 				E18A560D2BD7BFF300E34777 /* FirebaseAuthCombine-Community */,
 				E18A560F2BD7BFF300E34777 /* FirebaseFirestore */,
 				868A9A4E2BD9366E00476776 /* FirebaseStorage */,
+				E1D91A142BDE66300031B413 /* AlertKit */,
 			);
 			productName = OnlineStoreTheOne;
 			productReference = E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */;
@@ -931,6 +934,7 @@
 				E13B33FA2BD2A097007B17FC /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E16BB6702BD461C0009991F3 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				E18A560A2BD7BFF300E34777 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E1D91A132BDE66300031B413 /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = E1F1B21F2BCC1852001DC54D /* Products */;
 			projectDirPath = "";
@@ -946,7 +950,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1F1B22B2BCC1853001DC54D /* Assets.xcassets in Resources */,
 				E1F1B24F2BCC36E2001DC54D /* Inter-Black.ttf in Resources */,
 				E1F1B2512BCC36E2001DC54D /* Inter-Bold.ttf in Resources */,
 				E1F1B2542BCC36E2001DC54D /* Inter-SemiBold.ttf in Resources */,
@@ -957,6 +960,7 @@
 				E1F1B24C2BCC36E2001DC54D /* Inter-Thin.ttf in Resources */,
 				E1F1B24D2BCC36E2001DC54D /* Inter-ExtraLight.ttf in Resources */,
 				E1F1B2502BCC36E2001DC54D /* Inter-Light.ttf in Resources */,
+				E1D91A122BDE54D00031B413 /* Assets.xcassets in Resources */,
 				E1F1B2522BCC36E2001DC54D /* Inter-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -992,7 +996,6 @@
 				86EDFF162BD80F7C00CD9F81 /* InputContainerView.swift in Sources */,
 				86BC2D372BDD2003003BF895 /* CustomSearchTextField.swift in Sources */,
 				86BC2D452BDD55BE003BF895 /* DeleteProductViewController.swift in Sources */,
-				E1D1DC382BD1132E0009C2A3 /* NavBarController.swift in Sources */,
 				E1A2E8372BCD019A00CC0D64 /* Endpoint + Extension.swift in Sources */,
 				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
 				86BC2D472BDD55FE003BF895 /* AddNewCategoryViewController.swift in Sources */,
@@ -1018,7 +1021,7 @@
 				E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */,
 				E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */,
 				86EDFF272BD91F7600CD9F81 /* AuthService.swift in Sources */,
-				BEBA5DBE2BD0621900737686 /* MockData.swift in Sources */,
+				BEBA5DBE2BD0621900737686 /* SectionsData.swift in Sources */,
 				86BC2D2F2BDD11F0003BF895 /* BaseManagersViewController.swift in Sources */,
 				E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
@@ -1305,6 +1308,14 @@
 				minimumVersion = 10.24.0;
 			};
 		};
+		E1D91A132BDE66300031B413 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparrowcode/AlertKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.9;
+			};
+		};
 		E1F1B2642BCC5122001DC54D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -1350,6 +1361,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E18A560A2BD7BFF300E34777 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		E1D91A142BDE66300031B413 /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1D91A132BDE66300031B413 /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
 		};
 		E1F1B2652BCC5122001DC54D /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
