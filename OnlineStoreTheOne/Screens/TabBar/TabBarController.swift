@@ -16,8 +16,6 @@ final class TabBarController: UITabBarController {
 //        authenticateUser()
         configureTabBarAppearance()
         setupViewControllers()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleVisibilityChange(notification:)), name: .updateTabBarVisibility, object: nil)
     }
     
     // MARK: - private methods
@@ -68,23 +66,9 @@ final class TabBarController: UITabBarController {
         vc4.tabBarItem.selectedImage = UIImage(named: "selectedAccount")
         
         tabBar.tintColor = .black
-        
-        if let type = UserDefaults.standard.object(forKey: "accountType") as? String {
-            switch type {
-            case "Manager":
-                let viewControllers = [vc1, vc2, vc3, vc4]
-                setViewControllers(viewControllers, animated: true)
-                selectedIndex = 0
-            case "User":
-                let viewControllers = [vc1, vc2, vc4]
-                setViewControllers(viewControllers, animated: true)
-                selectedIndex = 0
-            default:
-                break
-            }
-        }
+        setViewControllers([vc1, vc2, vc3, vc4], animated: true)
     }
-
+    
     private func authenticateUser() {
         if Auth.auth().currentUser?.uid == nil {
             presentLoginScreen()
@@ -99,12 +83,4 @@ final class TabBarController: UITabBarController {
             self.present(navController, animated: true)
         }
     }
-    
-    @objc private func handleVisibilityChange(notification: Notification) {
-            setupViewControllers()
-    }
-}
-
-extension Notification.Name {
-    static let updateTabBarVisibility = Notification.Name("updateTabBarVisibility")
 }
