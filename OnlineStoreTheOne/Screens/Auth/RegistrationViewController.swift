@@ -135,7 +135,7 @@ final class RegistrationViewController: UIViewController {
                 profileImageURL: ""
             )
             AuthService.shared.registerUser(with: credentials)
-            dismiss(animated: true)
+            navigationController?.popViewController(animated: true)
         }
         return action
     }
