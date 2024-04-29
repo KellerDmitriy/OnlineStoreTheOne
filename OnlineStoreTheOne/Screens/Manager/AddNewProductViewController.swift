@@ -127,7 +127,7 @@ final class AddNewProductViewController: UIViewController {
     
     private func fetchCategories() {
         Task {
-            let result = await NetworkService.shared.fetchCategory()
+            let result = await NetworkService.shared.fetchAllCategories()
             switch result {
             case .success(let success):
                 productView.setData(success)

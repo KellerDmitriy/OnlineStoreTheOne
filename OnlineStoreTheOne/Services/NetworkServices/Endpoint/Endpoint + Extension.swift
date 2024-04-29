@@ -18,6 +18,12 @@ extension Endpoint {
     /// Создает конечную точку для HTTP PUT запроса.
     static func put() -> Endpoint { Endpoint(method: .PUT) }
     
+    /// Создает конечную точку для получения всех продуктов.
+        static func allProducts() -> Self {
+            Endpoint.get()
+                .path("products")
+        }
+    
     /// Создает конечную точку для получения всех категорий
     static func allCategories() -> Self {
         Endpoint.get()

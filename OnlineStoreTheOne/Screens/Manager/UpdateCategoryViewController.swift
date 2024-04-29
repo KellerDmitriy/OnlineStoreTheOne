@@ -129,7 +129,7 @@ final class UpdateCategoryViewController: UIViewController {
     }
     
     private func findCategoryByName(_ name: String) async {
-        let result = await NetworkService.shared.fetchAllCategory()
+        let result = await NetworkService.shared.fetchAllCategories()
         switch result {
         case .success(let categories):
             let filteredCategories = categories.filter { $0.name?.lowercased().contains(name.lowercased()) ?? false }

@@ -30,8 +30,11 @@ final class NetworkService {
     
     /// Получение всех продуктов из сети.
     /// - Returns: Результат выполнения запроса с массивом продуктов или ошибкой сети.
-
-    /// Получение всех категорий 
+    func fetchAllProducts() async -> Result<[Products], NetworkError> {
+            await request(from: .allProducts())
+                .mapError(NetworkError.init)
+        }
+    /// Получение всех категорий
     func fetchAllCategories() async -> Result<[Category], NetworkError> {
         await request(from: .allCategories())
             .mapError(NetworkError.init)
