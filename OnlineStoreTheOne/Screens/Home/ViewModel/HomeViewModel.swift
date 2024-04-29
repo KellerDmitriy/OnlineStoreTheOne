@@ -13,7 +13,9 @@ final class HomeViewModel: ObservableObject {
     @Published var productsError: Error?
     @Published var categoriesError: Error?
     
-    @Published var isLoading: Bool = true       
+    @Published var productCount = 1
+    
+    @Published var isLoading: Bool = true
     @Published var categories: [Category] = []
     @Published var products: [Products] = []
     @Published var searchedProducts: [Products] = []
@@ -55,8 +57,8 @@ final class HomeViewModel: ObservableObject {
             let result = await networkService.fetchProducts(with: categoryID)
             switch result {
             case .success(let products):
-                self.products = products
                 self.isLoading = false
+                self.products = products
             case .failure(let error):
                 self.productsError = error
             }
@@ -79,6 +81,12 @@ final class HomeViewModel: ObservableObject {
     }
     
     //MARK: - Storage Methods
+    
+    func getProductsFromCart() {
+        let cart = storageService.getCartFromRealm()
+        let productCount = cart.count
+    }
+    
     func addToCarts(product: Products) {
         storageService.addProductToCart(product) { result in
             switch result {

@@ -93,7 +93,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         titleLabel.text = title
         priceLabel.text = price
         self.addToCartCompletion = addToCartCompletion
-        startShimmering(duration: 3, repeatCount: 3)
+        startShimmering(duration: 2, repeatCount: 2)
     }
     
     private func setupView() {
