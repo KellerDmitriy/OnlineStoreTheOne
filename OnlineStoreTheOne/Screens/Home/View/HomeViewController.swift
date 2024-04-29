@@ -12,7 +12,7 @@ import AlertKit
 
 final class HomeViewController: UIViewController {
     //MARK: - Properties
-    var viewModel = HomeViewModel()
+    var viewModel: HomeViewModel!
     
     let sections = SectionsData.shared.sections
     
@@ -28,20 +28,34 @@ final class HomeViewController: UIViewController {
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = HomeViewModel()
+        
         view.backgroundColor = .white
         addViews()
         setupViews()
         setDelegates()
         
-        viewModel.fetchData()
-        
         observeProducts()
         observeError()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchCategory()
+        viewModel.fetchProducts(for: viewModel.selectedCategory)
     }
     
     // MARK: - Data Observing
     private func observeProducts() {
         viewModel.$products
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            .store(in: &viewModel.subscription)
+        
+        viewModel.$categories
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }

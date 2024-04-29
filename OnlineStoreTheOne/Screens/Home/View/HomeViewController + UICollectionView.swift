@@ -78,8 +78,8 @@ extension HomeViewController: UICollectionViewDelegate {
 
         case .categories:
             let category = viewModel.categories[indexPath.row]
-            viewModel.fetchProducts(for: category.id)
-            collectionView.reloadData()
+            viewModel.updateCategory(category.id)
+      
     
         case .products:
             let selectedProduct = viewModel.products[indexPath.row]
