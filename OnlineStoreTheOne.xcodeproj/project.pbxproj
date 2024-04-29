@@ -410,8 +410,8 @@
 		86C474FC2BD5076C0070E3D8 /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				86C4750F2BD5B4990070E3D8 /* ViewModel */,
 				86C474FF2BD509DE0070E3D8 /* Views */,
+				86C4750F2BD5B4990070E3D8 /* ViewModel */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -557,8 +557,8 @@
 		BEBA5DC62BD10AB200737686 /* SearchResult */ = {
 			isa = PBXGroup;
 			children = (
-				E1E2B4CB2BDBD98800D72CF7 /* ViewModel */,
 				BEBA5DC82BD10AEB00737686 /* View */,
+				E1E2B4CB2BDBD98800D72CF7 /* ViewModel */,
 			);
 			path = SearchResult;
 			sourceTree = "<group>";
@@ -1076,7 +1076,6 @@
 				E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */,
 				86EDFF272BD91F7600CD9F81 /* AuthService.swift in Sources */,
 				BEBA5DBE2BD0621900737686 /* SectionsData.swift in Sources */,
-				86BC2D2F2BDD11F0003BF895 /* BaseManagersViewController.swift in Sources */,
 				E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */,
 				E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */,
 				E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */,
