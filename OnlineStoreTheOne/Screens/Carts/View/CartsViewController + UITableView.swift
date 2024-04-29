@@ -31,7 +31,7 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
             }, 
             
             isChecked: { [weak self] isChecked in
-                self?.checkMarkButtonTap(id: cart.id)
+                self?.checkMarkButtonTap(id: cart.id, newIsSelect: isChecked)
             }
         )
         return cell
@@ -39,18 +39,20 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
     
     //    MARK: - Action
     
-    func checkMarkButtonTap(id: Int) {
-        viewModel.checkSelected(for: id)
+    func checkMarkButtonTap(id: Int, newIsSelect: Bool) {
+        viewModel.isSelect = newIsSelect
+        viewModel.updateCheckMark(for: id, isSelect: newIsSelect)
     }
     
     
     func trashButtonTap(id: Int) {
         viewModel.removeFromCart(id)
+        viewModel.getProductsFromCart()
     }
     
     func updateCount(_ productID: Int, newCount: Int) {
         viewModel.productCount = newCount
-        viewModel.updateItemCount(for: productID, newCount: newCount)
+        viewModel.updateProductCount(for: productID, newCount: newCount)
     }
 }
 

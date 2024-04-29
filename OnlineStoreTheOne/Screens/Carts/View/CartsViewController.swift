@@ -66,16 +66,22 @@ final class CartsViewController: UIViewController {
         viewModel = CartsViewModel()
        
         setupViews()
-        setupLayout()
-        configureTableView()
+
         
         setupNavigationBar()
+        
         observeCartProducts()
+        observeTotal()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getProductsFromCart()
+        viewModel.getOrderSummery()
+    }
+    
+    deinit {
+    print( "Cards is over" )
     }
     
     // MARK: - Data Observing
@@ -83,22 +89,17 @@ final class CartsViewController: UIViewController {
            viewModel.$cartProducts
                .receive(on: DispatchQueue.main)
                .sink { [weak self] carts in
-                   self?.tableView.reloadData()
+                   self?.animateCollectionView()
                    self?.cartButton.count = carts?.count ?? 0
                }
                .store(in: &viewModel.subscription)
        }
     
-    private func observe() {
-        viewModel.$isSelect
-            .sink { [weak self] isSelect in
-                //                self?.updateIsSelectedInCart(isSelected: isSelect)
-            }
-            .store(in: &viewModel.subscription)
-        
-        viewModel.$productCount
-            .sink { [weak self] count in
-                //                self?.updateProductCountInCart(count: count)
+    private func observeTotal() {
+        viewModel.$orderSummary
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] total in
+                self?.totalPriceLabel.text = "\(total) $"
             }
             .store(in: &viewModel.subscription)
     }
@@ -118,6 +119,15 @@ final class CartsViewController: UIViewController {
         view.addSubview(totalPriceLabel)
         
         view.addSubview(payButton)
+        
+        setupLayout()
+        configureTableView()
+    }
+    
+    func animateCollectionView() {
+        UIView.transition(with: tableView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.tableView.reloadData()
+        }, completion: nil)
     }
     
     private func configureTableView() {
