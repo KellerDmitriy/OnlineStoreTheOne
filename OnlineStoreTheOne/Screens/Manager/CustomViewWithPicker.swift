@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
-    var handle: ((String) -> Void)?
-    
+    //MARK: - Private Properties
+    private var subscriptions: Set<AnyCancellable> = []
     private let containerView = UIView()
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -28,12 +29,13 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         return $0
     }(UILabel())
     
-    lazy var textField: UITextField = {
+    private lazy var textField: UITextField = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.borderStyle = .roundedRect
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
         $0.layer.borderColor = Colors.placeholderManagerFields.cgColor
+        $0.addTarget(self, action: #selector(didTextChanged), for: .editingDidEnd)
         return $0
     }(UITextField())
     
@@ -44,19 +46,39 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         return $0
     }(UIImageView())
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private let pickerView = UIPickerView()
+    private var data: [String] = []
+    
+    //MARK: - Callback
+    var textChanged: ((String?) -> Void)?
+    
+    //MARK: - Public Properties
+    let viewModel: CustomViewWithPickerViewModel
+    var currentText: String? {
+        textField.text
+    }
+    
+    //MARK: - Lifecycle
+    init(viewModel: CustomViewWithPickerViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setupViews()
         setConstraints()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let pickerView = UIPickerView()
-    
-    private var data: [String] = []
+    //MARK: - Private Methods
+    private func bind() {
+        viewModel.$categoryList.sink { [weak self] newData in
+            guard let self else { return }
+            data = newData
+            pickerView.reloadAllComponents()
+        }.store(in: &subscriptions)
+    }
     
     private func setupViews() {
         addSubview(containerView)
@@ -106,10 +128,7 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         textField.inputAccessoryView = toolBar
     }
     
-    @objc func dismissKeyboard() {
-        textField.resignFirstResponder()
-    }
-    
+    //MARK: - Public Methods
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -124,6 +143,14 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         textField.text = data[row]
-        handle?(textField.text ?? "")
+    }
+    
+    //MARK: - Objc Methods
+    @objc private func dismissKeyboard() {
+        textField.resignFirstResponder()
+    }
+    
+    @objc private func didTextChanged() {
+        textChanged?(textField.text)
     }
 }

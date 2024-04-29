@@ -6,19 +6,78 @@
 //
 
 import UIKit
+import Combine
 
-class AddNewProductViewController: BaseManagersViewController {
-
-    let productView = ContainerManagersView(type: .addNewProduct)
-    let scrollView = UIScrollView()
-    let mainStackView = UIStackView()
+final class AddNewProductViewController: UIViewController {
+    //MARK: - Private Properties
+    private let viewModel = AddNewProductViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
+    private let productView = ContainerManagersView(type: .addNewProduct)
+    private let scrollView = UIScrollView()
+    private let mainStackView = UIStackView()
     
+    private lazy var saveButton = FilledButtonFactory(
+        title: "Save",
+        type: .greenButton,
+        action: UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            Task {
+                await self.addNewProduct()
+            }
+            navigationController?.popViewController(animated: true)
+        })
+    ).createButton()
+    
+    private lazy var cancelButton = FilledButtonFactory(
+        title: "Cancel",
+        type: .grayButton,
+        action: UIAction(handler: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        })
+    ).createButton()
+    
+    private lazy var buttonsStackView: UIStackView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .horizontal
+        $0.spacing = 30
+        $0.distribution = .fillEqually
+        return $0
+    }(UIStackView())
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        fetchCategories()
         setupViews()
+        setConstraints()
+        setActions()
     }
-
+    
+    //MARK: - Private Methods
+    private func setActions() {
+        productView.actionPublisher.sink { [weak self] action in
+            guard let self else { return }
+            switch action {
+            case .titleField(let title):
+                viewModel.title = title
+            case .priceField(let price):
+                viewModel.price = Int(price)
+            case .categoryField(let category):
+                viewModel.category = productView.getCategoryId(category)
+            case .descriptionView(let description):
+                viewModel.description = description
+            case .imageOneView(let url):
+                viewModel.imageOne = url
+            case .imageTwoView(let url):
+                viewModel.imageTwo = url
+            case .imageThreeView(let url):
+                viewModel.imageThree = url
+            case .searchView(_):
+                break
+            }
+        }.store(in: &subscriptions)
+    }
+    
     private func setupViews() {
         view.backgroundColor = .white
         title = "Add new product"
@@ -29,6 +88,13 @@ class AddNewProductViewController: BaseManagersViewController {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.addArrangedSubview(productView)
         productView.translatesAutoresizingMaskIntoConstraints = false
+        
+        navigationItem.hidesBackButton = true
+        view.addSubview(buttonsStackView)
+        [saveButton, cancelButton].forEach { button in
+            button.titleLabel?.font = UIFont.makeTypography(.medium, size: 16)
+            buttonsStackView.addArrangedSubview(button)
+        }
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -47,5 +113,39 @@ class AddNewProductViewController: BaseManagersViewController {
         }
         
         hideKeyboardWhenTappedAround()
+    }
+    
+    private func setConstraints() {
+        buttonsStackView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
+    }
+    
+    private func fetchCategories() {
+        Task {
+            let result = await NetworkService.shared.fetchAllCategories()
+            switch result {
+            case .success(let success):
+                productView.setData(success)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
+    
+    private func addNewProduct() async {
+        guard let newProduct = viewModel.product else { return }
+        
+        let result = await NetworkService.shared.createProduct(product: newProduct)
+        switch result {
+        case .success(let response):
+            print("Продукт успешно добавлен с ID \(response.id) и категорией \(response.category.name ?? "not found").")
+        case .failure(let error):
+            print("Ошибка при добавлении продукта: \(error)")
+        }
     }
 }

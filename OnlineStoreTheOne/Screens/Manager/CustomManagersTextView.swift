@@ -9,6 +9,7 @@ import UIKit
 
 final class CustomManagersTextView: UIView {
     
+    //MARK: - Private Properties
     private let containerView = UIView()
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +34,10 @@ final class CustomManagersTextView: UIView {
         return $0
     }(UITextView())
     
+    //MARK: - Callback
+    var textChanged: ((String?) -> Void)?
+    
+    //MARK: - Lifecycle
     init(with text: String) {
         super.init(frame: .zero)
         self.label.text = text
@@ -45,6 +50,7 @@ final class CustomManagersTextView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Private Methods
     private func setupViews() {
         addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,15 +78,19 @@ final class CustomManagersTextView: UIView {
     }
 }
 
+//MARK: - CustomManagersTextView: UITextViewDelegate
 extension CustomManagersTextView: UITextViewDelegate {
-
+    
     func textViewDidChange(_ textView: UITextView) {
         textView.snp.updateConstraints {
             $0.height.equalTo(max(40, textView.contentHeight))
         }
+        
+        textChanged?(textView.text)
     }
 }
 
+//MARK: - extension UITextView
 extension UITextView {
     var contentHeight: CGFloat {
         sizeThatFits(

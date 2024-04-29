@@ -6,19 +6,79 @@
 //
 
 import UIKit
+import Combine
 
-class AddNewCategoryViewController: BaseManagersViewController {
-
-    let categoryView = ContainerManagersView(type: .addNewCategory)
-    let scrollView = UIScrollView()
-    let mainStackView = UIStackView()
+final class AddNewCategoryViewController: UIViewController {
     
+    //MARK: - Private Properties
+    private let viewModel = AddNewCategoryViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
+    private let categoryView = ContainerManagersView(type: .addNewCategory)
+    private let scrollView = UIScrollView()
+    private let mainStackView = UIStackView()
+    
+    private lazy var saveButton = FilledButtonFactory(
+        title: "Save",
+        type: .greenButton,
+        action: UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            Task {
+                await self.createNewCategory()
+            }
+            navigationController?.popViewController(animated: true)
+        })
+    ).createButton()
+    
+    private lazy var cancelButton = FilledButtonFactory(
+        title: "Cancel",
+        type: .grayButton,
+        action: UIAction(handler: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        })
+    ).createButton()
+    
+    private lazy var buttonsStackView: UIStackView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .horizontal
+        $0.spacing = 30
+        $0.distribution = .fillEqually
+        return $0
+    }(UIStackView())
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
+        setConstraints()
+        setActions()
     }
-
+    
+    //MARK: - Private Methods
+    private func setActions() {
+        categoryView.actionPublisher.sink { [weak self] action in
+            guard let self else { return }
+            switch action {
+            case .titleField(let title):
+                viewModel.name = title
+            case .priceField(_):
+                break
+            case .categoryField(_):
+                break
+            case .descriptionView(_):
+                break
+            case .imageOneView(let url):
+                viewModel.image = url
+            case .imageTwoView(_):
+                break
+            case .imageThreeView(_):
+                break
+            case .searchView(_):
+                break
+            }
+        }.store(in: &subscriptions)
+    }
+    
     private func setupViews() {
         view.backgroundColor = .white
         title = "Add new category"
@@ -29,6 +89,13 @@ class AddNewCategoryViewController: BaseManagersViewController {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.addArrangedSubview(categoryView)
         categoryView.translatesAutoresizingMaskIntoConstraints = false
+        
+        navigationItem.hidesBackButton = true
+        view.addSubview(buttonsStackView)
+        [saveButton, cancelButton].forEach { button in
+            button.titleLabel?.font = UIFont.makeTypography(.medium, size: 16)
+            buttonsStackView.addArrangedSubview(button)
+        }
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -47,6 +114,28 @@ class AddNewCategoryViewController: BaseManagersViewController {
         }
         
         hideKeyboardWhenTappedAround()
+    }
+    
+    private func setConstraints() {
+        buttonsStackView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
+    }
+    
+    private func createNewCategory() async {
+        guard let category = viewModel.newCategory else { return }
+        
+        let result = await NetworkService.shared.createCategory(category: category)
+        switch result {
+        case .success(let category):
+            print("Category successfully created with name: \(category.name)")
+        case .failure(let error):
+            print("Error creating category: \(error)")
+        }
     }
 }
 
