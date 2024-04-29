@@ -64,7 +64,7 @@ final class CartsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = CartsViewModel()
-        view.backgroundColor = .white
+       
         setupViews()
         setupLayout()
         configureTableView()
@@ -90,19 +90,25 @@ final class CartsViewController: UIViewController {
                }
                .store(in: &viewModel.subscription)
        }
-    private func changeToWishListButton() {
-//        viewModel.$isSelect
-//            .receive(on: DispatchQueue.main)
-//        
-//            .sink {
-//       
-//             
-//            }
-//            .store(in: &viewModel.subscription)
+    
+    private func observe() {
+        viewModel.$isSelect
+            .sink { [weak self] isSelect in
+                //                self?.updateIsSelectedInCart(isSelected: isSelect)
+            }
+            .store(in: &viewModel.subscription)
+        
+        viewModel.$productCount
+            .sink { [weak self] count in
+                //                self?.updateProductCountInCart(count: count)
+            }
+            .store(in: &viewModel.subscription)
     }
+    
     
     //    MARK: - Setup
     private func setupViews() {
+        view.backgroundColor = .white
         view.addSubview(locationTitleLabel)
         view.addSubview(locationLabel)
         

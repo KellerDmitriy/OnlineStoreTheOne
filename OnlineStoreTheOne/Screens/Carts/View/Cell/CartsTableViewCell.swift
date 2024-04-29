@@ -66,9 +66,12 @@ final class CartsTableViewCell: UITableViewCell {
     }
     
     //MARK: - Methods
-    func configureCell(_ cartModel: CartsModel, 
-                       onTrashTapped: @escaping () -> (),
-     countDidChange: @escaping ((Int) -> Void))
+    func configureCell(_ 
+                       cartModel: CartsModel,
+                       onTrashTapped: @escaping () -> Void,
+                       countDidChange: @escaping ((Int) -> Void),
+                       isChecked: @escaping ((Bool) -> Void)
+    )
     {
         titleLabel.text = cartModel.title
         priceLabel.text = String("$\(cartModel.price)")
@@ -84,6 +87,7 @@ final class CartsTableViewCell: UITableViewCell {
         
         counterActionButton.onTrashTapped = onTrashTapped
         counterActionButton.countDidChange = countDidChange
+        checkMarkButton.isCheckedMark = isChecked
     }
     
     //MARK: - Setup Views
@@ -117,16 +121,18 @@ final class CartsTableViewCell: UITableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Constants.verticalSpacing)
             make.leading.equalTo(productImageView.snp.trailing).offset(Constants.horizontalSpacing)
+            make.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
         }
         
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constants.labelSpacing)
             make.leading.equalTo(productImageView.snp.trailing).offset(Constants.horizontalSpacing)
+            
         }
         
         counterActionButton.snp.makeConstraints { make in
             make.trailing.equalTo(cartsContentView.snp.trailingMargin)
-            make.top.equalTo(priceLabel.snp.bottom).offset(Constants.verticalSpacing)
+            make.top.equalToSuperview().offset(Constants.verticalCountSpacing)
             make.width.equalTo(Constants.buttonWidth)
             make.height.equalTo(Constants.buttonHeight)
         }
@@ -141,6 +147,7 @@ extension CartsTableViewCell {
         static let imageWidth: CGFloat = 100
         static let labelSpacing: CGFloat = 10
         static let buttonWidth: CGFloat = 120
-        static let buttonHeight: CGFloat = 50
+        static let buttonHeight: CGFloat = 30
+        static let verticalCountSpacing: CGFloat = 70
     }
 }
