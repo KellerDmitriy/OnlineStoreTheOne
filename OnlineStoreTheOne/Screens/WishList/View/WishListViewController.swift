@@ -34,18 +34,14 @@ final class WishListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        viewModel = WishListViewModel()
+        
         setupUI()
-        setupSearchController()
         observeViewModelChanges()
     }
     
-
-    private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Products"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getWishListIDs()
     }
     
     // MARK: - ViewModel Observing
@@ -56,8 +52,18 @@ final class WishListViewController: UIViewController {
                 self?.animateCollectionView()
             }
             .store(in: &viewModel.subscription)
+        
+        viewModel.$filteredWishList
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.animateCollectionView()
+            }
+            .store(in: &viewModel.subscription)
     }
     
+
+    
+
     // MARK: - Actions
     @objc func addToCartTap() {
         let viewControllerToPresent = CartsViewController()
@@ -67,8 +73,9 @@ final class WishListViewController: UIViewController {
     }
     
     // MARK: - UI Setup
+    
     func animateCollectionView() {
-        UIView.transition(with: collectionView, duration: 0.9, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: collectionView, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.collectionView.reloadData()
         }, completion: nil)
     }
@@ -78,6 +85,16 @@ final class WishListViewController: UIViewController {
         
         setupNavigation()
         setupCollectionView()
+        setupSearchController()
+    }
+    
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Products"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     private func setupCollectionView() {

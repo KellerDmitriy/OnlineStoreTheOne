@@ -8,25 +8,24 @@
 import Foundation
 import Combine
 
-
 final class WishListViewModel {
     let networkService = NetworkService.shared
     let storageService = StorageService.shared
     let realmStorageService = RealmStorageService.shared
     
     @Published var wishList: [Products] = []
-    var filteredWishList: [Products] = []
+    @Published var filteredWishList: [Products] = []
     @Published var wishListKeys: [Int] = []
+    
     var subscription: Set<AnyCancellable> = []
     
     init() {
-        getWishListIDs()
+//        getWishListIDs()
         observeProducts()
     }
     
     private func observeProducts() {
         $wishListKeys
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] wishListKeys in
                 wishListKeys.forEach { id in
                     self?.fetchProducts(wishListKey: id)
@@ -47,7 +46,6 @@ final class WishListViewModel {
             }
         }
     }
-    
     
     func getWishListIDs() {
         wishListKeys = storageService.getWishListIDs()
