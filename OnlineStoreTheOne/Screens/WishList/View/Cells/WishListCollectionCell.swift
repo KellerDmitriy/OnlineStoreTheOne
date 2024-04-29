@@ -13,7 +13,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     static let cellID = String(describing: WishListCollectionCell.self)
     
     var addToCartCompletion: (() -> Void)?
-    var addToWishListCompletion: (() -> Void)?
+    var removeFromWishListCompletion: (() -> Void)?
     
     //MARK: - Private Properties
     private let productImageView: UIImageView = {
@@ -60,7 +60,7 @@ final class WishListCollectionCell: UICollectionViewCell {
             button.setBackgroundImage(image, for: .normal)
         }
         button.addAction(UIAction { [weak self] _ in
-            self?.addToWishListCompletion?()
+            self?.removeFromWishListCompletion?()
         }, for: .touchUpInside)
         return button
     }()
@@ -82,14 +82,21 @@ final class WishListCollectionCell: UICollectionViewCell {
     }
     
     //MARK: - Methods
-    func configureCell(_ wishModel: WishListModel) {
+    func configureCell(_ wishModel: Products) {
         titleLabel.text = wishModel.title
-        priceLabel.text = String("\(wishModel.price)")
+        priceLabel.text = String("$\(wishModel.price)")
         
-        if let imageData = wishModel.images.first {
-            productImageView.image = UIImage(data: imageData)
+        let trimmed = wishModel.images?.first?
+            .data(using: .utf8)
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) }
+            .flatMap { $0 as? [String] }
+            .flatMap(\.first)
+            .flatMap(URL.init)
+        
+        if let trimmedUrl = trimmed {
+            productImageView.kf.setImage(with: trimmedUrl)
         } else {
-            productImageView.image = UIImage(named: "ps4")
+            productImageView.kf.setImage(with: URL(string: wishModel.images?.first ?? ""))
         }
     }
     
@@ -105,6 +112,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     private func setConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(112)
         }
         
         titleLabel.snp.makeConstraints { make in

@@ -5,81 +5,112 @@
 //  Created by Иван Семенов on 19.04.2024.
 //
 
+
 import Foundation
+import Combine
 
-protocol HomeViewModelDelegate: AnyObject {
-    func dataUpdated()
-}
-
-final class HomeViewModel {
+final class HomeViewModel: ObservableObject {
+    @Published var productsError: Error?
+    @Published var categoriesError: Error?
     
-    var products: [Products] = []
-    var categories: [Category] = []
+    @Published var isLoading: Bool = true
+    @Published var categories: [Category] = []
+    @Published var products: [Products] = []
+    @Published var searchedProducts: [Products] = []
+    @Published var searchText = ""
     
-    var dataUpdated: (() -> Void)?
+    @Published var selectedCategory: Int = 1
+    
+    var subscription: Set<AnyCancellable> = []
     
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
-    func fetchProducts() {
+    //MARK: - Init
+    init() {
+        observe()
+    }
+    
+    //MARK: - Observe Methods
+    private func observe() {
+        $searchText
+            .sink {  searchText in
+            }
+            .store(in: &subscription)
+        
+        $selectedCategory
+            .sink { [weak self] categoryId in
+                self?.fetchProducts(for: categoryId)
+            }
+            .store(in: &subscription)
+    }
+    
+    //MARK: - Fetch Methods
+    func updateCategory(_ id: Int) {
+        selectedCategory = id
+    }
+    
+    func fetchProducts(for categoryID: Int?) {
         Task {
-            let result = await networkService.fetchAllProducts()
+            let result = await networkService.fetchProducts(with: categoryID)
             switch result {
             case .success(let products):
                 self.products = products
+                self.isLoading = false
             case .failure(let error):
-                print("Error fetching products: \(error)")
+                self.productsError = error
             }
         }
     }
-    public func getData(id: Int) {
-        ///получение категории по  идентификатору
-        guard let category = categories.first(where: { $0.id == id }) else {
-            print("Category with id \(id) not found")
-            return
-        }
-        ///запрос продуктов для выбранной категории
-        fetchProducts(for: category)
-    }
-
-    func fetchProducts(for category: Category) {
-        Task {
-            let result: Result<[Products], NetworkError> = await networkService.fetchProducts(with: category)
-            
-            if case let .success(data) = result {
-                self.products = data
-                dataUpdated?()
-            } else if case let .failure(error) = result {
-                print("Failed to fetch data: \(error)")
-            }
-        }
-    }
-
-    func fetchSearchProducts(_ title: String) {
-        Task {
-            let result = await networkService.fetchSearchProducts(by: title)
-            
-            switch result {
-            case .success(let data):
-                self.products = data
-                dataUpdated?()
-            case .failure(let error):
-                print("Failed to fetch products: \(error)")
-            }
-        }
-    }
-
+    
+    
     func fetchCategory() {
         Task {
-            let result = await networkService.fetchCategory()
-            
+            let result = await networkService.fetchAllCategories()
             switch result {
             case .success(let categories):
-                self.categories = categories
+                let filteredCategories = filterCategories(categories)
+                let uniqueCategories = filterUniqueCategories(filteredCategories)
+                self.categories = uniqueCategories
             case .failure(let error):
-                print("Error fetching products: \(error)")
+                self.categoriesError = error
+            }
+        }
+    }
+    
+    //MARK: - Storage Methods
+    func addToCarts(product: Products) {
+        storageService.addItem(CartsModel.self, product) { result in
+            switch result {
+            case .success:
+                print("Item added from cart successfully")
+            case .failure(let error):
+                print("Error adding product to cart: \(error)")
             }
         }
     }
 }
 
+//MARK: - Helper Methods
+extension HomeViewModel {
+    func filterCategories(_ categories: [Category]) -> [Category] {
+        return categories.filter { category in
+            if let name = category.name, let imageURL = category.image, name != "New Category" {
+                return name.count <= 15
+            }
+            return false
+        }
+    }
+
+    func filterUniqueCategories(_ categories: [Category]) -> [Category] {
+        var uniqueCategories: [Category] = []
+        var seenNames: Set<String> = Set()
+        for category in categories {
+            if let name = category.name, !seenNames.contains(name) {
+                uniqueCategories.append(category)
+                seenNames.insert(name)
+            }
+        }
+        return uniqueCategories
+    }
+}

@@ -15,6 +15,7 @@ protocol ButtonFactory {
 
 enum TypeButton {
     case greenButton
+    case greenButtonMini
     case grayButton
 }
 
@@ -54,7 +55,12 @@ final class FilledButtonFactory: ButtonFactory {
             button.backgroundColor = Colors.lightGray
             button.setTitleColor(.black, for: .normal)
             button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        case .greenButtonMini:
+            button.backgroundColor = Colors.greenSheen
+            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(Colors.red, for: .selected)
         }
+        button.makeSystem(button)
         button.titleLabel?.font = UIFont.makeTypography(.medium, size: 14)
         button.addAction(action, for: .touchUpInside)
         return button

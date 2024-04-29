@@ -8,6 +8,8 @@
 import UIKit
 
 final class PaymentSuccessView: UIViewController {
+    
+    var viewModel = CartsViewModel()
     //MARK: - UI elements
     
     private lazy var successImage: UIImageView = {
@@ -68,6 +70,7 @@ final class PaymentSuccessView: UIViewController {
             title: "Continue",
             type: .greenButton,
             action: UIAction { [weak self] _ in
+                self?.viewModel.deleteAllProducts()
                 self?.dismiss(animated: true)
             })
             .createButton()

@@ -20,12 +20,14 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
         element.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         return element
     }()
+    
     private let searchButton: UIButton = {
         let element = UIButton(type: .system)
         element.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         element.tintColor = .systemGray
         return element
     }()
+    
     lazy var searchTextField: UITextField = {
         let element = UITextField()
         element.placeholder = NSLocalizedString("Search here ...", comment: "")
@@ -67,5 +69,4 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
             make.leading.equalTo(searchButton.snp.trailing)
         }
     }
-    
 }

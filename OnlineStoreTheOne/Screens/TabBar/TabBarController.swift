@@ -13,7 +13,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authenticateUser()
+//        authenticateUser()
         configureTabBarAppearance()
         setupViewControllers()
     }
@@ -37,10 +37,10 @@ final class TabBarController: UITabBarController {
     
     private func setupViewControllers() {
         
-        let vc1 = NavBarController(
+        let vc1 = UINavigationController(
             rootViewController: HomeViewController()
         )
-        let vc2 = NavBarController(
+        let vc2 = UINavigationController(
             rootViewController: WishListViewController()
         )
         let vc3 = UINavigationController(

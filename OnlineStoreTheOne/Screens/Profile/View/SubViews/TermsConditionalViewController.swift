@@ -61,7 +61,7 @@ private extension TermsConditionalViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         
-        var sections = getTranslatedStrings()
+        let sections = getTranslatedStrings()
         
         let attributedText = NSMutableAttributedString()
         

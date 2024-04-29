@@ -9,10 +9,10 @@ import Foundation
 import RealmSwift
 
 final class CartsModel: Object, StorableItem {
-    
     @Persisted var id: Int
     @Persisted var title: String
     @Persisted var price: Int
-    @Persisted var countProduct: Int 
+    @Persisted var countProduct: Int = 1
+    @Persisted var isSelected: Bool = true
     @Persisted var images: List<Data>
 }

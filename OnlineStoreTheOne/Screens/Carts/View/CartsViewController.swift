@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class CartsViewController: UIViewController {
-    var viewModel = CartsViewModel()
+    var viewModel: CartsViewModel!
     
     //    MARK: - UI elements
     private lazy var locationTitleLabel: UILabel = {
@@ -31,6 +31,8 @@ final class CartsViewController: UIViewController {
     private lazy var totalPriceLabel: UILabel = {
         NewLabelFactory(text: "100 $", font: .extraBold, color: .black, size: 16).createLabel()
     }()
+    
+    let cartButton = CartButton()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -61,26 +63,43 @@ final class CartsViewController: UIViewController {
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = CartsViewModel()
         view.backgroundColor = .white
         setupViews()
         setupLayout()
         configureTableView()
         
         setupNavigationBar()
-        
         observeCartProducts()
+        changeToWishListButton()
        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getProductsFromCart()
     }
     
     // MARK: - Data Observing
        private func observeCartProducts() {
            viewModel.$cartProducts
                .receive(on: DispatchQueue.main)
-               .sink { [weak self] _ in
+               .sink { [weak self] carts in
                    self?.tableView.reloadData()
+                   self?.cartButton.count = carts?.count ?? 0
                }
                .store(in: &viewModel.subscription)
        }
+    private func changeToWishListButton() {
+//        viewModel.$isSelect
+//            .receive(on: DispatchQueue.main)
+//        
+//            .sink {
+//       
+//             
+//            }
+//            .store(in: &viewModel.subscription)
+    }
     
     //    MARK: - Setup
     private func setupViews() {
@@ -117,7 +136,7 @@ final class CartsViewController: UIViewController {
         )
         navigationItem.leftBarButtonItem = backButton
         
-        let cartButton = CartButton()
+        
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
         navigationItem.rightBarButtonItem = cartButtonItem
         
@@ -183,7 +202,7 @@ final class CartsViewController: UIViewController {
         }
     }
     
-    //    MARK: - Methods
+    //    MARK: - Action
     private func payButtonTap() {
         let vc = PaymentSuccessView()
         if let presentationController = vc.presentationController as? UISheetPresentationController {
@@ -196,7 +215,7 @@ final class CartsViewController: UIViewController {
 // MARK: - Constants
 extension CartsViewController {
     struct Constants {
-        static let rowHeight: CGFloat = 110
+        static let rowHeight: CGFloat = 120
         static let horizontalSpacing: CGFloat = 16
         static let verticalSpacing: CGFloat = 20
         static let heightForButton: CGFloat = 50
