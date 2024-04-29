@@ -50,7 +50,7 @@ final class SearchResultViewModel: ObservableObject {
     
     //MARK: - Storage Methods
     func addToCarts(product: Products) {
-        storageService.addItem(CartsModel.self, product) { result in
+        storageService.addProductToCart(product) { result in
             switch result {
             case .success:
                 print("Item added from cart successfully")

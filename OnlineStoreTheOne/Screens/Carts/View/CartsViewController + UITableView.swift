@@ -23,13 +23,15 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
             cart,
             onTrashTapped: { [weak self] in
                 guard let self = self else { return }
-                
                 self.trashButtonTap(id: cart.id)
-                tableView.reloadData()
-                
             }, 
+            
             countDidChange: { [weak self] count in
                 self?.updateCount(cart.id, newCount: count)
+            }, 
+            
+            isChecked: { [weak self] isChecked in
+                self?.checkMarkButtonTap(id: cart.id)
             }
         )
         return cell

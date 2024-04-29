@@ -8,6 +8,7 @@
 import UIKit
 
 final class CheckMarkButton: UIButton {
+    var isCheckedMark: ((Bool) -> Void)?
     
     var isChecked: Bool = true {
         didSet {
@@ -17,7 +18,7 @@ final class CheckMarkButton: UIButton {
             self.tintColor = isChecked ? Colors.greenSheen : Colors.gray
         }
     }
-
+    
     private lazy var checkMarkButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "square"), for: .normal)
@@ -32,7 +33,7 @@ final class CheckMarkButton: UIButton {
         super.init(frame: frame)
         setupViews()
         setConstraints()
-    
+        
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +44,7 @@ final class CheckMarkButton: UIButton {
     
     @objc private func buttonTapped() {
         isChecked.toggle()
+        isCheckedMark?(isChecked)
     }
     
     private func setupViews() {

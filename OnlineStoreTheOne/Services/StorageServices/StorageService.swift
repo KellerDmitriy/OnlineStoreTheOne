@@ -15,7 +15,6 @@ final class StorageService {
     enum UserDefaultKeys {
         static let onboardCompleted = "OnboardCompleted"
         static let searchText = "SavedSearchText"
-        static let wishListID = "SavedWishListID"
     }
     
     // MARK: - Initialization
@@ -34,35 +33,6 @@ final class StorageService {
         userDefaults.set(false, forKey: UserDefaultKeys.onboardCompleted)
     }
     
-    // MARK: - SavedWishListID
-    func saveWishListID(id: Int) {
-        var wishListIDs = getWishListIDs()
-        if !wishListIDs.contains(id) {
-            wishListIDs.append(id)
-            userDefaults.set(wishListIDs, forKey: UserDefaultKeys.wishListID)
-        }
-    }
-    
-    func isItemSaved(_ id: Int) -> Bool {
-        let wishListIds = userDefaults.array(forKey: UserDefaultKeys.wishListID) as? [Int] ?? []
-        return wishListIds.contains(id)
-    }
-    
-    func deleteWishListID(_ id: Int) {
-        var wishListIDs = getWishListIDs()
-        if let index = wishListIDs.firstIndex(of: id) {
-            wishListIDs.remove(at: index)
-            userDefaults.set(wishListIDs, forKey: UserDefaultKeys.wishListID)
-        }
-    }
-
-    func getWishListIDs() -> [Int] {
-        if let wishListIDs = userDefaults.object(forKey: UserDefaultKeys.wishListID) as? [Int] {
-            return wishListIDs
-        } else {
-            return []
-        }
-    }
     
     // MARK: - SavedSearchText
     func saveSearchText() {

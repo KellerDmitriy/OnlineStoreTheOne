@@ -50,7 +50,7 @@ final class WishListViewModel {
 
     //MARK: - Storage Methods
     func addToCart(_ product: Products) {
-        realmStorageService.addItem(CartsModel.self, product) { result in
+        realmStorageService.addProductToCart(product) { result in
             switch result {
             case .success:
                 print("Item added from WishList successfully")
