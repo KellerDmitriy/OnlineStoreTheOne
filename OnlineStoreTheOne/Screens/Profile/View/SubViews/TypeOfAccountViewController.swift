@@ -82,6 +82,10 @@ private extension TypeOfAccountViewController {
         
     }
     
+    private func updateTabBar() {
+        NotificationCenter.default.post(name: .updateTabBarVisibility, object: nil)
+    }
+    
     private func updateAccount(type: String) {
         if let user = Auth.auth().currentUser {
             AuthService.shared.changeAccountType(userId: user.uid, type: type)
@@ -95,6 +99,11 @@ private extension TypeOfAccountViewController {
             self?.updateAccount(type: type)
             UserDefaults.standard.set(type, forKey: "accountType")
             self?.setupButtons()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+                self?.updateTabBar()
+            }
+            
         }
         return act
     }
@@ -105,6 +114,10 @@ private extension TypeOfAccountViewController {
             self?.updateAccount(type: type)
             UserDefaults.standard.set("User", forKey: "accountType")
             self?.setupButtons()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+                self?.updateTabBar()
+            }
         }
         return act
     }
