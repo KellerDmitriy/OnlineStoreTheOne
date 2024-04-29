@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 final class TypeAccountViewController: UIViewController {
     
     var completion: ((String) -> Void)?

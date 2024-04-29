@@ -8,15 +8,20 @@
 import UIKit
 import SnapKit
 
+protocol CartButtonDelegate: AnyObject {
+    func cartButton(_ cartButton: CartButton, didUpdateCount count: Int)
+}
+
 final class CartButton: UIButton {
     //MARK: - Public Properties
     var count = 0 {
         didSet {
             configure()
             setCountToCountLabel()
+            delegate?.cartButton(self, didUpdateCount: count)
         }
     }
-    
+    weak var delegate: CartButtonDelegate?
     //    MARK: - UI elements
     private lazy var countLabel: UILabel = {
         let label = UILabel()

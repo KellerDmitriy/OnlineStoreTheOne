@@ -23,4 +23,8 @@ extension RealmStorageService {
                 completion(.success(()))
         }
     }
+    
+    func loadWishListFromRealm() -> Results<WishListModel> {
+        realm.objects(WishListModel.self)
+    }
 }

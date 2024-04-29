@@ -174,7 +174,7 @@ private extension DetailsViewController {
     }
     
     func cartButtonTap() {
-        viewModel.addToCart()
+//        viewModel.addToCart()
     }
     
     func actionForAddToWishListButtonTap() {

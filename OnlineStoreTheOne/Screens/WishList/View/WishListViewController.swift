@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import AlertKit
 
 final class WishListViewController: UIViewController {
-    
-    var viewModel = WishListViewModel()
+    var viewModel: WishListViewModel!
     
     //MARK: Private properties
     private var searchBarIsEmpty: Bool {
@@ -17,7 +17,7 @@ final class WishListViewController: UIViewController {
         return text.isEmpty
     }
     
-    private var isFiltering: Bool {
+    var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
     
@@ -33,21 +33,30 @@ final class WishListViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+       viewModel = WishListViewModel()
         setupUI()
-        observeProducts()
-        viewModel.fetchProducts()
-        
+        setupSearchController()
+        observeViewModelChanges()
     }
     
-    // MARK: - Data Observing
-    private func observeProducts() {
-        viewModel.products.bind { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
+
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Products"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
+    // MARK: - ViewModel Observing
+    private func observeViewModelChanges() {
+        viewModel.$wishList
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.animateCollectionView()
             }
-        }
+            .store(in: &viewModel.subscription)
     }
-    
     
     // MARK: - Actions
     @objc func addToCartTap() {
@@ -136,32 +145,22 @@ final class WishListViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = cartButtonItem
     }
-}
-
-// MARK: - UISearchResultsUpdating, TextFieldDelegate
-extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text ?? "")
-    }
-    
-    private func filterContentForSearchText(_ searchText: String) {
-        let filteredProducts = viewModel.products.value.filter { product in
-            product.title.lowercased().contains(searchText.lowercased())
-        }
-        collectionView.reloadData()
-    }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        searchController.isActive = false
-        return true
-    }
     
     private func configureSearchController() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchTextField.delegate = self
         
         searchController.searchBar.placeholder = "Search title..."
+    }
+}
+
+// MARK: - UISearchResultsUpdating, TextFieldDelegate
+extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text ?? ""
+        viewModel.filteredWishList = viewModel.wishList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        collectionView.reloadData()
     }
 }
 

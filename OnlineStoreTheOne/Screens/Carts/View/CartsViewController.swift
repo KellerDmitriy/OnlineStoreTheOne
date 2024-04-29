@@ -32,6 +32,8 @@ final class CartsViewController: UIViewController {
         NewLabelFactory(text: "100 $", font: .extraBold, color: .black, size: 16).createLabel()
     }()
     
+    let cartButton = CartButton()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -69,14 +71,16 @@ final class CartsViewController: UIViewController {
         setupNavigationBar()
         observeCartProducts()
         changeToWishListButton()
+       
     }
     
     // MARK: - Data Observing
        private func observeCartProducts() {
            viewModel.$cartProducts
                .receive(on: DispatchQueue.main)
-               .sink { [weak self] _ in
+               .sink { [weak self] carts in
                    self?.tableView.reloadData()
+                   self?.cartButton.count = carts?.count ?? 0
                }
                .store(in: &viewModel.subscription)
        }
@@ -126,7 +130,7 @@ final class CartsViewController: UIViewController {
         )
         navigationItem.leftBarButtonItem = backButton
         
-        let cartButton = CartButton()
+        
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
         navigationItem.rightBarButtonItem = cartButtonItem
         

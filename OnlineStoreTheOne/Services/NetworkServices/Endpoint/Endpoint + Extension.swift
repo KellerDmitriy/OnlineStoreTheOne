@@ -49,5 +49,6 @@ extension Endpoint {
                 URLQueryItem(name: "title", value: searchText)
             }
     }
+
 }
 

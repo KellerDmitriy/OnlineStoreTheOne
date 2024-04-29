@@ -6,49 +6,61 @@
 //
 
 import Foundation
-import RealmSwift
+import Combine
+
 
 final class WishListViewModel {
-    //MARK:  Properties
     let networkService = NetworkService.shared
-    let storageService = RealmStorageService.shared
+    let storageService = StorageService.shared
+    let realmStorageService = RealmStorageService.shared
     
-    var wishListKeys: Observable<[Int]> = Observable([])
-    var products: Observable<[Products]> = Observable([])
+    @Published var wishList: [Products] = []
+    var filteredWishList: [Products] = []
+    @Published var wishListKeys: [Int] = []
+    var subscription: Set<AnyCancellable> = []
     
-    var filteredWishLists: Observable<[WishListModel]> = Observable([])
-    
-    //MARK: - Init
     init() {
-        wishListKeys.value = storageService.realm.objects(WishListModel.self).map { $0.id }
+        getWishListIDs()
+        observeProducts()
     }
     
     private func observeProducts() {
-        wishListKeys.bind { [weak self] _ in
-            guard let self = self else { return }
-            self.fetchProducts()
-        }
+        $wishListKeys
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] wishListKeys in
+                wishListKeys.forEach { id in
+                    self?.fetchProducts(wishListKey: id)
+                }
+            }
+            .store(in: &subscription)
     }
     
-    func fetchProducts() {
-        for wishListKey in self.wishListKeys.value {
-            Task {
-                let result = await self.networkService.fetchSingleProduct(for: wishListKey)
-                switch result {
-                case .success(let product):
-                    DispatchQueue.main.async {
-                        self.products.value.append(product)
-                    }
-                case .failure(let error):
-                    print("Error fetching product: \(error)")
-                }
+    func fetchProducts(wishListKey: Int) {
+        wishList = []
+        Task {
+            let result = await self.networkService.fetchSingleProduct(for: wishListKey)
+            switch result {
+            case .success(let product):
+                self.wishList.append(product)
+            case .failure(let error):
+                print("Error fetching product: \(error)")
             }
         }
     }
     
+    
+    func getWishListIDs() {
+        wishListKeys = storageService.getWishListIDs()
+    }
+    
+    func removeWishList(at id: Int) {
+        storageService.deleteWishListID(id)
+        wishList.removeAll { $0.id == id }
+    }
+    
     //MARK: - Storage Methods
     func addToCart(_ product: Products) {
-        storageService.addItem(CartsModel.self, product) { result in
+        realmStorageService.addItem(CartsModel.self, product) { result in
             switch result {
             case .success:
                 print("Item added from WishList successfully")
@@ -58,22 +70,4 @@ final class WishListViewModel {
         }
     }
     
-    
-    //MARK: - Storage Methods
-    func removeWishList(at id: Int, completion: @escaping () -> Void) {
-        storageService.removeItem(WishListModel.self, id: id) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                print("Item removed from WishList")
-                self.wishListKeys.value = self.storageService.realm.objects(WishListModel.self).map { $0.id }
-                if let index = self.products.value.firstIndex(where: { $0.id == id }) {
-                       self.products.value.remove(at: index)
-                   }
-                completion()
-            case .failure(let error):
-                print("Error removing item from cart: \(error)")
-            }
-        }
-    }
 }
