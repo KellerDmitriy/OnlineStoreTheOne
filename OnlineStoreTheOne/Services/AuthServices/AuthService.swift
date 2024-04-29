@@ -59,6 +59,16 @@ struct AuthService {
         }
     }
     
+    func changeAccountType(userId: String, type: String) {
+        let ref = Firestore.firestore().collection("users").document(userId)
+        
+        ref.updateData(["type": type]) { error in
+            if let error = error {
+                print("Error updating user type: \(error)")
+            }
+        }
+    }
+    
     func fetchUser(userId: String, completion: @escaping (RegistrationCredentials?) -> Void) {
         Firestore.firestore().collection("users").document(userId).getDocument {
             document,
