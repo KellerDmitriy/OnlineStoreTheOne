@@ -64,10 +64,8 @@ final class CartsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = CartsViewModel()
-       
         setupViews()
 
-        
         setupNavigationBar()
         
         observeCartProducts()

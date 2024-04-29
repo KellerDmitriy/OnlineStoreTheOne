@@ -25,7 +25,7 @@ final class CounterActionButton: UIView {
     // UI elements
     private lazy var countLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .black
         label.text = "\(count)"
         return label
