@@ -16,6 +16,7 @@ final class InputContainerView: UIView {
         super.init(frame: .zero)
         self.snp.makeConstraints {
             $0.height.equalTo(46)
+            
         }
         backgroundColor = Colors.grayBackgroundAuth
         addSubview(textField)
@@ -32,6 +33,7 @@ final class InputContainerView: UIView {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(16)
         }
+        textField.autocapitalizationType = .none
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.snp.makeConstraints {
             $0.centerY.equalToSuperview()

@@ -9,12 +9,6 @@ import UIKit
 
 final class RegistrationViewController: UIViewController {
      //MARK: - Private properties
-    private let singUpLabel: UILabel = {
-        $0.text = "Sign Up"
-        $0.font = .makeTypography(.bold, size: 18)
-        $0.textColor = Colors.darkArsenic
-        return $0
-    }(UILabel())
     
     private let completeAccountLabel: UILabel = {
         $0.text = "Complete your account"
@@ -33,7 +27,7 @@ final class RegistrationViewController: UIViewController {
     
     private let loginView = InputContainerView(
         image: UIImage(named: "person"),
-        textField: CustomTextField(placeholder: "Enter your Login", type: .text)
+        textField: CustomTextField(placeholder: "Enter your Name", type: .text)
     )
     
     private let emailView = InputContainerView(
@@ -116,6 +110,11 @@ final class RegistrationViewController: UIViewController {
         setConstraints()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+    
      //MARK: - Private Methods
     private func registerUserAction() -> UIAction {
         let action = UIAction { [weak self] _ in
@@ -156,7 +155,6 @@ final class RegistrationViewController: UIViewController {
         ].forEach(view.addSubview(_:))
         
         [
-            singUpLabel,
             completeAccountLabel
         ].forEach(labelsStackView.addArrangedSubview(_:))
         

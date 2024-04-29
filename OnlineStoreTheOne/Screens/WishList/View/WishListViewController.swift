@@ -44,6 +44,11 @@ final class WishListViewController: UIViewController {
         viewModel.getWishListIDs()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+    
     // MARK: - ViewModel Observing
     private func observeViewModelChanges() {
         viewModel.$wishList
@@ -61,9 +66,6 @@ final class WishListViewController: UIViewController {
             .store(in: &viewModel.subscription)
     }
     
-
-    
-
     // MARK: - Actions
     @objc func addToCartTap() {
         let viewControllerToPresent = CartsViewController()
@@ -87,7 +89,6 @@ final class WishListViewController: UIViewController {
         setupCollectionView()
         setupSearchController()
     }
-    
     
     private func setupSearchController() {
         searchController.searchResultsUpdater = self
