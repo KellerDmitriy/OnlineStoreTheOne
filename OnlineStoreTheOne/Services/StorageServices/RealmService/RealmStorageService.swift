@@ -25,8 +25,8 @@ final class RealmStorageService {
     
     // MARK: - CRUD Operations
     
-    func addItem<T: Object>(_ itemType: T.Type, _ item: Products, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let imageUrlString = item.images?.first else {
+    func addProductToCart(_ product: Products, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let imageUrlString = product.images?.first else {
             completion(.failure(StorageError.noImageURLFound))
             return
         }
@@ -41,15 +41,18 @@ final class RealmStorageService {
             case .success(let imageResult):
                 if let imageData = imageResult.image.pngData() {
                     self.write {
-                        let newItem = T()
-                        if let newItem = newItem as? StorableItem {
-                            newItem.id = item.id
-                            newItem.title = item.title
-                            newItem.price = item.price
+                        if let existingItem = self.realm.objects(CartsModel.self).filter("id == %@", product.id).first {
+                            existingItem.countProduct += 1
+                        } else {
+                            let newItem = CartsModel()
+                            newItem.id = product.id
+                            newItem.title = product.title
+                            newItem.price = product.price
                             newItem.images.append(imageData)
                             self.realm.add(newItem)
                         }
                     }
+                    completion(.success(()))
                 }
             case .failure(let error):
                 completion(.failure(error))

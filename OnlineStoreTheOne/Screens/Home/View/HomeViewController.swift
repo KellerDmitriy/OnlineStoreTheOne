@@ -83,6 +83,15 @@ final class HomeViewController: UIViewController {
                     self.showAlertError(error: error)
                 }
                 .store(in: &viewModel.subscription)
+        
+        viewModel.$isLoading
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            .store(in: &viewModel.subscription)
         }
 
     func showAlertError(error: Error) {
