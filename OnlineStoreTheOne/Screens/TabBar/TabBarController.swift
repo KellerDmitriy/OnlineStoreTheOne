@@ -6,6 +6,7 @@
 //
 import UIKit
 import FirebaseAuth
+import Firebase
 
 final class TabBarController: UITabBarController {
     
@@ -16,6 +17,7 @@ final class TabBarController: UITabBarController {
         authenticateUser()
         configureTabBarAppearance()
         setupViewControllers()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleVisibilityChange(notification:)), name: .updateTabBarVisibility, object: nil)
     }
     
     // MARK: - private methods
@@ -66,7 +68,32 @@ final class TabBarController: UITabBarController {
         vc4.tabBarItem.selectedImage = UIImage(named: "selectedAccount")
         
         tabBar.tintColor = .black
-        setViewControllers([vc1, vc2, vc3, vc4], animated: true)
+        setViewControllers([vc1, vc2, vc4], animated: true)
+        
+        if let user = Auth.auth().currentUser {
+            self.fetchAccountType(userId: user.uid) { type, error in
+                if let error {
+                    print(error)
+                }
+                
+                if let type {
+                    switch type {
+                    case "Manager":
+                        let vcs = [vc1, vc2, vc3, vc4]
+                        self.setViewControllers(vcs, animated: true)
+                        self.selectedIndex = 0
+                        UserDefaults.standard.set(type, forKey: "accountType")
+                    case "User":
+                        let vcs = [vc1, vc2, vc4]
+                        self.setViewControllers(vcs, animated: true)
+                        self.selectedIndex = 0
+                        UserDefaults.standard.set(type, forKey: "accountType")
+                    default:
+                        break
+                    }
+                }
+            }
+        }
     }
     
     private func authenticateUser() {
@@ -83,4 +110,28 @@ final class TabBarController: UITabBarController {
             self.present(navController, animated: true)
         }
     }
+    
+   private func fetchAccountType(userId: String, completion: @escaping (String?, Error?) -> Void) {
+            let ref = Firestore.firestore().collection("users").document(userId)
+            
+            ref.getDocument { document, error in
+                if let error {
+                    print("Error with fetchAccountType")
+                    completion(nil, error)
+                }
+                
+                if let document, document.exists {
+                    let type = document.get("type") as? String
+                    completion(type, nil)
+                }
+            }
+        }
+    
+    @objc func handleVisibilityChange(notification: Notification) {
+        setupViewControllers()
+    }
+}
+
+extension Notification.Name {
+    static let updateTabBarVisibility = Notification.Name("updateTabBarVisibility")
 }

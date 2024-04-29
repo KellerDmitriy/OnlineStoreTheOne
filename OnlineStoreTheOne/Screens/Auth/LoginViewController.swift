@@ -136,11 +136,18 @@ final class LoginViewController: UIViewController {
                 if let error {
                     print("Error login user: \(error)")
                 } else {
-                    self.dismiss(animated: true)
+                    self.updateTabBar()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        self?.dismiss(animated: true)
+                    }
                 }
             }
         }
         return action
+    }
+    
+    private func updateTabBar() {
+        NotificationCenter.default.post(name: .updateTabBarVisibility, object: nil)
     }
     
      //MARK: - @Objc Private Methods
