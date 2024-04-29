@@ -10,9 +10,7 @@ import Combine
 
 final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
-    var textChanged: ((String?) -> Void)?
-    
-    let viewModel: CustomViewWithPickerViewModel
+    //MARK: - Private Properties
     private var subscriptions: Set<AnyCancellable> = []
     private let containerView = UIView()
     private let stackView: UIStackView = {
@@ -48,6 +46,19 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         return $0
     }(UIImageView())
     
+    private let pickerView = UIPickerView()
+    private var data: [String] = []
+    
+    //MARK: - Callback
+    var textChanged: ((String?) -> Void)?
+    
+    //MARK: - Public Properties
+    let viewModel: CustomViewWithPickerViewModel
+    var currentText: String? {
+        textField.text
+    }
+    
+    //MARK: - Lifecycle
     init(viewModel: CustomViewWithPickerViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
@@ -60,14 +71,7 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let pickerView = UIPickerView()
-    
-    private var data: [String] = []
-    
-    var currentText: String? {
-        textField.text
-    }
-    
+    //MARK: - Private Methods
     private func bind() {
         viewModel.$categoryList.sink { [weak self] newData in
             guard let self else { return }
@@ -124,14 +128,7 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
         textField.inputAccessoryView = toolBar
     }
     
-    @objc func dismissKeyboard() {
-        textField.resignFirstResponder()
-    }
-    
-    @objc private func didTextChanged() {
-        textChanged?(textField.text)
-    }
-    
+    //MARK: - Public Methods
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -146,5 +143,14 @@ final class CustomViewWithPicker: UIView, UIPickerViewDataSource, UIPickerViewDe
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         textField.text = data[row]
+    }
+    
+    //MARK: - Objc Methods
+    @objc private func dismissKeyboard() {
+        textField.resignFirstResponder()
+    }
+    
+    @objc private func didTextChanged() {
+        textChanged?(textField.text)
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 final class ManagerViewController: UIViewController {
-    
+     //MARK: - Private Properties
     private lazy var addNewProductButton = FilledButtonFactory(
         title: "Add New Product",
         type: .greenButton,
@@ -76,6 +76,7 @@ final class ManagerViewController: UIViewController {
         return $0
     }(UIStackView())
     
+     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -83,6 +84,7 @@ final class ManagerViewController: UIViewController {
         setupConstraints()
     }
 
+     //MARK: - Private Methods
     private func setupViews() {
         view.addSubview(buttonsStackView)
         [addNewProductButton, updateProductButton,

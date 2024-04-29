@@ -35,6 +35,11 @@
 		86BC2D5C2BDE860F003BF895 /* UpdateProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D5B2BDE860F003BF895 /* UpdateProductViewModel.swift */; };
 		86BC2D5E2BDE8C4C003BF895 /* ProductUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D5D2BDE8C4C003BF895 /* ProductUpdate.swift */; };
 		86BC2D602BDEBA81003BF895 /* DeleteProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D5F2BDEBA81003BF895 /* DeleteProductViewModel.swift */; };
+		86BC2D622BDF8A74003BF895 /* AddNewCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D612BDF8A74003BF895 /* AddNewCategoryViewModel.swift */; };
+		86BC2D642BDF8AC5003BF895 /* NewCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D632BDF8AC5003BF895 /* NewCategory.swift */; };
+		86BC2D662BDF8E77003BF895 /* UpdateCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D652BDF8E77003BF895 /* UpdateCategoryViewModel.swift */; };
+		86BC2D682BDF8E98003BF895 /* CategoryUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D672BDF8E98003BF895 /* CategoryUpdate.swift */; };
+		86BC2D6A2BDF9564003BF895 /* DeleteCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BC2D692BDF9564003BF895 /* DeleteCategoryViewModel.swift */; };
 		86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C474FD2BD507820070E3D8 /* DetailsViewController.swift */; };
 		86C4750B2BD52EDD0070E3D8 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C4750A2BD52EDD0070E3D8 /* ProductListView.swift */; };
 		86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFF102BD80F5E00CD9F81 /* RegistrationViewController.swift */; };
@@ -150,6 +155,11 @@
 		86BC2D5B2BDE860F003BF895 /* UpdateProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProductViewModel.swift; sourceTree = "<group>"; };
 		86BC2D5D2BDE8C4C003BF895 /* ProductUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductUpdate.swift; sourceTree = "<group>"; };
 		86BC2D5F2BDEBA81003BF895 /* DeleteProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProductViewModel.swift; sourceTree = "<group>"; };
+		86BC2D612BDF8A74003BF895 /* AddNewCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryViewModel.swift; sourceTree = "<group>"; };
+		86BC2D632BDF8AC5003BF895 /* NewCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategory.swift; sourceTree = "<group>"; };
+		86BC2D652BDF8E77003BF895 /* UpdateCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCategoryViewModel.swift; sourceTree = "<group>"; };
+		86BC2D672BDF8E98003BF895 /* CategoryUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryUpdate.swift; sourceTree = "<group>"; };
+		86BC2D692BDF9564003BF895 /* DeleteCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCategoryViewModel.swift; sourceTree = "<group>"; };
 		86C474FD2BD507820070E3D8 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		86C475032BD50CF10070E3D8 /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
 		86C475052BD50D8B0070E3D8 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -378,6 +388,9 @@
 				86BC2D562BDE6489003BF895 /* AddNewProductViewModel.swift */,
 				86BC2D5B2BDE860F003BF895 /* UpdateProductViewModel.swift */,
 				86BC2D5F2BDEBA81003BF895 /* DeleteProductViewModel.swift */,
+				86BC2D612BDF8A74003BF895 /* AddNewCategoryViewModel.swift */,
+				86BC2D652BDF8E77003BF895 /* UpdateCategoryViewModel.swift */,
+				86BC2D692BDF9564003BF895 /* DeleteCategoryViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -387,6 +400,8 @@
 			children = (
 				86BC2D592BDE7151003BF895 /* Product.swift */,
 				86BC2D5D2BDE8C4C003BF895 /* ProductUpdate.swift */,
+				86BC2D632BDF8AC5003BF895 /* NewCategory.swift */,
+				86BC2D672BDF8E98003BF895 /* CategoryUpdate.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1011,10 +1026,12 @@
 			files = (
 				E16BB6992BD65592009991F3 /* UICollectionView+Extension.swift in Sources */,
 				E16BB69A2BD65592009991F3 /* IdentifiableCell.swift in Sources */,
+				86BC2D682BDF8E98003BF895 /* CategoryUpdate.swift in Sources */,
 				E16BB6962BD65218009991F3 /* PhotoCollectionView.swift in Sources */,
 				E16BB6952BD65203009991F3 /* DetailsProductViewModel.swift in Sources */,
 				86BC2D4D2BDD56AE003BF895 /* DeleteCategoryViewController.swift in Sources */,
 				86EDFF112BD80F5E00CD9F81 /* RegistrationViewController.swift in Sources */,
+				86BC2D642BDF8AC5003BF895 /* NewCategory.swift in Sources */,
 				531121F02BD2E5EE0018FA37 /* TermsConditionalViewController.swift in Sources */,
 				E16BB67D2BD4FB97009991F3 /* RealmStorageService + Extension.swift in Sources */,
 				531121F12BD2E5EE0018FA37 /* TypeOfAccountViewController.swift in Sources */,
@@ -1056,6 +1073,7 @@
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E18A56072BD7A24800E34777 /* UINavigationController + Extension.swift in Sources */,
 				534848A42BD69C2300162CE6 /* PaymentSuccessView.swift in Sources */,
+				86BC2D6A2BDF9564003BF895 /* DeleteCategoryViewModel.swift in Sources */,
 				E1F1B25D2BCC5042001DC54D /* CartsViewModel.swift in Sources */,
 				E16BB6762BD46389009991F3 /* WishListModel.swift in Sources */,
 				86BC2D5A2BDE7151003BF895 /* Product.swift in Sources */,
@@ -1077,6 +1095,7 @@
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				86BC2D332BDD189F003BF895 /* CustomManagersTextView.swift in Sources */,
 				E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */,
+				86BC2D662BDF8E77003BF895 /* UpdateCategoryViewModel.swift in Sources */,
 				86BC2D602BDEBA81003BF895 /* DeleteProductViewModel.swift in Sources */,
 				86BC2D432BDD5596003BF895 /* UpdateProductViewController.swift in Sources */,
 				E14BC4192BD860E70026103A /* CountButton.swift in Sources */,
@@ -1096,6 +1115,7 @@
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				BEBA5DCB2BD10E6C00737686 /* SearchResultViewController.swift in Sources */,
 				E16BB66F2BD4616E009991F3 /* RealmStorageService.swift in Sources */,
+				86BC2D622BDF8A74003BF895 /* AddNewCategoryViewModel.swift in Sources */,
 				86EDFF292BD926C800CD9F81 /* String+Extension.swift in Sources */,
 				E1A2E8352BCCFF0B00CC0D64 /* NetworkError.swift in Sources */,
 				E1A2E8332BCCFEE200CC0D64 /* Endpoint.swift in Sources */,

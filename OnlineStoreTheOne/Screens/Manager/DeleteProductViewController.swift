@@ -10,9 +10,9 @@ import Combine
 
 final class DeleteProductViewController: UIViewController {
     
-    let viewModel = DeleteProductViewModel()
+    //MARK: - Private Properties
+    private let viewModel = DeleteProductViewModel()
     private var subscriptions: Set<AnyCancellable> = []
-
     private let productView = ContainerManagersView(type: .deleteProduct)
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -26,7 +26,6 @@ final class DeleteProductViewController: UIViewController {
                 await self.deleteProduct()
             }
             navigationController?.popViewController(animated: true)
-            print("Delete Button Tapped")
         })
     ).createButton()
     
@@ -35,7 +34,6 @@ final class DeleteProductViewController: UIViewController {
         type: .grayButton,
         action: UIAction(handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
-            print("Cancel Button Tapped")
         })
     ).createButton()
     
@@ -131,13 +129,18 @@ final class DeleteProductViewController: UIViewController {
         return $0
     }(UIStackView())
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
         setConstraints()
         bind()
-        
+        setActions()
+    }
+    
+    //MARK: - Private Methods
+    private func setActions() {
         productView.actionPublisher.sink { [weak self] action in
             guard let self else { return }
             switch action {
@@ -162,7 +165,7 @@ final class DeleteProductViewController: UIViewController {
             }
         }.store(in: &subscriptions)
     }
-
+    
     private func setupViews() {
         view.backgroundColor = .white
         title = "Delete product"
@@ -238,28 +241,29 @@ final class DeleteProductViewController: UIViewController {
     }
     
     private func findProductByTitle(_ title: String) async {
-         let result = await NetworkService.shared.fetchAllProducts()
-         switch result {
-         case .success(let products):
-             let filteredProducts = products.filter { $0.title.lowercased().contains(title.lowercased()) }
-             if let firstProduct = filteredProducts.first {
-                 viewModel.id = "\(firstProduct.id)"
-                 viewModel.title = firstProduct.title
-                 viewModel.price = "\(firstProduct.price)"
-                 print("Найден продукт: \(firstProduct.title) с ID: \(firstProduct.id)")
-             } else {
-                 print("Продукт с названием '\(title)' не найден.")
-                 viewModel.id = "-"
-                 viewModel.price = "_"
-                 viewModel.title = "-"
-             }
-         case .failure(let error):
-             print("Ошибка при запросе продуктов: \(error)")
-         }
-     }
+        let result = await NetworkService.shared.fetchAllProducts()
+        switch result {
+        case .success(let products):
+            let filteredProducts = products.filter { $0.title.lowercased().contains(title.lowercased()) }
+            if let firstProduct = filteredProducts.first {
+                viewModel.id = "\(firstProduct.id)"
+                viewModel.title = firstProduct.title
+                viewModel.price = "\(firstProduct.price)"
+                print("Найден продукт: \(firstProduct.title) с ID: \(firstProduct.id)")
+            } else {
+                print("Продукт с названием '\(title)' не найден.")
+                viewModel.id = "-"
+                viewModel.price = "_"
+                viewModel.title = "-"
+            }
+        case .failure(let error):
+            print("Ошибка при запросе продуктов: \(error)")
+        }
+    }
     
     private func deleteProduct() async {
-        guard let id = Int(viewModel.id ?? "") else { return }
+        guard let id = Int(viewModel.id) else { return }
+        
         let result = await NetworkService.shared.deleteProductById(id)
         switch result {
         case .success():

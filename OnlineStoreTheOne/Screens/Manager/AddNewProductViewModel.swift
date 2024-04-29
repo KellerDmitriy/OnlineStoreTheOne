@@ -17,7 +17,11 @@ final class AddNewProductViewModel {
     var imageThree: String?
 
     var product: Product? {
-        let images = [imageOne, imageTwo, imageThree].compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+        let images = [
+            imageOne,
+            imageTwo,
+            imageThree
+        ].compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
 
         guard
             let title,

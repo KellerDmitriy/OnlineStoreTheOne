@@ -14,7 +14,6 @@ final class UpdateProductViewModel {
     
     var productUpdate: ProductUpdate? {
         guard
-            let id,
             let title,
             let price
         else { return nil }
@@ -23,7 +22,6 @@ final class UpdateProductViewModel {
             title: title,
             price: price
         )
-        
         return product
     }
 }

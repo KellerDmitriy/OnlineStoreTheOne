@@ -25,11 +25,3 @@ struct MyProductResponse: Codable {
     var creationAt: String
     var updatedAt: String
 }
-
-struct MyCategory: Codable {
-    var id: Int
-    var name: String
-    var image: String
-    var creationAt: String
-    var updatedAt: String
-}

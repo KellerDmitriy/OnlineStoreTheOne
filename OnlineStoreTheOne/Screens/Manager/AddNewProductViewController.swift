@@ -9,10 +9,9 @@ import UIKit
 import Combine
 
 final class AddNewProductViewController: UIViewController {
-    
-    let viewModel = AddNewProductViewModel()
+    //MARK: - Private Properties
+    private let viewModel = AddNewProductViewModel()
     private var subscriptions: Set<AnyCancellable> = []
-
     private let productView = ContainerManagersView(type: .addNewProduct)
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -26,7 +25,6 @@ final class AddNewProductViewController: UIViewController {
                 await self.addNewProduct()
             }
             navigationController?.popViewController(animated: true)
-            print("Save Button Tapped")
         })
     ).createButton()
     
@@ -35,7 +33,6 @@ final class AddNewProductViewController: UIViewController {
         type: .grayButton,
         action: UIAction(handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
-            print("Cancel Button Tapped")
         })
     ).createButton()
     
@@ -47,12 +44,17 @@ final class AddNewProductViewController: UIViewController {
         return $0
     }(UIStackView())
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchCategories()
         setupViews()
         setConstraints()
-        
+        setActions()
+    }
+    
+    //MARK: - Private Methods
+    private func setActions() {
         productView.actionPublisher.sink { [weak self] action in
             guard let self else { return }
             switch action {
@@ -75,7 +77,7 @@ final class AddNewProductViewController: UIViewController {
             }
         }.store(in: &subscriptions)
     }
-
+    
     private func setupViews() {
         view.backgroundColor = .white
         title = "Add new product"
@@ -135,16 +137,15 @@ final class AddNewProductViewController: UIViewController {
         }
     }
     
-    func addNewProduct() async {
+    private func addNewProduct() async {
         guard let newProduct = viewModel.product else { return }
-
+        
         let result = await NetworkService.shared.createProduct(product: newProduct)
-            switch result {
-            case .success(let response):
-                print("Продукт успешно добавлен с ID \(response.id) и категорией \(response.category.name).")
-            case .failure(let error):
-                print("Ошибка при добавлении продукта: \(error)")
-            }
+        switch result {
+        case .success(let response):
+            print("Продукт успешно добавлен с ID \(response.id) и категорией \(response.category.name ?? "not found").")
+        case .failure(let error):
+            print("Ошибка при добавлении продукта: \(error)")
+        }
     }
-   
 }

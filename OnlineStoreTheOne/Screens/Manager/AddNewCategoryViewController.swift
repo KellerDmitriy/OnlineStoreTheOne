@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Combine
 
-class AddNewCategoryViewController: UIViewController {
-
+final class AddNewCategoryViewController: UIViewController {
+    
+    //MARK: - Private Properties
+    private let viewModel = AddNewCategoryViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     private let categoryView = ContainerManagersView(type: .addNewCategory)
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -17,7 +21,11 @@ class AddNewCategoryViewController: UIViewController {
         title: "Save",
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
-            print("Save Button Tapped")
+            guard let self else { return }
+            Task {
+                await self.createNewCategory()
+            }
+            navigationController?.popViewController(animated: true)
         })
     ).createButton()
     
@@ -26,7 +34,6 @@ class AddNewCategoryViewController: UIViewController {
         type: .grayButton,
         action: UIAction(handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
-            print("Cancel Button Tapped")
         })
     ).createButton()
     
@@ -38,13 +45,40 @@ class AddNewCategoryViewController: UIViewController {
         return $0
     }(UIStackView())
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
         setConstraints()
+        setActions()
     }
-
+    
+    //MARK: - Private Methods
+    private func setActions() {
+        categoryView.actionPublisher.sink { [weak self] action in
+            guard let self else { return }
+            switch action {
+            case .titleField(let title):
+                viewModel.name = title
+            case .priceField(_):
+                break
+            case .categoryField(_):
+                break
+            case .descriptionView(_):
+                break
+            case .imageOneView(let url):
+                viewModel.image = url
+            case .imageTwoView(_):
+                break
+            case .imageThreeView(_):
+                break
+            case .searchView(_):
+                break
+            }
+        }.store(in: &subscriptions)
+    }
+    
     private func setupViews() {
         view.backgroundColor = .white
         title = "Add new category"
@@ -90,6 +124,18 @@ class AddNewCategoryViewController: UIViewController {
         }
         
         [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
+    }
+    
+    private func createNewCategory() async {
+        guard let category = viewModel.newCategory else { return }
+        
+        let result = await NetworkService.shared.createCategory(category: category)
+        switch result {
+        case .success(let category):
+            print("Category successfully created with name: \(category.name)")
+        case .failure(let error):
+            print("Error creating category: \(error)")
+        }
     }
 }
 

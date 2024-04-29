@@ -8,11 +8,11 @@
 import UIKit
 import Combine
 
-class UpdateProductViewController: UIViewController {
+final class UpdateProductViewController: UIViewController {
     
-    let viewModel = UpdateProductViewModel()
+    //MARK: - Private Properties
+    private let viewModel = UpdateProductViewModel()
     private var subscriptions: Set<AnyCancellable> = []
-    
     private let productView = ContainerManagersView(type: .updateProduct)
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -26,7 +26,6 @@ class UpdateProductViewController: UIViewController {
                 await self.updateProduct()
             }
             navigationController?.popViewController(animated: true)
-            print("Save Button Tapped")
         })
     ).createButton()
     
@@ -35,7 +34,6 @@ class UpdateProductViewController: UIViewController {
         type: .grayButton,
         action: UIAction(handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
-            print("Cancel Button Tapped")
         })
     ).createButton()
     
@@ -47,12 +45,17 @@ class UpdateProductViewController: UIViewController {
         return $0
     }(UIStackView())
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
         setConstraints()
-        
+        setActions()
+    }
+    
+    //MARK: - Private Methods
+    private func setActions() {
         productView.actionPublisher.sink { [weak self] action in
             guard let self else { return }
             switch action {
@@ -77,7 +80,7 @@ class UpdateProductViewController: UIViewController {
             }
         }.store(in: &subscriptions)
     }
-
+    
     private func setupViews() {
         view.backgroundColor = .white
         title = "Update product"
@@ -125,7 +128,7 @@ class UpdateProductViewController: UIViewController {
         [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
     }
     
-   private func findProductByTitle(_ title: String) async {
+    private func findProductByTitle(_ title: String) async {
         let result = await NetworkService.shared.fetchAllProducts()
         switch result {
         case .success(let products):
@@ -148,10 +151,10 @@ class UpdateProductViewController: UIViewController {
         
         let result = await NetworkService.shared.updateProduct(id: id, updateData: updateProduct)
         switch result {
-            case .success():
-                print("Product successfully updated.")
-            case .failure(let error):
-                print("Error updating product: \(error)")
-            }
+        case .success():
+            print("Product successfully updated.")
+        case .failure(let error):
+            print("Error updating product: \(error)")
+        }
     }
 }

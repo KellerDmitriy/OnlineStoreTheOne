@@ -9,8 +9,7 @@ import UIKit
 
 final class CustomViewWithOutPicker: UIView {
     
-    var textChanged: ((String?) -> Void)?
-    
+    //MARK: - Private Properties
     private let containerView = UIView()
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +36,10 @@ final class CustomViewWithOutPicker: UIView {
         return $0
     }(UITextField())
     
+    //MARK: - Callback
+    var textChanged: ((String?) -> Void)?
+    
+    //MARK: - Lifecycle
     init(with text: String) {
         super.init(frame: .zero)
         self.label.text = text
@@ -49,6 +52,7 @@ final class CustomViewWithOutPicker: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Private Methods
     private func setupViews() {
         addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,10 +79,12 @@ final class CustomViewWithOutPicker: UIView {
         }
     }
     
+    //MARK: - Public Methods
     func setText(_ text: String) {
         textField.text = text
     }
     
+    //MARK: - Objc Methods
     @objc private func didTextChanged() {
         textChanged?(textField.text)
     }

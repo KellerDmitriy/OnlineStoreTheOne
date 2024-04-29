@@ -9,10 +9,14 @@ import UIKit
 
 final class CustomSearchTextField: UITextField {
     
+    //MARK: - Private Properties
     private let imageView = UIImageView()
     private let iconContainerView = UIView()
+    
+    //MARK: - Callback
     var textChanged: ((String?) -> Void)?
     
+    //MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -23,6 +27,7 @@ final class CustomSearchTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Private Methods
     private func setupViews() {
         imageView.image = UIImage(named: "Search")
         imageView.contentMode = .scaleAspectFit
@@ -54,10 +59,10 @@ final class CustomSearchTextField: UITextField {
     }
 }
 
+//MARK: - CustomSearchTextField: UITextFieldDelegate
 extension CustomSearchTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textChanged?(self.text)
-        print(text)
         resignFirstResponder()
         return true
     }

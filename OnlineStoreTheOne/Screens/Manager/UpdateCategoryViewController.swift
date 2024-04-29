@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Combine
 
-class UpdateCategoryViewController: UIViewController {
-
+final class UpdateCategoryViewController: UIViewController {
+    
+    //MARK: - Private Properties
+    private let viewModel = UpdateCategoryViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     private let categoryView = ContainerManagersView(type: .updateCategory)
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -17,7 +21,11 @@ class UpdateCategoryViewController: UIViewController {
         title: "Save",
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
-            print("Save Button Tapped")
+            guard let self else { return }
+            Task {
+                await self.updateCategory()
+            }
+            navigationController?.popViewController(animated: true)
         })
     ).createButton()
     
@@ -26,7 +34,6 @@ class UpdateCategoryViewController: UIViewController {
         type: .grayButton,
         action: UIAction(handler: { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
-            print("Cancel Button Tapped")
         })
     ).createButton()
     
@@ -38,13 +45,42 @@ class UpdateCategoryViewController: UIViewController {
         return $0
     }(UIStackView())
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
         setConstraints()
+        setActions()
     }
-
+    
+    //MARK: - Private Methods
+    private func setActions() {
+        categoryView.actionPublisher.sink { [weak self] action in
+            guard let self else { return }
+            switch action {
+            case .titleField(let name):
+                viewModel.name = name
+            case .priceField(_):
+                break
+            case .categoryField(_):
+                break
+            case .descriptionView(_):
+                break
+            case .imageOneView(_):
+                break
+            case .imageTwoView(_):
+                break
+            case .imageThreeView(_):
+                break
+            case .searchView(let text):
+                Task {
+                    await self.findCategoryByName(text)
+                }
+            }
+        }.store(in: &subscriptions)
+    }
+    
     private func setupViews() {
         view.backgroundColor = .white
         title = "Update category"
@@ -90,6 +126,35 @@ class UpdateCategoryViewController: UIViewController {
         }
         
         [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
+    }
+    
+    private func findCategoryByName(_ name: String) async {
+        let result = await NetworkService.shared.fetchAllCategory()
+        switch result {
+        case .success(let categories):
+            let filteredCategories = categories.filter { $0.name?.lowercased().contains(name.lowercased()) ?? false }
+            if let firstCategory = filteredCategories.first {
+                print("Найдена категория: \(firstCategory.name ?? "No name") с ID: \(firstCategory.id)")
+                categoryView.setTextOnTitleField(firstCategory.name ?? "")
+                viewModel.id = firstCategory.id
+            } else {
+                print("Категория с названием '\(name)' не найдена.")
+            }
+        case .failure(let error):
+            print("Ошибка при запросе категорий: \(error)")
+        }
+    }
+    
+    private func updateCategory() async {
+        guard let id = viewModel.id, let updateData = viewModel.categoryUpdate else { return }
+        
+        let result = await NetworkService.shared.updateCategory(id: id, updateData: updateData)
+        switch result {
+        case .success():
+            print("Category successfully updated.")
+        case .failure(let error):
+            print("Error updating category: \(error)")
+        }
     }
 }
 

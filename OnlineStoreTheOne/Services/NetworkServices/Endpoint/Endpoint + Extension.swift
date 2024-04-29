@@ -63,5 +63,17 @@ extension Endpoint {
     static func deleteProduct(id: Int) -> Self {
             Endpoint(method: .DELETE, path: "products/\(id)")
         }
+    
+    static func createCategory() -> Self {
+           Endpoint(method: .POST, path: "categories")
+       }
+    
+    static func updateCategory(id: Int) -> Self {
+            Endpoint(method: .PUT, path: "categories/\(id)")
+        }
+    
+    static func deleteCategory(id: Int) -> Self {
+            Endpoint(method: .DELETE, path: "categories/\(id)")
+        }
 }
 
