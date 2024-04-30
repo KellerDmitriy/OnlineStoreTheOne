@@ -99,20 +99,13 @@ extension HomeViewController: UICollectionViewDelegate {
 
 //MARK: - UITextFieldDelegate
 extension HomeViewController: UITextFieldDelegate {
-    
-    //TODO: -
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        
-        if let searchText = textField.text {
-            let searchResultsVC = SearchResultViewController(searchText: searchText)
-            
-            let navigationController = UINavigationController(rootViewController: searchResultsVC)
-            navigationController.modalPresentationStyle = .fullScreen
-            self.present(navigationController, animated: true, completion: nil)
-        }
-        textField.text = ""
-        return true
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.inputView = UIView()
+        let searchResultsViewModel = SearchResultViewModel(searchText: "")
+        let searchResultsVC = SearchResultViewController(viewModel: searchResultsViewModel)
+        let navigationController = UINavigationController(rootViewController: searchResultsVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
 

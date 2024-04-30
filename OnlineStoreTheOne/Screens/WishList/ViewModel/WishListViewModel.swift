@@ -11,7 +11,6 @@ import RealmSwift
 
 final class WishListViewModel {
     let networkService = NetworkService.shared
-//    let storageService = StorageService.shared
     let realmStorageService = RealmStorageService.shared
     
     @Published var wishList: [Products] = []

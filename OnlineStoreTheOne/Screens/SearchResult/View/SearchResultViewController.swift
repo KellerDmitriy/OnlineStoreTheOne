@@ -11,11 +11,21 @@ import SwiftUI
 
 final class SearchResultViewController: UIViewController {
     // MARK: - Properties
-    var searchText: String
-    let viewModel = SearchResultViewModel()
+    var viewModel: SearchResultViewModel!
     
     // MARK: - UI Components
-    let searchField = SearchFieldCollectionViewCell()
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+    //MARK: Private properties
+//    private var searchBarIsEmpty: Bool {
+//        guard let text = searchController.searchBar.text else { return false }
+//        return text.isEmpty
+//    }
+//    
+//    var isFiltering: Bool {
+//        return searchController.isActive && !searchBarIsEmpty
+//    }
+    
     let cartButton = CartButton()
     
     lazy var collectionView: UICollectionView = {
@@ -32,17 +42,15 @@ final class SearchResultViewController: UIViewController {
     
     
     // MARK: - Init
-    init(searchText: String) {
-        self.searchText = searchText
+    init(viewModel: SearchResultViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        if !searchText.isEmpty {
-            viewModel.fetchSearchProducts(searchText)
-        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+       
     
     // MARK: - Life Circle
     override func viewDidLoad() {
@@ -50,8 +58,8 @@ final class SearchResultViewController: UIViewController {
         
         setupCollectionView()
         setupNavigationBar()
+        configureSearchController()
         observeProducts()
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -73,9 +81,9 @@ final class SearchResultViewController: UIViewController {
     //MARK: - Private methods
     private func setupNavigationBar() {
         navigationController?.setupNavigationBar()
-        navigationController?.navigationBar.addBottomBorder()
-//        setSearchBar()
-        let cartButton = CartButton()
+        navigationItem.title = "Your searched results"
+        navigationItem.searchController = searchController
+ 
         cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartBarButtonItem = UIBarButtonItem(customView: cartButton)
         
@@ -90,14 +98,14 @@ final class SearchResultViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButton
     }
     
-    private func setSearchBar() {
-        let frame = CGRect(x: 40, y: 0, width: 450, height: 44)
-        let titleView = UIView(frame: frame)
-        searchField.frame = frame
-        titleView.addSubview(searchField)
-        navigationItem.titleView = titleView
-        searchField.searchTextField.delegate = self
-    }
+    private func configureSearchController() {
+        searchController.isActive = true
+        searchController.searchBar.resignFirstResponder()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.searchTextField.delegate = self
+        
+        searchController.searchBar.placeholder = "Search title..."
+}
     
     //MARK: - Actions
     func cartButtonTapped(_ product: Products) {
@@ -113,6 +121,15 @@ final class SearchResultViewController: UIViewController {
     
     @objc private func backButtonTapped() {
         navigationController?.dismiss(animated: true, completion: nil)
+    }
+}
+// MARK: - UISearchResultsUpdating, TextFieldDelegate
+extension SearchResultViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+//        let searchText = searchController.searchBar.text ?? ""
+//        viewModel.filteredWishList = viewModel.wishList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+//        collectionView.reloadData()
     }
 }
 
@@ -139,7 +156,6 @@ extension SearchResultViewController {
     
     private func addConstraints() {
 
-        searchField.translatesAutoresizingMaskIntoConstraints = false
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -190,7 +206,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderProductsView", for: indexPath) as! HeaderProductsView
-        headerView.configureHeader(labelName: "Search result for \(searchText)")
+        headerView.configureHeader(labelName: "Search result for \(viewModel.searchText)")
         return headerView
     }
 }

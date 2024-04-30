@@ -18,11 +18,14 @@ final class SearchResultViewModel: ObservableObject {
     let networkService = NetworkService.shared
     let storageService = RealmStorageService.shared
     
-//    //MARK: - Init
-//    init() {
-//        observe()
-//    }
-//    
+    //MARK: - Init
+    init(searchText: String) {
+        self.searchText = searchText
+        if !searchText.isEmpty {
+            fetchSearchProducts(searchText)
+        }
+    }
+//
 //    //MARK: - Observe Methods
 //    private func observe() {
 //        $searchText

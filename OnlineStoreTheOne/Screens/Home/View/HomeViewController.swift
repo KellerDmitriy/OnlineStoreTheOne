@@ -173,6 +173,7 @@ final class HomeViewController: UIViewController {
 extension HomeViewController {
     private func addViews() {
         view.addSubview(collectionView)
+       
         addConstraints()
     }
     
