@@ -7,7 +7,6 @@
 
 import UIKit
 import Combine
-import AlertKit
 
 final class DetailsViewController: UIViewController {
     //MARK: - Private Properties
@@ -77,7 +76,7 @@ final class DetailsViewController: UIViewController {
             .sink { [weak self] product in
                 self?.productList.setProduct(name: product.title)
                 self?.productList.setProduct(price: "$ \(product.price)")
-                self?.productList.setProductDescription(text: product.description ?? "nil")
+                self?.productList.setProductDescription(text: product.description)
                 self?.photoCollection.set(data: product.images ?? [""])
             }
             .store(in: &viewModel.cancellables)
@@ -164,7 +163,6 @@ final class DetailsViewController: UIViewController {
 
 // MARK: - Actions
 private extension DetailsViewController {
-    //    MARK: - Actions
     func payButtonTap() {
         let vc = PaymentSuccessView()
         if let presentationController = vc.presentationController as? UISheetPresentationController {
@@ -187,14 +185,11 @@ private extension DetailsViewController {
     func addToWishListButtonTap () {
         viewModel.favoriteButtonPressed()
         viewModel.isSaved
-        ? AlertKitAPI.present(title: "Saved to wish list", subtitle: nil, icon: .heart, style: .iOS17AppleMusic, haptic: .success)
-        : AlertKitAPI.present(title: "Deleted from wish list", subtitle: nil, icon: .error, style: .iOS17AppleMusic, haptic: .success)
     }
     
     func setToAddToWishListButton(_ status: Bool) {
         let image = status ? UIImage(named: "selectedWishlist") : UIImage(named: "Wishlist")
         productList.addToWishListButton.setImage(image, for: .normal)
-        
     }
     
     

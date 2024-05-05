@@ -93,7 +93,7 @@ final class LoginViewController: UIViewController {
         ].forEach(loginStackView.addArrangedSubview(_:))
         
         loginButton.titleLabel?.font = .makeTypography(.bold, size: 18)
-        loginButton.layer.cornerRadius = 12
+        loginButton.layer.cornerRadius = 8
         loginButton.isEnabled = false
         loginButton.backgroundColor = Colors.greenSheen.withAlphaComponent(0.6)
         
@@ -147,7 +147,7 @@ final class LoginViewController: UIViewController {
     }
     
     private func updateTabBar() {
-        NotificationCenter.default.post(name: .updateTabBarVisibility, object: nil)
+//        NotificationCenter.default.post(name: .updateTabBarVisibility, object: nil)
     }
     
      //MARK: - @Objc Private Methods

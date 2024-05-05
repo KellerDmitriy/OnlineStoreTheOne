@@ -17,14 +17,14 @@ final class SearchResultViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     
     //MARK: Private properties
-//    private var searchBarIsEmpty: Bool {
-//        guard let text = searchController.searchBar.text else { return false }
-//        return text.isEmpty
-//    }
-//    
-//    var isFiltering: Bool {
-//        return searchController.isActive && !searchBarIsEmpty
-//    }
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
     let cartButton = CartButton()
     
@@ -50,9 +50,17 @@ final class SearchResultViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-       
+    
     
     // MARK: - Life Circle
+    
+    // MARK: - Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchController.isActive = true
+//        searchController.searchBar.becomeFirstResponder()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,7 +91,7 @@ final class SearchResultViewController: UIViewController {
         navigationController?.setupNavigationBar()
         navigationItem.title = "Your searched results"
         navigationItem.searchController = searchController
- 
+        
         cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartBarButtonItem = UIBarButtonItem(customView: cartButton)
         
@@ -99,18 +107,17 @@ final class SearchResultViewController: UIViewController {
     }
     
     private func configureSearchController() {
-        searchController.isActive = true
-        searchController.searchBar.resignFirstResponder()
+        
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchTextField.delegate = self
         
         searchController.searchBar.placeholder = "Search title..."
-}
+    }
     
     //MARK: - Actions
     func cartButtonTapped(_ product: Products) {
-         viewModel.addToCarts(product: product)
-     }
+        viewModel.addToCarts(product: product)
+    }
     
     @objc func addToCartTap() {
         let viewControllerToPresent = CartsViewController()
@@ -127,9 +134,9 @@ final class SearchResultViewController: UIViewController {
 extension SearchResultViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-//        let searchText = searchController.searchBar.text ?? ""
-//        viewModel.filteredWishList = viewModel.wishList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
-//        collectionView.reloadData()
+        //        let searchText = searchController.searchBar.text ?? ""
+        //        viewModel.filteredWishList = viewModel.wishList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        //        collectionView.reloadData()
     }
 }
 
@@ -155,7 +162,7 @@ extension SearchResultViewController {
     }
     
     private func addConstraints() {
-
+        
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import AlertKit
+
 
 final class WishListViewController: UIViewController {
     var viewModel: WishListViewModel!

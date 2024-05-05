@@ -14,11 +14,12 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     //MARK: - Private Properties
     private let categoryImageView: UIImageView = {
         let element = UIImageView()
-        element.layer.cornerRadius = 12
+        element.layer.cornerRadius = 8
         element.layer.masksToBounds = true
         element.contentMode = .scaleAspectFill
         return element
     }()
+    
     private let nameLabel: UILabel = {
         let element = UILabel()
         element.textColor = .systemGray
@@ -67,6 +68,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         categoryImageView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview().inset(6)
         }
+        
         nameLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(categoryImageView.snp.bottom).offset(8)

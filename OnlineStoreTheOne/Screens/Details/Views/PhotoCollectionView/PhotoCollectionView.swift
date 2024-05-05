@@ -11,7 +11,7 @@ final class PhotoCollectionView: UIView {
     //MARK: - Private Properties
     private lazy var pageIndicator: UIPageControl = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.layer.cornerRadius = 5
+        $0.layer.cornerRadius = 8
         $0.backgroundStyle = .prominent
         $0.addTarget(self, action: #selector(didChangePage(control:)), for: .valueChanged)
         return $0

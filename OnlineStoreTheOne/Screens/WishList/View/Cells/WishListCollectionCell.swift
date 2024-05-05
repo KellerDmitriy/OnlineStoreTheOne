@@ -20,7 +20,7 @@ final class WishListCollectionCell: UICollectionViewCell {
         let element = UIImageView()
         element.contentMode = .scaleAspectFill
         element.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        element.layer.cornerRadius = 12
+        element.layer.cornerRadius = 8
         element.layer.masksToBounds = true
         return element
     }()
@@ -71,7 +71,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        layer.cornerRadius = 12
+        layer.cornerRadius = 8
         setupViews()
         setConstraints()
         
@@ -107,6 +107,7 @@ final class WishListCollectionCell: UICollectionViewCell {
         addSubview(priceLabel)
         addSubview(addToCartButton)
         addSubview(addToWishListButton)
+     
     }
     
     private func setConstraints() {

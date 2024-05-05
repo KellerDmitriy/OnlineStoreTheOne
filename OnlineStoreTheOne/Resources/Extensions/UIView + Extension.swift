@@ -8,6 +8,16 @@
 import UIKit
 
 extension UIView {
+    /// Добавляет тень к представлению.
+    func makeCellShadow() {
+        self.layer.cornerRadius = 8
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowOpacity = 0.3
+        self.layer.shadowRadius = 4
+        self.layer.masksToBounds = false
+    }
+    
     /// Добавляет нижнюю границу(полоску) к представлению.
     func addBottomBorder() {
         let height: CGFloat = 0.3

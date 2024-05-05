@@ -18,7 +18,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         let element = UIImageView()
         element.contentMode = .scaleAspectFill
         element.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        element.layer.cornerRadius = 12
+        element.layer.cornerRadius = 8
         element.layer.masksToBounds = true
         return element
     }()
@@ -42,7 +42,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     private lazy var addToCartButton: UIButton = {
         let filledButtonFactory = FilledButtonFactory(
             title: "Add to cart",
-            type: .greenButtonMini,
+            type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.addToCartCompletion?()
             }
@@ -54,7 +54,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        layer.cornerRadius = 12
+        layer.cornerRadius = 8
         setupView()
         setConstraints()
     }
@@ -97,10 +97,12 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupView() {
-        addSubview(productImageView)
+        contentView.addSubview(productImageView)
         addSubview(titleLabel)
         addSubview(priceLabel)
         addSubview(addToCartButton)
+        
+      
     }
     
     private func setConstraints() {

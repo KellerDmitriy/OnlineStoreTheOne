@@ -41,7 +41,7 @@ extension HomeViewController: UICollectionViewDataSource {
             
         case .categories:
             let cell: CategoryCollectionViewCell = collectionView.dequeueCell(indexPath)
-            
+            cell.makeCellShadow()
             if indexPath.row < viewModel.categories.count {
                 let category = viewModel.categories[indexPath.row]
                 cell.configureCell(image: category.image ?? "",
@@ -51,7 +51,7 @@ extension HomeViewController: UICollectionViewDataSource {
             
         case .products:
             let cell: ProductCollectionViewCell = collectionView.dequeueCell(indexPath)
-            
+            cell.makeCellShadow()
             if indexPath.row < viewModel.products.count {
                 let product = viewModel.products[indexPath.row]
                 cell.configureCell(

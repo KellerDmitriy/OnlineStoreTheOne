@@ -19,10 +19,10 @@ extension Endpoint {
     static func put() -> Endpoint { Endpoint(method: .PUT) }
     
     /// Создает конечную точку для получения всех продуктов.
-        static func allProducts() -> Self {
-            Endpoint.get()
-                .path("products")
-        }
+    static func allProducts() -> Self {
+        Endpoint.get()
+            .path("products")
+    }
     
     /// Создает конечную точку для получения всех категорий
     static func allCategories() -> Self {
@@ -57,27 +57,27 @@ extension Endpoint {
     }
     
     static func createProduct() -> Self {
-            Endpoint(method: .POST, path: "products")
-        }
+        Endpoint(method: .POST, path: "products")
+    }
     
     static func updateProduct(id: Int) -> Self {
-            Endpoint(method: .PUT, path: "products/\(id)")
-        }
+        Endpoint(method: .PUT, path: "products/\(id)")
+    }
     
     static func deleteProduct(id: Int) -> Self {
-            Endpoint(method: .DELETE, path: "products/\(id)")
-        }
+        Endpoint(method: .DELETE, path: "products/\(id)")
+    }
     
     static func createCategory() -> Self {
-           Endpoint(method: .POST, path: "categories")
-       }
+        Endpoint(method: .POST, path: "categories")
+    }
     
     static func updateCategory(id: Int) -> Self {
-            Endpoint(method: .PUT, path: "categories/\(id)")
-        }
+        Endpoint(method: .PUT, path: "categories/\(id)")
+    }
     
     static func deleteCategory(id: Int) -> Self {
-            Endpoint(method: .DELETE, path: "categories/\(id)")
-        }
+        Endpoint(method: .DELETE, path: "categories/\(id)")
+    }
 }
 

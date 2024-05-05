@@ -5,7 +5,7 @@
 //  Created by Иван Семенов on 19.04.2024.
 //
 
-import UIKit
+
 import Foundation
 import Combine
 
@@ -19,6 +19,8 @@ final class HomeViewModel: ObservableObject {
     @Published var categories: [Category] = []
     @Published var products: [Products] = []
     @Published var searchedProducts: [Products] = []
+    
+    @Published var idsForCart: [Int] = []
     @Published var searchText = ""
     
     @Published var selectedCategory: Int = 1
@@ -26,7 +28,7 @@ final class HomeViewModel: ObservableObject {
     var subscription: Set<AnyCancellable> = []
     
     let networkService = NetworkService.shared
-    let storageService = RealmStorageService.shared
+    let storageService = StorageService.shared
     
     //MARK: - Init
     init() {
@@ -57,14 +59,15 @@ final class HomeViewModel: ObservableObject {
             let result = await networkService.fetchProducts(with: categoryID)
             switch result {
             case .success(let products):
+                print(products)
                 self.isLoading = false
                 self.products = products
             case .failure(let error):
+                print(error)
                 self.productsError = error
             }
         }
     }
-    
     
     func fetchCategory() {
         Task {
@@ -75,26 +78,18 @@ final class HomeViewModel: ObservableObject {
                 let uniqueCategories = filterUniqueCategories(filteredCategories)
                 self.categories = uniqueCategories
             case .failure(let error):
+                print(error)
                 self.categoriesError = error
             }
         }
     }
     
     //MARK: - Storage Methods
-    
-    func getProductsFromCart() {
-        let cart = storageService.getCartFromRealm()
-        let productCount = cart.count
-    }
-    
-    func addToCarts(product: Products) {
-        storageService.addProductToCart(product) { result in
-            switch result {
-            case .success:
-                print("Item added from cart successfully")
-            case .failure(let error):
-                print("Error adding product to cart: \(error)")
-            }
+    func addToCart(_ productId: Int) {
+        if let product = products.first(where: { $0.id == productId }) {
+            let cartItem = CartModel(product: product, countProduct: 1, isSelected: true)
+            
+            storageService.saveOrUpdateCart(cartItem)
         }
     }
 }

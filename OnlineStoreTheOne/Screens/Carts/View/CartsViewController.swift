@@ -78,17 +78,13 @@ final class CartsViewController: UIViewController {
         viewModel.getOrderSummery()
     }
     
-    deinit {
-    print( "Cards is over" )
-    }
-    
     // MARK: - Data Observing
        private func observeCartProducts() {
            viewModel.$cartProducts
                .receive(on: DispatchQueue.main)
                .sink { [weak self] carts in
                    self?.animateCollectionView()
-                   self?.cartButton.count = carts?.count ?? 0
+                   self?.cartButton.count = carts.count
                }
                .store(in: &viewModel.subscription)
        }
@@ -160,56 +156,46 @@ final class CartsViewController: UIViewController {
     
     private func setupLayout() {
         locationTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-                   .offset(Constants.verticalSpacing)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing)
             make.leading.equalTo(Constants.horizontalSpacing)
         }
-        
-        locationLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-                   .offset(Constants.verticalSpacing)
 
+        locationLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing)
             make.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
         }
-        
+
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(locationTitleLabel.snp.bottom)
-                .offset(Constants.verticalSpacing)
-            make.leading.trailing.equalToSuperview()
-                .inset(Constants.horizontalSpacing)
-            make.bottom.equalTo(separatorLine.snp.top)
-                .offset(-Constants.verticalSpacing)
+            make.top.equalTo(locationLabel.snp.bottom).offset(Constants.verticalSpacing)
+            make.leading.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
+            make.bottom.equalTo(separatorLine.snp.top).offset(-Constants.verticalSpacing)
         }
-        
+
         separatorLine.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(1)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-                .inset(Constants.separatorSpacing)
+            make.bottom.equalTo(summaryLabel.snp.top).offset(-Constants.verticalSpacing)
         }
-        
-        summaryLabel.snp.makeConstraints { make in
-            make.top.equalTo(separatorLine.snp.bottom).offset(Constants.verticalSpacing)
-            make.leading.equalTo(Constants.horizontalSpacing)
 
-        }
-        
-        totalLabel.snp.makeConstraints { make in
-            make.top.equalTo(summaryLabel.snp.bottom).offset(Constants.verticalSpacing)
+        summaryLabel.snp.makeConstraints { make in
             make.leading.equalTo(Constants.horizontalSpacing)
+            make.bottom.equalTo(totalLabel.snp.top).offset(-Constants.verticalSpacing)
+        }
+
+        totalLabel.snp.makeConstraints { make in
+            make.leading.equalTo(Constants.horizontalSpacing)
+            make.bottom.equalTo(totalPriceLabel.snp.top).offset(-Constants.verticalSpacing)
         }
 
         totalPriceLabel.snp.makeConstraints { make in
-            make.top.equalTo(summaryLabel.snp.bottom).offset(Constants.verticalSpacing)
             make.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
+            make.bottom.equalTo(payButton.snp.top).offset(-Constants.verticalSpacing)
         }
-        
+
         payButton.snp.makeConstraints { make in
-            make.top.equalTo(totalLabel.snp.bottom).offset(Constants.verticalSpacing)
-            make.leading.trailing.equalToSuperview()
-                .inset(Constants.horizontalSpacing)
+            make.leading.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-                .inset(Constants.bottomSpacing)
+                           .inset(Constants.bottomSpacing)
             make.height.equalTo(Constants.heightForButton)
         }
     }
@@ -227,7 +213,7 @@ final class CartsViewController: UIViewController {
 // MARK: - Constants
 extension CartsViewController {
     struct Constants {
-        static let rowHeight: CGFloat = 120
+        static let rowHeight: CGFloat = 130
         static let horizontalSpacing: CGFloat = 16
         static let verticalSpacing: CGFloat = 20
         static let heightForButton: CGFloat = 50

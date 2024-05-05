@@ -7,16 +7,16 @@
 
 import Foundation
 import Combine
-import RealmSwift
+
 
 final class WishListViewModel {
     let networkService = NetworkService.shared
-    let realmStorageService = RealmStorageService.shared
+    let storageService = StorageService.shared
     
     @Published var wishList: [Products] = []
     @Published var filteredWishList: [Products] = []
     
-    @Published var wishListKeys: Results<WishListModel>!
+    @Published var wishListKeys: [Int] = []
     
     var subscription: Set<AnyCancellable> = []
     
@@ -27,13 +27,14 @@ final class WishListViewModel {
     private func observeProducts() {
         $wishListKeys
             .sink { [weak self] wishListKeys in
-                wishListKeys?.forEach { wishList in
-                    self?.fetchProducts(wishListKey: wishList.id)
+                wishListKeys.forEach { id in
+                    self?.fetchProducts(wishListKey: id)
                 }
             }
             .store(in: &subscription)
     }
     
+    //MARK: - Fetch Methods
     func fetchProducts(wishListKey: Int) {
         wishList = []
         Task {
@@ -48,30 +49,20 @@ final class WishListViewModel {
     }
 
     //MARK: - Storage Methods
-    func addToCart(_ product: Products) {
-        realmStorageService.addProductToCart(product) { result in
-            switch result {
-            case .success:
-                print("Item added from WishList successfully")
-            case .failure(let error):
-                print("Error adding/removing item from wishlist: \(error)")
-            }
+    func addToCart(_ productId: Int) {
+        if let product = wishList.first(where: { $0.id == productId }) {
+            let cartItem = CartModel(product: product, countProduct: 1, isSelected: true)
+            
+            storageService.saveOrUpdateCart(cartItem)
         }
     }
     
     func getWishListIDs() {
-        wishListKeys = realmStorageService.getWishListFromRealm()
+        wishListKeys = storageService.getIDsForWishList() ?? []
     }
     
     func removeWishList(at id: Int) {
-        realmStorageService.removeItem(WishListModel.self, id: id) { result in
-            switch result {
-            case .success:
-                print("Item removed from cart")
-            case .failure(let error):
-                print("Error removing item from cart: \(error)")
-            }
-        }
+        storageService.removeIDFromWishList(id)
         wishList.removeAll { $0.id == id }
     }
 }

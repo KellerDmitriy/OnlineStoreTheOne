@@ -14,10 +14,10 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authenticateUser()
+//        authenticateUser()
         configureTabBarAppearance()
         setupViewControllers()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleVisibilityChange(notification:)), name: .updateTabBarVisibility, object: nil)
+      
     }
     
     // MARK: - private methods
@@ -68,32 +68,7 @@ final class TabBarController: UITabBarController {
         vc4.tabBarItem.selectedImage = UIImage(named: "selectedAccount")
         
         tabBar.tintColor = .black
-        setViewControllers([vc1, vc2, vc4], animated: true)
-        
-        if let user = Auth.auth().currentUser {
-            self.fetchAccountType(userId: user.uid) { type, error in
-                if let error {
-                    print(error)
-                }
-                
-                if let type {
-                    switch type {
-                    case "Manager":
-                        let vcs = [vc1, vc2, vc3, vc4]
-                        self.setViewControllers(vcs, animated: true)
-                        self.selectedIndex = 0
-                        UserDefaults.standard.set(type, forKey: "accountType")
-                    case "User":
-                        let vcs = [vc1, vc2, vc4]
-                        self.setViewControllers(vcs, animated: true)
-                        self.selectedIndex = 0
-                        UserDefaults.standard.set(type, forKey: "accountType")
-                    default:
-                        break
-                    }
-                }
-            }
-        }
+        setViewControllers([vc1, vc2, vc3, vc4], animated: true)
     }
     
     private func authenticateUser() {
@@ -130,8 +105,4 @@ final class TabBarController: UITabBarController {
     @objc func handleVisibilityChange(notification: Notification) {
         setupViewControllers()
     }
-}
-
-extension Notification.Name {
-    static let updateTabBarVisibility = Notification.Name("updateTabBarVisibility")
 }

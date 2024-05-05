@@ -24,10 +24,8 @@ final class HeaderProductsView: UICollectionReusableView {
         element.tintColor = .black
         element.titleLabel?.font = UIFont.makeTypography(.regular, size: 12)
         element.contentHorizontalAlignment = .leading
-        element.titleEdgeInsets = UIEdgeInsets(top: 0, left: -12, bottom: 0, right: 8)
-        element.imageEdgeInsets = UIEdgeInsets(top: 0, left: 54, bottom: 0, right: -70)
         element.addTarget(self, action: #selector(filtersButtonTapped), for: .touchUpInside)
-        element.layer.cornerRadius = 12
+        element.layer.cornerRadius = 8
         element.layer.borderWidth = 1
         element.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor 
         return element

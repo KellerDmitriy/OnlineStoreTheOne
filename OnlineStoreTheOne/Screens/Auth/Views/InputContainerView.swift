@@ -44,7 +44,7 @@ final class InputContainerView: UIView {
             let hasText = !(text?.isEmpty ?? true)
             self?.updateAppearance(hasText: hasText)
         }
-        layer.cornerRadius = 12
+        layer.cornerRadius = 8
         layer.borderWidth = 1
         layer.borderColor = Colors.grayBorderAuth.cgColor
     }

@@ -7,8 +7,6 @@
 
 import UIKit
 import SnapKit
-import SwiftUI
-import AlertKit
 
 final class HomeViewController: UIViewController {
     //MARK: - Properties
@@ -43,7 +41,7 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchCategory()
         viewModel.fetchProducts(for: viewModel.selectedCategory)
-        viewModel.getProductsFromCart()
+   
     }
     
     // MARK: - Data Observing
@@ -106,7 +104,7 @@ final class HomeViewController: UIViewController {
     }
     
     func showAlertError(error: Error) {
-        AlertKitAPI.present(title: "Error", subtitle: "\(error)", icon: .error, style: .iOS16AppleMusic, haptic: .error)
+//TODO: 
     }
     
     //MARK: - Private methods
@@ -158,7 +156,7 @@ final class HomeViewController: UIViewController {
     
     //MARK: - Action
     func addToCartButtonTapped(_ product: Products) {
-        viewModel.addToCarts(product: product)
+        viewModel.addToCart(product.id)
     }
     
     @objc private func cartButtonTapped() {
@@ -291,21 +289,4 @@ extension HomeViewController {
     
 }
 
-//MARK: - PreviewProvider
-struct ContentViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentViewController()
-            .edgesIgnoringSafeArea(.all)
-    }
-}
 
-struct ContentViewController: UIViewControllerRepresentable {
-    
-    typealias UIViewControllerType = HomeViewController
-    
-    func makeUIViewController(context: Context) -> UIViewControllerType {
-        return HomeViewController()
-    }
-    
-    func updateUIViewController(_ uiViewController: HomeViewController, context: Context) {}
-}

@@ -14,7 +14,7 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
     private let mainView: UIView = {
         let element = UIView()
         element.backgroundColor = .white
-        element.layer.cornerRadius = 12
+        element.layer.cornerRadius = 8
         element.layer.masksToBounds = true
         element.layer.borderWidth = 1
         element.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor

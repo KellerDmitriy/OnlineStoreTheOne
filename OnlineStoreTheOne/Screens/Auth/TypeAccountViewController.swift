@@ -15,7 +15,7 @@ final class TypeAccountViewController: UIViewController {
     private lazy var managerButton: UIButton = {
         $0.setTitle("Manager", for: .normal)
         $0.backgroundColor = Colors.greenSheen
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 8
         $0.titleLabel?.font = .makeTypography(.medium, size: 16)
         $0.tintColor = .white
         $0.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
@@ -25,7 +25,7 @@ final class TypeAccountViewController: UIViewController {
     private lazy var userButton: UIButton = {
         $0.setTitle("User", for: .normal)
         $0.backgroundColor = Colors.greenSheen
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 8
         $0.titleLabel?.font = .makeTypography(.medium, size: 16)
         $0.tintColor = .white
         $0.addTarget(self, action: #selector(tapButton), for: .touchUpInside)

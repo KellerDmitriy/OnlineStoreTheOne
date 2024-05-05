@@ -145,7 +145,7 @@ final class RegistrationViewController: UIViewController {
         navigationItem.hidesBackButton = true
         
         signUpButton.titleLabel?.font = .makeTypography(.bold, size: 18)
-        signUpButton.layer.cornerRadius = 12
+        signUpButton.layer.cornerRadius = 8
         signUpButton.isEnabled = false
         signUpButton.backgroundColor = Colors.greenSheen.withAlphaComponent(0.6)
         [

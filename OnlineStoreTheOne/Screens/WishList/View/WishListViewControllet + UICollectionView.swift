@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AlertKit
 
 // MARK: - UICollectionViewDataSource
 
@@ -25,9 +24,9 @@ extension WishListViewController: UICollectionViewDataSource {
         : viewModel.wishList[indexPath.item]
         
         cell.configureCell(product)
-        
+        cell.makeCellShadow()
         cell.addToCartCompletion = { [weak self] in
-            self?.viewModel.addToCart(product)
+            self?.viewModel.addToCart(product.id)
         }
         
         cell.removeFromWishListCompletion = { [weak self] in

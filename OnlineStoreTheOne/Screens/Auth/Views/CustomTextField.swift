@@ -39,7 +39,7 @@ final class CustomTextField: UITextField, UITextFieldDelegate {
         textColor = Colors.gray
         attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: Colors.gray])
         backgroundColor = .clear
-        layer.cornerRadius = 12
+        layer.cornerRadius = 8
         self.snp.makeConstraints {
             $0.height.equalTo(46)
         }

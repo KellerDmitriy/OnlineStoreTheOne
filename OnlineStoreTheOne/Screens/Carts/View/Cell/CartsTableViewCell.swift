@@ -17,10 +17,8 @@ final class CartsTableViewCell: UITableViewCell {
     
     private lazy var cartsContentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.borderWidth = 1
-        view.layer.borderColor = Colors.lightGray.cgColor
+//        view.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        view.layer.cornerRadius = 8
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -32,7 +30,7 @@ final class CartsTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 8
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -56,7 +54,7 @@ final class CartsTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = .gray
+        
         setupViews()
         setConstraints()
     }
@@ -67,19 +65,26 @@ final class CartsTableViewCell: UITableViewCell {
     
     //MARK: - Methods
     func configureCell(_ 
-                       cartModel: CartsModel,
+                       cartModel: CartModel,
                        onTrashTapped: @escaping () -> Void,
                        countDidChange: @escaping ((Int) -> Void),
                        isChecked: @escaping ((Bool) -> Void)
     )
     {
-        titleLabel.text = cartModel.title
-        priceLabel.text = String("$\(cartModel.price)")
+        titleLabel.text = cartModel.product.title
+        priceLabel.text = String("$\(cartModel.product.price)")
         
-        if let imageData = cartModel.images.first {
-            productImageView.image = UIImage(data: imageData)
+        let trimmed = cartModel.product.images?.first?
+            .data(using: .utf8)
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) }
+            .flatMap { $0 as? [String] }
+            .flatMap(\.first)
+            .flatMap(URL.init)
+        
+        if let trimmedUrl = trimmed {
+            productImageView.kf.setImage(with: trimmedUrl)
         } else {
-            productImageView.image = UIImage(named: "ps4")
+            productImageView.kf.setImage(with: URL(string: cartModel.product.images?.first ?? ""))
         }
         
         counterActionButton.count = cartModel.countProduct
@@ -93,7 +98,7 @@ final class CartsTableViewCell: UITableViewCell {
     //MARK: - Setup Views
     private func setupViews() {
         
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         contentView.addSubview(cartsContentView)
         cartsContentView.addSubview(checkMarkButton)
         cartsContentView.addSubview(productImageView)
