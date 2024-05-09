@@ -18,20 +18,28 @@ final class HomeViewModel: ObservableObject {
     @Published var isLoading: Bool = true
     @Published var categories: [Category] = []
     @Published var products: [Products] = []
+    @Published var productsForCategory: [Products] = []
     @Published var searchedProducts: [Products] = []
     
-    @Published var idsForCart: [Int] = []
+//    @Published var idsForCart: [Int] = []
     @Published var searchText = ""
     
-    @Published var selectedCategory: Int = 1
+    @Published var selectedCategory: Int?  = nil
+    
+    var isCategoryProducts: Bool {
+        selectedCategory == nil
+    }
     
     var subscription: Set<AnyCancellable> = []
     
-    let networkService = NetworkService.shared
-    let storageService = StorageService.shared
+    let networkService: NetworkServiceProtocol
+    let storageService: StorageServiceProtocol
     
     //MARK: - Init
-    init() {
+    init(networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+        self.networkService = networkService
+        self.storageService = storageService
+        
         observe()
     }
     
@@ -44,7 +52,7 @@ final class HomeViewModel: ObservableObject {
         
         $selectedCategory
             .sink { [weak self] categoryId in
-                self?.fetchProducts(for: categoryId)
+                self?.selected(categoryID: categoryId ?? 1)
             }
             .store(in: &subscription)
     }
@@ -54,12 +62,11 @@ final class HomeViewModel: ObservableObject {
         selectedCategory = id
     }
     
-    func fetchProducts(for categoryID: Int?) {
+    func fetchProducts() {
         Task {
-            let result = await networkService.fetchProducts(with: categoryID)
+            let result = await networkService.fetchAllProducts()
             switch result {
             case .success(let products):
-                print(products)
                 self.isLoading = false
                 self.products = products
             case .failure(let error):
@@ -69,7 +76,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
-    func fetchCategory() {
+    func fetchCategories() {
         Task {
             let result = await networkService.fetchAllCategories()
             switch result {
@@ -82,6 +89,11 @@ final class HomeViewModel: ObservableObject {
                 self.categoriesError = error
             }
         }
+    }
+    
+    func selected(categoryID: Int) {
+        productsForCategory = []
+        productsForCategory = products.filter { $0.category?.id == categoryID }
     }
     
     //MARK: - Storage Methods

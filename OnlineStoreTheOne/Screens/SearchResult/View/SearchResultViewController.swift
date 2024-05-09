@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import SwiftUI
 
 final class SearchResultViewController: UIViewController {
     // MARK: - Properties
@@ -51,14 +50,11 @@ final class SearchResultViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    // MARK: - Life Circle
-    
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         searchController.isActive = true
-//        searchController.searchBar.becomeFirstResponder()
+        searchController.searchBar.becomeFirstResponder()
     }
 
     override func viewDidLoad() {
@@ -115,8 +111,8 @@ final class SearchResultViewController: UIViewController {
     }
     
     //MARK: - Actions
-    func cartButtonTapped(_ product: Products) {
-        viewModel.addToCarts(product: product)
+    func cartButtonTapped(_ productID: Int) {
+        viewModel.addToCart(productID)
     }
     
     @objc func addToCartTap() {

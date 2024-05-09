@@ -11,7 +11,7 @@ import Combine
 final class UpdateCategoryViewController: UIViewController {
     
     //MARK: - Private Properties
-    private let viewModel = UpdateCategoryViewModel()
+    private var viewModel: UpdateCategoryViewModel!
     private var subscriptions: Set<AnyCancellable> = []
     private let categoryView = ContainerManagersView(type: .updateCategory)
     private let scrollView = UIScrollView()
@@ -22,9 +22,7 @@ final class UpdateCategoryViewController: UIViewController {
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
             guard let self else { return }
-            Task {
-                await self.updateCategory()
-            }
+            self.updateCategory()
             navigationController?.popViewController(animated: true)
         })
     ).createButton()
@@ -48,7 +46,7 @@ final class UpdateCategoryViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel = UpdateCategoryViewModel(networkService: NetworkService.init())
         setupViews()
         setConstraints()
         setActions()
@@ -74,9 +72,8 @@ final class UpdateCategoryViewController: UIViewController {
             case .imageThreeView(_):
                 break
             case .searchView(let text):
-                Task {
-                    await self.findCategoryByName(text)
-                }
+                
+                self.findCategoryByName(text)
             }
         }.store(in: &subscriptions)
     }
@@ -128,33 +125,12 @@ final class UpdateCategoryViewController: UIViewController {
         [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
     }
     
-    private func findCategoryByName(_ name: String) async {
-        let result = await NetworkService.shared.fetchAllCategories()
-        switch result {
-        case .success(let categories):
-            let filteredCategories = categories.filter { $0.name?.lowercased().contains(name.lowercased()) ?? false }
-            if let firstCategory = filteredCategories.first {
-                print("Найдена категория: \(firstCategory.name ?? "No name") с ID: \(firstCategory.id)")
-                categoryView.setTextOnTitleField(firstCategory.name ?? "")
-                viewModel.id = firstCategory.id
-            } else {
-                print("Категория с названием '\(name)' не найдена.")
-            }
-        case .failure(let error):
-            print("Ошибка при запросе категорий: \(error)")
-        }
+    private func findCategoryByName(_ name: String) {
+        viewModel.findCategoryByName(name)
     }
     
-    private func updateCategory() async {
-        guard let id = viewModel.id, let updateData = viewModel.categoryUpdate else { return }
-        
-        let result = await NetworkService.shared.updateCategory(id: id, updateData: updateData)
-        switch result {
-        case .success():
-            print("Category successfully updated.")
-        case .failure(let error):
-            print("Error updating category: \(error)")
-        }
+    private func updateCategory() {
+        viewModel.updateCategory()
     }
 }
 

@@ -14,6 +14,10 @@ final class HomeViewController: UIViewController {
     
     let sections = SectionsData.shared.sections
     
+    var isSelectedCategory: Bool {
+        return viewModel.selectedCategory == nil
+    }
+    
     lazy var collectionView: UICollectionView = {
         let collectViewLayout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectViewLayout)
@@ -26,9 +30,12 @@ final class HomeViewController: UIViewController {
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = HomeViewModel()
+        let networkService = NetworkService()
+        let storageService = StorageService()
         
-        view.backgroundColor = .white
+        viewModel = HomeViewModel(networkService: networkService, storageService: storageService)
+        
+        
         addViews()
         setupViews()
         setDelegates()
@@ -39,9 +46,8 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchCategory()
-        viewModel.fetchProducts(for: viewModel.selectedCategory)
-   
+        viewModel.fetchCategories()
+        viewModel.fetchProducts()
     }
     
     // MARK: - Data Observing
@@ -55,6 +61,14 @@ final class HomeViewController: UIViewController {
             .store(in: &viewModel.subscription)
         
         viewModel.$categories
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            .store(in: &viewModel.subscription)
+        
+        viewModel.$selectedCategory
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
@@ -170,6 +184,7 @@ final class HomeViewController: UIViewController {
 //MARK: - AddViews
 extension HomeViewController {
     private func addViews() {
+        view.backgroundColor = .white
         view.addSubview(collectionView)
        
         addConstraints()

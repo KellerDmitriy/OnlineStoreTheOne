@@ -10,7 +10,7 @@ import SnapKit
 
 final class OnboardingViewController: UIViewController {
      //MARK: - Private Properties
-    private let storageService = StorageService.shared
+    private var storageService: StorageServiceProtocol!
     
     private let imageArray = [
         UIImage(named: "Onboarding1"),
@@ -24,9 +24,19 @@ final class OnboardingViewController: UIViewController {
     }(UIImageView())
     private var index = 0
     
+    init(storageService: StorageServiceProtocol) {
+        super.init(nibName: nil, bundle: nil)
+        self.storageService = storageService
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
      //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         setupViews()
         setupLayout()
         

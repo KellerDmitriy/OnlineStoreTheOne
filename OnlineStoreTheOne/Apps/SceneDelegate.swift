@@ -16,7 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let storageService = StorageService.shared
+        DependencyContainer.register { NetworkService() }
+        DependencyContainer.register { StorageService() }
+        
+        let storageService = StorageService()
         
         
         if storageService.isOnboardComplete() {
@@ -24,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = tabBarController
             window?.makeKeyAndVisible()
         } else {
-            let onboardController = OnboardingViewController()
+            let onboardController = OnboardingViewController(storageService: storageService)
             window?.rootViewController = onboardController
             window?.makeKeyAndVisible()
         }

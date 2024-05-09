@@ -31,9 +31,11 @@ final class WishListViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     
     // MARK: - LifeCycle
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       viewModel = WishListViewModel()
+        setupDependencies()
         
         setupUI()
         observeViewModelChanges()
@@ -47,6 +49,16 @@ final class WishListViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
+    }
+    
+    private func setupDependencies() {
+        let networkService: NetworkServiceProtocol = NetworkService()
+        let storageService: StorageServiceProtocol = StorageService()
+        
+        viewModel = WishListViewModel(
+            networkService: networkService,
+            storageService: storageService
+        )
     }
     
     // MARK: - ViewModel Observing

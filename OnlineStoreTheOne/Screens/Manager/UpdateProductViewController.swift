@@ -11,7 +11,8 @@ import Combine
 final class UpdateProductViewController: UIViewController {
     
     //MARK: - Private Properties
-    private let viewModel = UpdateProductViewModel()
+    private var viewModel: UpdateProductViewModel!
+    
     private var subscriptions: Set<AnyCancellable> = []
     private let productView = ContainerManagersView(type: .updateProduct)
     private let scrollView = UIScrollView()
@@ -48,6 +49,7 @@ final class UpdateProductViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = UpdateProductViewModel(networkService: NetworkService.init())
         
         setupViews()
         setConstraints()
@@ -129,7 +131,7 @@ final class UpdateProductViewController: UIViewController {
     }
     
     private func findProductByTitle(_ title: String) async {
-        let result = await NetworkService.shared.fetchAllProducts()
+        let result = await viewModel.networkService.fetchAllProducts()
         switch result {
         case .success(let products):
             let filteredProducts = products.filter { $0.title.lowercased().contains(title.lowercased()) }
@@ -149,7 +151,7 @@ final class UpdateProductViewController: UIViewController {
     private func updateProduct() async {
         guard let id = viewModel.id, let updateProduct = viewModel.productUpdate else { return }
         
-        let result = await NetworkService.shared.updateProduct(id: id, updateData: updateProduct)
+        let result = await viewModel.networkService.updateProduct(id: id, updateData: updateProduct)
         switch result {
         case .success():
             print("Product successfully updated.")

@@ -63,7 +63,10 @@ final class CartsViewController: UIViewController {
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = CartsViewModel()
+        let networkService = NetworkService()
+        let storageService = StorageService()
+        viewModel = CartsViewModel(networkService: networkService, storageService: storageService)
+        
         setupViews()
 
         setupNavigationBar()

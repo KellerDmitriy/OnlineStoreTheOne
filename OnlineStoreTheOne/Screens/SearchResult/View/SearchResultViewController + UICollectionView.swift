@@ -21,7 +21,7 @@ extension SearchResultViewController: UICollectionViewDataSource {
                            title: product.title,
                            price: "$\(String(product.price))",
                            addToCartCompletion: { [weak self] in
-            self?.cartButtonTapped(product) }
+            self?.cartButtonTapped(product.id) }
         )
         return cell
     }
@@ -37,7 +37,7 @@ extension SearchResultViewController: UITextFieldDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedProduct = viewModel.searchedProducts[indexPath.row]
-        let detailVM = DetailsProductViewModel(productId: selectedProduct.id)
+        let detailVM = DetailsProductViewModel(productId: selectedProduct.id, networkService: NetworkService.init(), storageService: StorageService.init())
         
         let detailVC = DetailsViewController(viewModel: detailVM)
         let navigationController = UINavigationController(rootViewController: detailVC)

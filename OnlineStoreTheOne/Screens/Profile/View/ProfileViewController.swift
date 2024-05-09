@@ -10,7 +10,9 @@ import FirebaseAuth
 
 final class ProfileViewController: UIViewController {
     
-    var viewModel = ProfileViewModel()
+   private var viewModel: ProfileViewModel!
+   private  let storageService = StorageService()
+    
     //MARK: - UI elements
     var profileImage: UIImageView = {
         let image = UIImageView()
@@ -99,7 +101,11 @@ final class ProfileViewController: UIViewController {
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        let storageService = StorageService()
+        
+        viewModel = ProfileViewModel(storageService: storageService)
+        
+        
         setUpView()
         setConstraint()
         
@@ -124,7 +130,7 @@ final class ProfileViewController: UIViewController {
         let alert = UIAlertController(title: "Alert", message: "Are you sure you want to sign out?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Sign out", style: .destructive) { _ in
             self.viewModel.storageService.onboardingOn()
-            let onboarding = OnboardingViewController()
+            let onboarding = OnboardingViewController(storageService: self.viewModel.storageService)
             if let window = self.view.window {
                 window.rootViewController = onboarding
                 UIView.transition(
@@ -193,7 +199,7 @@ private extension ProfileViewController {
     //MARK: - Set up view
     func setUpView() {
         view.backgroundColor = .white
-        
+     
         view.addSubview(profileImage)
         view.addSubview(editButton)
         view.addSubview(userName)

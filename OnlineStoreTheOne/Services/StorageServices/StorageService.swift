@@ -7,9 +7,26 @@
 
 import Foundation
 
-final class StorageService {
+protocol StorageServiceProtocol {
+    func onboardCompleted()
+    func isOnboardComplete() -> Bool
+    func onboardingOn()
+    func saveSearchText(_ text: String)
+    func getSearchedText() -> [String]
+    func addIDsForWishList(_ id: Int)
+    func getIDsForWishList() -> [Int]?
+    func removeIDFromWishList(_ id: Int)
+    func isWishListSaved(_ id: Int) -> Bool
+    func addCarts(_ cartItems: [CartModel])
+    func saveOrUpdateCart(_ cartItem: CartModel)
+    func getCarts() -> [CartModel]
+    func updateCart<T>(for id: Int, newValue: T)
+    func removeCartItem(for id: Int)
+}
+
+final class StorageService: StorageServiceProtocol {
     // MARK: - Properties
-    public static let shared = StorageService()
+
     private let userDefaults = UserDefaults.standard
     
     enum UDKeys {
@@ -20,7 +37,7 @@ final class StorageService {
     }
     
     // MARK: - Initialization
-    private init() {}
+    init() {}
     
     // MARK: - Onboarding
     func onboardCompleted() {

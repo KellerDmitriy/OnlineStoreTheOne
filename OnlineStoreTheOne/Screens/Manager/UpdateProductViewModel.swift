@@ -11,6 +11,13 @@ final class UpdateProductViewModel {
     var id: Int?
     var title: String?
     var price: Int?
+    let networkService: NetworkServiceProtocol
+
+    
+    //MARK: - Init
+    init(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
     
     var productUpdate: ProductUpdate? {
         guard

@@ -12,6 +12,14 @@ final class AddNewCategoryViewModel {
     var name: String?
     var image: String?
     
+    let networkService: NetworkServiceProtocol
+    
+    //MARK: - Init
+    init(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
+    
+    //MARK: - Public Methods
     var newCategory: NewCategory? {
         guard
             let name,
@@ -21,4 +29,19 @@ final class AddNewCategoryViewModel {
         let category = NewCategory(name: name, image: image)
         return category
     }
+    
+    func createNewCategory() {
+        Task {
+            guard let category = newCategory else { return }
+            
+            let result = await networkService.createCategory(category: category)
+            switch result {
+            case .success(let category):
+                print("Category successfully created with name: \(category.name)")
+            case .failure(let error):
+                print("Error creating category: \(error)")
+            }
+        }
+    }
+    
 }

@@ -15,11 +15,14 @@ final class DetailsProductViewModel: ObservableObject {
     
     var cancellables: Set<AnyCancellable> = []
     
-    let networkService = NetworkService.shared
-    let storageService = StorageService.shared
+    let networkService: NetworkServiceProtocol
+    let storageService: StorageServiceProtocol
     
     // MARK: - Init
-    init(productId: Int) {
+    init(productId: Int, networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+        self.networkService = networkService
+        self.storageService = storageService
+        
         self.isSaved = storageService.isWishListSaved(productId)
         
         fetchProductDetails(productId: productId)

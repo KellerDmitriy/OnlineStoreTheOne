@@ -7,7 +7,13 @@
 
 import Foundation
 
-
 final class ProfileViewModel {
-    let storageService = StorageService.shared
+    //MARK:  Properties
+    let storageService: StorageServiceProtocol
+    
+    //MARK: - Init
+    init(storageService: StorageServiceProtocol) {
+        self.storageService = storageService
+        
+    }
 }

@@ -11,7 +11,7 @@ import Combine
 final class DeleteProductViewController: UIViewController {
     
     //MARK: - Private Properties
-    private let viewModel = DeleteProductViewModel()
+    private var viewModel: DeleteProductViewModel!
     private var subscriptions: Set<AnyCancellable> = []
     private let productView = ContainerManagersView(type: .deleteProduct)
     private let scrollView = UIScrollView()
@@ -132,7 +132,7 @@ final class DeleteProductViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel = DeleteProductViewModel(networkService: NetworkService.init())
         setupViews()
         setConstraints()
         bind()
@@ -240,37 +240,12 @@ final class DeleteProductViewController: UIViewController {
         }
     }
     
-    private func findProductByTitle(_ title: String) async {
-        let result = await NetworkService.shared.fetchAllProducts()
-        switch result {
-        case .success(let products):
-            let filteredProducts = products.filter { $0.title.lowercased().contains(title.lowercased()) }
-            if let firstProduct = filteredProducts.first {
-                viewModel.id = "\(firstProduct.id)"
-                viewModel.title = firstProduct.title
-                viewModel.price = "\(firstProduct.price)"
-                print("Найден продукт: \(firstProduct.title) с ID: \(firstProduct.id)")
-            } else {
-                print("Продукт с названием '\(title)' не найден.")
-                viewModel.id = "-"
-                viewModel.price = "_"
-                viewModel.title = "-"
-            }
-        case .failure(let error):
-            print("Ошибка при запросе продуктов: \(error)")
-        }
+    private func findProductByTitle(_ title: String) {
+        viewModel.findProductByTitle(title)
     }
     
-    private func deleteProduct() async {
-        guard let id = Int(viewModel.id) else { return }
-        
-        let result = await NetworkService.shared.deleteProductById(id)
-        switch result {
-        case .success():
-            print("Product successfully deleted.")
-        case .failure(let error):
-            print("Failed to delete product: \(error)")
-        }
+    private func deleteProduct() {
+        viewModel.deleteProduct()
     }
     
     private func bind() {

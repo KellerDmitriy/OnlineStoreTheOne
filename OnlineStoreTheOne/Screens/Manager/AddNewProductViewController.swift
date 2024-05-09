@@ -10,7 +10,7 @@ import Combine
 
 final class AddNewProductViewController: UIViewController {
     //MARK: - Private Properties
-    private let viewModel = AddNewProductViewModel()
+    private var viewModel: AddNewProductViewModel!
     private var subscriptions: Set<AnyCancellable> = []
     private let productView = ContainerManagersView(type: .addNewProduct)
     private let scrollView = UIScrollView()
@@ -47,6 +47,7 @@ final class AddNewProductViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = AddNewProductViewModel(networkService: NetworkService.init())
         fetchCategories()
         setupViews()
         setConstraints()
@@ -127,7 +128,7 @@ final class AddNewProductViewController: UIViewController {
     
     private func fetchCategories() {
         Task {
-            let result = await NetworkService.shared.fetchAllCategories()
+            let result = await viewModel.networkService.fetchAllCategories()
             switch result {
             case .success(let success):
                 productView.setData(success)
@@ -140,7 +141,7 @@ final class AddNewProductViewController: UIViewController {
     private func addNewProduct() async {
         guard let newProduct = viewModel.product else { return }
         
-        let result = await NetworkService.shared.createProduct(product: newProduct)
+        let result = await viewModel.networkService.createProduct(product: newProduct)
         switch result {
         case .success(let response):
             print("Продукт успешно добавлен с ID \(response.id) и категорией \(response.category.name ?? "not found").")

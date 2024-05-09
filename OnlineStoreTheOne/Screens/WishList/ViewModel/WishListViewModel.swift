@@ -10,8 +10,9 @@ import Combine
 
 
 final class WishListViewModel {
-    let networkService = NetworkService.shared
-    let storageService = StorageService.shared
+    //MARK:  Properties
+    let networkService: NetworkServiceProtocol
+    let storageService: StorageServiceProtocol
     
     @Published var wishList: [Products] = []
     @Published var filteredWishList: [Products] = []
@@ -20,10 +21,15 @@ final class WishListViewModel {
     
     var subscription: Set<AnyCancellable> = []
     
-    init() {
+    //MARK: - Init
+    init(networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+        self.networkService = networkService
+        self.storageService = storageService
+        
         observeProducts()
     }
     
+    //MARK: - Observe Methods
     private func observeProducts() {
         $wishListKeys
             .sink { [weak self] wishListKeys in

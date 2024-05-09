@@ -11,7 +11,7 @@ import Combine
 final class DeleteCategoryViewController: UIViewController {
     
     //MARK: - Private Properties
-    private let viewModel = DeleteCategoryViewModel()
+    private var viewModel: DeleteCategoryViewModel!
     private var subscriptions: Set<AnyCancellable> = []
     private let categoryView = ContainerManagersView(type: .deleteCategory)
     private let scrollView = UIScrollView()
@@ -22,9 +22,8 @@ final class DeleteCategoryViewController: UIViewController {
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
             guard let self else { return }
-            Task {
-                await self.deleteCategory()
-            }
+               self.deleteCategory()
+         
             navigationController?.popViewController(animated: true)
         })
     ).createButton()
@@ -109,7 +108,7 @@ final class DeleteCategoryViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel = DeleteCategoryViewModel(networkService: NetworkService.init())
         setupViews()
         setConstraints()
         bind()
@@ -136,9 +135,9 @@ final class DeleteCategoryViewController: UIViewController {
             case .imageThreeView(_):
                 break
             case .searchView(let text):
-                Task {
-                    await self.findCategoryByName(text)
-                }
+                
+                self.findCategoryByName(text)
+               
             }
         }.store(in: &subscriptions)
     }
@@ -225,33 +224,12 @@ final class DeleteCategoryViewController: UIViewController {
         }.store(in: &subscriptions)
     }
     
-    private func findCategoryByName(_ name: String) async {
-        let result = await NetworkService.shared.fetchAllCategories()
-        switch result {
-        case .success(let categories):
-            let filteredCategories = categories.filter { $0.name?.lowercased().contains(name.lowercased()) ?? false }
-            if let firstCategory = filteredCategories.first {
-                print("Найдена категория: \(firstCategory.name ?? "No name") с ID: \(firstCategory.id)")
-                viewModel.id = "\(firstCategory.id)"
-                viewModel.title = firstCategory.name ?? "-"
-            } else {
-                print("Категория с названием '\(name)' не найдена.")
-            }
-        case .failure(let error):
-            print("Ошибка при запросе категорий: \(error)")
-        }
+    private func findCategoryByName(_ name: String)  {
+        viewModel.findCategoryByName(name)
     }
     
-    private func deleteCategory() async {
-        guard let id = Int(viewModel.id) else { return }
-        
-        let result = await NetworkService.shared.deleteCategory(id: id)
-        switch result {
-        case .success():
-            print("Category successfully deleted.")
-        case .failure(let error):
-            print("Error deleting category: \(error)")
-        }
+    private func deleteCategory() {
+        viewModel.deleteCategory()
     }
 }
 

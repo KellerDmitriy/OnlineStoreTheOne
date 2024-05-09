@@ -9,7 +9,6 @@ import UIKit
 
 final class PaymentSuccessView: UIViewController {
     
-    var viewModel = CartsViewModel()
     //MARK: - UI elements
     
     private lazy var successImage: UIImageView = {

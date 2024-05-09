@@ -26,7 +26,9 @@ extension HomeViewController: UICollectionViewDataSource {
             case .categories:
                 return viewModel.categories.count
             case .products:
-                return viewModel.products.count
+            return viewModel.isCategoryProducts
+            ? viewModel.products.count
+            : viewModel.productsForCategory.count
         }
     }
     
@@ -53,7 +55,11 @@ extension HomeViewController: UICollectionViewDataSource {
             let cell: ProductCollectionViewCell = collectionView.dequeueCell(indexPath)
             cell.makeCellShadow()
             if indexPath.row < viewModel.products.count {
-                let product = viewModel.products[indexPath.row]
+                
+                let product = viewModel.isCategoryProducts
+                ? viewModel.products[indexPath.row]
+                : viewModel.productsForCategory[indexPath.row]
+                
                 cell.configureCell(
                     image: product.images?.first ?? "",
                     title: product.title,
@@ -86,7 +92,7 @@ extension HomeViewController: UICollectionViewDelegate {
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         case .products:
             let selectedProduct = viewModel.products[indexPath.row]
-            let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id)
+            let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id, networkService: NetworkService.init(), storageService: StorageService.init())
             
             let detailViewController = DetailsViewController(viewModel: detailViewModel)
             let navigationController = UINavigationController(rootViewController: detailViewController)
@@ -101,7 +107,7 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.inputView = UIView()
-        let searchResultsViewModel = SearchResultViewModel(searchText: "")
+        let searchResultsViewModel = SearchResultViewModel(searchText: "", networkService: NetworkService(), storageService: StorageService())
         let searchResultsVC = SearchResultViewController(viewModel: searchResultsViewModel)
         let navigationController = UINavigationController(rootViewController: searchResultsVC)
         navigationController.modalPresentationStyle = .fullScreen

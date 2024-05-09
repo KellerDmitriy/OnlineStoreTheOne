@@ -43,4 +43,13 @@ final class AddNewProductViewModel {
         )
         return product
     }
+    
+    let networkService: NetworkServiceProtocol
+    
+    //MARK: - Init
+    init(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
+    
+    
 }

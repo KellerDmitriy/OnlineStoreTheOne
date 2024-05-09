@@ -11,7 +11,7 @@ import Combine
 final class AddNewCategoryViewController: UIViewController {
     
     //MARK: - Private Properties
-    private let viewModel = AddNewCategoryViewModel()
+    private var viewModel: AddNewCategoryViewModel!
     private var subscriptions: Set<AnyCancellable> = []
     private let categoryView = ContainerManagersView(type: .addNewCategory)
     private let scrollView = UIScrollView()
@@ -22,9 +22,8 @@ final class AddNewCategoryViewController: UIViewController {
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
             guard let self else { return }
-            Task {
-                await self.createNewCategory()
-            }
+            
+            self.createNewCategory()
             navigationController?.popViewController(animated: true)
         })
     ).createButton()
@@ -48,6 +47,7 @@ final class AddNewCategoryViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = AddNewCategoryViewModel(networkService: NetworkService.init())
         
         setupViews()
         setConstraints()
@@ -126,16 +126,8 @@ final class AddNewCategoryViewController: UIViewController {
         [saveButton, cancelButton].forEach { $0.snp.makeConstraints { $0.height.equalTo(50) } }
     }
     
-    private func createNewCategory() async {
-        guard let category = viewModel.newCategory else { return }
-        
-        let result = await NetworkService.shared.createCategory(category: category)
-        switch result {
-        case .success(let category):
-            print("Category successfully created with name: \(category.name)")
-        case .failure(let error):
-            print("Error creating category: \(error)")
-        }
+    private func createNewCategory() {
+        viewModel.createNewCategory()
     }
 }
 

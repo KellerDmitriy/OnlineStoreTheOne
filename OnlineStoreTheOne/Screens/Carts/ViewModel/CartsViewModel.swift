@@ -10,8 +10,9 @@ import Combine
 
 final class CartsViewModel: ObservableObject {
     //MARK:  Properties
-    let networkService = NetworkService.shared
-    let storageService = StorageService.shared
+    let networkService: NetworkServiceProtocol
+    let storageService: StorageServiceProtocol
+    
     
     @Published var cartProducts: [CartModel] = []
     
@@ -22,7 +23,10 @@ final class CartsViewModel: ObservableObject {
     var subscription: Set<AnyCancellable> = []
     
     //MARK: - Init
-    init() {
+    init(networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+        self.networkService = networkService
+        self.storageService = storageService
+        
         observeCartProducts()
 //        getProductsFromCart()
     }
@@ -48,11 +52,13 @@ final class CartsViewModel: ObservableObject {
     
     //MARK: - Public Methods
     func updateProductCount(for id: Int, newCount: Int) {
+        productCount = newCount
         storageService.updateCart(for: id, newValue: newCount)
     }
     
     func updateCheckMark(for id: Int, isSelect: Bool) {
         guard cartProducts.first(where: { $0.product.id == id }) != nil else { return }
+        self.isSelect = isSelect
         storageService.updateCart(for: id, newValue: isSelect)
     }
     
