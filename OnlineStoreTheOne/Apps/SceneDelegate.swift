@@ -16,21 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        DependencyContainer.register { NetworkService() }
-        DependencyContainer.register { StorageService() }
+        let context = Context()
         
-        let storageService = StorageService()
+        let navigationController = UINavigationController(rootViewController: UIViewController())
+        let appCoordinator = AppCoordinator(navigationController: navigationController)
         
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
         
-        if storageService.isOnboardComplete() {
-            let tabBarController = TabBarController()
-            window?.rootViewController = tabBarController
-            window?.makeKeyAndVisible()
-        } else {
-            let onboardController = OnboardingViewController(storageService: storageService)
-            window?.rootViewController = onboardController
-            window?.makeKeyAndVisible()
-        }
+        let startFlow = StartEntity().selectStartFlow(context: context)
+        appCoordinator.start(startFlow)
+        
     }
 }
 

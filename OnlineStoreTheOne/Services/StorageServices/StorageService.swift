@@ -8,8 +8,8 @@
 import Foundation
 
 protocol StorageServiceProtocol {
-    func onboardCompleted()
-    func isOnboardComplete() -> Bool
+    var isOnboardComplete: Bool { get set }
+
     func onboardingOn()
     func saveSearchText(_ text: String)
     func getSearchedText() -> [String]
@@ -30,6 +30,7 @@ final class StorageService: StorageServiceProtocol {
     private let userDefaults = UserDefaults.standard
     
     enum UDKeys {
+        static let authCompleted = "authCompleted"
         static let onboardCompleted = "OnboardCompleted"
         static let searchText = "SavedSearchText"
         static let wishListIDs = "wishListIDs"
@@ -39,13 +40,20 @@ final class StorageService: StorageServiceProtocol {
     // MARK: - Initialization
     init() {}
     
-    // MARK: - Onboarding
-    func onboardCompleted() {
-        userDefaults.set(true, forKey: UDKeys.onboardCompleted)
+    // MARK: - Auth
+    func isAuthComplete() -> Bool {
+        userDefaults.bool(forKey: UDKeys.authCompleted)
     }
     
-    func isOnboardComplete() -> Bool {
-        userDefaults.bool(forKey: UDKeys.onboardCompleted)
+    // MARK: - Onboarding
+    
+    var isOnboardComplete: Bool {
+        get {
+            userDefaults.bool(forKey: UDKeys.onboardCompleted)
+        }
+        set {
+            userDefaults.set(newValue, forKey: UDKeys.onboardCompleted)
+        }
     }
     
     func onboardingOn() {

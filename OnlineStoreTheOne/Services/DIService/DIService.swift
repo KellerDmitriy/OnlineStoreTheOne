@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class DependencyContainer {
-    static let shared = DependencyContainer()
+final class DIService {
+    static let shared = DIService()
 
     private var dependencies = [String: () -> Any]()
 
@@ -32,9 +32,11 @@ final class DependencyContainer {
         guard let dependency = dependencies[key] else {
             fatalError("No Dependency found for \(key). Register a dependency before resolving it.")
         }
+        
         guard let resolvedDependency = dependency() as? T else {
             fatalError("Failed to cast dependency to \(type).")
         }
+        
         return resolvedDependency
     }
 }
