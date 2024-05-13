@@ -11,6 +11,7 @@ import Combine
 final class DetailsViewController: UIViewController {
     //MARK: - Private Properties
     private let viewModel: DetailsProductViewModel
+    let coordinator: IDetailCoordinator
     
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -49,8 +50,9 @@ final class DetailsViewController: UIViewController {
     }(UIView())
     
     //MARK: - Lifecycle
-    init(viewModel: DetailsProductViewModel) {
+    init(viewModel: DetailsProductViewModel, coordinator: IDetailCoordinator) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -67,6 +69,10 @@ final class DetailsViewController: UIViewController {
         actionForAddToWishListButtonTap()
         bind()
         changeToWishListButton()
+    }
+    
+    deinit {
+        coordinator.finish()
     }
     
     //MARK: - Private Methods
@@ -113,14 +119,6 @@ final class DetailsViewController: UIViewController {
         navigationController?.navigationBar.addBottomBorder()
         navigationItem.title = "Details product"
         
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        navigationItem.leftBarButtonItem = backButton
-        
         let cartButton = CartButton()
         cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
@@ -164,11 +162,7 @@ final class DetailsViewController: UIViewController {
 // MARK: - Actions
 private extension DetailsViewController {
     func payButtonTap() {
-        let vc = PaymentSuccessView()
-        if let presentationController = vc.presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium()]
-            self.present(vc, animated: true)
-        }
+        coordinator.showPayScene()
     }
     
     func cartButtonTap() {
@@ -192,15 +186,7 @@ private extension DetailsViewController {
         productList.addToWishListButton.setImage(image, for: .normal)
     }
     
-    
-    @objc func backButtonTapped() {
-        navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
     @objc func addToCartTap() {
-//        let viewControllerToPresent = CartsViewController()
-//        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true, completion: nil)
+        coordinator.showCartsFlow()
     }
 }

@@ -43,11 +43,7 @@ extension WishListViewController: UICollectionViewDelegate {
         ? viewModel.filteredWishList[indexPath.item]
         : viewModel.wishList[indexPath.item]
         
-        let detailViewModel = DetailsProductViewModel(productId: selectedWishList.id, networkService: NetworkService(), storageService: StorageService())
-        let detailViewController = DetailsViewController(viewModel: detailViewModel)
-        let navigationController = UINavigationController(rootViewController: detailViewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true, completion: nil)
+        coordinator.showDetailFlow(selectedWishList.id)
     }
 }
 

@@ -7,6 +7,13 @@
 
 import UIKit
 
+enum Tabs {
+    case home
+    case wishList
+    case manager
+    case profile
+}
+
 final class TabBarCoordinator: ITabBarCoordinator {
     // MARK: - Properties
     var finishDelegate: ICoordinatorFinishDelete?
@@ -14,14 +21,23 @@ final class TabBarCoordinator: ITabBarCoordinator {
 
     var childCoordinators: [ICoordinator] = []
     
+    let networkService: NetworkServiceProtocol
+    let storageService: StorageServiceProtocol
+    
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
+    init(
+        navigationController: UINavigationController,
+        networkService: NetworkServiceProtocol,
+        storageService: StorageServiceProtocol
+    ) {
         self.navigationController = navigationController
+        self.networkService = networkService
+        self.storageService = storageService
     }
     
     // MARK: - Coordinator Lifecycle
     func start(_ flow: Flow? = nil) {
-        showTabBar()
+        showHomeFlow()
     }
     
     // MARK: - Flow Presentation

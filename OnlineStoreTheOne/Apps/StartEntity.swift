@@ -14,16 +14,17 @@ enum Flow {
 }
 
 final class Context {
-    private let storageService = StorageService()
+    var authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+    var storageService: StorageServiceProtocol = DIService.resolve(forKey: .storageService) ?? StorageService()
     
     var isOnboardComplete: Bool {
-        get { return self.storageService.isOnboardComplete }
+        get { return storageService.isOnboardComplete }
         set { storageService.isOnboardComplete = newValue }
     }
     
     lazy var isAuth: () -> Bool = {
 //        TODO: -
-        return false
+        return true
     }
 }
 
@@ -33,7 +34,7 @@ protocol IStartEntity {
 
 final class StartEntity: IStartEntity {
     func selectStartFlow(context: Context) -> Flow {
-        if context.isOnboardComplete {
+        if !context.isOnboardComplete {
             return .onboarding
         } else if context.isAuth() {
             return .tabBar

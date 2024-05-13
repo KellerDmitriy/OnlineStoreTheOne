@@ -22,9 +22,8 @@ final class DeleteProductViewController: UIViewController {
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
             guard let self else { return }
-            Task {
-                await self.deleteProduct()
-            }
+            self.deleteProduct()
+            
             navigationController?.popViewController(animated: true)
         })
     ).createButton()
@@ -159,9 +158,8 @@ final class DeleteProductViewController: UIViewController {
             case .imageThreeView(_):
                 break
             case .searchView(let text):
-                Task {
-                    await self.findProductByTitle(text)
-                }
+              self.findProductByTitle(text)
+              
             }
         }.store(in: &subscriptions)
     }

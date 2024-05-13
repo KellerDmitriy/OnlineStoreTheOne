@@ -31,6 +31,7 @@ protocol IAppCoordinator: ICoordinator {
     func showOnboardingFlow()
     func showAuthFlow()
     func showTabBarFlow()
+    func showAlertController(title: String, message: String, createAction: @escaping (String) -> Void)
 }
 
 protocol IAuthCoordinator: ICoordinator {
@@ -54,14 +55,28 @@ protocol IOnboardingCoordinator: ICoordinator {
 protocol IHomeCoordinator: ICoordinator {
     func showHomeScene()
     func showSearchResultScene(searchText: String?)
-    func showDetailScene(productId: Int)
+    
+    func showCartsFlow()
+    func showDetailFlow(productId: Int)
+}
+
+protocol IDetailCoordinator: ICoordinator {
+    func showDetailScene(_ id: Int)
+    func showPayScene()
+    
+    func showCartsFlow()
+}
+
+protocol ICartsCoordinator: ICoordinator {
     func showCartsScene()
+    func showPayScene()
 }
 
 protocol IWishListCoordinator: ICoordinator {
     func showWishListScene()
-    func showDetailScene()
-    func showCartsScene()
+    
+    func showDetailFlow(_ id: Int)
+    func showCartsFlow()
 }
 
 protocol IManagerCoordinator: ICoordinator {
@@ -70,7 +85,8 @@ protocol IManagerCoordinator: ICoordinator {
 
 protocol IProfileCoordinator: ICoordinator {
     func showProfileScene()
-    func showOnboardingScene()
     func showTypeOfAccountScene()
-    func TermAndConditionScene()
+    func showTermAndConditionScene()
+    
+    func showOnboardingFlow()
 }

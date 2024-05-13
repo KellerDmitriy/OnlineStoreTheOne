@@ -84,7 +84,9 @@ private extension TypeOfAccountViewController {
     
     private func updateAccount(type: String) {
         if let user = Auth.auth().currentUser {
-            AuthService.shared.changeAccountType(userId: user.uid, type: type)
+            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            
+            authService.changeAccountType(userId: user.uid, type: type)
         }
     }
     

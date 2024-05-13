@@ -25,8 +25,9 @@ final class AuthCoordinator: IAuthCoordinator {
     
     // MARK: - Flow Presentation
     func showLoginScene() {
-        let viewController = LoginViewController()
-        navigationController.pushViewController(viewController, animated: true)
+        let viewModel = LoginViewModel()
+        let viewController = LoginViewController(coordinator: self, viewModel: viewModel)
+        navigationController.setViewControllers([viewController], animated: true)
     }
     
     func showRegistationScene() {

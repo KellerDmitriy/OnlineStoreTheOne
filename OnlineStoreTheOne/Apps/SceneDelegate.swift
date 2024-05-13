@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let context = Context()
         
         let navigationController = UINavigationController(rootViewController: UIViewController())
+        navigationController.setupNavigationBar()
         let appCoordinator = AppCoordinator(navigationController: navigationController)
         
         window?.rootViewController = navigationController

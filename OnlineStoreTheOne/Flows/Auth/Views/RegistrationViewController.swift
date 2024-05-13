@@ -134,7 +134,9 @@ final class RegistrationViewController: UIViewController {
                 type: type,
                 profileImageURL: ""
             )
-            AuthService.shared.registerUser(with: credentials)
+            
+            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            authService.registerUser(with: credentials)
             dismiss(animated: true)
         }
         return action

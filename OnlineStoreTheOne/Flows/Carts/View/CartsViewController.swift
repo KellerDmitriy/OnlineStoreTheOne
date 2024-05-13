@@ -10,6 +10,7 @@ import SnapKit
 
 final class CartsViewController: UIViewController {
     let viewModel: CartsViewModel
+    let coordinator: ICartsCoordinator
     
     //    MARK: - UI elements
     private lazy var locationTitleLabel: UILabel = {
@@ -61,8 +62,9 @@ final class CartsViewController: UIViewController {
     }()
     
     // MARK: - Init
-    init(viewModel: CartsViewModel) {
+    init(viewModel: CartsViewModel, coordinator: ICartsCoordinator) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -145,23 +147,8 @@ final class CartsViewController: UIViewController {
         navigationItem.title = "Your Cart"
         navigationController?.navigationBar.addBottomBorder()
         
-        navigationController?.navigationBar.tintColor = .black
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        navigationItem.leftBarButtonItem = backButton
-        
-        
         let cartButtonItem = UIBarButtonItem(customView: cartButton)
         navigationItem.rightBarButtonItem = cartButtonItem
-        
-    }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     private func setupLayout() {
@@ -212,11 +199,7 @@ final class CartsViewController: UIViewController {
     
     //    MARK: - Action
     private func payButtonTap() {
-        let vc = PaymentSuccessView()
-        if let presentationController = vc.presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium()]
-            self.present(vc, animated: true)
-        }
+        coordinator.showPayScene()
     }
 }
 

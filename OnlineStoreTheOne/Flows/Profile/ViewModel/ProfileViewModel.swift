@@ -9,11 +9,10 @@ import Foundation
 
 final class ProfileViewModel {
     //MARK:  Properties
-    let storageService: StorageServiceProtocol
+    var storageService: StorageServiceProtocol
     
     //MARK: - Init
     init(storageService: StorageServiceProtocol) {
         self.storageService = storageService
-        
     }
 }

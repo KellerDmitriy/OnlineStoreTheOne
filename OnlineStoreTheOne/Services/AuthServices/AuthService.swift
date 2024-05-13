@@ -8,10 +8,17 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import FirebaseAuth
 
-struct AuthService {
-    static let shared = AuthService()
-    private init() {}
+protocol AuthProvider {
+    func logUserIn(with email: String, password: String, completion: ((AuthDataResult?, Error?) -> Void)?)
+    func registerUser(with model: RegistrationCredentials)
+    func changeAccountType(userId: String, type: String)
+    func fetchUser(userId: String, completion: @escaping (RegistrationCredentials?) -> Void)
+    func uploadUserImage(userId: String, image: UIImage)
+}
+
+final class AuthService: AuthProvider {
     
     func logUserIn(with email: String, password: String, completion: ((AuthDataResult?, Error?) -> Void)?) {
         Auth.auth().signIn(withEmail: email, password: password, completion: completion)

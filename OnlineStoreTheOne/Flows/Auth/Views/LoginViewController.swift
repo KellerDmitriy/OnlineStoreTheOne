@@ -13,6 +13,9 @@ protocol AuthenticationControllerProtocol {
 
 final class LoginViewController: UIViewController {
     
+    private let coordinator: IAuthCoordinator?
+    var viewModel: LoginViewModel
+    
      //MARK: - Private Properties
     private lazy var logoImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -60,11 +63,20 @@ final class LoginViewController: UIViewController {
         $0.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
+
     
-     //MARK: - Public Properties
-    var viewModel = LoginViewModel()
+     //MARK: - Lifecycle\
     
-     //MARK: - Lifecycle
+    init(coordinator: IAuthCoordinator, viewModel: LoginViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -132,7 +144,8 @@ final class LoginViewController: UIViewController {
                 let email = viewModel.email,
                 let password = viewModel.password
             else { return }
-            AuthService.shared.logUserIn(with: email, password: password) { result, error in
+            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            authService.logUserIn(with: email, password: password) { result, error in
                 if let error {
                     print("Error login user: \(error)")
                 } else {
@@ -152,8 +165,7 @@ final class LoginViewController: UIViewController {
     
      //MARK: - @Objc Private Methods
     @objc private func handleShowSignUp() {
-        let controller = RegistrationViewController()
-        navigationController?.pushViewController(controller, animated: true)
+        coordinator?.showRegistationScene()
     }
     
     @objc private func textDidChange(sender: CustomTextField) {

@@ -30,8 +30,19 @@ final class OnboardingCoordinator: IOnboardingCoordinator {
     
     // MARK: - Flow Presentation
     func showOnboardingScene() {
-        let viewController = OnboardingViewController()
+        let viewModel = OnboardingViewModel()
+        let viewController = OnboardingViewController(viewModel: viewModel, coordinator: self)
+        
+        viewController.didFinishOnboarding = {  
+            self.handleOnboardingFinished()
+        }
         navigationController.setViewControllers([viewController], animated: true)
     }
-
+    
+    // MARK: - Helper Methods
+    private func handleOnboardingFinished() {
+        let context = Context()
+        context.isOnboardComplete = true
+        finishDelegate?.didFinish(self)
+    }
 }

@@ -13,12 +13,14 @@ final class HomeCoordinator: IHomeCoordinator {
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
     
-    let networkService: NetworkServiceProtocol = DIService.resolve()
-    let storageService: StorageServiceProtocol = DIService.resolve()
+    let networkService: NetworkServiceProtocol
+    let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
+        self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
@@ -29,8 +31,8 @@ final class HomeCoordinator: IHomeCoordinator {
     // MARK: - Flow Presentation
     func showHomeScene() {
         let viewModel = HomeViewModel(networkService: networkService, storageService: storageService)
-        let viewController = HomeViewController(viewModel: viewModel)
-        navigationController.pushViewController(viewController, animated: true)
+        let viewController = HomeViewController(viewModel: viewModel, coordinator: self)
+        navigationController.setViewControllers([viewController], animated: true)
     }
     
     func showSearchResultScene(searchText: String? = nil) {
@@ -41,28 +43,26 @@ final class HomeCoordinator: IHomeCoordinator {
         )
         let viewController = SearchResultViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
+//        let searchResultsViewModel = SearchResultViewModel(searchText: "", networkService: NetworkService(), storageService: StorageService())
+//        let searchResultsVC = SearchResultViewController(viewModel: searchResultsViewModel)
+//        let navigationController = UINavigationController(rootViewController: searchResultsVC)
+//        navigationController.modalPresentationStyle = .fullScreen
+//        self.present(navigationController, animated: true, completion: nil)
     }
     
-    func showDetailScene(productId: Int) {
-        let detailViewModel = DetailsProductViewModel(
-            productId: productId,
-            networkService: networkService,
-            storageService: storageService
+    func showDetailFlow(productId: Int) {
+        let detailCoordinator = DetailCoordinator(
+            navigationController: navigationController,
+            productID: productId
         )
-        
-        let detailViewController = DetailsViewController(viewModel: detailViewModel)
-        let navigationController = UINavigationController(rootViewController: detailViewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        navigationController.present(navigationController, animated: true, completion: nil)
+        childCoordinators.append(detailCoordinator)
+        detailCoordinator.start()
     }
     
-    func showCartsScene() {
-        let viewModel = CartsViewModel(
-            networkService: networkService,
-            storageService: storageService
-        )
-        let viewController = CartsViewController(viewModel: viewModel)
-        navigationController.pushViewController(viewController, animated: true)
+    func showCartsFlow() {
+        let coordinator = CartsCoordinator(navigationController: navigationController)
+        childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }
 

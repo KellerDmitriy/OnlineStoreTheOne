@@ -7,10 +7,9 @@
 
 import UIKit
 
-extension UIViewController {
+enum UIAlertFactory {
     
-    func showAlert(title: String, message: String, completion: @escaping (String) -> Void) {
-        
+    static func createAlert(title: String, message: String, completion: @escaping (String) -> Void) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
@@ -24,16 +23,6 @@ extension UIViewController {
         alert.addAction(okAction)
         alert.addAction(cancelAction)
         
-        present(alert, animated: true)
-    }
-    
-    func showAlert(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "Ok", style: .default)
-        
-        alert.addAction(okAction)
-        present(alert, animated: true)
+        return alert
     }
 }

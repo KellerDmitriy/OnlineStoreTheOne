@@ -10,6 +10,7 @@ import UIKit
 
 final class WishListViewController: UIViewController {
     let viewModel: WishListViewModel
+    let coordinator: IWishListCoordinator
     
     //MARK: Private properties
     private var searchBarIsEmpty: Bool {
@@ -31,8 +32,9 @@ final class WishListViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     
     // MARK: - Init
-    init(viewModel: WishListViewModel) {
+    init(viewModel: WishListViewModel, coordinator: IWishListCoordinator) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -79,14 +81,10 @@ final class WishListViewController: UIViewController {
     
     // MARK: - Actions
     @objc func addToCartTap() {
-//        let viewControllerToPresent = CartsViewController()
-//        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true, completion: nil)
+        coordinator.showCartsFlow()
     }
     
     // MARK: - UI Setup
-    
     func animateCollectionView() {
         UIView.transition(with: collectionView, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.collectionView.reloadData()

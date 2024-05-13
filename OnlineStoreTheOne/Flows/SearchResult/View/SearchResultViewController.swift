@@ -90,16 +90,8 @@ final class SearchResultViewController: UIViewController {
         
         cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
         let cartBarButtonItem = UIBarButtonItem(customView: cartButton)
-        
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        
+
         navigationItem.rightBarButtonItem = cartBarButtonItem
-        navigationItem.leftBarButtonItem = backButton
     }
     
     private func configureSearchController() {
@@ -121,11 +113,8 @@ final class SearchResultViewController: UIViewController {
 //        navigationController.modalPresentationStyle = .fullScreen
 //        self.present(navigationController, animated: true, completion: nil)
     }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.dismiss(animated: true, completion: nil)
-    }
 }
+
 // MARK: - UISearchResultsUpdating, TextFieldDelegate
 extension SearchResultViewController: UISearchResultsUpdating {
     

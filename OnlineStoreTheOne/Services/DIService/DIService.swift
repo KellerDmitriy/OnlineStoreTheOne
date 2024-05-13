@@ -7,36 +7,35 @@
 
 import Foundation
 
+enum DIKey {
+    case networkService
+    case storageService
+    case authService
+}
+
 final class DIService {
     static let shared = DIService()
 
-    private var dependencies = [String: () -> Any]()
+    private var dependencies = [DIKey: () -> Any]()
 
     private init() {}
 
-    public static func register<T>(_ dependency: @escaping () -> T) {
-        shared.register(dependency, for: T.self)
+    public static func register<T>(_ dependency: @escaping () -> T, forKey key: DIKey) {
+        shared.register(dependency, forKey: key)
     }
 
-    public static func resolve<T>() -> T {
-        return shared.resolve(T.self)
+    public static func resolve<T>(forKey key: DIKey) -> T? {
+        return shared.resolve(forKey: key)
     }
 
-    private func register<T>(_ dependency: @escaping () -> T, for type: T.Type) {
-        let key = String(describing: type)
+    private func register<T>(_ dependency: @escaping () -> T, forKey key: DIKey) {
         dependencies[key] = dependency
     }
 
-    private func resolve<T>(_ type: T.Type) -> T {
-        let key = String(describing: type)
+    private func resolve<T>(forKey key: DIKey) -> T? {
         guard let dependency = dependencies[key] else {
-            fatalError("No Dependency found for \(key). Register a dependency before resolving it.")
+            return nil
         }
-        
-        guard let resolvedDependency = dependency() as? T else {
-            fatalError("Failed to cast dependency to \(type).")
-        }
-        
-        return resolvedDependency
+        return dependency() as? T
     }
 }

@@ -65,7 +65,7 @@
 		E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */; };
 		E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */; };
 		E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */; };
-		E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */; };
+		E16BB6822BD50C8F009991F3 /* UIAlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6812BD50C8F009991F3 /* UIAlertFactory.swift */; };
 		E16BB6952BD65203009991F3 /* DetailsProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C475102BD5B4B40070E3D8 /* DetailsProductViewModel.swift */; };
 		E16BB6962BD65218009991F3 /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C475032BD50CF10070E3D8 /* PhotoCollectionView.swift */; };
 		E16BB6982BD654B6009991F3 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6972BD654B6009991F3 /* PhotoCell.swift */; };
@@ -85,6 +85,7 @@
 		E1835F3D2BEE7FB700BE1962 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F3C2BEE7FB700BE1962 /* HomeCoordinator.swift */; };
 		E1835F3F2BEEB00600BE1962 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F3E2BEEB00600BE1962 /* ProfileCoordinator.swift */; };
 		E1835F432BEEBA8000BE1962 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F422BEEBA8000BE1962 /* OnboardingViewModel.swift */; };
+		E1835F4E2BF143D400BE1962 /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F4D2BF143D400BE1962 /* DetailCoordinator.swift */; };
 		E18A56072BD7A24800E34777 /* UINavigationController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A56062BD7A24800E34777 /* UINavigationController + Extension.swift */; };
 		E18A56092BD7BCE000E34777 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E18A56082BD7BCE000E34777 /* GoogleService-Info.plist */; };
 		E18A560C2BD7BFF300E34777 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E18A560B2BD7BFF300E34777 /* FirebaseAuth */; };
@@ -195,7 +196,7 @@
 		E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController + Extension.swift"; sourceTree = "<group>"; };
+		E16BB6812BD50C8F009991F3 /* UIAlertFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertFactory.swift; sourceTree = "<group>"; };
 		E16BB6972BD654B6009991F3 /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		E1835F232BE567FB00BE1962 /* CartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartModel.swift; sourceTree = "<group>"; };
 		E1835F262BEB877500BE1962 /* DIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIService.swift; sourceTree = "<group>"; };
@@ -211,6 +212,7 @@
 		E1835F3C2BEE7FB700BE1962 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E1835F3E2BEEB00600BE1962 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		E1835F422BEEBA8000BE1962 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		E1835F4D2BF143D400BE1962 /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
 		E18A56062BD7A24800E34777 /* UINavigationController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Extension.swift"; sourceTree = "<group>"; };
 		E18A56082BD7BCE000E34777 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E1A2E82E2BCCFB3F00CC0D64 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -306,7 +308,7 @@
 		86490FF82BD13BF800FCF45C /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				E1835F4B2BEEBB0800BE1962 /* Cordinator */,
+				E1835F4B2BEEBB0800BE1962 /* Coordinator */,
 				86BC2D582BDE7149003BF895 /* Model */,
 				86BC2D532BDE5B18003BF895 /* ViewModels */,
 				E1835F4A2BEEBAFE00BE1962 /* View */,
@@ -425,6 +427,7 @@
 			children = (
 				86C474FF2BD509DE0070E3D8 /* Views */,
 				86C4750F2BD5B4990070E3D8 /* ViewModel */,
+				E1835F4F2BF143D800BE1962 /* Coordinator */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -467,7 +470,7 @@
 		86EDFF0D2BD80F2C00CD9F81 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				E1835F402BEEB8EF00BE1962 /* Cordinator */,
+				E1835F402BEEB8EF00BE1962 /* Coordinator */,
 				86EDFF222BD90F1000CD9F81 /* Model */,
 				86EDFF1D2BD842A000CD9F81 /* ViewModel */,
 				86EDFF122BD80F6200CD9F81 /* Views */,
@@ -514,10 +517,10 @@
 		BEBA5DAC2BD0621900737686 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E1835F482BEEBADC00BE1962 /* Cordinator */,
 				BEBA5DAF2BD0621900737686 /* Model */,
 				BEBA5DBA2BD0621900737686 /* View */,
 				BEBA5DAD2BD0621900737686 /* ViewModel */,
+				E1835F482BEEBADC00BE1962 /* Cordinator */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -634,24 +637,16 @@
 			children = (
 				E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */,
 				E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */,
-				E1835F332BECEC8100BE1962 /* SubCoordinators */,
 			);
 			path = CoordinatorService;
 			sourceTree = "<group>";
 		};
-		E1835F332BECEC8100BE1962 /* SubCoordinators */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SubCoordinators;
-			sourceTree = "<group>";
-		};
-		E1835F402BEEB8EF00BE1962 /* Cordinator */ = {
+		E1835F402BEEB8EF00BE1962 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				E1835F2D2BECB0FD00BE1962 /* AuthCoordinator.swift */,
 			);
-			path = Cordinator;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		E1835F412BEEB90300BE1962 /* Cordinator */ = {
@@ -720,12 +715,12 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		E1835F4B2BEEBB0800BE1962 /* Cordinator */ = {
+		E1835F4B2BEEBB0800BE1962 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				E1835F3A2BEE7F1E00BE1962 /* ManagerCoordinator.swift */,
 			);
-			name = Cordinator;
+			name = Coordinator;
 			sourceTree = "<group>";
 		};
 		E1835F4C2BEEBB5400BE1962 /* Cordinator */ = {
@@ -734,6 +729,14 @@
 				E1835F382BEE7F0B00BE1962 /* CartsCoordinator.swift */,
 			);
 			path = Cordinator;
+			sourceTree = "<group>";
+		};
+		E1835F4F2BF143D800BE1962 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E1835F4D2BF143D400BE1962 /* DetailCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		E1A2E8302BCCFB4300CC0D64 /* Services */ = {
@@ -942,7 +945,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F1B2422BCC335C001DC54D /* DesignSystem */,
-				E16BB6812BD50C8F009991F3 /* AlertController + Extension.swift */,
+				E16BB6812BD50C8F009991F3 /* UIAlertFactory.swift */,
 				E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */,
 				86C475052BD50D8B0070E3D8 /* UICollectionView+Extension.swift */,
 				86C475072BD50DB20070E3D8 /* IdentifiableCell.swift */,
@@ -1159,7 +1162,7 @@
 				E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */,
 				86BC2D572BDE6489003BF895 /* AddNewProductViewModel.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
-				E16BB6822BD50C8F009991F3 /* AlertController + Extension.swift in Sources */,
+				E16BB6822BD50C8F009991F3 /* UIAlertFactory.swift in Sources */,
 				86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */,
 				E1F1B23E2BCC2992001DC54D /* UIFont + Extension.swift in Sources */,
 				E18A56072BD7A24800E34777 /* UINavigationController + Extension.swift in Sources */,
@@ -1179,6 +1182,7 @@
 				86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */,
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
 				E1835F302BECB3C500BE1962 /* TabBarCoordinator.swift in Sources */,
+				E1835F4E2BF143D400BE1962 /* DetailCoordinator.swift in Sources */,
 				86BC2D492BDD5663003BF895 /* UpdateCategoryViewController.swift in Sources */,
 				86EDFF212BD84BCF00CD9F81 /* RegistrationViewModel.swift in Sources */,
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,

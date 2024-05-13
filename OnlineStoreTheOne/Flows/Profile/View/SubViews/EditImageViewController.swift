@@ -207,7 +207,8 @@ extension EditImageViewController: UIImagePickerControllerDelegate, UINavigation
         
         if let user = Auth.auth().currentUser {
             let userId = user.uid
-            AuthService.shared.uploadUserImage(userId: userId, image: image)
+            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            authService.uploadUserImage(userId: userId, image: image)
         }
         
         picker.dismiss(animated: true) { [weak self] in

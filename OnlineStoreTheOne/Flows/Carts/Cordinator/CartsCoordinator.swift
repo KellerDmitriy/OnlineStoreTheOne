@@ -7,15 +7,20 @@
 
 import UIKit
 
-final class CartsCoordinator: ICoordinator {
+final class CartsCoordinator: ICartsCoordinator {
+    
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
     
+    let networkService: NetworkServiceProtocol
+    let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
+        self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
@@ -25,8 +30,19 @@ final class CartsCoordinator: ICoordinator {
     
     // MARK: - Flow Presentation
     func showCartsScene() {
-//        let viewController = CartsViewController()
-//        navigationController.pushViewController(viewController, animated: true)
+        let viewModel = CartsViewModel(
+            networkService: networkService,
+            storageService: storageService
+        )
+        let viewController = CartsViewController(viewModel: viewModel, coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
     }
 
+    func showPayScene() {
+        let viewController = PaymentSuccessView()
+        if let presentationController = viewController.presentationController as? UISheetPresentationController {
+            presentationController.detents = [.medium()]
+            navigationController.present(viewController, animated: true)
+        }
+    }
 }

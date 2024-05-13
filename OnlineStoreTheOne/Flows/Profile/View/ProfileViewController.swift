@@ -10,11 +10,12 @@ import FirebaseAuth
 
 final class ProfileViewController: UIViewController {
     
-   private var viewModel: ProfileViewModel!
-   private  let storageService = StorageService()
+   private var viewModel: ProfileViewModel
+   private let coordinator: IProfileCoordinator
+
     
     //MARK: - UI elements
-    var profileImage: UIImageView = {
+    lazy var profileImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "ProfileImage")
         image.contentMode = .scaleToFill
@@ -55,7 +56,9 @@ final class ProfileViewController: UIViewController {
             title: "Terms & Conditions",
             type: .standartButton,
             name: "ArrowIcon",
-            action: termsAction(),
+            action: UIAction { [weak self] _ in
+                self?.termsAction()
+            },
             textColor: nil)
             .createButtonWithLabel()
         return button
@@ -66,7 +69,9 @@ final class ProfileViewController: UIViewController {
             title: "Type of account",
             type: .standartButton,
             name: "ArrowIcon",
-            action: typeAction(),
+            action: UIAction { [weak self] _ in
+                self?.typeAction()
+            },
             textColor: nil)
             .createButtonWithLabel()
         return button
@@ -97,6 +102,16 @@ final class ProfileViewController: UIViewController {
         return stack
     }()
     
+    //MARK: - Init
+    init(viewModel: ProfileViewModel, coordinator: IProfileCoordinator) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
@@ -118,30 +133,16 @@ final class ProfileViewController: UIViewController {
     
     
     //MARK: - Actions
-    func termsAction() -> UIAction {
-        let act = UIAction { _ in
-            let vc = TermsConditionalViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        return act
+    func termsAction() {
+        coordinator.showTermAndConditionScene()
     }
     
     func signOutAction() {
         let alert = UIAlertController(title: "Alert", message: "Are you sure you want to sign out?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Sign out", style: .destructive) { _ in
-            self.viewModel.storageService.isOnboardComplete
-            let onboarding = OnboardingViewController()
-            if let window = self.view.window {
-                window.rootViewController = onboarding
-                UIView.transition(
-                    with: window,
-                    duration: 0.3,
-                    options: .transitionCrossDissolve,
-                    animations: {},
-                    completion: nil
-                )
-            }
-            
+        alert.addAction(UIAlertAction(title: "Sign out", style: .destructive) { [weak self] _ in
+            self?.viewModel.storageService.isOnboardComplete = false
+            self?.coordinator.showOnboardingFlow()
+
             do {
                 try Auth.auth().signOut()
             } catch let error {
@@ -165,20 +166,16 @@ final class ProfileViewController: UIViewController {
         return act
     }
     
-    func typeAction() -> UIAction {
-        let act = UIAction { _ in
-            let vc = TypeOfAccountViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        return act
+    func typeAction() {
+        coordinator.showTypeOfAccountScene()
     }
     
      //MARK: - Private Methods
     private func fetchUser() {
         if let user = Auth.auth().currentUser {
             let userId = user.uid
-            
-            AuthService.shared.fetchUser(userId: userId) { [weak self] user in
+            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            authService.fetchUser(userId: userId) { [weak self] user in
                 guard let user, let self else { return }
                 userName.text = user.login
                 userMail.text = user.email

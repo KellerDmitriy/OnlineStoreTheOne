@@ -95,10 +95,11 @@ final class TabBarController: UITabBarController {
     
     private func presentLoginScreen() {
         DispatchQueue.main.async {
-            let controller = LoginViewController()
-            let navController = UINavigationController(rootViewController: controller)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated: true)
+//            
+//            let controller = LoginViewController(coordinator: T##any IAuthCoordinator, viewModel: T##LoginViewModel
+//            let navController = UINavigationController(rootViewController: controller)
+//            navController.modalPresentationStyle = .fullScreen
+//            self.present(navController, animated: true)
         }
     }
     

@@ -11,6 +11,7 @@ import SnapKit
 final class HomeViewController: UIViewController {
     //MARK: - Properties
     let viewModel: HomeViewModel
+    let coordinator: IHomeCoordinator
     
     let sections = SectionsData.shared.sections
     
@@ -28,8 +29,9 @@ final class HomeViewController: UIViewController {
     }()
     
     //MARK: - Init
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModel, coordinator: IHomeCoordinator) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,6 +54,10 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchCategories()
         viewModel.fetchProducts()
+    }
+    
+    deinit {
+        coordinator.finish()
     }
     
     // MARK: - Data Observing
@@ -178,10 +184,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc private func cartButtonTapped() {
-//        let viewControllerToPresent = CartsViewController()
-//        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true, completion: nil)
+        coordinator.showCartsFlow()
     }
 }
 

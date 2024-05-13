@@ -92,12 +92,7 @@ extension HomeViewController: UICollectionViewDelegate {
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         case .products:
             let selectedProduct = viewModel.products[indexPath.row]
-            let detailViewModel = DetailsProductViewModel(productId: selectedProduct.id, networkService: NetworkService.init(), storageService: StorageService.init())
-            
-            let detailViewController = DetailsViewController(viewModel: detailViewModel)
-            let navigationController = UINavigationController(rootViewController: detailViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            self.present(navigationController, animated: true, completion: nil)
+            coordinator.showDetailFlow(productId: selectedProduct.id)
         }
     }
 }
@@ -107,11 +102,8 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.inputView = UIView()
-        let searchResultsViewModel = SearchResultViewModel(searchText: "", networkService: NetworkService(), storageService: StorageService())
-        let searchResultsVC = SearchResultViewController(viewModel: searchResultsViewModel)
-        let navigationController = UINavigationController(rootViewController: searchResultsVC)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true, completion: nil)
+        let searchText = textField.text
+        coordinator.showSearchResultScene(searchText: searchText)
     }
 }
 
