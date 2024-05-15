@@ -23,6 +23,10 @@ final class AuthCoordinator: IAuthCoordinator {
         showLoginScene()
     }
     
+    func finish() {
+        finishDelegate?.didFinish(self)
+    }
+    
     // MARK: - Flow Presentation
     func showLoginScene() {
         let viewModel = LoginViewModel()
@@ -35,4 +39,5 @@ final class AuthCoordinator: IAuthCoordinator {
         let viewController = RegistrationViewController(coordinator: self, viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
+    
 }

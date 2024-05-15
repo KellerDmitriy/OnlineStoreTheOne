@@ -25,7 +25,7 @@ final class TabBarCoordinator: ITabBarCoordinator {
         
         let tabBarController = TabBarController()
         setupViewControllers(for: tabBarController)
-//        navigationController.setViewControllers([tabBarController], animated: false)
+        navigationController.setViewControllers([tabBarController], animated: false)
     }
     
     // MARK: - Flow Presentation
@@ -61,6 +61,6 @@ final class TabBarCoordinator: ITabBarCoordinator {
             tag: 3
         )
         
-        tabBarController.viewControllers = [homeCoordinator, wishListCoordinator]
+        tabBarController.viewControllers = []
     }
 }
