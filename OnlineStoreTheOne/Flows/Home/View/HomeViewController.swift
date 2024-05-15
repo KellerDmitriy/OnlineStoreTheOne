@@ -99,23 +99,14 @@ final class HomeViewController: UIViewController {
     
     
     private func observeError() {
-        viewModel.$productsError
-            .compactMap { $0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                guard let self = self else { return }
-                self.showAlertError(error: error)
-            }
-            .store(in: &viewModel.subscription)
-        
-        viewModel.$categoriesError
-            .compactMap { $0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                guard let self = self else { return }
-                self.showAlertError(error: error)
-            }
-            .store(in: &viewModel.subscription)
+        viewModel.$dataError
+              .compactMap { $0 }
+              .receive(on: DispatchQueue.main)
+              .sink { [weak self] error in
+                  guard let self = self else { return }
+                  self.showAlertError(error: error)
+              }
+              .store(in: &viewModel.subscription)
         
         viewModel.$isLoading
             .compactMap { $0 }
@@ -128,64 +119,86 @@ final class HomeViewController: UIViewController {
     }
     
     func showAlertError(error: Error) {
-//TODO: 
-    }
-    
-    //MARK: - Private methods
-    private func setupViews() {
-        collectionView.register(SearchFieldCollectionViewCell.self)
-        collectionView.register(CategoryCollectionViewCell.self)
-        collectionView.register(ProductCollectionViewCell.self)
-        collectionView.register(HeaderNavBarMenuView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderNavBarMenuView")
-        collectionView.register(HeaderProductsView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderProductsView")
-        collectionView.collectionViewLayout = createLayout()
-    }
-    
-    private func setDelegates() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-    
-    //MARK: - CollectionView
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            let section = sections[indexPath.section]
-            switch section {
-            case .searchField:
-                let header = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: "HeaderNavBarMenuView",
-                    for: indexPath
-                ) as! HeaderNavBarMenuView
-                header.configureHeader(labelName: section.title)
-                
-                header.cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
-                return header
-            case .categories:
-                fallthrough
-            case .products:
-                let header = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: "HeaderProductsView",
-                    for: indexPath
-                ) as! HeaderProductsView
-                header.configureHeader(labelName: section.title)
-                return header
+        func showAlertError(error: DataError) {
+            let message: String
+            let retryAction: () -> Void
+            
+            switch error {
+            case .productsError:
+                message = error.localizedDescription
+                retryAction = { [weak self] in
+                    self?.viewModel.fetchProducts()
+                    self?.collectionView.reloadData()
+                }
+            case .categoriesError:
+                message = error.localizedDescription
+                retryAction = { [weak self] in
+                    self?.viewModel.fetchCategories()
+                    self?.collectionView.reloadData()
+                }
             }
-        default:
-            return UICollectionReusableView()
+            
+            coordinator.showAlertController(title: "Error", message: message) { _ in
+                retryAction()
+            }
         }
+}
+
+//MARK: - Action
+func addToCartButtonTapped(_ product: Products) {
+    viewModel.addToCart(product.id)
+}
+
+@objc private func cartButtonTapped() {
+    coordinator.showCartsFlow()
+}
+
+//MARK: - Private methods
+private func setupViews() {
+    collectionView.register(SearchFieldCollectionViewCell.self)
+    collectionView.register(CategoryCollectionViewCell.self)
+    collectionView.register(ProductCollectionViewCell.self)
+    collectionView.register(HeaderNavBarMenuView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderNavBarMenuView")
+    collectionView.register(HeaderProductsView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderProductsView")
+    collectionView.collectionViewLayout = createLayout()
+}
+
+private func setDelegates() {
+    collectionView.delegate = self
+    collectionView.dataSource = self
+}
+
+//MARK: - CollectionView
+func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    switch kind {
+    case UICollectionView.elementKindSectionHeader:
+        let section = sections[indexPath.section]
+        switch section {
+        case .searchField:
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "HeaderNavBarMenuView",
+                for: indexPath
+            ) as! HeaderNavBarMenuView
+            header.configureHeader(labelName: section.title)
+            
+            header.cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
+            return header
+        case .categories:
+            fallthrough
+        case .products:
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "HeaderProductsView",
+                for: indexPath
+            ) as! HeaderProductsView
+            header.configureHeader(labelName: section.title)
+            return header
+        }
+    default:
+        return UICollectionReusableView()
     }
-    
-    //MARK: - Action
-    func addToCartButtonTapped(_ product: Products) {
-        viewModel.addToCart(product.id)
-    }
-    
-    @objc private func cartButtonTapped() {
-        coordinator.showCartsFlow()
-    }
+}
 }
 
 //MARK: - AddViews
@@ -193,7 +206,7 @@ extension HomeViewController {
     private func addViews() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
-       
+        
         addConstraints()
     }
     

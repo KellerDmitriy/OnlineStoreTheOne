@@ -13,10 +13,10 @@ protocol AuthenticationControllerProtocol {
 
 final class LoginViewController: UIViewController {
     
+    private var viewModel: LoginViewModelProtocol
     private let coordinator: IAuthCoordinator?
-    var viewModel: LoginViewModel
     
-     //MARK: - Private Properties
+    //MARK: - Private Properties
     private lazy var logoImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = UIImage(named: "logo")
@@ -37,7 +37,9 @@ final class LoginViewController: UIViewController {
     private lazy var loginButton = FilledButtonFactory(
         title: "Log In",
         type: .greenButton,
-        action: loginUserAction()
+        action: UIAction { [weak self] _ in
+            self?.loginUser()
+        }
     ).createButton()
     
     private lazy var loginStackView: UIStackView = {
@@ -63,11 +65,11 @@ final class LoginViewController: UIViewController {
         $0.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
-
     
-     //MARK: - Lifecycle\
     
-    init(coordinator: IAuthCoordinator, viewModel: LoginViewModel) {
+    //MARK: - Lifecycle\
+    
+    init(coordinator: IAuthCoordinator, viewModel: LoginViewModelProtocol) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -89,7 +91,35 @@ final class LoginViewController: UIViewController {
         view.endEditing(true)
     }
     
-     //MARK: - Private Methods
+    private func loginUser() {
+        viewModel.logUserIn { [weak self] error in
+            if let error = error {
+                self?.coordinator?.showAlertController(
+                    title: "Error",
+                    message: error.localizedDescription) { [weak self] _ in
+                        self?.loginUser()
+                    }
+            } else {
+                self?.coordinator?.finish()
+            }
+        }
+    }
+    
+    //MARK: - @Objc Private Methods
+    @objc private func handleShowSignUp() {
+        coordinator?.showRegistationScene()
+    }
+    
+    @objc private func textDidChange(sender: CustomTextField) {
+        if sender == emailView.textField {
+            viewModel.email = emailView.textField.text
+        } else {
+            viewModel.password = passwordView.textField.text
+        }
+        checkFormStatus()
+    }
+    
+    //MARK: - Private Methods
     private func setupViews() {
         view.backgroundColor = .white
         [
@@ -135,50 +165,9 @@ final class LoginViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(32)
         }
     }
-    
-    private func loginUserAction() -> UIAction {
-        let action = UIAction { [weak self] _ in
-            guard let self else { return }
-            
-            guard
-                let email = viewModel.email,
-                let password = viewModel.password
-            else { return }
-            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
-            authService.logUserIn(with: email, password: password) { result, error in
-                if let error {
-                    print("Error login user: \(error)")
-                } else {
-                    self.updateTabBar()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                        self?.dismiss(animated: true)
-                    }
-                }
-            }
-        }
-        return action
-    }
-    
-    private func updateTabBar() {
-//        NotificationCenter.default.post(name: .updateTabBarVisibility, object: nil)
-    }
-    
-     //MARK: - @Objc Private Methods
-    @objc private func handleShowSignUp() {
-        coordinator?.showRegistationScene()
-    }
-    
-    @objc private func textDidChange(sender: CustomTextField) {
-        if sender == emailView.textField {
-            viewModel.email = emailView.textField.text
-        } else {
-            viewModel.password = passwordView.textField.text
-        }
-        checkFormStatus()
-    }
 }
 
- //MARK: - LoginViewController: AuthenticationControllerProtocol
+//MARK: - LoginViewController: AuthenticationControllerProtocol
 extension LoginViewController: AuthenticationControllerProtocol {
     func checkFormStatus() {
         if viewModel.formIsValid {

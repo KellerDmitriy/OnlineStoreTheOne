@@ -10,6 +10,9 @@ import UIKit
 final class RegistrationViewController: UIViewController {
      //MARK: - Private properties
     
+    private let coordinator: IAuthCoordinator?
+    private var viewModel: RegistrationViewModelProtocol
+    
     private let completeAccountLabel: UILabel = {
         $0.text = "Complete your account"
         $0.font = .makeTypography(.bold, size: 24)
@@ -53,7 +56,7 @@ final class RegistrationViewController: UIViewController {
             action: UIAction(handler: { [weak self] _ in
                 let vc = TypeAccountViewController()
                 vc.completion = { [weak self] text in
-                    self?.viewModel.type = text
+                    self?.viewModel.type? = text
                     self?.checkFormStatus()
                     self?.typeOfAccountButton.1.text = text
                 }
@@ -72,7 +75,9 @@ final class RegistrationViewController: UIViewController {
     private lazy var signUpButton = FilledButtonFactory(
         title: "Sign Up",
         type: .greenButton,
-        action: registerUserAction()
+        action: UIAction { [weak self] _ in
+            self?.registerUser()
+        }
     ).createButton()
     
     private lazy var accountStackView: UIStackView = {
@@ -99,10 +104,20 @@ final class RegistrationViewController: UIViewController {
         return $0
     }(UIButton(type: .system))
     
-     //MARK: - Public properties
-    var viewModel = RegistrationViewModel()
+
     
      //MARK: - Lifecycle
+    
+    init(coordinator: IAuthCoordinator, viewModel: RegistrationViewModelProtocol) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -116,30 +131,18 @@ final class RegistrationViewController: UIViewController {
     }
     
      //MARK: - Private Methods
-    private func registerUserAction() -> UIAction {
-        let action = UIAction { [weak self] _ in
-            guard let self else { return }
-            
-            guard
-                let login = viewModel.login,
-                let email = viewModel.email,
-                let password = viewModel.password,
-                let type = viewModel.type
-            else { return }
-            
-            let credentials = RegistrationCredentials(
-                login: login,
-                email: email,
-                password: password,
-                type: type,
-                profileImageURL: ""
-            )
-            
-            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
-            authService.registerUser(with: credentials)
-            dismiss(animated: true)
+    private func registerUser() {
+        viewModel.registerUser { [weak self] error in
+            if let error = error {
+                self?.coordinator?.showAlertController(
+                    title: "Error",
+                    message: error.localizedDescription) { [weak self] _ in
+                        self?.registerUser()
+                    }
+            } else {
+                self?.coordinator?.finish()
+            }
         }
-        return action
     }
     
     private func setupViews() {
@@ -199,7 +202,7 @@ final class RegistrationViewController: UIViewController {
         }
         
         typeOfAccountButton.0.snp.makeConstraints {
-            $0.height.equalTo(46)
+            $0.height.equalTo(56)
         }
         
         typeOfAccountButton.1.snp.makeConstraints {
@@ -211,7 +214,6 @@ final class RegistrationViewController: UIViewController {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().offset(-40)
         }
-        
     }
     
      //MARK: - @Objc Private Methods
@@ -239,12 +241,7 @@ final class RegistrationViewController: UIViewController {
  //MARK: - RegistrationViewController: AuthenticationControllerProtocol
 extension RegistrationViewController: AuthenticationControllerProtocol {
     func checkFormStatus() {
-        if viewModel.formIsValid {
-            signUpButton.isEnabled = true
-            signUpButton.backgroundColor = Colors.greenSheen
-        } else {
-            signUpButton.isEnabled = false
-            signUpButton.backgroundColor = Colors.greenSheen.withAlphaComponent(0.6)
-        }
+        signUpButton.isEnabled = viewModel.formIsValid
+        signUpButton.backgroundColor = viewModel.formIsValid ? Colors.greenSheen : Colors.greenSheen.withAlphaComponent(0.6)
     }
 }

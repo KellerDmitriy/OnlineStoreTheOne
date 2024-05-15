@@ -7,20 +7,21 @@
 
 import UIKit
 
-final class AppCoordinator: IAppCoordinator {
+final class AppCoordinator: IAppCoordinator, ICoordinatorFinishDelete {
     
     // MARK: - Properties
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
     
+    let context: Context
     let networkService: NetworkServiceProtocol
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, context: Context) {
         self.navigationController = navigationController
-      
+        self.context = context
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
@@ -42,28 +43,38 @@ final class AppCoordinator: IAppCoordinator {
     // MARK: - Flow Presentation
     func showOnboardingFlow() {
         let onboardingCoordinator = OnboardingCoordinator(navigationController: navigationController)
+        onboardingCoordinator.finishDelegate = self
         childCoordinators.append(onboardingCoordinator)
         onboardingCoordinator.start()
     }
     
     func showAuthFlow() {
         let authCoordinator = AuthCoordinator(navigationController: navigationController)
+        authCoordinator.finishDelegate = self
         childCoordinators.append(authCoordinator)
         authCoordinator.start()
     }
     
     func showTabBarFlow() {
         let tabBarCoordinator = TabBarCoordinator(
-            navigationController: navigationController,
-            networkService: networkService,
-            storageService: storageService
+            navigationController: navigationController
         )
         childCoordinators.append(tabBarCoordinator)
         tabBarCoordinator.start()
     }
     
-    func showAlertController(title: String, message: String, createAction: @escaping (String) -> Void) {
-        let alert = UIAlertFactory.createAlert(title: title, message: message, completion: createAction)
-        navigationController.present(alert, animated: true, completion: nil)
-    }
+//    MARK: - Helpers Methods
+    func didFinish(_ coordinator: ICoordinator) {
+           childCoordinators = childCoordinators.filter { $0 !== coordinator }
+           
+           switch coordinator {
+           case is OnboardingCoordinator:
+               context.isOnboardComplete = true
+               start(.auth)
+           case is AuthCoordinator:
+               start(.tabBar)
+           default:
+               break
+           }
+       }
 }

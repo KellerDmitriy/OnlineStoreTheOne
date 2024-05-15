@@ -207,7 +207,7 @@ extension EditImageViewController: UIImagePickerControllerDelegate, UINavigation
         
         if let user = Auth.auth().currentUser {
             let userId = user.uid
-            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            let authService: IFirebase = DIService.resolve(forKey: .authService) ?? FirebaseService()
             authService.uploadUserImage(userId: userId, image: image)
         }
         

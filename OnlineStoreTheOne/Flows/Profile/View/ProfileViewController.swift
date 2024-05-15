@@ -174,7 +174,7 @@ final class ProfileViewController: UIViewController {
     private func fetchUser() {
         if let user = Auth.auth().currentUser {
             let userId = user.uid
-            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            let authService: IFirebase = DIService.resolve(forKey: .authService) ?? FirebaseService()
             authService.fetchUser(userId: userId) { [weak self] user in
                 guard let user, let self else { return }
                 userName.text = user.login

@@ -14,8 +14,6 @@ final class OnboardingViewController: UIViewController {
     
     private let viewModel: OnboardingViewModel
     
-    var didFinishOnboarding: (() -> Void)?
-    
     private let backgroundImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFill
@@ -65,17 +63,10 @@ final class OnboardingViewController: UIViewController {
      //MARK: - Objc Methods
     @objc private func handleTap() {
         guard let nextImage = viewModel.nextImage() else {
-            navigateToNextScreen()
+            coordinator?.finish()
             return
         }
         backgroundImageView.image = nextImage
-    }
-    
-    func navigateToNextScreen() {
-        didFinishOnboarding?()
-        if viewModel.isLastImage() {
-            didFinishOnboarding?()
-        }
     }
 }
 

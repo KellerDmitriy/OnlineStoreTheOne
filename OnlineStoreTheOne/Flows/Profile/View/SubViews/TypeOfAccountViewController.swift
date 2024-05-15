@@ -8,10 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-enum TypeOfAccount: String {
-    case manager = "Manager"
-    case user = "User"
-}
+
 
 final class TypeOfAccountViewController: UIViewController {
     //MARK: - UI elements
@@ -67,7 +64,7 @@ private extension TypeOfAccountViewController {
                 self.userButton.0.backgroundColor = Colors.lightGray
                 self.userButton.1.textColor = Colors.darkArsenic
                 self.view.sendSubviewToBack(self.userButton.2)
-            case TypeOfAccount.user.rawValue:
+            case TypeOfAccount.basic.rawValue:
                 self.managerButton.0.backgroundColor = Colors.lightGray
                 self.managerButton.1.textColor = Colors.darkArsenic
                 self.view.sendSubviewToBack(self.managerButton.2)
@@ -84,7 +81,7 @@ private extension TypeOfAccountViewController {
     
     private func updateAccount(type: String) {
         if let user = Auth.auth().currentUser {
-            let authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+            let authService: IFirebase = DIService.resolve(forKey: .authService) ?? FirebaseService()
             
             authService.changeAccountType(userId: user.uid, type: type)
         }
@@ -108,7 +105,7 @@ private extension TypeOfAccountViewController {
     
     func userBtnTapped() -> UIAction {
         let act = UIAction { [weak self] _ in
-            let type = TypeOfAccount.user.rawValue
+            let type = TypeOfAccount.basic.rawValue
             self?.updateAccount(type: type)
             UserDefaults.standard.set("User", forKey: "accountType")
             self?.setupButtons()

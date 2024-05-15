@@ -29,7 +29,4 @@ final class OnboardingViewModel {
         return imageArray[currentIndex]
     }
     
-    func isLastImage() -> Bool {
-        return currentIndex == imageArray.count - 1
-    }
 }

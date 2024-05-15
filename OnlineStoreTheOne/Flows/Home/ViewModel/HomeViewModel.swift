@@ -9,9 +9,22 @@
 import Foundation
 import Combine
 
+enum DataError: Error {
+    case productsError(NetworkError)
+    case categoriesError(NetworkError)
+    
+    var localizedDescription: String {
+        switch self {
+        case .productsError(let error):
+            return "Products Error: \(error.localizedDescription)"
+        case .categoriesError(let error):
+            return "Categories Error: \(error.localizedDescription)"
+        }
+    }
+}
+
 final class HomeViewModel: ObservableObject {
-    @Published var productsError: Error?
-    @Published var categoriesError: Error?
+    @Published var dataError: DataError?
     
     @Published var productCount = 1
     
@@ -71,7 +84,7 @@ final class HomeViewModel: ObservableObject {
                 self.products = products
             case .failure(let error):
                 print(error)
-                self.productsError = error
+                self.dataError = .productsError(error)
             }
         }
     }
@@ -86,7 +99,7 @@ final class HomeViewModel: ObservableObject {
                 self.categories = uniqueCategories
             case .failure(let error):
                 print(error)
-                self.categoriesError = error
+                self.dataError = .categoriesError(error)
             }
         }
     }

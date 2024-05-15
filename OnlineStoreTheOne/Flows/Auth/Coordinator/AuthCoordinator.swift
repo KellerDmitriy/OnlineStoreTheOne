@@ -31,8 +31,8 @@ final class AuthCoordinator: IAuthCoordinator {
     }
     
     func showRegistationScene() {
-        let viewController = RegistrationViewController()
+        let viewModel = RegistrationViewModel()
+        let viewController = RegistrationViewController(coordinator: self, viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
-
 }

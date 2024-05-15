@@ -13,8 +13,13 @@ enum Flow {
     case tabBar
 }
 
+enum TypeOfAccount: String {
+    case manager = "Manager"
+    case basic = "Basic"
+}
+
 final class Context {
-    var authService: AuthProvider = DIService.resolve(forKey: .authService) ?? AuthService()
+    var authService: IFirebase = DIService.resolve(forKey: .authService) ?? FirebaseService()
     var storageService: StorageServiceProtocol = DIService.resolve(forKey: .storageService) ?? StorageService()
     
     var isOnboardComplete: Bool {
@@ -22,9 +27,9 @@ final class Context {
         set { storageService.isOnboardComplete = newValue }
     }
     
-    lazy var isAuth: () -> Bool = {
-//        TODO: -
-        return true
+    lazy var isAuth: () -> Bool = { [weak self] in
+//       self?.authService.isAuthenticated() ?? false
+        true
     }
 }
 

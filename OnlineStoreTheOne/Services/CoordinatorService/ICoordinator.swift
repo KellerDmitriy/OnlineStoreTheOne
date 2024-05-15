@@ -21,6 +21,11 @@ protocol ICoordinator: AnyObject {
 }
 
 extension ICoordinator {
+    func showAlertController(title: String, message: String, createAction: @escaping (String) -> Void) {
+        let alert = UIAlertFactory.createAlert(title: title, message: message, completion: createAction)
+        navigationController.present(alert, animated: true, completion: nil)
+    }
+    
     func finish() {
         childCoordinators.removeAll()
         finishDelegate?.didFinish(self)
@@ -31,7 +36,6 @@ protocol IAppCoordinator: ICoordinator {
     func showOnboardingFlow()
     func showAuthFlow()
     func showTabBarFlow()
-    func showAlertController(title: String, message: String, createAction: @escaping (String) -> Void)
 }
 
 protocol IAuthCoordinator: ICoordinator {
@@ -40,16 +44,11 @@ protocol IAuthCoordinator: ICoordinator {
 }
 
 protocol ITabBarCoordinator: ICoordinator {
-    func showTabBar()
-    func showHomeFlow()
-    func showWishListFlow()
-    func showManagerFlow()
-    func showProfileFlow()
+    func setupViewControllers(for tabBarController: UITabBarController)
 }
 
 protocol IOnboardingCoordinator: ICoordinator {
     func showOnboardingScene()
-    func showStartFlow(_ flow: Flow?)
 }
 
 protocol IHomeCoordinator: ICoordinator {
