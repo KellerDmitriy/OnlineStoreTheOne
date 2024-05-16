@@ -14,23 +14,23 @@ final class CartsViewController: UIViewController {
     
     //    MARK: - UI elements
     private lazy var locationTitleLabel: UILabel = {
-        NewLabelFactory(text: "Delivery to:", font: .extraLight, color: .black, size: 16).createLabel()
+        LabelFactory(text: "Delivery to:", font: .extraLight, color: .black, size: 16).createLabel()
     }()
     
     private lazy var locationLabel: UILabel = {
-        NewLabelFactory(text: "Moroco, St. 1/4", font: .extraLight, color: .black, size: 16).createLabel()
+        LabelFactory(text: "Moroco, St. 1/4", font: .extraLight, color: .black, size: 16).createLabel()
     }()
     
     private lazy var summaryLabel: UILabel = {
-        NewLabelFactory(text: "Order Summary:", font: .extraBold, color: .black, size: 16).createLabel()
+        LabelFactory(text: "Order Summary:", font: .extraBold, color: .black, size: 16).createLabel()
     }()
     
     private lazy var totalLabel: UILabel = {
-        NewLabelFactory(text: "Totals:", font: .medium, color: .black, size: 16).createLabel()
+        LabelFactory(text: "Totals:", font: .medium, color: .black, size: 16).createLabel()
     }()
     
     private lazy var totalPriceLabel: UILabel = {
-        NewLabelFactory(text: "100 $", font: .extraBold, color: .black, size: 16).createLabel()
+        LabelFactory(text: "100 $", font: .extraBold, color: .black, size: 16).createLabel()
     }()
     
     let cartButton = CartButton()

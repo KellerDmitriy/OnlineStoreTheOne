@@ -9,16 +9,21 @@ import UIKit
 
 enum UIAlertFactory {
     
-    static func createAlert(title: String, message: String, completion: @escaping (String) -> Void) -> UIAlertController {
+    static func createAlert(
+        title: String,
+        message: String,
+        titleDefaultAction: String = "Ok",
+        titleDestructiveAction: String = "Cancel",
+        completion: @escaping () -> Void
+    ) -> UIAlertController {
+        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
-            guard let newValue = alert.textFields?.first?.text else { return }
-            guard !newValue.isEmpty else { return }
-            completion(newValue)
+        let okAction = UIAlertAction(title: titleDefaultAction, style: .default) { _ in
+            completion()
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+        let cancelAction = UIAlertAction(title: titleDestructiveAction, style: .destructive)
         
         alert.addAction(okAction)
         alert.addAction(cancelAction)

@@ -96,7 +96,7 @@ final class LoginViewController: UIViewController {
             if let error = error {
                 self?.coordinator?.showAlertController(
                     title: "Error",
-                    message: error.localizedDescription) { [weak self] _ in
+                    message: error.localizedDescription) { [weak self]  in
                         self?.loginUser()
                     }
             } else {

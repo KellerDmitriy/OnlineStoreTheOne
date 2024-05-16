@@ -48,28 +48,22 @@ final class RegistrationViewController: UIViewController {
         textField: CustomTextField(placeholder: "Confirm your Password", type: .password)
     )
     
-    private lazy var typeOfAccountButton: (UIButton, UILabel, UIView) = {
-        let button = ButtonLabelFactory(
+    private lazy var typeOfAccountButton: UIButton = {
+        let button = ChevronButtonFactory(
             title: "Type of account",
-            type: .standartButton,
-            name: "ArrowIcon",
-            action: UIAction(handler: { [weak self] _ in
+            chevron: "ArrowIcon",
+            action: UIAction { [weak self] _ in
                 let vc = TypeAccountViewController()
                 vc.completion = { [weak self] text in
                     self?.viewModel.type? = text
                     self?.checkFormStatus()
-                    self?.typeOfAccountButton.1.text = text
+//                    self?.typeOfAccountButton.1.text = text
                 }
                 self?.navigationController?.pushViewController(vc, animated: true)
-            }),
-            textColor: nil)
-            .createButtonWithLabel()
-        button.0.backgroundColor = Colors.grayBackgroundAuth
-        button.0.layer.borderWidth = 1
-        button.0.layer.borderColor = Colors.grayBorderAuth.cgColor
-        button.1.textColor = Colors.gray
-        button.1.font = .makeTypography(.medium, size: 16)
-        return button
+            },
+            textColor: Colors.gray
+        )
+        return button.createButtonWithChevron()
     }()
     
     private lazy var signUpButton = FilledButtonFactory(
@@ -136,7 +130,7 @@ final class RegistrationViewController: UIViewController {
             if let error = error {
                 self?.coordinator?.showAlertController(
                     title: "Error",
-                    message: error.localizedDescription) { [weak self] _ in
+                    message: error.localizedDescription) { [weak self] in
                         self?.registerUser()
                     }
             } else {
@@ -168,11 +162,9 @@ final class RegistrationViewController: UIViewController {
             emailView,
             passwordView,
             confirmPasswordView,
-            typeOfAccountButton.0,
+            typeOfAccountButton,
             signUpButton
         ].forEach(accountStackView.addArrangedSubview(_:))
-        typeOfAccountButton.0.addSubview(typeOfAccountButton.1)
-        typeOfAccountButton.0.addSubview(typeOfAccountButton.2)
         
         emailView.textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         passwordView.textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
@@ -201,19 +193,14 @@ final class RegistrationViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(32)
         }
         
-        typeOfAccountButton.0.snp.makeConstraints {
-            $0.height.equalTo(56)
-        }
-        
-        typeOfAccountButton.1.snp.makeConstraints {
+        typeOfAccountButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(20)
-        }
-        
-        typeOfAccountButton.2.snp.makeConstraints {
+            $0.height.equalTo(56)
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().offset(-40)
         }
+        
     }
     
      //MARK: - @Objc Private Methods

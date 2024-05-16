@@ -12,29 +12,40 @@ import FirebaseAuth
 
 final class TypeOfAccountViewController: UIViewController {
     //MARK: - UI elements
-    private lazy var managerButton: (UIButton, UILabel, UIView) = {
-        let button = ButtonLabelFactory(
+    
+    private lazy var managerButton: UIButton = {
+        let button = ChevronButtonFactory(
             title: "Manager",
-            type: .standartButton,
-            name: "CheckIcon",
-            action: managerBtnTapped(),
-            textColor: nil)
-            .createButtonWithLabel()
-        button.0.backgroundColor = Colors.greenSheen
-        button.1.textColor = .white
-        return button
+            chevron: "CheckIcon",
+            action: UIAction { [weak self] _ in
+                self?.managerBtnTapped()
+            },
+            textColor: Colors.gray
+        )
+        return button.createButtonWithChevron()
     }()
     
-    private lazy var userButton: (UIButton, UILabel, UIView) = {
-        let button = ButtonLabelFactory(
+    private lazy var userButton: UIButton = {
+        let button = ChevronButtonFactory(
             title: "User",
-            type: .standartButton,
-            name: "CheckIcon",
-            
-            action: userBtnTapped(),
-            textColor: nil)
-            .createButtonWithLabel()
-        return button
+            chevron: "CheckIcon",
+            action: UIAction { [weak self] _ in
+                self?.userBtnTapped()
+            },
+            textColor: Colors.gray
+        )
+        return button.createButtonWithChevron()
+    }()
+
+    private lazy var buttonsStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 25
+        stack.addArrangedSubview(userButton)
+        stack.addArrangedSubview(managerButton)
+        
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
     
     //MARK: - ViewDidLoad
@@ -44,7 +55,6 @@ final class TypeOfAccountViewController: UIViewController {
         setUpView()
         setConstraint()
         navigationItem.title = "Type of Account"
-        navigationController?.setupNavigationBar()
         navigationController?.navigationBar.addBottomBorder()
         setupButtons()
     }
@@ -57,21 +67,17 @@ private extension TypeOfAccountViewController {
         if let type = UserDefaults.standard.object(forKey: "accountType") as? String {
             switch type {
             case TypeOfAccount.manager.rawValue:
-                self.managerButton.0.backgroundColor = Colors.greenSheen
-                self.managerButton.1.textColor = .white
-                self.view.bringSubviewToFront(self.managerButton.2)
+                self.managerButton.backgroundColor = Colors.greenSheen
+                self.managerButton.tintColor = .white
                 
-                self.userButton.0.backgroundColor = Colors.lightGray
-                self.userButton.1.textColor = Colors.darkArsenic
-                self.view.sendSubviewToBack(self.userButton.2)
+                self.userButton.backgroundColor = Colors.lightGray
+                self.userButton.tintColor = Colors.darkArsenic
             case TypeOfAccount.basic.rawValue:
-                self.managerButton.0.backgroundColor = Colors.lightGray
-                self.managerButton.1.textColor = Colors.darkArsenic
-                self.view.sendSubviewToBack(self.managerButton.2)
+                self.managerButton.backgroundColor = Colors.lightGray
+                self.managerButton.tintColor = Colors.darkArsenic
                 
-                self.userButton.0.backgroundColor = Colors.greenSheen
-                self.userButton.1.textColor = .white
-                self.view.bringSubviewToFront(self.userButton.2)
+                self.userButton.backgroundColor = Colors.greenSheen
+                self.userButton.tintColor = .white
             default:
                 break
             }
@@ -88,75 +94,48 @@ private extension TypeOfAccountViewController {
     }
     
     //MARK: -  Action
-    func managerBtnTapped() -> UIAction {
-        let act = UIAction { [weak self] _ in
+    func managerBtnTapped(){
             let type = TypeOfAccount.manager.rawValue
-            self?.updateAccount(type: type)
+          updateAccount(type: type)
             UserDefaults.standard.set(type, forKey: "accountType")
-            self?.setupButtons()
+            setupButtons()
             
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
 //                self?.updateTabBar()
 //            }
-            
-        }
-        return act
     }
     
-    func userBtnTapped() -> UIAction {
-        let act = UIAction { [weak self] _ in
+    func userBtnTapped() {
             let type = TypeOfAccount.basic.rawValue
-            self?.updateAccount(type: type)
+            updateAccount(type: type)
             UserDefaults.standard.set("User", forKey: "accountType")
-            self?.setupButtons()
+            setupButtons()
             
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
 //                self?.updateTabBar()
 //            }
-        }
-        return act
     }
     
     //MARK: - Set up view
     func setUpView() {
         view.backgroundColor = .white
-        
-        view.addSubview(managerButton.0)
-        view.addSubview(managerButton.1)
-        view.addSubview(managerButton.2)
-        
-        view.addSubview(userButton.0)
-        view.addSubview(userButton.1)
-        view.addSubview(userButton.2)
-        view.sendSubviewToBack(userButton.2)
-        
+        view.addSubview(buttonsStack)
     }
     
     //MARK: - Set constraint
     func setConstraint() {
-        NSLayoutConstraint.activate([
-            
-            managerButton.0.heightAnchor.constraint(equalToConstant: 56),
-            managerButton.0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            managerButton.0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            managerButton.0.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            
-            managerButton.1.topAnchor.constraint(equalTo: managerButton.0.topAnchor, constant: 20),
-            managerButton.1.leadingAnchor.constraint(equalTo: managerButton.0.leadingAnchor, constant: 20),
-            managerButton.2.topAnchor.constraint(equalTo: managerButton.0.topAnchor, constant: 15.5),
-            managerButton.2.trailingAnchor.constraint(equalTo: managerButton.0.trailingAnchor, constant: -35),
-            
-            userButton.0.heightAnchor.constraint(equalToConstant: 56),
-            userButton.0.topAnchor.constraint(equalTo: managerButton.0.bottomAnchor, constant: 20),
-            userButton.0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            userButton.0.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            userButton.1.topAnchor.constraint(equalTo: userButton.0.topAnchor, constant: 20),
-            userButton.1.leadingAnchor.constraint(equalTo: userButton.0.leadingAnchor, constant: 20),
-            userButton.2.topAnchor.constraint(equalTo: userButton.0.topAnchor, constant: 15.5),
-            userButton.2.trailingAnchor.constraint(equalTo: userButton.0.trailingAnchor, constant: -35),
-            
-        ])
+        buttonsStack.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        managerButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+        }
+        
+        userButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+        }
     }
 }
 

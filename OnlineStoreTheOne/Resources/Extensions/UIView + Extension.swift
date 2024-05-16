@@ -22,7 +22,7 @@ extension UIView {
     func addBottomBorder() {
         let height: CGFloat = 0.3
         let separator = UIView()
-        separator.backgroundColor = Colors.gray.withAlphaComponent(0.3)
+        separator.backgroundColor = Colors.gray.withAlphaComponent(0.5)
         separator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         separator.frame = CGRect(
             x: 0,
@@ -96,6 +96,7 @@ extension UIView {
         animation.repeatCount = .infinity
         gradient.add(animation, forKey: shimmerAnimationKey)
     }
+    
     ///  c задержкой и повтором
     public func startShimmering(duration: TimeInterval, repeatCount: Float = 1) {
             let white = UIColor.white.cgColor

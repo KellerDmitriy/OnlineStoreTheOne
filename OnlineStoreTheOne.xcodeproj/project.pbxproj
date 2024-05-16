@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		531121EE2BD2E5240018FA37 /* ButtonWithLabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121EC2BD2E5240018FA37 /* ButtonWithLabelFactory.swift */; };
-		531121EF2BD2E5240018FA37 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121ED2BD2E5240018FA37 /* LabelFactory.swift */; };
+		531121EE2BD2E5240018FA37 /* ChevronButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121EC2BD2E5240018FA37 /* ChevronButtonFactory.swift */; };
+		531121EF2BD2E5240018FA37 /* LabelFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */; };
 		531121F02BD2E5EE0018FA37 /* TermsConditionalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53369BB72BD055AF00699323 /* TermsConditionalViewController.swift */; };
 		531121F12BD2E5EE0018FA37 /* TypeOfAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121E62BD1A99A0018FA37 /* TypeOfAccountViewController.swift */; };
-		531121F22BD2E5EE0018FA37 /* EditImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121EA2BD2CF9D0018FA37 /* EditImageViewController.swift */; };
+		531121F22BD2E5EE0018FA37 /* EditImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531121EA2BD2CF9D0018FA37 /* EditImageView.swift */; };
 		534848A42BD69C2300162CE6 /* PaymentSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534848A32BD69C2300162CE6 /* PaymentSuccessView.swift */; };
 		86490FF42BCE9B5300FCF45C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */; };
 		86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86490FF92BD13C1600FCF45C /* ManagerViewController.swift */; };
@@ -138,9 +138,9 @@
 
 /* Begin PBXFileReference section */
 		531121E62BD1A99A0018FA37 /* TypeOfAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfAccountViewController.swift; sourceTree = "<group>"; };
-		531121EA2BD2CF9D0018FA37 /* EditImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageViewController.swift; sourceTree = "<group>"; };
-		531121EC2BD2E5240018FA37 /* ButtonWithLabelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonWithLabelFactory.swift; path = OnlineStoreTheOne/Resources/Helpers/ButtonWithLabelFactory.swift; sourceTree = SOURCE_ROOT; };
-		531121ED2BD2E5240018FA37 /* LabelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelFactory.swift; path = OnlineStoreTheOne/Resources/Helpers/LabelFactory.swift; sourceTree = SOURCE_ROOT; };
+		531121EA2BD2CF9D0018FA37 /* EditImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageView.swift; sourceTree = "<group>"; };
+		531121EC2BD2E5240018FA37 /* ChevronButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChevronButtonFactory.swift; path = OnlineStoreTheOne/Resources/Helpers/ChevronButtonFactory.swift; sourceTree = SOURCE_ROOT; };
+		531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelFactoryProtocol.swift; path = OnlineStoreTheOne/Resources/Helpers/LabelFactoryProtocol.swift; sourceTree = SOURCE_ROOT; };
 		53369BB72BD055AF00699323 /* TermsConditionalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionalViewController.swift; sourceTree = "<group>"; };
 		534848A32BD69C2300162CE6 /* PaymentSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessView.swift; sourceTree = "<group>"; };
 		86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -603,7 +603,7 @@
 			children = (
 				53369BB72BD055AF00699323 /* TermsConditionalViewController.swift */,
 				531121E62BD1A99A0018FA37 /* TypeOfAccountViewController.swift */,
-				531121EA2BD2CF9D0018FA37 /* EditImageViewController.swift */,
+				531121EA2BD2CF9D0018FA37 /* EditImageView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -837,7 +837,7 @@
 			isa = PBXGroup;
 			children = (
 				E1D1DC3B2BD2624B0009C2A3 /* Buttons */,
-				531121ED2BD2E5240018FA37 /* LabelFactory.swift */,
+				531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -889,7 +889,7 @@
 		E1D1DC3B2BD2624B0009C2A3 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				531121EC2BD2E5240018FA37 /* ButtonWithLabelFactory.swift */,
+				531121EC2BD2E5240018FA37 /* ChevronButtonFactory.swift */,
 				E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */,
 				E1D1DC392BD24FC10009C2A3 /* CartButton.swift */,
 				E14BC4132BD834B40026103A /* CheckMarkButton.swift */,
@@ -1168,7 +1168,7 @@
 				531121F02BD2E5EE0018FA37 /* TermsConditionalViewController.swift in Sources */,
 				E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */,
 				531121F12BD2E5EE0018FA37 /* TypeOfAccountViewController.swift in Sources */,
-				531121F22BD2E5EE0018FA37 /* EditImageViewController.swift in Sources */,
+				531121F22BD2E5EE0018FA37 /* EditImageView.swift in Sources */,
 				86BC2D282BDCF8A0003BF895 /* AddNewProductViewController.swift in Sources */,
 				E1A2E84B2BCDB92A00CC0D64 /* ButtonFactory.swift in Sources */,
 				BEBA5DC12BD0621900737686 /* CategoryCollectionViewCell.swift in Sources */,
@@ -1244,7 +1244,7 @@
 				E1A2E83E2BCD20AA00CC0D64 /* Result + Extension.swift in Sources */,
 				BEBA5DC52BD0621900737686 /* HomeViewController.swift in Sources */,
 				BEBA5DC32BD0621900737686 /* SearchFieldCollectionViewCell.swift in Sources */,
-				531121EE2BD2E5240018FA37 /* ButtonWithLabelFactory.swift in Sources */,
+				531121EE2BD2E5240018FA37 /* ChevronButtonFactory.swift in Sources */,
 				E1E2B4CA2BDBD98300D72CF7 /* SearchResultViewModel.swift in Sources */,
 				E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */,
 				E1F1B2402BCC2E18001DC54D /* Color + Extension.swift in Sources */,
@@ -1255,7 +1255,7 @@
 				868A9A502BD949A400476776 /* LoginViewController.swift in Sources */,
 				86EDFF142BD80F7000CD9F81 /* CustomTextField.swift in Sources */,
 				E1D91A102BDCF8620031B413 /* SearchResultViewController + UICollectionView.swift in Sources */,
-				531121EF2BD2E5240018FA37 /* LabelFactory.swift in Sources */,
+				531121EF2BD2E5240018FA37 /* LabelFactoryProtocol.swift in Sources */,
 				E1A2E8402BCD216B00CC0D64 /* Sequwnces + Extension.swift in Sources */,
 				BEBA5DCB2BD10E6C00737686 /* SearchResultViewController.swift in Sources */,
 				86BC2D622BDF8A74003BF895 /* AddNewCategoryViewModel.swift in Sources */,

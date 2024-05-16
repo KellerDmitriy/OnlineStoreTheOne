@@ -42,11 +42,11 @@ final class CartsTableViewCell: UITableViewCell {
     }()
     
     private lazy var titleLabel: UILabel = {
-        NewLabelFactory(text: "", font: .regular, color: .black, size: 14).createLabel()
+        LabelFactory(text: "", font: .regular, color: .black, size: 14).createLabel()
     }()
     
     private lazy var priceLabel: UILabel = {
-        NewLabelFactory(text: "", font: .semiBold, color: .black, size: 14).createLabel()
+        LabelFactory(text: "", font: .semiBold, color: .black, size: 14).createLabel()
     }()
     
     

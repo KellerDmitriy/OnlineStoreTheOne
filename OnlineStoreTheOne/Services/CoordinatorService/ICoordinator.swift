@@ -21,8 +21,20 @@ protocol ICoordinator: AnyObject {
 }
 
 extension ICoordinator {
-    func showAlertController(title: String, message: String, createAction: @escaping (String) -> Void) {
-        let alert = UIAlertFactory.createAlert(title: title, message: message, completion: createAction)
+    func showAlertController(
+        title: String,
+        message: String,
+        titleDefaultAction: String = "Ok",
+        titleDestructiveAction: String = "Cancel",
+        createAction: @escaping () -> Void
+    ) {
+        let alert = UIAlertFactory.createAlert(
+            title: title,
+            message: message,
+            titleDefaultAction: titleDefaultAction,
+            titleDestructiveAction: titleDestructiveAction,
+            completion: createAction
+        )
         navigationController.present(alert, animated: true, completion: nil)
     }
     

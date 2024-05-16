@@ -23,34 +23,27 @@ final class PaymentSuccessView: UIViewController {
     }()
     
     private lazy var congratsLabel: UILabel = {
-        let label = NewLabelFactory(text: "Congrats! your payment is successfully", font: .extraBold, size: 22).createLabel()
+        let label = LabelFactory(text: "Congrats! your payment is successfully", font: .extraBold, size: 22).createLabel()
         label.textColor = .black
         label.textAlignment = .center
         return label
     }()
     
     private lazy var miniLabel: UILabel = {
-        let label = NewLabelFactory(text: "Track your order or just chat directly to the seller. Download order summary in down bellow", font: .light, size: 14).createLabel()
+        let label = LabelFactory(text: "Track your order or just chat directly to the seller. Download order summary in down bellow", font: .light, size: 14).createLabel()
         label.textAlignment = .center
         return label
     }()
     
-    private lazy var pdfButton: (UIButton, UILabel, UIView) = {
-        let button = ButtonLabelFactory(
+    private lazy var pdfButton: UIButton = {
+        let button = ChevronButtonFactory(
             title: "order_invoice",
-            type: .imageEditButtons,
-            name: "PDFIcon",
+            chevron: "PDFIcon",
             action: UIAction { [weak self] _ in
-            
             },
-            textColor: Colors.gray)
-            .createButtonWithLabel()
-        button.0.backgroundColor = .white
-        button.0.layer.borderColor = Colors.lightGray.cgColor
-        button.0.layer.borderWidth = 1
-        button.0.layer.cornerRadius = 15
-        button.1.font = UIFont.makeTypography(.light, size: 14)
-        return button
+            textColor: Colors.gray
+        )
+        return button.createButtonWithChevron()
     }()
     
     private lazy var downloadImage: UIView = {
@@ -94,9 +87,7 @@ private extension PaymentSuccessView {
         view.addSubview(successImage)
         view.addSubview(congratsLabel)
         view.addSubview(miniLabel)
-        view.addSubview(pdfButton.0)
-        view.addSubview(pdfButton.1)
-        view.addSubview(pdfButton.2)
+        view.addSubview(pdfButton)
         view.addSubview(downloadImage)
         view.addSubview(continueButton)
     }
@@ -116,21 +107,17 @@ private extension PaymentSuccessView {
             miniLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             miniLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             
-            pdfButton.0.topAnchor.constraint(equalTo: miniLabel.bottomAnchor, constant: 10),
-            pdfButton.0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            pdfButton.0.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             
+            pdfButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 15.5),
+            pdfButton.leadingAnchor.constraint(equalTo:view.leadingAnchor, constant: 15),
+            pdfButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            pdfButton.leadingAnchor.constraint(equalTo: view.trailingAnchor, constant: 40),
             
-            pdfButton.2.topAnchor.constraint(equalTo: pdfButton.0.topAnchor, constant: 15.5),
-            pdfButton.2.leadingAnchor.constraint(equalTo: pdfButton.0.leadingAnchor, constant: 15),
-            pdfButton.1.topAnchor.constraint(equalTo: pdfButton.0.topAnchor, constant: 20),
-            pdfButton.1.leadingAnchor.constraint(equalTo: pdfButton.2.trailingAnchor, constant: 40),
-            
-            downloadImage.topAnchor.constraint(equalTo: pdfButton.0.topAnchor, constant: 15.5),
-            downloadImage.trailingAnchor.constraint(equalTo: pdfButton.0.trailingAnchor, constant: -35),
+            downloadImage.topAnchor.constraint(equalTo: pdfButton.topAnchor, constant: 15.5),
+            downloadImage.trailingAnchor.constraint(equalTo: pdfButton.trailingAnchor, constant: -35),
             
             continueButton.heightAnchor.constraint(equalToConstant: 50),
-            continueButton.topAnchor.constraint(equalTo: pdfButton.0.bottomAnchor, constant: 15),
+            continueButton.topAnchor.constraint(equalTo: pdfButton.bottomAnchor, constant: 15),
             continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
         ])

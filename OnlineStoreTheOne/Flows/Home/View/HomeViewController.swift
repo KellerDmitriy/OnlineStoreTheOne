@@ -138,7 +138,7 @@ final class HomeViewController: UIViewController {
                 }
             }
             
-            coordinator.showAlertController(title: "Error", message: message) { _ in
+            coordinator.showAlertController(title: "Error", message: message) { 
                 retryAction()
             }
         }
