@@ -72,7 +72,7 @@ private extension TypeOfAccountViewController {
                 
                 self.userButton.backgroundColor = Colors.lightGray
                 self.userButton.tintColor = Colors.darkArsenic
-            case TypeOfAccount.basic.rawValue:
+            case TypeOfAccount.user.rawValue:
                 self.managerButton.backgroundColor = Colors.lightGray
                 self.managerButton.tintColor = Colors.darkArsenic
                 
@@ -106,7 +106,7 @@ private extension TypeOfAccountViewController {
     }
     
     func userBtnTapped() {
-            let type = TypeOfAccount.basic.rawValue
+            let type = TypeOfAccount.user.rawValue
             updateAccount(type: type)
             UserDefaults.standard.set("User", forKey: "accountType")
             setupButtons()

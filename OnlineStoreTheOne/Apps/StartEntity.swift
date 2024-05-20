@@ -7,15 +7,9 @@
 
 import Foundation
 
-enum Flow {
-    case onboarding
-    case auth
-    case tabBar
-}
-
 enum TypeOfAccount: String {
     case manager = "Manager"
-    case basic = "Basic"
+    case user = "User"
 }
 
 final class Context {
@@ -28,8 +22,8 @@ final class Context {
     }
     
     lazy var isAuth: () -> Bool = { [weak self] in
-//       self?.authService.isAuthenticated() ?? false
-        true
+       self?.authService.isAuthenticated() ?? false
+    
     }
 }
 
@@ -42,7 +36,7 @@ final class StartEntity: IStartEntity {
         if !context.isOnboardComplete {
             return .onboarding
         } else if context.isAuth() {
-            return .tabBar
+            return .home
         } else {
             return .auth
         }

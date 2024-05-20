@@ -8,18 +8,21 @@
 import UIKit
 
 final class OnboardingCoordinator: IOnboardingCoordinator {
+    let flow: Flow
     
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
+    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
+        self.flow = flow
+        self.finishDelegate = finishDelegate
         self.navigationController = navigationController
     }
     
     // MARK: - Coordinator Lifecycle
-    func start(_ flow: Flow? = nil) {
+    func start() {
         showOnboardingScene()
     }
     

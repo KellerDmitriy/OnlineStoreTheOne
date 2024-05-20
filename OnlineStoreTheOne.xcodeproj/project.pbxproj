@@ -62,6 +62,9 @@
 		E13B33FC2BD2A097007B17FC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E13B33FB2BD2A097007B17FC /* Kingfisher */; };
 		E14BC4142BD834B40026103A /* CheckMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BC4132BD834B40026103A /* CheckMarkButton.swift */; };
 		E14BC4192BD860E70026103A /* CountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BC4182BD860E70026103A /* CountButton.swift */; };
+		E15B897F2BF6B1670060A8D3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E15B897E2BF6B1670060A8D3 /* SnapKit */; };
+		E15B89812BF6B1670060A8D3 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E15B89802BF6B1670060A8D3 /* SnapKit-Dynamic */; };
+		E15B89832BFB32D60060A8D3 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B89822BFB32D60060A8D3 /* Coordinator.swift */; };
 		E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */; };
 		E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */; };
 		E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */; };
@@ -76,7 +79,6 @@
 		E1835F2A2BEC1F8D00BE1962 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */; };
 		E1835F2C2BECAFA000BE1962 /* ICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */; };
 		E1835F2E2BECB0FD00BE1962 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F2D2BECB0FD00BE1962 /* AuthCoordinator.swift */; };
-		E1835F302BECB3C500BE1962 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F2F2BECB3C500BE1962 /* TabBarCoordinator.swift */; };
 		E1835F322BECB7B500BE1962 /* StartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F312BECB7B500BE1962 /* StartEntity.swift */; };
 		E1835F352BEE76F900BE1962 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F342BEE76F900BE1962 /* OnboardingCoordinator.swift */; };
 		E1835F372BEE7EE500BE1962 /* WishListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F362BEE7EE500BE1962 /* WishListCoordinator.swift */; };
@@ -131,8 +133,6 @@
 		E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2592BCC4FE2001DC54D /* CartsViewController.swift */; };
 		E1F1B25D2BCC5042001DC54D /* CartsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B25C2BCC5042001DC54D /* CartsViewModel.swift */; };
 		E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2622BCC50D5001DC54D /* Observable.swift */; };
-		E1F1B2662BCC5122001DC54D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E1F1B2652BCC5122001DC54D /* SnapKit */; };
-		E1F1B2682BCC5122001DC54D /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E1F1B2672BCC5122001DC54D /* SnapKit-Dynamic */; };
 		E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B26A2BCC6B60001DC54D /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
@@ -194,6 +194,7 @@
 		BEBA5DCA2BD10E6C00737686 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		E14BC4132BD834B40026103A /* CheckMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkButton.swift; sourceTree = "<group>"; };
 		E14BC4182BD860E70026103A /* CountButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountButton.swift; sourceTree = "<group>"; };
+		E15B89822BFB32D60060A8D3 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -204,7 +205,6 @@
 		E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICoordinator.swift; sourceTree = "<group>"; };
 		E1835F2D2BECB0FD00BE1962 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
-		E1835F2F2BECB3C500BE1962 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		E1835F312BECB7B500BE1962 /* StartEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartEntity.swift; sourceTree = "<group>"; };
 		E1835F342BEE76F900BE1962 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		E1835F362BEE7EE500BE1962 /* WishListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCoordinator.swift; sourceTree = "<group>"; };
@@ -269,10 +269,10 @@
 				E13B33FC2BD2A097007B17FC /* Kingfisher in Frameworks */,
 				E18A560C2BD7BFF300E34777 /* FirebaseAuth in Frameworks */,
 				868A9A4F2BD9366E00476776 /* FirebaseStorage in Frameworks */,
-				E1F1B2662BCC5122001DC54D /* SnapKit in Frameworks */,
+				E15B897F2BF6B1670060A8D3 /* SnapKit in Frameworks */,
 				E18A56102BD7BFF300E34777 /* FirebaseFirestore in Frameworks */,
+				E15B89812BF6B1670060A8D3 /* SnapKit-Dynamic in Frameworks */,
 				E18A560E2BD7BFF300E34777 /* FirebaseAuthCombine-Community in Frameworks */,
-				E1F1B2682BCC5122001DC54D /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,13 +624,14 @@
 			path = DIService;
 			sourceTree = "<group>";
 		};
-		E1835F282BEC1DE400BE1962 /* CoordinatorService */ = {
+		E1835F282BEC1DE400BE1962 /* NavigationService */ = {
 			isa = PBXGroup;
 			children = (
 				E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */,
 				E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */,
+				E15B89822BFB32D60060A8D3 /* Coordinator.swift */,
 			);
-			path = CoordinatorService;
+			path = NavigationService;
 			sourceTree = "<group>";
 		};
 		E1835F402BEEB8EF00BE1962 /* Coordinator */ = {
@@ -672,14 +673,6 @@
 				86EDFF152BD80F7C00CD9F81 /* InputContainerView.swift */,
 			);
 			path = SubViews;
-			sourceTree = "<group>";
-		};
-		E1835F472BEEBAC300BE1962 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				E1835F2F2BECB3C500BE1962 /* TabBarCoordinator.swift */,
-			);
-			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		E1835F482BEEBADC00BE1962 /* Cordinator */ = {
@@ -785,7 +778,7 @@
 		E1A2E8302BCCFB4300CC0D64 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E1835F282BEC1DE400BE1962 /* CoordinatorService */,
+				E1835F282BEC1DE400BE1962 /* NavigationService */,
 				E1835F252BEB875700BE1962 /* DIService */,
 				86EDFF252BD91F6400CD9F81 /* FireBaseServices */,
 				E1A2E8312BCCFB6B00CC0D64 /* NetworkServices */,
@@ -1057,7 +1050,6 @@
 		E1F1B2692BCC6B4B001DC54D /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				E1835F472BEEBAC300BE1962 /* Coordinator */,
 				E1F1B26A2BCC6B60001DC54D /* TabBarController.swift */,
 			);
 			path = TabBar;
@@ -1080,13 +1072,13 @@
 			);
 			name = OnlineStoreTheOne;
 			packageProductDependencies = (
-				E1F1B2652BCC5122001DC54D /* SnapKit */,
-				E1F1B2672BCC5122001DC54D /* SnapKit-Dynamic */,
 				E13B33FB2BD2A097007B17FC /* Kingfisher */,
 				E18A560B2BD7BFF300E34777 /* FirebaseAuth */,
 				E18A560D2BD7BFF300E34777 /* FirebaseAuthCombine-Community */,
 				E18A560F2BD7BFF300E34777 /* FirebaseFirestore */,
 				868A9A4E2BD9366E00476776 /* FirebaseStorage */,
+				E15B897E2BF6B1670060A8D3 /* SnapKit */,
+				E15B89802BF6B1670060A8D3 /* SnapKit-Dynamic */,
 			);
 			productName = OnlineStoreTheOne;
 			productReference = E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */;
@@ -1117,9 +1109,9 @@
 			);
 			mainGroup = E1F1B2152BCC1852001DC54D;
 			packageReferences = (
-				E1F1B2642BCC5122001DC54D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				E13B33FA2BD2A097007B17FC /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E18A560A2BD7BFF300E34777 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E15B897D2BF6B1670060A8D3 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = E1F1B21F2BCC1852001DC54D /* Products */;
 			projectDirPath = "";
@@ -1192,6 +1184,7 @@
 				86BC2D5C2BDE860F003BF895 /* UpdateProductViewModel.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E16BB6982BD654B6009991F3 /* PhotoCell.swift in Sources */,
+				E15B89832BFB32D60060A8D3 /* Coordinator.swift in Sources */,
 				86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */,
 				E1D1DC252BD071290009C2A3 /* CartsTableViewCell.swift in Sources */,
 				E1835F432BEEBA8000BE1962 /* OnboardingViewModel.swift in Sources */,
@@ -1225,7 +1218,6 @@
 				E1F1B25A2BCC4FE2001DC54D /* CartsViewController.swift in Sources */,
 				86490FFA2BD13C1600FCF45C /* ManagerViewController.swift in Sources */,
 				E1D1DC212BD0710F0009C2A3 /* CartsViewController + UITableView.swift in Sources */,
-				E1835F302BECB3C500BE1962 /* TabBarCoordinator.swift in Sources */,
 				E1835F4E2BF143D400BE1962 /* DetailCoordinator.swift in Sources */,
 				86BC2D492BDD5663003BF895 /* UpdateCategoryViewController.swift in Sources */,
 				86EDFF212BD84BCF00CD9F81 /* RegistrationViewModel.swift in Sources */,
@@ -1497,20 +1489,20 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		E15B897D2BF6B1670060A8D3 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		E18A560A2BD7BFF300E34777 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.24.0;
-			};
-		};
-		E1F1B2642BCC5122001DC54D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1526,6 +1518,16 @@
 			package = E13B33FA2BD2A097007B17FC /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
+		E15B897E2BF6B1670060A8D3 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E15B897D2BF6B1670060A8D3 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		E15B89802BF6B1670060A8D3 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E15B897D2BF6B1670060A8D3 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
 		E18A560B2BD7BFF300E34777 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E18A560A2BD7BFF300E34777 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -1540,16 +1542,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E18A560A2BD7BFF300E34777 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
-		};
-		E1F1B2652BCC5122001DC54D /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E1F1B2642BCC5122001DC54D /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		E1F1B2672BCC5122001DC54D /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E1F1B2642BCC5122001DC54D /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

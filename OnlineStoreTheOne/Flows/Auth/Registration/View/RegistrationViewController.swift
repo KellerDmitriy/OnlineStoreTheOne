@@ -13,21 +13,6 @@ final class RegistrationViewController: UIViewController {
     private let coordinator: IAuthCoordinator?
     private var viewModel: RegistrationViewModelProtocol
     
-    private let completeAccountLabel: UILabel = {
-        $0.text = "Complete your account"
-        $0.font = .makeTypography(.bold, size: 24)
-        $0.textColor = Colors.darkArsenic
-        return $0
-    }(UILabel())
-    
-    private let labelsStackView: UIStackView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.alignment = .center
-        $0.spacing = 42
-        $0.axis = .vertical
-        return $0
-    }(UIStackView())
-    
     private let loginView = InputContainerView(
         image: UIImage(named: "person"),
         textField: CustomTextField(placeholder: "Enter your Name", type: .text)
@@ -51,7 +36,7 @@ final class RegistrationViewController: UIViewController {
     private lazy var typeOfAccountButton: UIButton = {
         let button = ChevronButtonFactory(
             title: "Type of account",
-            chevron: "ArrowIcon",
+            chevron: "chevron.forward",
             action: UIAction { [weak self] _ in
                 let vc = TypeAccountViewController()
                 vc.completion = { [weak self] text in
@@ -78,6 +63,7 @@ final class RegistrationViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .vertical
         $0.spacing = 26
+        $0.distribution = .fillEqually
         return $0
     }(UIStackView())
     
@@ -141,29 +127,20 @@ final class RegistrationViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .white
+        
+        navigationItem.title = "Complete your account"
         navigationItem.hidesBackButton = true
         
-        signUpButton.titleLabel?.font = .makeTypography(.bold, size: 18)
-        signUpButton.layer.cornerRadius = 8
-        signUpButton.isEnabled = false
-        signUpButton.backgroundColor = Colors.greenSheen.withAlphaComponent(0.6)
-        [
-            labelsStackView,
-            accountStackView,
-            alreadyHaveAccountButton
-        ].forEach(view.addSubview(_:))
+        view.addSubview(accountStackView)
+  
         
-        [
-            completeAccountLabel
-        ].forEach(labelsStackView.addArrangedSubview(_:))
-        
-        [
-            loginView,
+        [   loginView,
             emailView,
             passwordView,
             confirmPasswordView,
             typeOfAccountButton,
-            signUpButton
+            signUpButton,
+            alreadyHaveAccountButton
         ].forEach(accountStackView.addArrangedSubview(_:))
         
         emailView.textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
@@ -173,34 +150,11 @@ final class RegistrationViewController: UIViewController {
     }
     
     private func setConstraints() {
-        labelsStackView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.centerX.equalToSuperview()
-        }
-        
         accountStackView.snp.makeConstraints {
-            $0.top.equalTo(labelsStackView.snp.bottom).offset(40)
-            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(150)
             $0.leading.trailing.equalToSuperview().inset(20)
+
         }
-        
-        signUpButton.snp.makeConstraints {
-            $0.height.equalTo(46)
-        }
-        
-        alreadyHaveAccountButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(32)
-        }
-        
-        typeOfAccountButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalTo(20)
-            $0.height.equalTo(56)
-            $0.top.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().offset(-40)
-        }
-        
     }
     
      //MARK: - @Objc Private Methods

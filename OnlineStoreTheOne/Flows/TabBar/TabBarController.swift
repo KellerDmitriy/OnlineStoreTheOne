@@ -9,6 +9,17 @@ import UIKit
 final class TabBarController: UITabBarController {
 
     // MARK: - LifeCycle
+    init(tabBarControllers: [UIViewController]) {
+        super.init(nibName: nil, bundle: nil)
+        for tab in tabBarControllers {
+            self.addChild(tab)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) is not supported")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBarAppearance()

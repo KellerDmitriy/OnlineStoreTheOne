@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class ProfileCoordinator: IProfileCoordinator {
+final class ProfileCoordinator: IProfileCoordinator{
+    
+    var flow: Flow
     
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
@@ -16,13 +18,14 @@ final class ProfileCoordinator: IProfileCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
+    init(flow: Flow, navigationController: UINavigationController) {
+        self.flow = .profile
         self.navigationController = navigationController
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
-    func start(_ flow: Flow? = nil) {
+    func start() {
         showProfileScene()
     }
     
@@ -30,6 +33,7 @@ final class ProfileCoordinator: IProfileCoordinator {
     func showProfileScene() {
         let viewModel = ProfileViewModel(storageService: storageService)
         let viewController = ProfileViewController(viewModel: viewModel, coordinator: self)
+        viewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), selectedImage: nil)
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -44,8 +48,14 @@ final class ProfileCoordinator: IProfileCoordinator {
     }
     
     func showOnboardingFlow() {
-        let coordinator = OnboardingCoordinator(navigationController: navigationController)
+        let coordinator = OnboardingCoordinator(flow: .onboarding, finishDelegate: self, navigationController: navigationController)
         childCoordinators.append(coordinator)
         coordinator.start()
+    }
+}
+
+extension ProfileCoordinator: ICoordinatorFinishDelete {
+    func didFinish(_ coordinator: any ICoordinator) {
+        
     }
 }

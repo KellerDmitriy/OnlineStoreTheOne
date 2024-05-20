@@ -45,6 +45,7 @@ final class LoginViewController: UIViewController {
     private lazy var loginStackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .vertical
+        $0.distribution = .fillEqually
         $0.spacing = 36
         return $0
     }(UIStackView())
@@ -124,20 +125,16 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         [
             logoImageView,
-            loginStackView,
-            dontHaveAccountButton
+            loginStackView
+            
         ].forEach(view.addSubview(_:))
         
         [
             emailView,
             passwordView,
-            loginButton
+            loginButton,
+            dontHaveAccountButton
         ].forEach(loginStackView.addArrangedSubview(_:))
-        
-        loginButton.titleLabel?.font = .makeTypography(.bold, size: 18)
-        loginButton.layer.cornerRadius = 8
-        loginButton.isEnabled = false
-        loginButton.backgroundColor = Colors.greenSheen.withAlphaComponent(0.6)
         
         emailView.textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         passwordView.textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
@@ -150,19 +147,10 @@ final class LoginViewController: UIViewController {
             $0.height.width.equalTo(150)
         }
         
-        loginButton.snp.makeConstraints {
-            $0.height.equalTo(46)
-        }
-        
         loginStackView.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(50)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        
-        dontHaveAccountButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(32)
         }
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 final class HomeCoordinator: IHomeCoordinator {
+    let flow: Flow
 
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
@@ -17,14 +18,15 @@ final class HomeCoordinator: IHomeCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
+    init(flow: Flow, navigationController: UINavigationController) {
+        self.flow = .home
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
-    func start(_ flow: Flow? = nil) {
+    func start() {
         showHomeScene()
     }
     
@@ -32,6 +34,7 @@ final class HomeCoordinator: IHomeCoordinator {
     func showHomeScene() {
         let viewModel = HomeViewModel(networkService: networkService, storageService: storageService)
         let viewController = HomeViewController(viewModel: viewModel, coordinator: self)
+        viewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home"), selectedImage: nil)
         navigationController.setViewControllers([viewController], animated: true)
     }
     
@@ -52,8 +55,9 @@ final class HomeCoordinator: IHomeCoordinator {
     
     func showDetailFlow(productId: Int) {
         let detailCoordinator = DetailCoordinator(
-            navigationController: navigationController,
-            productID: productId
+            flow: .detail, 
+            productID: productId,
+            navigationController: navigationController
         )
         childCoordinators.append(detailCoordinator)
         detailCoordinator.start()

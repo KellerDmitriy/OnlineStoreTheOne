@@ -11,6 +11,7 @@ final class CustomViewWithOutPicker: UIView {
     
     //MARK: - Private Properties
     private let containerView = UIView()
+    
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .horizontal
@@ -18,6 +19,7 @@ final class CustomViewWithOutPicker: UIView {
         $0.distribution = .equalSpacing
         return $0
     }(UIStackView())
+    
     private lazy var label: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .makeTypography(.semiBold, size: 13)

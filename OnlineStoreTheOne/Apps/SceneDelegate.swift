@@ -10,23 +10,21 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coordinator: AppCoordinator?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let context = Context()
-        
         let navigationController = UINavigationController()
         navigationController.setupNavigationBar()
-        let appCoordinator = AppCoordinator(navigationController: navigationController, context: context)
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        let startFlow = StartEntity().selectStartFlow(context: context)
-        appCoordinator.start(startFlow)
+        let appCoordinator = AppCoordinator(flow: .app, navigationController: navigationController)
+        appCoordinator.start()
         
     }
 }

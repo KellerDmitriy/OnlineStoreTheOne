@@ -9,7 +9,8 @@
 import UIKit
 
 final class WishListCoordinator: IWishListCoordinator {
-    
+    // MARK: - Properties
+    let flow: Flow
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
@@ -18,14 +19,15 @@ final class WishListCoordinator: IWishListCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
+    init(flow: Flow, navigationController: UINavigationController) {
+        self.flow = .wishList
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
-    func start(_ flow: Flow? = nil) {
+    func start() {
         showWishListScene()
     }
     
@@ -33,13 +35,15 @@ final class WishListCoordinator: IWishListCoordinator {
     func showWishListScene() {
         let viewModel = WishListViewModel(networkService: networkService, storageService: storageService)
         let viewController = WishListViewController(viewModel: viewModel, coordinator: self)
+        viewController.tabBarItem = UITabBarItem(title: "Wish List", image: UIImage(named: "wishlist"), selectedImage: nil)
         navigationController.pushViewController(viewController, animated: true)
     }
 
     func showDetailFlow(_ id: Int) {
         let detailCoordinator = DetailCoordinator(
-            navigationController: navigationController,
-            productID: id
+            flow: .detail, 
+            productID: id,
+            navigationController: navigationController
         )
         childCoordinators.append(detailCoordinator)
         detailCoordinator.start()

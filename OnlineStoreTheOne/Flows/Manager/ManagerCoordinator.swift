@@ -8,24 +8,28 @@
 import UIKit
 
 final class ManagerCoordinator: ICoordinator {
+    let flow: Flow
+
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
     
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController) {
+    init(flow: Flow, navigationController: UINavigationController) {
+        self.flow = .manager
         self.navigationController = navigationController
     }
     
     // MARK: - Coordinator Lifecycle
-    func start(_ flow: Flow? = nil) {
+    func start() {
         showManagerScene()
     }
     
     // MARK: - Flow Presentation
     func showManagerScene() {
         let viewController = ManagerViewController()
+        viewController.tabBarItem = UITabBarItem(title: "Manager", image: UIImage(named: "manager"), selectedImage: nil)
         navigationController.pushViewController(viewController, animated: true)
     }
 

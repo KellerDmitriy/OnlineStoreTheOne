@@ -8,6 +8,9 @@
 import UIKit
 
 final class DetailCoordinator: IDetailCoordinator {
+    // MARK: - Properties
+    let flow: Flow
+    
     var productID: Int
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
@@ -17,17 +20,16 @@ final class DetailCoordinator: IDetailCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(navigationController: UINavigationController,
-         productID: Int
-    ) {
-        self.navigationController = navigationController
+    init(flow: Flow, productID: Int, navigationController: UINavigationController) {
+        self.flow = .detail
         self.productID = productID
+        self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: DIKey.networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: DIKey.storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
-    func start(_ flow: Flow? = nil) {
+    func start() {
         showDetailScene(productID)
     }
     

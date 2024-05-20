@@ -7,16 +7,30 @@
 
 import UIKit
 
+enum Flow {
+    case app
+    case onboarding
+    case auth
+    case tabBar
+    case home
+    case wishList
+    case detail
+    case carts
+    case manager
+    case profile
+}
+
 protocol ICoordinatorFinishDelete {
     func didFinish(_ coordinator: ICoordinator)
 }
 
 protocol ICoordinator: AnyObject {
+    var flow: Flow { get }
     var finishDelegate: ICoordinatorFinishDelete? { get set }
     var navigationController: UINavigationController { get set }
     var childCoordinators: [ICoordinator] { get set }
     
-    func start(_ flow: Flow?)
+    func start()
     func finish()
 }
 
@@ -38,6 +52,14 @@ extension ICoordinator {
         navigationController.present(alert, animated: true, completion: nil)
     }
     
+    func addChildCoordinator(_ child: ICoordinator) {
+        childCoordinators.append(child)
+    }
+    
+    func removeChildCoordinator(_ child: ICoordinator) {
+        childCoordinators = childCoordinators.filter{ $0 !== child }
+    }
+    
     func finish() {
         childCoordinators.removeAll()
         finishDelegate?.didFinish(self)
@@ -53,10 +75,6 @@ protocol IAppCoordinator: ICoordinator {
 protocol IAuthCoordinator: ICoordinator {
     func showLoginScene()
     func showRegistationScene()
-}
-
-protocol ITabBarCoordinator: ICoordinator {
-    func setupViewControllers(for tabBarController: UITabBarController)
 }
 
 protocol IOnboardingCoordinator: ICoordinator {
