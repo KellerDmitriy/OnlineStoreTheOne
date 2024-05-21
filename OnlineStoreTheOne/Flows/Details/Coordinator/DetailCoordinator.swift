@@ -20,9 +20,10 @@ final class DetailCoordinator: IDetailCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, productID: Int, navigationController: UINavigationController) {
+    init(flow: Flow, productID: Int, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
         self.flow = .detail
         self.productID = productID
+        self.finishDelegate = finishDelegate
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: DIKey.networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: DIKey.storageService) ?? StorageService()
@@ -42,6 +43,7 @@ final class DetailCoordinator: IDetailCoordinator {
         )
         
         let detailViewController = DetailsViewController(viewModel: detailViewModel, coordinator: self)
+        detailViewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(detailViewController, animated: true)
     }
     

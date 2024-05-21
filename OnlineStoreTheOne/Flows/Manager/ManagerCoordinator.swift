@@ -8,6 +8,7 @@
 import UIKit
 
 final class ManagerCoordinator: ICoordinator {
+    // MARK: - Properties
     let flow: Flow
 
     var finishDelegate: ICoordinatorFinishDelete?
@@ -16,8 +17,9 @@ final class ManagerCoordinator: ICoordinator {
     
     
     // MARK: - Initialization
-    init(flow: Flow, navigationController: UINavigationController) {
+    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
         self.flow = .manager
+        self.finishDelegate = finishDelegate
         self.navigationController = navigationController
     }
     
@@ -32,6 +34,5 @@ final class ManagerCoordinator: ICoordinator {
         viewController.tabBarItem = UITabBarItem(title: "Manager", image: UIImage(named: "manager"), selectedImage: nil)
         navigationController.pushViewController(viewController, animated: true)
     }
-
 }
 

@@ -15,8 +15,9 @@ final class AuthCoordinator: IAuthCoordinator {
     var childCoordinators: [ICoordinator] = []
     
     // MARK: - Initialization
-    init(flow: Flow, navigationController: UINavigationController) {
+    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
         self.flow = .auth
+        self.finishDelegate = finishDelegate
         self.navigationController = navigationController
     }
     

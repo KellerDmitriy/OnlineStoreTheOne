@@ -19,8 +19,9 @@ final class WishListCoordinator: IWishListCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, navigationController: UINavigationController) {
+    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
         self.flow = .wishList
+        self.finishDelegate = finishDelegate
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
@@ -35,14 +36,14 @@ final class WishListCoordinator: IWishListCoordinator {
     func showWishListScene() {
         let viewModel = WishListViewModel(networkService: networkService, storageService: storageService)
         let viewController = WishListViewController(viewModel: viewModel, coordinator: self)
-        viewController.tabBarItem = UITabBarItem(title: "Wish List", image: UIImage(named: "wishlist"), selectedImage: nil)
         navigationController.pushViewController(viewController, animated: true)
     }
 
     func showDetailFlow(_ id: Int) {
         let detailCoordinator = DetailCoordinator(
             flow: .detail, 
-            productID: id,
+            productID: id, 
+            finishDelegate: finishDelegate,
             navigationController: navigationController
         )
         childCoordinators.append(detailCoordinator)

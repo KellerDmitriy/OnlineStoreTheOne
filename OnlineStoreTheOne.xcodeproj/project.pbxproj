@@ -64,7 +64,6 @@
 		E14BC4192BD860E70026103A /* CountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BC4182BD860E70026103A /* CountButton.swift */; };
 		E15B897F2BF6B1670060A8D3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E15B897E2BF6B1670060A8D3 /* SnapKit */; };
 		E15B89812BF6B1670060A8D3 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E15B89802BF6B1670060A8D3 /* SnapKit-Dynamic */; };
-		E15B89832BFB32D60060A8D3 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B89822BFB32D60060A8D3 /* Coordinator.swift */; };
 		E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */; };
 		E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */; };
 		E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */; };
@@ -194,7 +193,6 @@
 		BEBA5DCA2BD10E6C00737686 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		E14BC4132BD834B40026103A /* CheckMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkButton.swift; sourceTree = "<group>"; };
 		E14BC4182BD860E70026103A /* CountButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountButton.swift; sourceTree = "<group>"; };
-		E15B89822BFB32D60060A8D3 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -629,7 +627,6 @@
 			children = (
 				E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */,
 				E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */,
-				E15B89822BFB32D60060A8D3 /* Coordinator.swift */,
 			);
 			path = NavigationService;
 			sourceTree = "<group>";
@@ -1184,7 +1181,6 @@
 				86BC2D5C2BDE860F003BF895 /* UpdateProductViewModel.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E16BB6982BD654B6009991F3 /* PhotoCell.swift in Sources */,
-				E15B89832BFB32D60060A8D3 /* Coordinator.swift in Sources */,
 				86C474FE2BD507820070E3D8 /* DetailsViewController.swift in Sources */,
 				E1D1DC252BD071290009C2A3 /* CartsTableViewCell.swift in Sources */,
 				E1835F432BEEBA8000BE1962 /* OnboardingViewModel.swift in Sources */,

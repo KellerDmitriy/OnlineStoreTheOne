@@ -8,6 +8,7 @@
 import UIKit
 
 final class OnboardingCoordinator: IOnboardingCoordinator {
+    // MARK: - Properties
     let flow: Flow
     
     var finishDelegate: ICoordinatorFinishDelete?

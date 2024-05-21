@@ -85,12 +85,9 @@ final class LoginViewController: UIViewController {
         
         setupViews()
         setConstraints()
+        setupObservers()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        view.endEditing(true)
-    }
     
     private func loginUser() {
         viewModel.logUserIn { [weak self] error in
@@ -165,5 +162,32 @@ extension LoginViewController: AuthenticationControllerProtocol {
             loginButton.isEnabled = false
             loginButton.backgroundColor = Colors.greenSheen.withAlphaComponent(0.6)
         }
+    }
+}
+
+//MARK: - Observers
+private extension LoginViewController {
+    func setupObservers() {
+        startKeyboardListener()
+    }
+    
+    func startKeyboardListener() {
+        
+    }
+    
+    func storKeyboardListener() {
+        
+    }
+    
+    func handleTap() {
+        
+    }
+    
+    func keyboardWillShow() {
+        
+    }
+    
+    func keyboardWillHide() {
+        
     }
 }

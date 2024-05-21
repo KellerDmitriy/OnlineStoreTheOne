@@ -37,6 +37,7 @@ final class CartsCoordinator: ICartsCoordinator {
             storageService: storageService
         )
         let viewController = CartsViewController(viewModel: viewModel, coordinator: self)
+        viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)
     }
 

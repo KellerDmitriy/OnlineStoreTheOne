@@ -18,8 +18,9 @@ final class HomeCoordinator: IHomeCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, navigationController: UINavigationController) {
+    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
         self.flow = .home
+        self.finishDelegate = finishDelegate
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
@@ -34,7 +35,6 @@ final class HomeCoordinator: IHomeCoordinator {
     func showHomeScene() {
         let viewModel = HomeViewModel(networkService: networkService, storageService: storageService)
         let viewController = HomeViewController(viewModel: viewModel, coordinator: self)
-        viewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home"), selectedImage: nil)
         navigationController.setViewControllers([viewController], animated: true)
     }
     
@@ -56,7 +56,8 @@ final class HomeCoordinator: IHomeCoordinator {
     func showDetailFlow(productId: Int) {
         let detailCoordinator = DetailCoordinator(
             flow: .detail, 
-            productID: productId,
+            productID: productId, 
+            finishDelegate: finishDelegate,
             navigationController: navigationController
         )
         childCoordinators.append(detailCoordinator)

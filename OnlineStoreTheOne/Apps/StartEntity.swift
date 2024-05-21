@@ -36,7 +36,7 @@ final class StartEntity: IStartEntity {
         if !context.isOnboardComplete {
             return .onboarding
         } else if context.isAuth() {
-            return .home
+            return .tabBar
         } else {
             return .auth
         }

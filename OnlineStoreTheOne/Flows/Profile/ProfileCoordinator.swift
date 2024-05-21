@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class ProfileCoordinator: IProfileCoordinator{
-    
+final class ProfileCoordinator: IProfileCoordinator {
+    // MARK: - Properties
     var flow: Flow
     
     var finishDelegate: ICoordinatorFinishDelete?
@@ -18,10 +18,11 @@ final class ProfileCoordinator: IProfileCoordinator{
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, navigationController: UINavigationController) {
+    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController, storageService: StorageServiceProtocol) {
         self.flow = .profile
+        self.finishDelegate = finishDelegate
         self.navigationController = navigationController
-        self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
+        self.storageService = storageService
     }
     
     // MARK: - Coordinator Lifecycle
@@ -29,12 +30,15 @@ final class ProfileCoordinator: IProfileCoordinator{
         showProfileScene()
     }
     
+    func finish() {
+        finishDelegate?.didFinish(self)
+    }
+    
     // MARK: - Flow Presentation
     func showProfileScene() {
         let viewModel = ProfileViewModel(storageService: storageService)
         let viewController = ProfileViewController(viewModel: viewModel, coordinator: self)
-        viewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), selectedImage: nil)
-        navigationController.pushViewController(viewController, animated: true)
+        navigationController.setViewControllers([viewController], animated: true)
     }
     
     func showTypeOfAccountScene() {
@@ -46,16 +50,5 @@ final class ProfileCoordinator: IProfileCoordinator{
         let viewController = TermsConditionalViewController()
         navigationController.pushViewController(viewController, animated: true)
     }
-    
-    func showOnboardingFlow() {
-        let coordinator = OnboardingCoordinator(flow: .onboarding, finishDelegate: self, navigationController: navigationController)
-        childCoordinators.append(coordinator)
-        coordinator.start()
-    }
 }
 
-extension ProfileCoordinator: ICoordinatorFinishDelete {
-    func didFinish(_ coordinator: any ICoordinator) {
-        
-    }
-}

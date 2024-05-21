@@ -10,7 +10,7 @@ import FirebaseAuth
 import SnapKit
 
 final class ProfileViewController: UIViewController {
-    
+    // MARK: - Properties
     private var viewModel: ProfileViewModel
     private let coordinator: IProfileCoordinator
     
@@ -144,8 +144,7 @@ final class ProfileViewController: UIViewController {
     }
     
     func singOut() {
-        viewModel.storageService.isOnboardComplete = false
-        coordinator.showOnboardingFlow()
+        coordinator.finish()
         
         do {
             try Auth.auth().signOut()

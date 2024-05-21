@@ -8,7 +8,6 @@
 import UIKit
 
 enum Flow {
-    case app
     case onboarding
     case auth
     case tabBar
@@ -61,7 +60,6 @@ extension ICoordinator {
     }
     
     func finish() {
-        childCoordinators.removeAll()
         finishDelegate?.didFinish(self)
     }
 }
@@ -117,5 +115,4 @@ protocol IProfileCoordinator: ICoordinator {
     func showTypeOfAccountScene()
     func showTermAndConditionScene()
     
-    func showOnboardingFlow()
 }

@@ -11,7 +11,6 @@ import SnapKit
 final class OnboardingViewController: UIViewController {
      //MARK: - Private Properties
     private let coordinator: IOnboardingCoordinator?
-    
     private let viewModel: OnboardingViewModel
     
     private let backgroundImageView: UIImageView = {
