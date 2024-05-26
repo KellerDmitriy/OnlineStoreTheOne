@@ -31,7 +31,7 @@ extension UICollectionReusableView {
 extension UICollectionView {
     // Register cell
     func register<T: UICollectionViewCell>(_ type: T.Type) {
-        register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
+        register(type.self, forCellWithReuseIdentifier: type.reuseIdentifier)
     }
 
     // Dequeue cell

@@ -8,8 +8,18 @@
 import UIKit
 import SnapKit
 
+
+protocol HeaderProductsDelegate: AnyObject {
+    func choseFiltration(filterType: ProductFilter)
+}
+
 final class HeaderProductsView: UICollectionReusableView {
-    //MARK: - Private Properties
+    //MARK: - Properties
+    weak var delegate: HeaderProductsDelegate?
+    
+    private let filters: [ProductFilter] = ProductFilter.allCases
+    
+    //MARK: -  UI elements
     private let headerLabel: UILabel = {
         let element = UILabel()
         element.textColor = .black
@@ -35,6 +45,7 @@ final class HeaderProductsView: UICollectionReusableView {
     @objc private func filtersButtonTapped() {
         print("нажата - Filters")
     }
+    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,9 +61,24 @@ final class HeaderProductsView: UICollectionReusableView {
         headerLabel.text = labelName
     }
     
+    private func configureFilterMenu(_ button: UIButton) {
+        let menu = UIMenu(title: "Filters", children: createMenuChildren(buttonType: button))
+        button.showsMenuAsPrimaryAction = true
+        button.menu = menu
+    }
+    
+    private func createMenuChildren(buttonType: UIButton) -> [UIAction]{
+        return filters.map { filter in
+            UIAction(title: filter.typeFilterLabel, handler: { [unowned self] action in
+                delegate?.choseFiltration(filterType: filter)
+            })
+        }
+    }
+    
     private func setupView() {
         addSubview(headerLabel)
         addSubview(filtersButton)
+        configureFilterMenu(filtersButton)
     }
     
     private func setConstraints() {

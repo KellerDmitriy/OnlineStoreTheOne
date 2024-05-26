@@ -40,10 +40,6 @@ final class HomeViewModel: ObservableObject {
     
     @Published var selectedCategory: Int?  = nil
     
-    var isCategoryProducts: Bool {
-        selectedCategory == nil
-    }
-    
     var subscription: Set<AnyCancellable> = []
     
     let networkService: NetworkServiceProtocol
@@ -87,6 +83,7 @@ final class HomeViewModel: ObservableObject {
             case .success(let products):
                 self.isLoading = false
                 self.products = products
+                self.productsForCategory = products
             case .failure(let error):
                 print(error)
                 self.dataError = .productsError(error)
@@ -147,4 +144,18 @@ extension HomeViewModel {
         return uniqueCategories
     }
 }
-
+//MARK: - HeaderProductsDelegate
+extension HomeViewModel: HeaderProductsDelegate {
+    func choseFiltration(filterType: ProductFilter) {
+        switch filterType {
+        case .nameAlphabet:
+            productsForCategory.sort { $0.title.localizedCompare($1.title) == .orderedAscending}
+        case .priceDescending:
+            productsForCategory.sort { $0.price > $1.price }
+        case .priceAscending:
+            productsForCategory.sort { $0.price < $1.price }
+        case .noFilter:
+            productsForCategory = products.filter { $0.category?.id == selectedCategory }
+        }
+    }
+}

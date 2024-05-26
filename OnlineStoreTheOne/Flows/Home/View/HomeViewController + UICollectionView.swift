@@ -30,9 +30,7 @@ extension HomeViewController: UICollectionViewDataSource {
             : min(4, viewModel.categories.count)
             
             case .products:
-            return viewModel.isCategoryProducts
-            ? viewModel.products.count
-            : viewModel.productsForCategory.count
+            return viewModel.productsForCategory.count
         }
     }
     
@@ -60,9 +58,7 @@ extension HomeViewController: UICollectionViewDataSource {
             cell.makeCellShadow()
             if indexPath.row < viewModel.products.count {
                 
-                let product = viewModel.isCategoryProducts
-                ? viewModel.products[indexPath.row]
-                : viewModel.productsForCategory[indexPath.row]
+                let product = viewModel.productsForCategory[indexPath.row]
                 
                 cell.configureCell(
                     image: product.images?.first ?? "",

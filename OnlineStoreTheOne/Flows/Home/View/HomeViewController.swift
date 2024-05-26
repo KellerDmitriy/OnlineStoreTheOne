@@ -66,17 +66,15 @@ final class HomeViewController: UIViewController {
         coordinator.finish()
     }
     
-
-    
     // MARK: - Data Observing
     private func observeProducts() {
         NotificationCenter.default.addObserver(self, selector: #selector(allCategoriesButtonTap), name: NSNotification.Name("allCategoriesButtonTapped"), object: nil)
         
-        viewModel.$products
+        viewModel.$productsForCategory
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                self.collectionView.reloadData()
+                self.collectionView.reloadSections(IndexSet(integer: 2))
             }
             .store(in: &viewModel.subscription)
         
@@ -100,8 +98,7 @@ final class HomeViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-//                let header = HeaderNavBarMenuView()
-//                header.cartButton.count = viewModel.productCount
+//                customNavigationBar.cartButton = viewModel.productCount
             }
             .store(in: &viewModel.subscription)
         
@@ -204,6 +201,7 @@ final class HomeViewController: UIViewController {
     private func setDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        
     }
     
     //MARK: - CollectionView
@@ -223,6 +221,7 @@ final class HomeViewController: UIViewController {
                     for: indexPath
                 ) as! HeaderProductsView
                 header.configureHeader(labelName: section.title)
+                header.delegate = viewModel
                 return header
             }
         case UICollectionView.elementKindSectionFooter:
@@ -250,13 +249,13 @@ extension HomeViewController {
     
     private func addConstraints() {
         customNavigationBar.snp.makeConstraints { make in
-            make.height.equalTo(44)
+            make.height.equalTo(40)
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(customNavigationBar.snp.bottom).offset(8)
+            make.top.equalTo(customNavigationBar.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }

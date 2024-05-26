@@ -67,6 +67,7 @@
 		E15B898A2C0125930060A8D3 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B89892C0125930060A8D3 /* CustomNavigationBar.swift */; };
 		E15B898C2C0126B40060A8D3 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B898B2C0126B40060A8D3 /* BackButton.swift */; };
 		E15B898E2C0383240060A8D3 /*  UINavigationController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B898D2C0383240060A8D3 /*  UINavigationController + Extension.swift */; };
+		E15B89902C0396F90060A8D3 /* ProductFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B898F2C0396F90060A8D3 /* ProductFilter.swift */; };
 		E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */; };
 		E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */; };
 		E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */; };
@@ -141,7 +142,7 @@
 		531121E62BD1A99A0018FA37 /* TypeOfAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfAccountViewController.swift; sourceTree = "<group>"; };
 		531121EA2BD2CF9D0018FA37 /* EditImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageView.swift; sourceTree = "<group>"; };
 		531121EC2BD2E5240018FA37 /* ChevronButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChevronButtonFactory.swift; path = OnlineStoreTheOne/Resources/Helpers/ChevronButtonFactory.swift; sourceTree = SOURCE_ROOT; };
-		531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelFactoryProtocol.swift; path = OnlineStoreTheOne/Resources/Helpers/LabelFactoryProtocol.swift; sourceTree = SOURCE_ROOT; };
+		531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelFactoryProtocol.swift; path = OnlineStoreTheOne/Resources/DesignSystem/Buttons/LabelFactoryProtocol.swift; sourceTree = SOURCE_ROOT; };
 		53369BB72BD055AF00699323 /* TermsConditionalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionalViewController.swift; sourceTree = "<group>"; };
 		534848A32BD69C2300162CE6 /* PaymentSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessView.swift; sourceTree = "<group>"; };
 		86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +199,7 @@
 		E15B89892C0125930060A8D3 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		E15B898B2C0126B40060A8D3 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		E15B898D2C0383240060A8D3 /*  UINavigationController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " UINavigationController + Extension.swift"; sourceTree = "<group>"; };
+		E15B898F2C0396F90060A8D3 /* ProductFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductFilter.swift; sourceTree = "<group>"; };
 		E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 			isa = PBXGroup;
 			children = (
 				BEBA5DB02BD0621900737686 /* Compositional Layout */,
+				E15B898F2C0396F90060A8D3 /* ProductFilter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -836,15 +839,6 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		E1A2E8492BCDB90D00CC0D64 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				E1D1DC3B2BD2624B0009C2A3 /* Buttons */,
-				531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 		E1D1DC1D2BD06FEA0009C2A3 /* StorageServices */ = {
 			isa = PBXGroup;
 			children = (
@@ -892,6 +886,7 @@
 		E1D1DC3B2BD2624B0009C2A3 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */,
 				531121EC2BD2E5240018FA37 /* ChevronButtonFactory.swift */,
 				E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */,
 				E1D1DC392BD24FC10009C2A3 /* CartButton.swift */,
@@ -979,10 +974,9 @@
 		E1F1B23B2BCC2634001DC54D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E1D91A112BDE54D00031B413 /* Assets.xcassets */,
-				E1A2E8492BCDB90D00CC0D64 /* Helpers */,
+				E1F1B2422BCC335C001DC54D /* DesignSystem */,
 				E1F1B23C2BCC2934001DC54D /* Extensions */,
-				E1F1B2412BCC32B9001DC54D /* Fonts */,
+				E1D91A112BDE54D00031B413 /* Assets.xcassets */,
 				E1F1B22C2BCC1853001DC54D /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -991,14 +985,12 @@
 		E1F1B23C2BCC2934001DC54D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E1F1B2422BCC335C001DC54D /* DesignSystem */,
 				E16BB6812BD50C8F009991F3 /* UIAlertFactory.swift */,
 				E1D1DC352BD102E90009C2A3 /* UIView + Extension.swift */,
 				86C475052BD50D8B0070E3D8 /* UICollectionView+Extension.swift */,
 				86C475072BD50DB20070E3D8 /* IdentifiableCell.swift */,
 				86EDFF282BD926C800CD9F81 /* String+Extension.swift */,
 				86BC2D392BDD3154003BF895 /* UIViewController+Extension.swift */,
-				E15B898D2C0383240060A8D3 /*  UINavigationController + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1022,8 +1014,11 @@
 		E1F1B2422BCC335C001DC54D /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				E1F1B2412BCC32B9001DC54D /* Fonts */,
+				E1D1DC3B2BD2624B0009C2A3 /* Buttons */,
 				E1F1B23D2BCC2992001DC54D /* UIFont + Extension.swift */,
 				E1F1B23F2BCC2E18001DC54D /* Color + Extension.swift */,
+				E15B898D2C0383240060A8D3 /*  UINavigationController + Extension.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -1205,6 +1200,7 @@
 				E14BC4142BD834B40026103A /* CheckMarkButton.swift in Sources */,
 				BEBA5DC02BD0621900737686 /* HeaderProductsView.swift in Sources */,
 				E1835F3F2BEEB00600BE1962 /* ProfileCoordinator.swift in Sources */,
+				E15B89902C0396F90060A8D3 /* ProductFilter.swift in Sources */,
 				E1D1DC362BD102E90009C2A3 /* UIView + Extension.swift in Sources */,
 				86BC2D572BDE6489003BF895 /* AddNewProductViewModel.swift in Sources */,
 				E1A2E82F2BCCFB3F00CC0D64 /* NetworkService.swift in Sources */,
