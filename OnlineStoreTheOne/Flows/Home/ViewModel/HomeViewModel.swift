@@ -27,6 +27,7 @@ final class HomeViewModel: ObservableObject {
     @Published var dataError: DataError?
     
     @Published var productCount = 1
+    @Published var isCategoryExpanded = false
     
     @Published var isLoading: Bool = true
     @Published var categories: [Category] = []
@@ -34,7 +35,7 @@ final class HomeViewModel: ObservableObject {
     @Published var productsForCategory: [Products] = []
     @Published var searchedProducts: [Products] = []
     
-//    @Published var idsForCart: [Int] = []
+    //    @Published var idsForCart: [Int] = []
     @Published var searchText = ""
     
     @Published var selectedCategory: Int?  = nil
@@ -73,6 +74,10 @@ final class HomeViewModel: ObservableObject {
     //MARK: - Fetch Methods
     func updateCategory(_ id: Int) {
         selectedCategory = id
+    }
+    
+    func toggleCategoryExpansion() {
+        isCategoryExpanded.toggle()
     }
     
     func fetchProducts() {
@@ -123,13 +128,13 @@ final class HomeViewModel: ObservableObject {
 extension HomeViewModel {
     func filterCategories(_ categories: [Category]) -> [Category] {
         return categories.filter { category in
-            if let name = category.name, let imageURL = category.image, name != "New Category" {
+            if let name = category.name, name != "New Category" {
                 return name.count <= 15
             }
             return false
         }
     }
-
+    
     func filterUniqueCategories(_ categories: [Category]) -> [Category] {
         var uniqueCategories: [Category] = []
         var seenNames: Set<String> = Set()

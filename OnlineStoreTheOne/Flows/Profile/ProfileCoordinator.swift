@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileCoordinator: IProfileCoordinator {
     // MARK: - Properties
-    var flow: Flow
+    var type: CoordinatorType
     
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
@@ -18,8 +18,8 @@ final class ProfileCoordinator: IProfileCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController, storageService: StorageServiceProtocol) {
-        self.flow = .profile
+    init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController, storageService: StorageServiceProtocol) {
+        self.type = .profile
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
         self.storageService = storageService
@@ -38,16 +38,18 @@ final class ProfileCoordinator: IProfileCoordinator {
     func showProfileScene() {
         let viewModel = ProfileViewModel(storageService: storageService)
         let viewController = ProfileViewController(viewModel: viewModel, coordinator: self)
-        navigationController.setViewControllers([viewController], animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func showTypeOfAccountScene() {
-        let viewController = TypeAccountViewController()
+        let viewController = TypeOfAccountViewController()
+        viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)
     }
     
     func showTermAndConditionScene() {
         let viewController = TermsConditionalViewController()
+        viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)
     }
 }

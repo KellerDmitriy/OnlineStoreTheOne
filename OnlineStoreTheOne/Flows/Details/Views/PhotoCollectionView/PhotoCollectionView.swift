@@ -105,7 +105,7 @@ extension PhotoCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: PhotoCell = collectionView.dequeueCell(indexPath)
+        let cell = collectionView.dequeueReusableCell(type: PhotoCell.self, for: indexPath)
         cell.configure(with: items[indexPath.row])
         return cell
     }

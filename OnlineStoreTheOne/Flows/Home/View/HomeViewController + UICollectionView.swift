@@ -23,8 +23,12 @@ extension HomeViewController: UICollectionViewDataSource {
         switch currentSection {
             case .searchField:
                 return 1
+            
             case .categories:
-                return viewModel.categories.count
+            return viewModel.isCategoryExpanded
+            ? viewModel.categories.count
+            : min(4, viewModel.categories.count)
+            
             case .products:
             return viewModel.isCategoryProducts
             ? viewModel.products.count
@@ -36,13 +40,13 @@ extension HomeViewController: UICollectionViewDataSource {
         switch sections[indexPath.section] {
             
         case .searchField:
-            let cell: SearchFieldCollectionViewCell = collectionView.dequeueCell(indexPath)
+            let cell = collectionView.dequeueReusableCell(type: SearchFieldCollectionViewCell.self, for: indexPath)
             
             cell.searchTextField.delegate = self
             return cell
             
         case .categories:
-            let cell: CategoryCollectionViewCell = collectionView.dequeueCell(indexPath)
+            let cell = collectionView.dequeueReusableCell(type: CategoryCollectionViewCell.self, for: indexPath)
             cell.makeCellShadow()
             if indexPath.row < viewModel.categories.count {
                 let category = viewModel.categories[indexPath.row]
@@ -52,7 +56,7 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
             
         case .products:
-            let cell: ProductCollectionViewCell = collectionView.dequeueCell(indexPath)
+            let cell = collectionView.dequeueReusableCell(type: ProductCollectionViewCell.self, for: indexPath)
             cell.makeCellShadow()
             if indexPath.row < viewModel.products.count {
                 

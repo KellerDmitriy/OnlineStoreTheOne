@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Flow {
+enum CoordinatorType {
     case onboarding
     case auth
     case tabBar
@@ -24,7 +24,7 @@ protocol ICoordinatorFinishDelete {
 }
 
 protocol ICoordinator: AnyObject {
-    var flow: Flow { get }
+    var type: CoordinatorType { get }
     var finishDelegate: ICoordinatorFinishDelete? { get set }
     var navigationController: UINavigationController { get set }
     var childCoordinators: [ICoordinator] { get set }

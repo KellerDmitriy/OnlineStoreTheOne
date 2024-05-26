@@ -8,7 +8,7 @@
 import UIKit
 
 final class CartsCoordinator: ICartsCoordinator {
-    let flow: Flow
+    let type: CoordinatorType
     
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
@@ -19,7 +19,7 @@ final class CartsCoordinator: ICartsCoordinator {
     
     // MARK: - Initialization
     init(navigationController: UINavigationController) {
-        self.flow = .carts
+        self.type = .carts
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()

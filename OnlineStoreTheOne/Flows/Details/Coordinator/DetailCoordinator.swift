@@ -9,7 +9,7 @@ import UIKit
 
 final class DetailCoordinator: IDetailCoordinator {
     // MARK: - Properties
-    let flow: Flow
+    let type: CoordinatorType
     
     var productID: Int
     var finishDelegate: ICoordinatorFinishDelete?
@@ -20,8 +20,8 @@ final class DetailCoordinator: IDetailCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, productID: Int, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
-        self.flow = .detail
+    init(flow: CoordinatorType, productID: Int, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
+        self.type = .detail
         self.productID = productID
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController

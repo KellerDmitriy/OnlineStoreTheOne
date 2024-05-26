@@ -35,17 +35,6 @@ final class PaymentSuccessView: UIViewController {
         return label
     }()
     
-    private lazy var pdfButton: UIButton = {
-        let button = ChevronButtonFactory(
-            title: "order_invoice",
-            chevron: "PDFIcon",
-            action: UIAction { [weak self] _ in
-            },
-            textColor: Colors.gray
-        )
-        return button.createButtonWithChevron()
-    }()
-    
     private lazy var downloadImage: UIView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
         let image = UIImage(named: "DownloadIcon")
@@ -69,6 +58,21 @@ final class PaymentSuccessView: UIViewController {
         return button
     }()
     
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            successImage,
+            congratsLabel,
+            miniLabel,
+            downloadImage,
+            continueButton
+        ])
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,43 +87,24 @@ private extension PaymentSuccessView {
     //MARK: - Set up view
     func setUpView() {
         view.backgroundColor = .white
-        
-        view.addSubview(successImage)
-        view.addSubview(congratsLabel)
-        view.addSubview(miniLabel)
-        view.addSubview(pdfButton)
-        view.addSubview(downloadImage)
-        view.addSubview(continueButton)
+        view.addSubview(stackView)
     }
+    
     //MARK: - Set constraint
     func setConstraint() {
-        NSLayoutConstraint.activate([
-            successImage.heightAnchor.constraint(equalToConstant: 150),
-            successImage.widthAnchor.constraint(equalToConstant: 150),
-            successImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            successImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            congratsLabel.topAnchor.constraint(equalTo: successImage.bottomAnchor, constant: 10),
-            congratsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 55),
-            congratsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -55),
-            
-            miniLabel.topAnchor.constraint(equalTo: congratsLabel.bottomAnchor, constant: 10),
-            miniLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            miniLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            
-            
-            pdfButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 15.5),
-            pdfButton.leadingAnchor.constraint(equalTo:view.leadingAnchor, constant: 15),
-            pdfButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            pdfButton.leadingAnchor.constraint(equalTo: view.trailingAnchor, constant: 40),
-            
-            downloadImage.topAnchor.constraint(equalTo: pdfButton.topAnchor, constant: 15.5),
-            downloadImage.trailingAnchor.constraint(equalTo: pdfButton.trailingAnchor, constant: -35),
-            
-            continueButton.heightAnchor.constraint(equalToConstant: 50),
-            continueButton.topAnchor.constraint(equalTo: pdfButton.bottomAnchor, constant: 15),
-            continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
-        ])
+        stackView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().offset(-30)
+        }
+        
+        successImage.snp.makeConstraints { make in
+            make.height.equalTo(150)
+            make.width.equalTo(successImage.snp.height)
+        }
+        
+        continueButton.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 final class HomeCoordinator: IHomeCoordinator {
-    let flow: Flow
+    let type: CoordinatorType
 
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
@@ -18,8 +18,8 @@ final class HomeCoordinator: IHomeCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
-        self.flow = .home
+    init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
+        self.type = .home
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
@@ -33,6 +33,8 @@ final class HomeCoordinator: IHomeCoordinator {
     
     // MARK: - Flow Presentation
     func showHomeScene() {
+        navigationController.navigationBar.isHidden = true
+        
         let viewModel = HomeViewModel(networkService: networkService, storageService: storageService)
         let viewController = HomeViewController(viewModel: viewModel, coordinator: self)
         navigationController.setViewControllers([viewController], animated: true)

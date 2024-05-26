@@ -38,6 +38,7 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
         element.returnKeyType = .search
         return element
     }()
+    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,10 +61,12 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(40)
         }
+        
         searchButton.snp.makeConstraints { make in
             make.height.leading.equalToSuperview()
             make.width.equalTo(40)
         }
+        
         searchTextField.snp.makeConstraints { make in
             make.height.trailing.equalToSuperview()
             make.leading.equalTo(searchButton.snp.trailing)

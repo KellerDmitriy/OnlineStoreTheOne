@@ -10,7 +10,7 @@ import UIKit
 
 final class WishListCoordinator: IWishListCoordinator {
     // MARK: - Properties
-    let flow: Flow
+    let type: CoordinatorType
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
@@ -19,8 +19,8 @@ final class WishListCoordinator: IWishListCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
-        self.flow = .wishList
+    init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
+        self.type = .wishList
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()

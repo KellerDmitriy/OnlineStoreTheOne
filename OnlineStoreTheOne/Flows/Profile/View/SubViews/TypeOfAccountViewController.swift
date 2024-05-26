@@ -6,19 +6,18 @@
 //
 
 import UIKit
-import FirebaseAuth
-
-
 
 final class TypeOfAccountViewController: UIViewController {
-    //MARK: - UI elements
     
+    var completion: ((String) -> Void)?
+    
+    //MARK: - UI elements
     private lazy var managerButton: UIButton = {
         let button = ChevronButtonFactory(
             title: "Manager",
             chevron: "CheckIcon",
             action: UIAction { [weak self] _ in
-                self?.managerBtnTapped()
+                self?.managerButtonTap()
             },
             textColor: Colors.gray
         )
@@ -30,13 +29,13 @@ final class TypeOfAccountViewController: UIViewController {
             title: "User",
             chevron: "CheckIcon",
             action: UIAction { [weak self] _ in
-                self?.userBtnTapped()
+                self?.userButtonTap()
             },
             textColor: Colors.gray
         )
         return button.createButtonWithChevron()
     }()
-
+    
     private lazy var buttonsStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -82,38 +81,17 @@ private extension TypeOfAccountViewController {
                 break
             }
         }
-        
-    }
-    
-    private func updateAccount(type: String) {
-        if let user = Auth.auth().currentUser {
-            let authService: IFirebase = DIService.resolve(forKey: .authService) ?? FirebaseService()
-            
-            authService.changeAccountType(userId: user.uid, type: type)
-        }
     }
     
     //MARK: -  Action
-    func managerBtnTapped(){
-            let type = TypeOfAccount.manager.rawValue
-          updateAccount(type: type)
-            UserDefaults.standard.set(type, forKey: "accountType")
-            setupButtons()
-            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
-//                self?.updateTabBar()
-//            }
+    func managerButtonTap() {
+        let type = TypeOfAccount.manager.rawValue
+        completion?(type)
     }
     
-    func userBtnTapped() {
-            let type = TypeOfAccount.user.rawValue
-            updateAccount(type: type)
-            UserDefaults.standard.set("User", forKey: "accountType")
-            setupButtons()
-            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
-//                self?.updateTabBar()
-//            }
+    func userButtonTap() {
+        let type = TypeOfAccount.user.rawValue
+        completion?(type)
     }
     
     //MARK: - Set up view

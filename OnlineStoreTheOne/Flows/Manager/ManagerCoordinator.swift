@@ -9,7 +9,7 @@ import UIKit
 
 final class ManagerCoordinator: ICoordinator {
     // MARK: - Properties
-    let flow: Flow
+    let type: CoordinatorType
 
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
@@ -17,8 +17,8 @@ final class ManagerCoordinator: ICoordinator {
     
     
     // MARK: - Initialization
-    init(flow: Flow, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
-        self.flow = .manager
+    init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
+        self.type = .manager
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
     }

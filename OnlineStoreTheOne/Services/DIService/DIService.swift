@@ -11,6 +11,7 @@ enum DIKey {
     case networkService
     case storageService
     case authService
+    case accountService
 }
 
 final class DIService {

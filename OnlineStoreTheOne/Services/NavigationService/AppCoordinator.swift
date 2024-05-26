@@ -8,9 +8,8 @@
 import UIKit
 
 final class AppCoordinator: ICoordinator {
-  
     // MARK: - Properties
-    var flow: Flow
+    var type: CoordinatorType
     let context: Context
     private let window: UIWindow?
     
@@ -22,9 +21,9 @@ final class AppCoordinator: ICoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(window: UIWindow?, flow: Flow, context: Context, navigationController: UINavigationController) {
+    init(window: UIWindow?, flow: CoordinatorType, context: Context, navigationController: UINavigationController) {
         self.window = window
-        self.flow = flow
+        self.type = flow
         self.context = context
         self.navigationController = navigationController
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
@@ -38,7 +37,10 @@ final class AppCoordinator: ICoordinator {
     
     // MARK: - Coordinator Lifecycle
     func start() {
-        switch flow {
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
+        switch type {
         case .onboarding:
             showOnboardingFlow()
         case .auth:
@@ -164,15 +166,15 @@ extension AppCoordinator: ICoordinatorFinishDelete {
  
     func didFinish(_ coordinator: ICoordinator) {
         removeChildCoordinator(coordinator)
-        switch coordinator.flow {
+        switch coordinator.type {
             
         case .onboarding:
             context.isOnboardComplete = true
-            flow = StartEntity().selectStartFlow(context: context)
+            type = StartEntity().selectStartFlow(context: context)
             start()
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .auth:
-            flow = StartEntity().selectStartFlow(context: context)
+            type = StartEntity().selectStartFlow(context: context)
             start()
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .tabBar:
@@ -189,7 +191,7 @@ extension AppCoordinator: ICoordinatorFinishDelete {
             return finish()
         case .profile:
             context.isOnboardComplete = false
-            flow = StartEntity().selectStartFlow(context: context)
+            type = StartEntity().selectStartFlow(context: context)
             start()
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         }

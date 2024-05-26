@@ -38,13 +38,7 @@ final class RegistrationViewController: UIViewController {
             title: "Type of account",
             chevron: "chevron.forward",
             action: UIAction { [weak self] _ in
-                let vc = TypeAccountViewController()
-                vc.completion = { [weak self] text in
-                    self?.viewModel.type? = text
-                    self?.checkFormStatus()
-//                    self?.typeOfAccountButton.1.text = text
-                }
-                self?.navigationController?.pushViewController(vc, animated: true)
+                self?.changeType()
             },
             textColor: Colors.gray
         )
@@ -103,6 +97,7 @@ final class RegistrationViewController: UIViewController {
         
         setupViews()
         setConstraints()
+        checkFormStatus()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -158,6 +153,17 @@ final class RegistrationViewController: UIViewController {
     }
     
      //MARK: - @Objc Private Methods
+    
+    private func changeType() {
+        let vc = TypeOfAccountViewController()
+        vc.completion = { [weak self] text in
+            self?.viewModel.type? = text
+            self?.checkFormStatus()
+            self?.typeOfAccountButton.titleLabel?.text = text
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc private func handleShowLogin() {
         navigationController?.popViewController(animated: true)
     }

@@ -28,11 +28,11 @@ final class Context {
 }
 
 protocol IStartEntity {
-    func selectStartFlow(context: Context) -> Flow
+    func selectStartFlow(context: Context) -> CoordinatorType
 }
 
 final class StartEntity: IStartEntity {
-    func selectStartFlow(context: Context) -> Flow {
+    func selectStartFlow(context: Context) -> CoordinatorType {
         if !context.isOnboardComplete {
             return .onboarding
         } else if context.isAuth() {

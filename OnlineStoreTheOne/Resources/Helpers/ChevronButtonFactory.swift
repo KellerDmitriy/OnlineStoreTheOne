@@ -44,7 +44,7 @@ final class ChevronButtonFactory: ChevronButtonFactoryProtocol {
         let button = UIButton(type: .system)
         button.addAction(action, for: .touchUpInside)
         button.backgroundColor = Colors.lightGray
-        button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 8
         button.tintColor = textColor
         
         let titleLabel = LabelFactory(

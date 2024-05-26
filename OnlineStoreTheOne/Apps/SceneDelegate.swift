@@ -19,10 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let navigationController = UINavigationController()
-        navigationController.setupNavigationBar()
         
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
         
         let context = Context()
         let startFlow = StartEntity().selectStartFlow(context: context)

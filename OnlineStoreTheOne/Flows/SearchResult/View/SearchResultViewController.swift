@@ -84,7 +84,7 @@ final class SearchResultViewController: UIViewController {
     
     //MARK: - Private methods
     private func setupNavigationBar() {
-        navigationController?.setupNavigationBar()
+    
         navigationItem.title = "Your searched results"
         navigationItem.searchController = searchController
         
