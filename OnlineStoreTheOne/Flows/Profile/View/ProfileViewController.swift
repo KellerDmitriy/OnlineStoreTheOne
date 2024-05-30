@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import SnapKit
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: BaseViewController {
     // MARK: - Properties
     private var viewModel: ProfileViewModel
     private let coordinator: IProfileCoordinator
@@ -18,6 +18,13 @@ final class ProfileViewController: UIViewController {
     //MARK: - UI elements
     let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     let settingsView = EditImageView()
+    
+    private let profileInformationContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     
     lazy var profileImage: UIImageView = {
         let image = UIImageView()
@@ -30,7 +37,7 @@ final class ProfileViewController: UIViewController {
         return image
     }()
     
-    private lazy var editButton: UIButton = {
+    private lazy var changeAvatarButton: UIButton = {
         let button = UIButton(primaryAction: UIAction { [weak self] _ in
             self?.editImageAction()
         })
@@ -121,15 +128,14 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUpView()
-        setConstraint()
+        addViews()
+        setupConstraints()
         setupNavigationBar()
         fetchUser()
     }
     
     func setupNavigationBar() {
         navigationItem.title = "Profile"
-        navigationController?.navigationBar.addBottomBorder()
     }
     
     //MARK: - Actions
@@ -178,30 +184,40 @@ final class ProfileViewController: UIViewController {
 }
 
 //MARK: - Extension
-private extension ProfileViewController {
+extension ProfileViewController {
     
     //MARK: - Set up view
-    func setUpView() {
+    override func addViews() {
         settingsView.delegate = self
-        view.backgroundColor = .white
         
-        view.addSubview(profileImage)
-        view.addSubview(editButton)
-        view.addSubview(userName)
-        view.addSubview(userMail)
+        view.addSubview(profileInformationContainer)
+        
+       [
+            profileImage,
+            changeAvatarButton,
+            userName,
+            userMail
+       ].forEach(profileInformationContainer.addSubview(_:))
+      
         view.addSubview(buttonsStack)
     }
     
-    //MARK: - Set constraint
-    func setConstraint() {
-        profileImage.snp.makeConstraints { make in
-            make.height.equalTo(100)
-            make.width.equalTo(100)
-            make.top.equalTo(view.snp.top).offset(113)
-            make.leading.equalTo(view.snp.leading).offset(27)
+    //MARK: - Setup Constraints
+    override func setupConstraints() {
+        profileInformationContainer.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(120)
         }
         
-        editButton.snp.makeConstraints { make in
+        profileImage.snp.makeConstraints { make in
+            make.height.equalTo(100)
+            make.width.equalTo(profileImage.snp.height)
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+        }
+        
+        changeAvatarButton.snp.makeConstraints { make in
             make.height.equalTo(32)
             make.width.equalTo(32)
             make.top.equalTo(profileImage.snp.top).offset(68)
@@ -209,7 +225,7 @@ private extension ProfileViewController {
         }
         
         userName.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top).offset(127)
+            make.top.equalToSuperview().offset(16)
             make.leading.equalTo(profileImage.snp.trailing).offset(40)
         }
         
@@ -240,7 +256,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
     
     func setupSettingsView() {
-        settingsView.frame = CGRect(x: editButton.frame.minX, y: editButton.frame.minY, width: 300, height: 300)
+        settingsView.frame = CGRect(x: changeAvatarButton.frame.minX, y: changeAvatarButton.frame.minY, width: 300, height: 300)
         settingsView.alpha = 0
         settingsView.backgroundColor = .white
         settingsView.layer.cornerRadius = 12
@@ -307,7 +323,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     @objc func hideSettings() {
             UIView.animate(withDuration: 0.3, animations: {
                 self.blurEffectView.alpha = 0
-                self.settingsView.frame = CGRect(x: self.editButton.frame.minX, y: self.editButton.frame.minY, width: 300, height: 300)
+                self.settingsView.frame = CGRect(x: self.changeAvatarButton.frame.minX, y: self.changeAvatarButton.frame.minY, width: 300, height: 300)
                 self.settingsView.alpha = 0
             }) { _ in
                 self.blurEffectView.removeFromSuperview()

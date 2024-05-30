@@ -68,6 +68,9 @@
 		E15B898C2C0126B40060A8D3 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B898B2C0126B40060A8D3 /* BackButton.swift */; };
 		E15B898E2C0383240060A8D3 /*  UINavigationController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B898D2C0383240060A8D3 /*  UINavigationController + Extension.swift */; };
 		E15B89902C0396F90060A8D3 /* ProductFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B898F2C0396F90060A8D3 /* ProductFilter.swift */; };
+		E15B89922C05B51C0060A8D3 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B89912C05B51C0060A8D3 /* CustomNavigationController.swift */; };
+		E15B89952C05B9410060A8D3 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B89942C05B9410060A8D3 /* BaseViewController.swift */; };
+		E15B89972C05DFB10060A8D3 /* SearchResultCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B89962C05DFB10060A8D3 /* SearchResultCoordinator.swift */; };
 		E16BB6672BD30CEC009991F3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */; };
 		E16BB6692BD30D1D009991F3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */; };
 		E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */; };
@@ -142,7 +145,7 @@
 		531121E62BD1A99A0018FA37 /* TypeOfAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfAccountViewController.swift; sourceTree = "<group>"; };
 		531121EA2BD2CF9D0018FA37 /* EditImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageView.swift; sourceTree = "<group>"; };
 		531121EC2BD2E5240018FA37 /* ChevronButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChevronButtonFactory.swift; path = OnlineStoreTheOne/Resources/Helpers/ChevronButtonFactory.swift; sourceTree = SOURCE_ROOT; };
-		531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelFactoryProtocol.swift; path = OnlineStoreTheOne/Resources/DesignSystem/Buttons/LabelFactoryProtocol.swift; sourceTree = SOURCE_ROOT; };
+		531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelFactoryProtocol.swift; path = OnlineStoreTheOne/Resources/DesignSystem/LabelFactoryProtocol.swift; sourceTree = SOURCE_ROOT; };
 		53369BB72BD055AF00699323 /* TermsConditionalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionalViewController.swift; sourceTree = "<group>"; };
 		534848A32BD69C2300162CE6 /* PaymentSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessView.swift; sourceTree = "<group>"; };
 		86490FF32BCE9B5300FCF45C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +203,9 @@
 		E15B898B2C0126B40060A8D3 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		E15B898D2C0383240060A8D3 /*  UINavigationController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " UINavigationController + Extension.swift"; sourceTree = "<group>"; };
 		E15B898F2C0396F90060A8D3 /* ProductFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductFilter.swift; sourceTree = "<group>"; };
+		E15B89912C05B51C0060A8D3 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		E15B89942C05B9410060A8D3 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		E15B89962C05DFB10060A8D3 /* SearchResultCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCoordinator.swift; sourceTree = "<group>"; };
 		E16BB6662BD30CEC009991F3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E16BB6682BD30D1D009991F3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E16BB67F2BD501EC009991F3 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -572,6 +578,7 @@
 			children = (
 				BEBA5DC82BD10AEB00737686 /* View */,
 				E1E2B4CB2BDBD98800D72CF7 /* ViewModel */,
+				E15B89982C05DFB80060A8D3 /* Coordinator */,
 			);
 			path = SearchResult;
 			sourceTree = "<group>";
@@ -591,6 +598,22 @@
 				E15B89842BFD3BF70060A8D3 /* TypeOfAccountService.swift */,
 			);
 			path = AccountService;
+			sourceTree = "<group>";
+		};
+		E15B89932C05B92E0060A8D3 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				E15B89942C05B9410060A8D3 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		E15B89982C05DFB80060A8D3 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E15B89962C05DFB10060A8D3 /* SearchResultCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		E16BB6652BD30CA4009991F3 /* View */ = {
@@ -642,6 +665,7 @@
 				E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */,
 				E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */,
 				E15B89892C0125930060A8D3 /* CustomNavigationBar.swift */,
+				E15B89912C05B51C0060A8D3 /* CustomNavigationController.swift */,
 			);
 			path = NavigationService;
 			sourceTree = "<group>";
@@ -886,7 +910,6 @@
 		E1D1DC3B2BD2624B0009C2A3 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */,
 				531121EC2BD2E5240018FA37 /* ChevronButtonFactory.swift */,
 				E1A2E84A2BCDB92A00CC0D64 /* ButtonFactory.swift */,
 				E1D1DC392BD24FC10009C2A3 /* CartButton.swift */,
@@ -957,6 +980,7 @@
 		E1F1B23A2BCC2629001DC54D /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				E15B89932C05B92E0060A8D3 /* Base */,
 				86EDFF0D2BD80F2C00CD9F81 /* Auth */,
 				86490FF22BCE9B3F00FCF45C /* Onboarding */,
 				E1F1B2692BCC6B4B001DC54D /* TabBar */,
@@ -975,7 +999,6 @@
 			isa = PBXGroup;
 			children = (
 				E1F1B2422BCC335C001DC54D /* DesignSystem */,
-				E1F1B23C2BCC2934001DC54D /* Extensions */,
 				E1D91A112BDE54D00031B413 /* Assets.xcassets */,
 				E1F1B22C2BCC1853001DC54D /* LaunchScreen.storyboard */,
 			);
@@ -1014,9 +1037,11 @@
 		E1F1B2422BCC335C001DC54D /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				E1F1B23C2BCC2934001DC54D /* Extensions */,
 				E1F1B2412BCC32B9001DC54D /* Fonts */,
 				E1D1DC3B2BD2624B0009C2A3 /* Buttons */,
 				E1F1B23D2BCC2992001DC54D /* UIFont + Extension.swift */,
+				531121ED2BD2E5240018FA37 /* LabelFactoryProtocol.swift */,
 				E1F1B23F2BCC2E18001DC54D /* Color + Extension.swift */,
 				E15B898D2C0383240060A8D3 /*  UINavigationController + Extension.swift */,
 			);
@@ -1216,6 +1241,8 @@
 				86BC2D2D2BDD0429003BF895 /* CustomViewWithPicker.swift in Sources */,
 				E1835F372BEE7EE500BE1962 /* WishListCoordinator.swift in Sources */,
 				E1D1DC312BD071BA0009C2A3 /* WishListViewModel.swift in Sources */,
+				E15B89952C05B9410060A8D3 /* BaseViewController.swift in Sources */,
+				E15B89922C05B51C0060A8D3 /* CustomNavigationController.swift in Sources */,
 				E1D1DC2F2BD071B30009C2A3 /* WishListViewController.swift in Sources */,
 				86EDFF272BD91F7600CD9F81 /* FirebaseService.swift in Sources */,
 				BEBA5DBE2BD0621900737686 /* SectionsData.swift in Sources */,
@@ -1231,6 +1258,7 @@
 				E1D1DC3D2BD2730B0009C2A3 /* WishListViewControllet + UICollectionView.swift in Sources */,
 				E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */,
 				E1835F392BEE7F0B00BE1962 /* CartsCoordinator.swift in Sources */,
+				E15B89972C05DFB10060A8D3 /* SearchResultCoordinator.swift in Sources */,
 				86BC2D332BDD189F003BF895 /* CustomManagersTextView.swift in Sources */,
 				E16BB6802BD501EC009991F3 /* HomeViewModel.swift in Sources */,
 				E1835F352BEE76F900BE1962 /* OnboardingCoordinator.swift in Sources */,

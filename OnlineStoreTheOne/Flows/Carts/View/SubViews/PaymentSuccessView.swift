@@ -94,7 +94,7 @@ private extension PaymentSuccessView {
     func setConstraint() {
         stackView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().offset(-30)
+            make.bottom.equalToSuperview().offset(-80)
         }
         
         successImage.snp.makeConstraints { make in

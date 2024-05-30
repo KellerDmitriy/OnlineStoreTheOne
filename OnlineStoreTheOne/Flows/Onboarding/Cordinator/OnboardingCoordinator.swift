@@ -27,10 +27,6 @@ final class OnboardingCoordinator: IOnboardingCoordinator {
         showOnboardingScene()
     }
     
-    func finish() {
-        finishDelegate?.didFinish(self)
-    }
-    
     // MARK: - Flow Presentation
     func showOnboardingScene() {
         let viewModel = OnboardingViewModel()

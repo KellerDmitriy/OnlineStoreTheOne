@@ -12,6 +12,7 @@ enum CoordinatorType {
     case auth
     case tabBar
     case home
+    case search
     case wishList
     case detail
     case carts
@@ -81,10 +82,18 @@ protocol IOnboardingCoordinator: ICoordinator {
 
 protocol IHomeCoordinator: ICoordinator {
     func showHomeScene()
-    func showSearchResultScene(searchText: String?)
+    func showSearchResultFlow()
     
     func showCartsFlow()
     func showDetailFlow(productId: Int)
+}
+
+protocol ISearchResultCoordinator: ICoordinator {
+    func showSearchResultScene(searchText: String?)
+    
+    func showDetailFlow(productId: Int)
+    func showCartsFlow()
+    
 }
 
 protocol IDetailCoordinator: ICoordinator {
@@ -114,5 +123,4 @@ protocol IProfileCoordinator: ICoordinator {
     func showProfileScene()
     func showTypeOfAccountScene()
     func showTermAndConditionScene()
-    
 }

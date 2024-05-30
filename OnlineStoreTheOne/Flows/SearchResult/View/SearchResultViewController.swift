@@ -8,9 +8,10 @@
 import UIKit
 import SnapKit
 
-final class SearchResultViewController: UIViewController {
+final class SearchResultViewController: BaseViewController {
     // MARK: - Properties
     var viewModel: SearchResultViewModel
+    let coordinator: ISearchResultCoordinator
     
     // MARK: - UI Components
     private let searchController = UISearchController(searchResultsController: nil)
@@ -24,8 +25,6 @@ final class SearchResultViewController: UIViewController {
     var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
-    
-    let cartButton = CartButton()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) in
@@ -41,8 +40,9 @@ final class SearchResultViewController: UIViewController {
     
     
     // MARK: - Init
-    init(viewModel: SearchResultViewModel) {
+    init(viewModel: SearchResultViewModel, coordinator: ISearchResultCoordinator) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -84,18 +84,14 @@ final class SearchResultViewController: UIViewController {
     
     //MARK: - Private methods
     private func setupNavigationBar() {
-    
         navigationItem.title = "Your searched results"
-        navigationItem.searchController = searchController
+        addNavBarButton(at: .backButton)
+        addNavBarButton(at: .cartButton)
+//        navigationItem.searchController = searchController
         
-        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
-        let cartBarButtonItem = UIBarButtonItem(customView: cartButton)
-
-        navigationItem.rightBarButtonItem = cartBarButtonItem
     }
     
     private func configureSearchController() {
-        
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchTextField.delegate = self
         
@@ -107,11 +103,12 @@ final class SearchResultViewController: UIViewController {
         viewModel.addToCart(productID)
     }
     
-    @objc func addToCartTap() {
-//        let viewControllerToPresent = CartsViewController()
-//        let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true, completion: nil)
+    override func cartBarButtonTap() {
+        coordinator.showCartsFlow()
+    }
+    
+    override func backBarButtonTap() {
+        coordinator.finish()
     }
 }
 

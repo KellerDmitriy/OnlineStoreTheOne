@@ -14,12 +14,12 @@ final class CartsTableViewCell: UITableViewCell {
     static let cellID = String(describing: CartsTableViewCell.self)
     
     //MARK: - Private Properties
-    
     private lazy var cartsContentView: UIView = {
         let view = UIView()
-//        view.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
+        view.backgroundColor = Colors.lightGray
+        view.makeCellShadow()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -98,7 +98,8 @@ final class CartsTableViewCell: UITableViewCell {
     //MARK: - Setup Views
     private func setupViews() {
         
-        contentView.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        contentView.backgroundColor = .clear
+        
         contentView.addSubview(cartsContentView)
         cartsContentView.addSubview(checkMarkButton)
         cartsContentView.addSubview(productImageView)
@@ -109,17 +110,17 @@ final class CartsTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         cartsContentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: Constants.verticalSpacing, left: Constants.horizontalSpacing, bottom: Constants.verticalSpacing, right: Constants.horizontalSpacing))
+            make.edges.equalToSuperview().inset(Constants.horizontalSpacing)
         }
         
         checkMarkButton.snp.makeConstraints { make in
             make.centerY.equalTo(productImageView.snp.centerY)
-            make.leading.equalTo(cartsContentView.snp.leadingMargin)
+            make.leading.equalToSuperview().offset(Constants.horizontalSpacing)
             make.trailing.equalTo(productImageView.snp.leading).offset(-Constants.horizontalSpacing)
         }
         
         productImageView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(Constants.minSpacing)
             make.width.equalTo(Constants.imageWidth)
         }
         
@@ -136,8 +137,8 @@ final class CartsTableViewCell: UITableViewCell {
         }
         
         counterActionButton.snp.makeConstraints { make in
-            make.trailing.equalTo(cartsContentView.snp.trailingMargin)
-            make.top.equalToSuperview().offset(Constants.verticalCountSpacing)
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-Constants.minSpacing)
             make.width.equalTo(Constants.buttonWidth)
             make.height.equalTo(Constants.buttonHeight)
         }
@@ -149,10 +150,10 @@ extension CartsTableViewCell {
     struct Constants {
         static let horizontalSpacing: CGFloat = 8
         static let verticalSpacing: CGFloat = 8
+        static let minSpacing: CGFloat = 4
         static let imageWidth: CGFloat = 100
         static let labelSpacing: CGFloat = 10
         static let buttonWidth: CGFloat = 120
         static let buttonHeight: CGFloat = 30
-        static let verticalCountSpacing: CGFloat = 70
     }
 }

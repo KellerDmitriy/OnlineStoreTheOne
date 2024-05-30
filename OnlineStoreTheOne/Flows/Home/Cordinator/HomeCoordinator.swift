@@ -8,6 +8,7 @@
 import UIKit
 
 final class HomeCoordinator: IHomeCoordinator {
+    // MARK: - Properties
     let type: CoordinatorType
 
     var finishDelegate: ICoordinatorFinishDelete?
@@ -18,7 +19,7 @@ final class HomeCoordinator: IHomeCoordinator {
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
+    init(type: CoordinatorType, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
         self.type = .home
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
@@ -33,26 +34,23 @@ final class HomeCoordinator: IHomeCoordinator {
     
     // MARK: - Flow Presentation
     func showHomeScene() {
-        navigationController.navigationBar.isHidden = true
+        let viewModel = HomeViewModel(
+            networkService: networkService,
+            storageService: storageService
+        )
         
-        let viewModel = HomeViewModel(networkService: networkService, storageService: storageService)
         let viewController = HomeViewController(viewModel: viewModel, coordinator: self)
         navigationController.setViewControllers([viewController], animated: true)
     }
     
-    func showSearchResultScene(searchText: String? = nil) {
-        let viewModel = SearchResultViewModel(
-            searchText: searchText ?? "",
-            networkService: networkService,
-            storageService: storageService
+    func showSearchResultFlow() {
+        let searchResultCoordinator = SearchResultCoordinator(
+            flow: .search,
+            finishDelegate: finishDelegate,
+            navigationController: navigationController
         )
-        let viewController = SearchResultViewController(viewModel: viewModel)
-        navigationController.pushViewController(viewController, animated: true)
-//        let searchResultsViewModel = SearchResultViewModel(searchText: "", networkService: NetworkService(), storageService: StorageService())
-//        let searchResultsVC = SearchResultViewController(viewModel: searchResultsViewModel)
-//        let navigationController = UINavigationController(rootViewController: searchResultsVC)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true, completion: nil)
+        childCoordinators.append(searchResultCoordinator)
+        searchResultCoordinator.start()
     }
     
     func showDetailFlow(productId: Int) {

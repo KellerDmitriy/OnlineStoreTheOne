@@ -19,7 +19,7 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
         ) as? CartsTableViewCell else { return UITableViewCell() }
         
         let cart = viewModel.cartProducts[indexPath.row]
-        cell.makeCellShadow()
+        
         cell.configureCell(
             cart,
             onTrashTapped: { [weak self] in

@@ -8,18 +8,12 @@
 import UIKit
 import SnapKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     //MARK: - Properties
     let viewModel: HomeViewModel
     let coordinator: IHomeCoordinator
     
     let sections = SectionsData.shared.sections
-    
-    var isSelectedCategory: Bool {
-        return viewModel.selectedCategory == nil
-    }
-    
-    let customNavigationBar = CustomNavigationBarImpl()
     
     lazy var collectionView: UICollectionView = {
         let collectViewLayout = UICollectionViewLayout()
@@ -45,14 +39,13 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         addViews()
-        setupViews()
+        registrationCells()
         setDelegates()
-       
-        customNavigationBar.setupConfiguration(configureNavigationBar())
-        actionForCartButton()
         
         observeProducts()
         observeError()
+        
+        addNavBarButton(at: .cartButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +56,6 @@ final class HomeViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-        coordinator.finish()
     }
     
     // MARK: - Data Observing
@@ -98,7 +90,7 @@ final class HomeViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-//                customNavigationBar.cartButton = viewModel.productCount
+                //                customNavigationBar.cartButton = viewModel.productCount
             }
             .store(in: &viewModel.subscription)
         
@@ -159,20 +151,8 @@ final class HomeViewController: UIViewController {
     }
     
     //MARK: - Methods for Navigation
-    func configureNavigationBar() -> CustomNavigationBarConfiguration? {
-       CustomNavigationBarConfiguration(
-        title: "",
-        withSearchTextField: false,
-        isSetupBackButton: false,
-        isSetupCartButton: true
-        )
-    }
-    
-    func actionForCartButton() {
-        customNavigationBar.cartButton.addAction(UIAction { [weak self] _ in
-            self?.cartButtonTapped()
-        },
-    for: .touchUpInside)
+    override func cartBarButtonTap() {
+        coordinator.showCartsFlow()
     }
     
     //MARK: - Action
@@ -189,7 +169,7 @@ final class HomeViewController: UIViewController {
     }
     
     //MARK: - Private methods
-    private func setupViews() {
+    private func registrationCells() {
         collectionView.register(SearchFieldCollectionViewCell.self)
         collectionView.register(CategoryCollectionViewCell.self)
         collectionView.registerFooter(FooterCategoriesView.self)
@@ -239,23 +219,16 @@ final class HomeViewController: UIViewController {
 
 //MARK: - AddViews
 extension HomeViewController {
-    private func addViews() {
+    override internal func addViews() {
         view.backgroundColor = .white
-        view.addSubview(customNavigationBar)
         view.addSubview(collectionView)
         
-        addConstraints()
+        setupConstraints()
     }
     
-    private func addConstraints() {
-        customNavigationBar.snp.makeConstraints { make in
-            make.height.equalTo(40)
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide)
-        }
-        
+    override internal func setupConstraints() {
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(customNavigationBar.snp.bottom)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
@@ -322,12 +295,12 @@ extension HomeViewController {
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .fractionalHeight(1))
         )
-      
+        
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
             widthDimension: .absolute(70),
             heightDimension: .absolute(70)),
-            subitems: [item]
+                                                       subitems: [item]
         )
         let section = createLayoutSection(
             group: group,

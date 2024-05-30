@@ -7,8 +7,7 @@
 
 import UIKit
 
-
-final class WishListViewController: UIViewController {
+final class WishListViewController: BaseViewController {
     let viewModel: WishListViewModel
     let coordinator: IWishListCoordinator
     
@@ -31,6 +30,12 @@ final class WishListViewController: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     
+    private let searchBarContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     // MARK: - Init
     init(viewModel: WishListViewModel, coordinator: IWishListCoordinator) {
         self.viewModel = viewModel
@@ -43,11 +48,12 @@ final class WishListViewController: UIViewController {
     }
     
     // MARK: - LifeCycle
-
     override func viewDidLoad() {
-        super.viewDidLoad()
         
         setupUI()
+        super.viewDidLoad()
+        
+        configureNavBar()
         observeViewModelChanges()
     }
     
@@ -79,8 +85,15 @@ final class WishListViewController: UIViewController {
             .store(in: &viewModel.subscription)
     }
     
+    //MARK: - NavigationController
+    func configureNavBar() {
+        title = "Your WishList"
+        navigationController?.tabBarItem.title = "Wish List"
+        addNavBarButton(at: .cartButton)
+    }
+    
     // MARK: - Actions
-    @objc func addToCartTap() {
+    override func cartBarButtonTap() {
         coordinator.showCartsFlow()
     }
     
@@ -92,9 +105,6 @@ final class WishListViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
-        
-        setupNavigation()
         setupCollectionView()
         setupSearchController()
     }
@@ -111,7 +121,7 @@ final class WishListViewController: UIViewController {
         let layout = createLayout()
         configureCollectionView(with: layout)
         registerCollectionViewCells()
-        addCollectionViewConstraints()
+        
     }
     
     private func configureCollectionView(with layout: UICollectionViewLayout) {
@@ -120,17 +130,35 @@ final class WishListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView)
+        
     }
     
     private func registerCollectionViewCells() {
         collectionView.register(WishListCollectionCell.self, forCellWithReuseIdentifier: WishListCollectionCell.cellID)
     }
     
-    private func addCollectionViewConstraints() {
+    override func addViews() {
+        super.addViews()
+        view.addSubview(collectionView)
+        view.addSubview(searchBarContainer)
+        searchBarContainer.addSubview(searchController.searchBar)
+        searchController.searchBar.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    override func setupConstraints() {
+        super.setupConstraints()
+        searchBarContainer.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
+            make.height.equalTo(50)
+        }
+        
+        searchController.searchBar.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.topAnchor)
+            make.top.equalTo(searchBarContainer.snp.bottom).offset(Constants.topAnchor)
             make.leading.equalTo(view).offset(Constants.horizontalSpacing)
             make.trailing.equalTo(view).offset(-Constants.horizontalSpacing)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.interItemSpacing)
@@ -138,7 +166,6 @@ final class WishListViewController: UIViewController {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        
         let availableWidth = view.frame.width -  Constants.interItemSpacing
         let availableHeight = view.frame.height -  Constants.interItemSpacing
         
@@ -158,22 +185,10 @@ final class WishListViewController: UIViewController {
         return UICollectionViewCompositionalLayout(section: section)
     }
     
-    // MARK: - Navigation
-    private func setupNavigation() {
-        configureSearchController()
-        
-        navigationController?.setupNavigationBar()
-        navigationItem.searchController = searchController
-        
-        navigationItem.title = "Your WishList"
-        let cartButton = CartButton()
-        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
-        let cartButtonItem = UIBarButtonItem(customView: cartButton)
-        
-        navigationItem.rightBarButtonItem = cartButtonItem
-    }
-    
+    // MARK: - Navigation & SearchController
+
     private func configureSearchController() {
+        
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchTextField.delegate = self
         

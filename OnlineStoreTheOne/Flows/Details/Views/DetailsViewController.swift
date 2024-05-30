@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class DetailsViewController: UIViewController {
+final class DetailsViewController: BaseViewController {
     //MARK: - Private Properties
     private let viewModel: DetailsProductViewModel
     let coordinator: IDetailCoordinator
@@ -63,8 +63,8 @@ final class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
-        setConstraints()
+        addViews()
+        setupConstraints()
         setupNavigation()
         actionForAddToWishListButtonTap()
         bind()
@@ -98,7 +98,7 @@ final class DetailsViewController: UIViewController {
             .store(in: &viewModel.cancellables)
     }
     
-    private func setupViews() {
+    override func addViews() {
         view.backgroundColor = .white
         [scrollView, mainStackView, buttonStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         view.addSubview(scrollView)
@@ -115,17 +115,17 @@ final class DetailsViewController: UIViewController {
     }
     
     private func setupNavigation() {
-        navigationController?.setupNavigationBar()
-        navigationController?.navigationBar.addBottomBorder()
+        addNavBarButton(at: .backButton)
+        addNavBarButton(at: .cartButton)
         navigationItem.title = "Details product"
-        
-        let cartButton = CartButton()
-        cartButton.addTarget(self, action: #selector(addToCartTap), for: .touchUpInside)
-        let cartButtonItem = UIBarButtonItem(customView: cartButton)
-        navigationItem.rightBarButtonItem = cartButtonItem
     }
     
-    private func setConstraints() {
+    override func cartBarButtonTap() {
+        coordinator.showCartsFlow()
+    }
+    
+//    MARK: Override methods
+    override func setupConstraints() {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(separatorLine.snp.bottom)
@@ -178,7 +178,6 @@ private extension DetailsViewController {
     
     func addToWishListButtonTap () {
         viewModel.favoriteButtonPressed()
-        viewModel.isSaved
     }
     
     func setToAddToWishListButton(_ status: Bool) {
@@ -186,7 +185,5 @@ private extension DetailsViewController {
         productList.addToWishListButton.setImage(image, for: .normal)
     }
     
-    @objc func addToCartTap() {
-        coordinator.showCartsFlow()
-    }
+
 }

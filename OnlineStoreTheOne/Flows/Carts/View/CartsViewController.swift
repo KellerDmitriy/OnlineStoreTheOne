@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class CartsViewController: UIViewController {
+final class CartsViewController: BaseViewController {
     let viewModel: CartsViewModel
     let coordinator: ICartsCoordinator
     
@@ -32,8 +32,6 @@ final class CartsViewController: UIViewController {
     private lazy var totalPriceLabel: UILabel = {
         LabelFactory(text: "100 $", font: .extraBold, color: .black, size: 16).createLabel()
     }()
-    
-    let cartButton = CartButton()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -75,8 +73,6 @@ final class CartsViewController: UIViewController {
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupViews()
 
         setupNavigationBar()
         
@@ -112,8 +108,8 @@ final class CartsViewController: UIViewController {
     
     
     //    MARK: - Setup
-    private func setupViews() {
-        view.backgroundColor = .white
+    override func addViews() {
+        super.addViews()
         view.addSubview(locationTitleLabel)
         view.addSubview(locationLabel)
         
@@ -126,7 +122,6 @@ final class CartsViewController: UIViewController {
         
         view.addSubview(payButton)
         
-        setupLayout()
         configureTableView()
     }
     
@@ -145,13 +140,12 @@ final class CartsViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.title = "Your Cart"
-        navigationController?.navigationBar.addBottomBorder()
-        
-        let cartButtonItem = UIBarButtonItem(customView: cartButton)
-        navigationItem.rightBarButtonItem = cartButtonItem
+        addNavBarButton(at: .backButton)
+        addNavBarButton(at: .cartButton)
     }
     
-    private func setupLayout() {
+    override func setupConstraints() {
+        super.setupConstraints()
         locationTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing)
             make.leading.equalTo(Constants.horizontalSpacing)
@@ -206,7 +200,7 @@ final class CartsViewController: UIViewController {
 // MARK: - Constants
 extension CartsViewController {
     struct Constants {
-        static let rowHeight: CGFloat = 130
+        static let rowHeight: CGFloat = 150
         static let horizontalSpacing: CGFloat = 16
         static let verticalSpacing: CGFloat = 20
         static let heightForButton: CGFloat = 50

@@ -1,52 +1,58 @@
 //
-//  WishListCoordinator.swift
+//  SearchResultCoordinator.swift
 //  OnlineStoreTheOne
 //
-//  Created by Келлер Дмитрий on 10.05.2024.
+//  Created by Келлер Дмитрий on 28.05.2024.
 //
-
 
 import UIKit
 
-final class WishListCoordinator: IWishListCoordinator {
+final class SearchResultCoordinator: ISearchResultCoordinator {
     // MARK: - Properties
-    let type: CoordinatorType
+    var type: CoordinatorType
+    
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
+    
     var childCoordinators: [ICoordinator] = []
     
     let networkService: NetworkServiceProtocol
     let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
-    init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
+    init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
         self.type = .wishList
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
+        
         self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
     func start() {
-        showWishListScene()
-    }
-    
-    func finish() {
-        finishDelegate?.didFinish(self)
+        showSearchResultScene(searchText: "")
     }
     
     // MARK: - Flow Presentation
-    func showWishListScene() {
-        let viewModel = WishListViewModel(networkService: networkService, storageService: storageService)
-        let viewController = WishListViewController(viewModel: viewModel, coordinator: self)
+    func showSearchResultScene(searchText: String?) {
+        let viewModel = SearchResultViewModel(
+            searchText: searchText ?? "",
+            networkService: networkService,
+            storageService: storageService
+        )
+        let viewController = SearchResultViewController(
+            viewModel: viewModel,
+            coordinator: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)
     }
-
-    func showDetailFlow(_ id: Int) {
+    
+    func showDetailFlow(productId id: Int) {
         let detailCoordinator = DetailCoordinator(
-            flow: .detail, 
-            productID: id, 
+            flow: .detail,
+            productID: id,
             finishDelegate: finishDelegate,
             navigationController: navigationController
         )
@@ -55,9 +61,7 @@ final class WishListCoordinator: IWishListCoordinator {
     }
     
     func showCartsFlow() {
-        let coordinator = CartsCoordinator(
-            navigationController: navigationController
-        )
+        let coordinator = CartsCoordinator(navigationController: navigationController)
         childCoordinators.append(coordinator)
         coordinator.start()
     }

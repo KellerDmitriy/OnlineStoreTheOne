@@ -49,6 +49,8 @@ final class AppCoordinator: ICoordinator {
             showTabBarFlow()
         case .home:
             showTabBarFlow()
+        case .search:
+            showTabBarFlow()
         case .wishList:
             showTabBarFlow()
         case .detail:
@@ -89,9 +91,9 @@ final class AppCoordinator: ICoordinator {
     }
     
     func showTabBarFlow() {
-        let homeNavigationController = UINavigationController()
+        let homeNavigationController = CustomNavigationController()
         let homeCoordinator = HomeCoordinator(
-            flow: .home, 
+            type: .home, 
             finishDelegate: self,
             navigationController: homeNavigationController
         )
@@ -102,7 +104,7 @@ final class AppCoordinator: ICoordinator {
         )
         homeCoordinator.start()
         
-        let wishListNavigationController = UINavigationController()
+        let wishListNavigationController = CustomNavigationController()
         let wishListCoordinator = WishListCoordinator(
             flow: .wishList, 
             finishDelegate: self,
@@ -132,7 +134,7 @@ final class AppCoordinator: ICoordinator {
         managerCoordinator.finishDelegate = self
         managerCoordinator.start()
         
-        let profileNavigationController = UINavigationController()
+        let profileNavigationController = CustomNavigationController()
         let profileCoordinator = ProfileCoordinator(
             flow: .profile, 
             finishDelegate: self,
@@ -178,9 +180,14 @@ extension AppCoordinator: ICoordinatorFinishDelete {
             start()
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .tabBar:
-            return finish()
+            type = .tabBar
+            
         case .home:
             return finish()
+        case .search:
+            type = .home
+            start()
+            navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .wishList:
             return finish()
         case .detail:

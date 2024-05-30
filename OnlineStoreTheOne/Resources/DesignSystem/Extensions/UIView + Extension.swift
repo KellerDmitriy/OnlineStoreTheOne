@@ -32,6 +32,7 @@ extension UIView {
         )
         addSubview(separator)
     }
+    
     /// Добавляет анимацию к кастомной кнопке.
     func makeSystem(_ button: UIButton) {
         button.addTarget(
