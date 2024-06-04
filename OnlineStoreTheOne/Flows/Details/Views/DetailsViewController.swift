@@ -115,8 +115,8 @@ final class DetailsViewController: BaseViewController {
     }
     
     private func setupNavigation() {
-        addNavBarButton(at: .backButton)
-        addNavBarButton(at: .cartButton)
+//        addNavBarButton(at: .backButton)
+//        addNavBarButton(at: .cartButton)
         navigationItem.title = "Details product"
     }
     

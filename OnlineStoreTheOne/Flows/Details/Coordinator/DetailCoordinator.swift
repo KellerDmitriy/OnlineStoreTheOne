@@ -15,18 +15,14 @@ final class DetailCoordinator: IDetailCoordinator {
     var finishDelegate: ICoordinatorFinishDelete?
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
-    
-    let networkService: NetworkServiceProtocol
-    let storageService: StorageServiceProtocol
-    
+
     // MARK: - Initialization
     init(flow: CoordinatorType, productID: Int, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
         self.type = .detail
         self.productID = productID
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
-        self.networkService = DIService.resolve(forKey: DIKey.networkService) ?? NetworkService()
-        self.storageService = DIService.resolve(forKey: DIKey.storageService) ?? StorageService()
+
     }
     
     // MARK: - Coordinator Lifecycle
@@ -37,9 +33,7 @@ final class DetailCoordinator: IDetailCoordinator {
     // MARK: - Flow Presentation
     func showDetailScene(_ id: Int) {
         let detailViewModel = DetailsProductViewModel(
-            productId: id,
-            networkService: networkService,
-            storageService: storageService
+            productId: id
         )
         
         let detailViewController = DetailsViewController(viewModel: detailViewModel, coordinator: self)

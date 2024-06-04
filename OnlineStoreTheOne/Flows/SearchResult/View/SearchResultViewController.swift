@@ -13,19 +13,17 @@ final class SearchResultViewController: BaseViewController {
     var viewModel: SearchResultViewModel
     let coordinator: ISearchResultCoordinator
     
-    // MARK: - UI Components
-    private let searchController = UISearchController(searchResultsController: nil)
-    
     //MARK: Private properties
     private var searchBarIsEmpty: Bool {
-        guard let text = searchController.searchBar.text else { return false }
+        guard let text = customNavigationBar.searchTextFieldCell.searchTextField.text else { return false }
         return text.isEmpty
     }
     
     var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
+        return !searchBarIsEmpty
     }
     
+    // MARK: - UI Components
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) in
             return self.createProductSection()
@@ -53,16 +51,14 @@ final class SearchResultViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        searchController.isActive = true
-        searchController.searchBar.becomeFirstResponder()
+
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCollectionView()
-        setupNavigationBar()
-        configureSearchController()
+
         observeProducts()
     }
     
@@ -82,21 +78,17 @@ final class SearchResultViewController: BaseViewController {
             .store(in: &viewModel.subscription)
     }
     
-    //MARK: - Private methods
-    private func setupNavigationBar() {
-        navigationItem.title = "Your searched results"
-        addNavBarButton(at: .backButton)
-        addNavBarButton(at: .cartButton)
-//        navigationItem.searchController = searchController
-        
-    }
     
-    private func configureSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.searchTextField.delegate = self
-        
-        searchController.searchBar.placeholder = "Search title..."
+    //MARK: - Override methods
+    override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
+        CustomNavigationBarConfiguration(
+        withSearchTextField: true,
+        isSetupBackButton: true,
+        isSetupCartButton: true
+        )
     }
+    //MARK: - Private methods
+    
     
     //MARK: - Actions
     func cartButtonTapped(_ productID: Int) {
@@ -106,7 +98,7 @@ final class SearchResultViewController: BaseViewController {
     override func cartBarButtonTap() {
         coordinator.showCartsFlow()
     }
-    
+   
     override func backBarButtonTap() {
         coordinator.finish()
     }
@@ -124,11 +116,13 @@ extension SearchResultViewController: UISearchResultsUpdating {
 
 //MARK: - AddViews
 extension SearchResultViewController {
+    override func addViews() {
+        super.addViews()
+        
+        view.addSubview(collectionView)
+    }
     
     private func setupCollectionView() {
-        view.backgroundColor = .white
-        view.addSubview(collectionView)
-        addConstraints()
         registerCells()
         setDelegate()
     }
@@ -141,12 +135,16 @@ extension SearchResultViewController {
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        
     }
     
-    private func addConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
         
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
 }
@@ -172,7 +170,8 @@ extension SearchResultViewController {
                 .init(
                     widthDimension: .absolute(349),
                     heightDimension: .absolute(217)),
-                                                       subitems: [item])
+                    subitems: [item]
+        )
         group.interItemSpacing = .fixed(16)
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
@@ -186,7 +185,7 @@ extension SearchResultViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 50) /// высота хедера
+        return CGSize(width: collectionView.bounds.width, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

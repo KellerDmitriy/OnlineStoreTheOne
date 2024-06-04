@@ -38,20 +38,18 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addViews()
         registrationCells()
         setDelegates()
         
         observeProducts()
         observeError()
-        
-        addNavBarButton(at: .cartButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.fetchCategories()
         viewModel.fetchProducts()
+        navigationController?.navigationBar.isHidden = true
     }
     
     deinit {
@@ -90,7 +88,7 @@ final class HomeViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                //                customNavigationBar.cartButton = viewModel.productCount
+                self.customNavigationBar.cartButton.count = viewModel.productCount
             }
             .store(in: &viewModel.subscription)
         
@@ -151,6 +149,13 @@ final class HomeViewController: BaseViewController {
     }
     
     //MARK: - Methods for Navigation
+    override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
+        CustomNavigationBarConfiguration(
+            withLocationView: true,
+            isSetupCartButton: true
+        )
+    }
+    
     override func cartBarButtonTap() {
         coordinator.showCartsFlow()
     }
@@ -162,10 +167,6 @@ final class HomeViewController: BaseViewController {
     
     func addToCartButtonTapped(_ product: Products) {
         viewModel.addToCart(product.id)
-    }
-    
-    @objc private func cartButtonTapped() {
-        coordinator.showCartsFlow()
     }
     
     //MARK: - Private methods
@@ -220,15 +221,14 @@ final class HomeViewController: BaseViewController {
 //MARK: - AddViews
 extension HomeViewController {
     override internal func addViews() {
-        view.backgroundColor = .white
+        super.addViews()
         view.addSubview(collectionView)
-        
-        setupConstraints()
     }
     
     override internal func setupConstraints() {
+        super.setupConstraints()
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }

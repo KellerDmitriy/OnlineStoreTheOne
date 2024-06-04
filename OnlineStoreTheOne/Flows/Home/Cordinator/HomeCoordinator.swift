@@ -39,11 +39,15 @@ final class HomeCoordinator: IHomeCoordinator {
             storageService: storageService
         )
         
+        
         let viewController = HomeViewController(viewModel: viewModel, coordinator: self)
+        navigationController.navigationBar.isHidden = true
         navigationController.setViewControllers([viewController], animated: true)
     }
     
     func showSearchResultFlow() {
+        navigationController.navigationBar.isHidden = true
+        
         let searchResultCoordinator = SearchResultCoordinator(
             flow: .search,
             finishDelegate: finishDelegate,
@@ -54,6 +58,8 @@ final class HomeCoordinator: IHomeCoordinator {
     }
     
     func showDetailFlow(productId: Int) {
+        navigationController.navigationBar.isHidden = false
+        
         let detailCoordinator = DetailCoordinator(
             flow: .detail, 
             productID: productId, 

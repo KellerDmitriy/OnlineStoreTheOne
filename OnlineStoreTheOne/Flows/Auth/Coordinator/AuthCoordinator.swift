@@ -25,11 +25,7 @@ final class AuthCoordinator: IAuthCoordinator {
     func start() {
         showLoginScene()
     }
-    
-    func finish() {
-        finishDelegate?.didFinish(self)
-    }
-    
+
     // MARK: - Flow Presentation
     func showLoginScene() {
         let viewModel = LoginViewModel()

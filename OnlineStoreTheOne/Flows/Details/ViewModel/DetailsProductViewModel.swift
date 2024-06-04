@@ -19,9 +19,9 @@ final class DetailsProductViewModel: ObservableObject {
     let storageService: StorageServiceProtocol
     
     // MARK: - Init
-    init(productId: Int, networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
-        self.networkService = networkService
-        self.storageService = storageService
+    init(productId: Int) {
+        self.networkService = DIService.resolve(forKey: DIKey.networkService) ?? NetworkService()
+        self.storageService = DIService.resolve(forKey: DIKey.storageService) ?? StorageService()
         
         self.isSaved = storageService.isWishListSaved(productId)
         

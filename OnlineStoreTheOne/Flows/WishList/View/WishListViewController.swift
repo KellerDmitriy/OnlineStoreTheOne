@@ -7,18 +7,18 @@
 
 import UIKit
 
-final class WishListViewController: BaseViewController {
+final class WishListViewController: BaseViewController, UITextFieldDelegate {
     let viewModel: WishListViewModel
     let coordinator: IWishListCoordinator
     
     //MARK: Private properties
     private var searchBarIsEmpty: Bool {
-        guard let text = searchController.searchBar.text else { return false }
+        guard let text = customNavigationBar.searchTextFieldCell.searchTextField.text else { return false }
         return text.isEmpty
     }
     
     var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
+        return !searchBarIsEmpty
     }
     
     //    MARK: - UI elements
@@ -26,14 +26,6 @@ final class WishListViewController: BaseViewController {
         let collectionView = UICollectionView()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
-    }()
-    
-    private let searchController = UISearchController(searchResultsController: nil)
-    
-    private let searchBarContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
     
     // MARK: - Init
@@ -49,8 +41,6 @@ final class WishListViewController: BaseViewController {
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
-        
-        setupUI()
         super.viewDidLoad()
         
         configureNavBar()
@@ -87,14 +77,26 @@ final class WishListViewController: BaseViewController {
     
     //MARK: - NavigationController
     func configureNavBar() {
-        title = "Your WishList"
+        navigationController?.navigationBar.isHidden = true
         navigationController?.tabBarItem.title = "Wish List"
-        addNavBarButton(at: .cartButton)
+        customNavigationBar.searchTextFieldCell.searchTextField.delegate = self
+    }
+    
+    override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
+        CustomNavigationBarConfiguration(
+            withSearchTextField: true,
+            isSetupBackButton: false,
+            isSetupCartButton: true
+        )
     }
     
     // MARK: - Actions
     override func cartBarButtonTap() {
         coordinator.showCartsFlow()
+    }
+    
+    override func backBarButtonTap() {
+        coordinator.finish()
     }
     
     // MARK: - UI Setup
@@ -104,24 +106,11 @@ final class WishListViewController: BaseViewController {
         }, completion: nil)
     }
     
-    private func setupUI() {
-        setupCollectionView()
-        setupSearchController()
-    }
-    
-    private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Products"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-    }
     
     private func setupCollectionView() {
         let layout = createLayout()
         configureCollectionView(with: layout)
         registerCollectionViewCells()
-        
     }
     
     private func configureCollectionView(with layout: UICollectionViewLayout) {
@@ -139,26 +128,15 @@ final class WishListViewController: BaseViewController {
     
     override func addViews() {
         super.addViews()
+        setupCollectionView()
         view.addSubview(collectionView)
-        view.addSubview(searchBarContainer)
-        searchBarContainer.addSubview(searchController.searchBar)
-        searchController.searchBar.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override func setupConstraints() {
         super.setupConstraints()
-        searchBarContainer.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
-            make.height.equalTo(50)
-        }
-        
-        searchController.searchBar.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(searchBarContainer.snp.bottom).offset(Constants.topAnchor)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.topAnchor)
             make.leading.equalTo(view).offset(Constants.horizontalSpacing)
             make.trailing.equalTo(view).offset(-Constants.horizontalSpacing)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.interItemSpacing)
@@ -184,20 +162,10 @@ final class WishListViewController: BaseViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-    
-    // MARK: - Navigation & SearchController
-
-    private func configureSearchController() {
-        
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.searchTextField.delegate = self
-        
-        searchController.searchBar.placeholder = "Search title..."
-    }
 }
 
 // MARK: - UISearchResultsUpdating, TextFieldDelegate
-extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
+extension WishListViewController: UISearchBarDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text ?? ""
@@ -209,7 +177,7 @@ extension WishListViewController: UISearchResultsUpdating, UITextFieldDelegate {
 //MARK: Constants
 extension WishListViewController {
     struct Constants {
-        static let topAnchor: CGFloat = 8
+        static let topAnchor: CGFloat = 60
         static let horizontalSpacing: CGFloat = 20
         static let interItemSpacing: CGFloat = 20
     }

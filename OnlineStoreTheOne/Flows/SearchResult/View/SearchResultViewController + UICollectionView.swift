@@ -36,13 +36,9 @@ extension SearchResultViewController: UITextFieldDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let selectedProduct = viewModel.searchedProducts[indexPath.row]
-//        let detailVM = DetailsProductViewModel(productId: selectedProduct.id, networkService: NetworkService.init(), storageService: StorageService.init())
-//        
-//        let detailVC = DetailsViewController(viewModel: detailVM)
-//        let navigationController = UINavigationController(rootViewController: detailVC)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true)
+        let selectedProduct = viewModel.searchedProducts[indexPath.row]
+        
+        coordinator.showDetailFlow(productId: selectedProduct.id)
     }
 }
 

@@ -164,11 +164,12 @@ final class AppCoordinator: ICoordinator {
     }
 }
 
+//MARK: - ICoordinatorFinishDelete
 extension AppCoordinator: ICoordinatorFinishDelete {
  
-    func didFinish(_ coordinator: ICoordinator) {
-        removeChildCoordinator(coordinator)
-        switch coordinator.type {
+    func didFinish(_ childCoordinator: ICoordinator) {
+        removeChildCoordinator(childCoordinator)
+        switch childCoordinator.type {
             
         case .onboarding:
             context.isOnboardComplete = true
@@ -181,7 +182,6 @@ extension AppCoordinator: ICoordinatorFinishDelete {
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .tabBar:
             type = .tabBar
-            
         case .home:
             return finish()
         case .search:
@@ -193,7 +193,7 @@ extension AppCoordinator: ICoordinatorFinishDelete {
         case .detail:
             return finish()
         case .carts:
-            return finish()
+            navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .manager:
             return finish()
         case .profile:

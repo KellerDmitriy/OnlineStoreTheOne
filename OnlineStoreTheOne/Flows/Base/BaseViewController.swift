@@ -4,52 +4,77 @@
 //
 //  Created by Келлер Дмитрий on 28.05.2024.
 //
-
 import UIKit
+
 enum NavBarButtonType {
     case backButton
     case cartButton
 }
 
-class BaseViewController: UIViewController {
-    let backButton = BackButton()
-    let cartButton = CartButton()
+protocol IBaseViewController: AnyObject {
+    func configureNavigationBar() -> CustomNavigationBarConfiguration?
+}
+
+class BaseViewController: UIViewController, IBaseViewController {
     
+    var customNavigationBar = CustomNavigationBarImpl()
+    
+    lazy var backButton = customNavigationBar.backButton
+    lazy var cartButton = customNavigationBar.cartButton
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
         setupConstraints()
         configure()
+        
+        customNavigationBar.setupConfiguration(configureNavigationBar())
+        addActionForNavBarButton(at: .cartButton)
+        addActionForNavBarButton(at: .backButton)
     }
+    
+    // MARK: - IBaseViewController
+    func configureNavigationBar() -> CustomNavigationBarConfiguration? { nil }
+    
 }
 
 @objc
 extension BaseViewController {
-    
-    func addViews() {}
-    func setupConstraints() {}
+    // MARK: - Configuration
     func configure() {
         view.backgroundColor = .systemBackground
+        customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
+       
     }
     
+    // MARK: - Actions
     func backBarButtonTap() {}
-    
     func cartBarButtonTap() {}
+    
+    // MARK: - Setup Methods
+    func addViews() {
+        view.addSubview(customNavigationBar)
+        view.bringSubviewToFront(customNavigationBar)
+    }
+    
+    func setupConstraints() {
+        customNavigationBar.snp.makeConstraints { make in
+            make.height.equalTo(44)
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+        }
+    }
 }
 
-
 extension BaseViewController {
-    
-    func addNavBarButton(at type: NavBarButtonType) {
+    // MARK: - Navigation Bar Button Actions
+    func addActionForNavBarButton(at type: NavBarButtonType) {
         switch type {
         case .backButton:
-          
             backButton.addTarget(self, action: #selector(backBarButtonTap), for: .touchUpInside)
-            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         case .cartButton:
-           
             cartButton.addTarget(self, action: #selector(cartBarButtonTap), for: .touchUpInside)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: cartButton)
         }
     }
 }

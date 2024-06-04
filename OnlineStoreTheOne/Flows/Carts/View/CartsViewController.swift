@@ -73,8 +73,6 @@ final class CartsViewController: BaseViewController {
     //    MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupNavigationBar()
         
         observeCartProducts()
         observeTotal()
@@ -106,10 +104,26 @@ final class CartsViewController: BaseViewController {
             .store(in: &viewModel.subscription)
     }
     
+    //    MARK: - Override Methods
+    override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
+        CustomNavigationBarConfiguration(
+        title: "Your Cart",
+        isSetupBackButton: true,
+        isSetupCartButton: true
+        )
+    }
     
-    //    MARK: - Setup
+    override func cartBarButtonTap() {
+        coordinator.showCartsScene()
+    }
+    
+    override func backBarButtonTap() {
+        coordinator.finish()
+    }
+    
     override func addViews() {
         super.addViews()
+        
         view.addSubview(locationTitleLabel)
         view.addSubview(locationLabel)
         
@@ -138,21 +152,16 @@ final class CartsViewController: BaseViewController {
         tableView.rowHeight = Constants.rowHeight
     }
     
-    private func setupNavigationBar() {
-        navigationItem.title = "Your Cart"
-        addNavBarButton(at: .backButton)
-        addNavBarButton(at: .cartButton)
-    }
-    
     override func setupConstraints() {
         super.setupConstraints()
+        
         locationTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing * 2)
             make.leading.equalTo(Constants.horizontalSpacing)
         }
 
         locationLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing * 2)
             make.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
         }
 
@@ -199,7 +208,7 @@ final class CartsViewController: BaseViewController {
 
 // MARK: - Constants
 extension CartsViewController {
-    struct Constants {
+    enum Constants {
         static let rowHeight: CGFloat = 150
         static let horizontalSpacing: CGFloat = 16
         static let verticalSpacing: CGFloat = 20

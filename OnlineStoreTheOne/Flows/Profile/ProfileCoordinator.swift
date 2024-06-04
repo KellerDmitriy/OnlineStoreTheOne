@@ -30,10 +30,6 @@ final class ProfileCoordinator: IProfileCoordinator {
         showProfileScene()
     }
     
-    func finish() {
-        finishDelegate?.didFinish(self)
-    }
-    
     // MARK: - Flow Presentation
     func showProfileScene() {
         let viewModel = ProfileViewModel(storageService: storageService)

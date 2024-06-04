@@ -46,6 +46,7 @@ final class SearchResultCoordinator: ISearchResultCoordinator {
             coordinator: self
         )
         viewController.hidesBottomBarWhenPushed = true
+        navigationController.navigationBar.isHidden = true
         navigationController.pushViewController(viewController, animated: true)
     }
     

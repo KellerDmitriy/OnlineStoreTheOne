@@ -11,13 +11,14 @@ import SnapKit
 final class SearchFieldCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private Properties
-    private let mainView: UIView = {
+    let mainView: UIView = {
         let element = UIView()
         element.backgroundColor = .white
         element.layer.cornerRadius = 8
         element.layer.masksToBounds = true
         element.layer.borderWidth = 1
         element.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
+        element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
     
@@ -25,6 +26,7 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
         let element = UIButton(type: .system)
         element.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         element.tintColor = .systemGray
+        element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
     
@@ -36,6 +38,7 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
         element.font = UIFont.makeTypography(.regular, size: 13)    
         element.autocapitalizationType = .words
         element.returnKeyType = .search
+        element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
     

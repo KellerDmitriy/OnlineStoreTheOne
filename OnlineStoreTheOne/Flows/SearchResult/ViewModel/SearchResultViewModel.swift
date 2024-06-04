@@ -71,7 +71,6 @@ final class SearchResultViewModel: ObservableObject {
     }
     
 //    MARK: - Saved Search Text
-    
     func saveSearchText(_ text: String) {
         storageService.saveSearchText(text)
     }

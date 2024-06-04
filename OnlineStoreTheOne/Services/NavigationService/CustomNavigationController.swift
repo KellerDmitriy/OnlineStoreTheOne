@@ -23,8 +23,6 @@ final class CustomNavigationController: UINavigationController {
             .foregroundColor: Colors.darkArsenic,
             .font: UIFont.makeTypography(.semiBold, size: 17)
         ]
-        
-        navigationBar.addBottomBorder()
     }
 
 }
