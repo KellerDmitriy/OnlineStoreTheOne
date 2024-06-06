@@ -61,7 +61,7 @@ final class HomeCoordinator: IHomeCoordinator {
         navigationController.navigationBar.isHidden = false
         
         let detailCoordinator = DetailCoordinator(
-            flow: .detail, 
+            type: .detail, 
             productID: productId, 
             finishDelegate: finishDelegate,
             navigationController: navigationController

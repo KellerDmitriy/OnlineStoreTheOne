@@ -81,7 +81,6 @@ final class LocationView: UIView {
     
     
     @objc private func changeAddress() {
-        print(">> Change Address BTN tapped")
         delegate?.changeDeliveryAddressTapped()
     }
     

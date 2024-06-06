@@ -17,7 +17,7 @@ final class DetailCoordinator: IDetailCoordinator {
     var childCoordinators: [ICoordinator] = []
 
     // MARK: - Initialization
-    init(flow: CoordinatorType, productID: Int, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
+    init(type: CoordinatorType, productID: Int, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
         self.type = .detail
         self.productID = productID
         self.finishDelegate = finishDelegate

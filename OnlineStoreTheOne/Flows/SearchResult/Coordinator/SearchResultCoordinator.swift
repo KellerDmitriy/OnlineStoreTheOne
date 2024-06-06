@@ -52,7 +52,7 @@ final class SearchResultCoordinator: ISearchResultCoordinator {
     
     func showDetailFlow(productId id: Int) {
         let detailCoordinator = DetailCoordinator(
-            flow: .detail,
+            type: .detail,
             productID: id,
             finishDelegate: finishDelegate,
             navigationController: navigationController

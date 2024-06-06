@@ -49,7 +49,7 @@ final class HomeViewController: BaseViewController {
         super.viewWillAppear(animated)
         viewModel.fetchCategories()
         viewModel.fetchProducts()
-        navigationController?.navigationBar.isHidden = true
+       
     }
     
     deinit {

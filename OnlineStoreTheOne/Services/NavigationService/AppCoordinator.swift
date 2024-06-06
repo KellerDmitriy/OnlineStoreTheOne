@@ -187,7 +187,7 @@ extension AppCoordinator: ICoordinatorFinishDelete {
         case .search:
             type = .home
             start()
-            navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
+                navigationController.popViewController(animated: true)
         case .wishList:
             return finish()
         case .detail:

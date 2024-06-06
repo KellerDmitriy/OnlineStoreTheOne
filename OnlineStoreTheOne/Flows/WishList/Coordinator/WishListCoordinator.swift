@@ -45,7 +45,7 @@ final class WishListCoordinator: IWishListCoordinator {
 
     func showDetailFlow(_ id: Int) {
         let detailCoordinator = DetailCoordinator(
-            flow: .detail, 
+            type: .detail, 
             productID: id, 
             finishDelegate: finishDelegate,
             navigationController: navigationController

@@ -100,7 +100,8 @@ final class SearchResultViewController: BaseViewController {
     }
    
     override func backBarButtonTap() {
-        coordinator.finish()
+#warning("переделать")
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
