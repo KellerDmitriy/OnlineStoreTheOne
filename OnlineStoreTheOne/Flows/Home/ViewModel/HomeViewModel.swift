@@ -42,13 +42,15 @@ final class HomeViewModel: ObservableObject {
     
     var subscription: Set<AnyCancellable> = []
     
+    weak var coordinator: IHomeCoordinator?
     let networkService: NetworkServiceProtocol
     let storageService: StorageServiceProtocol
     
     //MARK: - Init
-    init(networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
-        self.networkService = networkService
-        self.storageService = storageService
+    init(coordinator: IHomeCoordinator) {
+        self.coordinator = coordinator
+        self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
+        self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
         
         observe()
     }

@@ -29,8 +29,8 @@ final class OnboardingCoordinator: IOnboardingCoordinator {
     
     // MARK: - Flow Presentation
     func showOnboardingScene() {
-        let viewModel = OnboardingViewModel()
-        let viewController = OnboardingViewController(viewModel: viewModel, coordinator: self)
+        let viewModel = OnboardingViewModel(coordinator: self)
+        let viewController = OnboardingViewController(viewModel: viewModel)
         
         navigationController.setViewControllers([viewController], animated: true)
     }

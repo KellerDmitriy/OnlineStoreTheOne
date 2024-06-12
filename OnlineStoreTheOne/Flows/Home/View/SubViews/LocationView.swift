@@ -16,32 +16,33 @@ final class LocationView: UIView {
     
     weak var delegate: LocationViewDelegate?
     
-    var deliveryAddress = "Salatiga City, Central Java" {
+    var deliveryAddress = "\(Country.germany.capitalized) - \(Country.germany.capital)" {
         didSet {
             changeDeliveryAddressButton.configuration?.title = deliveryAddress
         }
     }
     
     let titleLabel: UILabel = {
-        let view = UILabel()
-        view.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        view.textColor = .label.withAlphaComponent(0.5)
-        view.text = Text.deliveryAddress
-        return view
+        let label = UILabel()
+        label.font = UIFont.makeTypography(.semiBold, size: 12)
+        label.textColor = .label.withAlphaComponent(0.5)
+        label.text = Text.deliveryAddress
+        return label
     }()
     
     private lazy var changeDeliveryAddressButton: UIButton = {
         let button = UIButton()
-        button.configuration = .plain()
+        button.configuration = .bordered()
         button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-        button.configuration?.baseForegroundColor = .label
+        button.configuration?.baseForegroundColor = Colors.darkArsenic
         button.configuration?.title = deliveryAddress
         button.configuration?.titleAlignment = .leading
         button.configuration?.image = Image.chevronDown?.resizedImage(
-            Size: CGSize(width: 14, height: 8)
+           Size: CGSize(width: 14, height: 8)
         )
         button.configuration?.imagePlacement = .trailing
         button.configuration?.imagePadding = 5
+    
         
         return button
     }()
@@ -83,36 +84,51 @@ final class LocationView: UIView {
     @objc private func changeAddress() {
         delegate?.changeDeliveryAddressTapped()
     }
-    
-    
+
     func buttonMenu() -> UIMenu {
-        let address1 = UIAction(title: "Banyumas Regency, Central Java", image: nil) { action in
-            self.deliveryAddress = action.title
+       var menuActions = [UIAction]()
+        for country in Country.allCases {
+            let action = UIAction(title: "\(country.capitalized) - \(country.capital)", image: nil) { action in
+                self.deliveryAddress = country.capital
+            }
+            menuActions.append(action)
         }
         
-        let address2 = UIAction(title: "Semarang City, Central Java", image: nil) { action in
-            self.deliveryAddress = action.title
-        }
+        return  UIMenu(title: "", options: .displayInline, children: menuActions)
+    }
+    
+    enum Country: CaseIterable {
+        case china, japan, unitedStates, unitedKingdom, russia, india, brazil, germany, france, australia
         
-        let address3 = UIAction(title: "Tegal City, Central Java", image: nil) { action in
-            self.deliveryAddress = action.title
-        }
+        var capitalized: String {
+                switch self {
+                case .china: return "China"
+                case .japan: return "Japan"
+                case .unitedStates: return "United States"
+                case .unitedKingdom: return "United Kingdom"
+                case .russia: return "Russia"
+                case .india: return "India"
+                case .brazil: return "Brazil"
+                case .germany: return "Germany"
+                case .france: return "France"
+                case .australia: return "Australia"
+                }
+            }
         
-        let address4 = UIAction(title: "Wonogiri Regency, Central Java", image: nil) { action in
-            self.deliveryAddress = action.title
+        var capital: String {
+            switch self {
+            case .china: return "Beijing"
+            case .japan: return "Tokyo"
+            case .unitedStates: return "WashingtonD.C."
+            case .unitedKingdom: return "London"
+            case .russia: return "Moscow"
+            case .india: return "NewDelhi"
+            case .brazil: return "Brasilia"
+            case .germany: return "Berlin"
+            case .france: return "Paris"
+            case .australia: return "Canberra"
+            }
         }
-        
-        let address5 = UIAction(title: "Temanggung Regency, Central Java", image: nil) { action in
-            self.deliveryAddress = action.title
-        }
-        
-        return UIMenu(title: "", options: .displayInline, children: [
-            address1,
-            address2,
-            address3,
-            address4,
-            address5
-        ])
     }
 }
 

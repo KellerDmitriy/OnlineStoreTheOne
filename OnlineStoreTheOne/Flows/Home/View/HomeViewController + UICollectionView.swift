@@ -92,7 +92,7 @@ extension HomeViewController: UICollectionViewDelegate {
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         case .products:
             let selectedProduct = viewModel.productsForCategory[indexPath.row]
-            coordinator.showDetailFlow(productId: selectedProduct.id)
+            viewModel.coordinator?.showDetailFlow(productId: selectedProduct.id)
         }
     }
 }
@@ -103,7 +103,7 @@ extension HomeViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.inputView = UIView()
         let searchText = textField.text
-        coordinator.showSearchResultFlow()
+        viewModel.coordinator?.showSearchResultFlow()
     }
 }
 

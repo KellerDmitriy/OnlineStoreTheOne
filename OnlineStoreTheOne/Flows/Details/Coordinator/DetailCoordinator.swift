@@ -22,7 +22,6 @@ final class DetailCoordinator: IDetailCoordinator {
         self.productID = productID
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
-
     }
     
     // MARK: - Coordinator Lifecycle
@@ -33,11 +32,13 @@ final class DetailCoordinator: IDetailCoordinator {
     // MARK: - Flow Presentation
     func showDetailScene(_ id: Int) {
         let detailViewModel = DetailsProductViewModel(
-            productId: id
+            productId: id,
+            coordinator: self
         )
         
-        let detailViewController = DetailsViewController(viewModel: detailViewModel, coordinator: self)
+        let detailViewController = DetailsViewController(viewModel: detailViewModel)
         detailViewController.hidesBottomBarWhenPushed = true
+        navigationController.navigationBar.isHidden = true
         navigationController.pushViewController(detailViewController, animated: true)
     }
     

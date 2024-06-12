@@ -19,13 +19,15 @@ final class SearchResultViewModel: ObservableObject {
     @Published var savedSearchText = [String]()
     var subscription: Set<AnyCancellable> = []
     
+    weak var coordinator: ISearchResultCoordinator?
     let networkService: NetworkServiceProtocol
     let storageService: StorageServiceProtocol
     
     //MARK: - Init
-    init(searchText: String, networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
-        self.networkService = networkService
-        self.storageService = storageService
+    init(searchText: String, coordinator: ISearchResultCoordinator) {
+        self.coordinator = coordinator
+        self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
+        self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
         
         self.searchText = searchText
         if !searchText.isEmpty {
@@ -33,7 +35,7 @@ final class SearchResultViewModel: ObservableObject {
         }
         observe()
     }
-
+    
     //MARK: - Observe Methods
     private func observe() {
         $searchText
@@ -70,12 +72,25 @@ final class SearchResultViewModel: ObservableObject {
         }
     }
     
-//    MARK: - Saved Search Text
+    //    MARK: - Saved Search Text
     func saveSearchText(_ text: String) {
         storageService.saveSearchText(text)
     }
     
     func getSearchText() {
         savedSearchText = storageService.getSearchedText()
+    }
+    
+    //    MARK: - Route
+    func showCartsFlow() {
+        coordinator?.showCartsFlow()
+    }
+    
+    func showDetailFlow(_ id: Int) {
+        coordinator?.showDetailFlow(id)
+    }
+    
+    func dismissScreen() {
+        coordinator?.popViewController()
     }
 }

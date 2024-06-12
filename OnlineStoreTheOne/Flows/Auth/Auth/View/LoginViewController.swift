@@ -14,7 +14,6 @@ protocol AuthenticationControllerProtocol {
 final class LoginViewController: UIViewController {
     
     private var viewModel: LoginViewModelProtocol
-    private let coordinator: IAuthCoordinator?
     
     //MARK: - Private Properties
     private lazy var logoImageView: UIImageView = {
@@ -70,8 +69,7 @@ final class LoginViewController: UIViewController {
     
     //MARK: - Lifecycle\
     
-    init(coordinator: IAuthCoordinator, viewModel: LoginViewModelProtocol) {
-        self.coordinator = coordinator
+    init(viewModel: LoginViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -92,20 +90,19 @@ final class LoginViewController: UIViewController {
     private func loginUser() {
         viewModel.logUserIn { [weak self] error in
             if let error = error {
-                self?.coordinator?.showAlertController(
-                    title: "Error",
+                self?.viewModel.showErrorInfo(
                     message: error.localizedDescription) { [weak self]  in
                         self?.loginUser()
                     }
             } else {
-                self?.coordinator?.finish()
+                self?.viewModel.coordinatorDidFinish()
             }
         }
     }
     
     //MARK: - @Objc Private Methods
     @objc private func handleShowSignUp() {
-        coordinator?.showRegistationScene()
+        viewModel.showRegistationScene()
     }
     
     @objc private func textDidChange(sender: CustomTextField) {

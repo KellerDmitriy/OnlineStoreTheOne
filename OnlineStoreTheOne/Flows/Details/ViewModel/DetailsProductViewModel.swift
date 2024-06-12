@@ -15,11 +15,13 @@ final class DetailsProductViewModel: ObservableObject {
     
     var cancellables: Set<AnyCancellable> = []
     
+    weak var coordinator: IDetailCoordinator?
     let networkService: NetworkServiceProtocol
     let storageService: StorageServiceProtocol
     
     // MARK: - Init
-    init(productId: Int) {
+    init(productId: Int, coordinator: IDetailCoordinator) {
+        self.coordinator = coordinator
         self.networkService = DIService.resolve(forKey: DIKey.networkService) ?? NetworkService()
         self.storageService = DIService.resolve(forKey: DIKey.storageService) ?? StorageService()
         
@@ -63,5 +65,18 @@ final class DetailsProductViewModel: ObservableObject {
     func removeFromWishList() {
         storageService.removeIDFromWishList(product.id)
 
+    }
+    
+    //    MARK: - Route
+    func showCartFLow() {
+        coordinator?.showCartsFlow()
+    }
+    
+    func showPayScene() {
+        coordinator?.showPayScene()
+    }
+    
+    func dismissScreen() {
+        coordinator?.popViewController()
     }
 }

@@ -10,7 +10,6 @@ import SnapKit
 
 final class OnboardingViewController: UIViewController {
      //MARK: - Private Properties
-    private let coordinator: IOnboardingCoordinator
     private let viewModel: OnboardingViewModel
     
     private let backgroundImageView: UIImageView = {
@@ -20,9 +19,8 @@ final class OnboardingViewController: UIViewController {
     }(UIImageView())
     
     
-    init(viewModel: OnboardingViewModel, coordinator: IOnboardingCoordinator) {
+    init(viewModel: OnboardingViewModel) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -62,7 +60,7 @@ final class OnboardingViewController: UIViewController {
      //MARK: - Objc Methods
     @objc private func handleTap() {
         guard let nextImage = viewModel.nextImage() else {
-            coordinator.finish()
+            viewModel.coordinator?.finish()
             return
         }
         backgroundImageView.image = nextImage

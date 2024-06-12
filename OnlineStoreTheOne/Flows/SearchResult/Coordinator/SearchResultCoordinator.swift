@@ -16,17 +16,12 @@ final class SearchResultCoordinator: ISearchResultCoordinator {
     
     var childCoordinators: [ICoordinator] = []
     
-    let networkService: NetworkServiceProtocol
-    let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
     init(flow: CoordinatorType, finishDelegate: ICoordinatorFinishDelete?, navigationController: UINavigationController) {
         self.type = .wishList
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
-        
-        self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
-        self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
     }
     
     // MARK: - Coordinator Lifecycle
@@ -38,19 +33,15 @@ final class SearchResultCoordinator: ISearchResultCoordinator {
     func showSearchResultScene(searchText: String?) {
         let viewModel = SearchResultViewModel(
             searchText: searchText ?? "",
-            networkService: networkService,
-            storageService: storageService
-        )
-        let viewController = SearchResultViewController(
-            viewModel: viewModel,
             coordinator: self
         )
+        let viewController = SearchResultViewController(viewModel: viewModel)
         viewController.hidesBottomBarWhenPushed = true
         navigationController.navigationBar.isHidden = true
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showDetailFlow(productId id: Int) {
+    func showDetailFlow(_ id: Int) {
         let detailCoordinator = DetailCoordinator(
             type: .detail,
             productID: id,

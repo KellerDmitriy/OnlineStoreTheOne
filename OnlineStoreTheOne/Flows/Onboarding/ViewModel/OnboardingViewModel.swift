@@ -9,6 +9,7 @@ import UIKit
 
 final class OnboardingViewModel {
     // MARK: - Properties
+    weak var coordinator: IOnboardingCoordinator?
     
     private let imageArray = [
         UIImage(named: "Onboarding1"),
@@ -17,6 +18,11 @@ final class OnboardingViewModel {
     ]
     private var currentIndex = 0
     
+    //    MARK: - Init
+    init(coordinator: IOnboardingCoordinator) {
+        self.coordinator = coordinator
+        
+    }
     // MARK: - Methods
     func currentImage() -> UIImage? {
         guard currentIndex < imageArray.count else { return nil }

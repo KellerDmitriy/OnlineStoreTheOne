@@ -15,16 +15,13 @@ final class HomeCoordinator: IHomeCoordinator {
     var navigationController: UINavigationController
     var childCoordinators: [ICoordinator] = []
     
-    let networkService: NetworkServiceProtocol
-    let storageService: StorageServiceProtocol
     
     // MARK: - Initialization
     init(type: CoordinatorType, finishDelegate: ICoordinatorFinishDelete, navigationController: UINavigationController) {
         self.type = .home
         self.finishDelegate = finishDelegate
         self.navigationController = navigationController
-        self.networkService = DIService.resolve(forKey: .networkService) ?? NetworkService()
-        self.storageService = DIService.resolve(forKey: .storageService) ?? StorageService()
+
     }
     
     // MARK: - Coordinator Lifecycle
@@ -34,13 +31,8 @@ final class HomeCoordinator: IHomeCoordinator {
     
     // MARK: - Flow Presentation
     func showHomeScene() {
-        let viewModel = HomeViewModel(
-            networkService: networkService,
-            storageService: storageService
-        )
-        
-        
-        let viewController = HomeViewController(viewModel: viewModel, coordinator: self)
+        let viewModel = HomeViewModel(coordinator: self)
+        let viewController = HomeViewController(viewModel: viewModel)
         navigationController.navigationBar.isHidden = true
         navigationController.setViewControllers([viewController], animated: true)
     }

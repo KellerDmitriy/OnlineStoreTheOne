@@ -118,8 +118,7 @@ final class CartsViewController: BaseViewController {
     }
     
     override func backBarButtonTap() {
-        #warning("переделать")
-        navigationController?.popToRootViewController(animated: true)
+        coordinator.popViewController()
     }
     
     override func addViews() {

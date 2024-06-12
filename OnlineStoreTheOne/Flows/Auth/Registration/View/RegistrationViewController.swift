@@ -9,8 +9,6 @@ import UIKit
 
 final class RegistrationViewController: UIViewController {
      //MARK: - Private properties
-    
-    private let coordinator: IAuthCoordinator?
     private var viewModel: RegistrationViewModelProtocol
     
     private let loginView = InputContainerView(
@@ -81,9 +79,7 @@ final class RegistrationViewController: UIViewController {
 
     
      //MARK: - Lifecycle
-    
-    init(coordinator: IAuthCoordinator, viewModel: RegistrationViewModelProtocol) {
-        self.coordinator = coordinator
+    init(viewModel: RegistrationViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -109,13 +105,12 @@ final class RegistrationViewController: UIViewController {
     private func registerUser() {
         viewModel.registerUser { [weak self] error in
             if let error = error {
-                self?.coordinator?.showAlertController(
-                    title: "Error",
+                self?.viewModel.showErrorInfo(
                     message: error.localizedDescription) { [weak self] in
                         self?.registerUser()
                     }
             } else {
-                self?.coordinator?.finish()
+                self?.viewModel.coordinatorDidFinish()
             }
         }
     }
@@ -153,7 +148,7 @@ final class RegistrationViewController: UIViewController {
     }
     
      //MARK: - @Objc Private Methods
-    
+    #warning("переделать!")
     private func changeType() {
         let vc = TypeOfAccountViewController()
         vc.completion = { [weak self] text in
@@ -165,7 +160,7 @@ final class RegistrationViewController: UIViewController {
     }
     
     @objc private func handleShowLogin() {
-        navigationController?.popViewController(animated: true)
+        viewModel.showLoginFlow()
     }
     
     @objc private func textDidChange(sender: CustomTextField) {

@@ -11,7 +11,7 @@ import SnapKit
 final class SearchResultViewController: BaseViewController {
     // MARK: - Properties
     var viewModel: SearchResultViewModel
-    let coordinator: ISearchResultCoordinator
+
     
     //MARK: Private properties
     private var searchBarIsEmpty: Bool {
@@ -38,9 +38,8 @@ final class SearchResultViewController: BaseViewController {
     
     
     // MARK: - Init
-    init(viewModel: SearchResultViewModel, coordinator: ISearchResultCoordinator) {
+    init(viewModel: SearchResultViewModel) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -96,12 +95,11 @@ final class SearchResultViewController: BaseViewController {
     }
     
     override func cartBarButtonTap() {
-        coordinator.showCartsFlow()
+        viewModel.showCartsFlow()
     }
    
     override func backBarButtonTap() {
-#warning("переделать")
-        navigationController?.popToRootViewController(animated: true)
+        viewModel.dismissScreen()
     }
 }
 

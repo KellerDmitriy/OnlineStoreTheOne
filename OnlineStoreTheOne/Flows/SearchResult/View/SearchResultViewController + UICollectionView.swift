@@ -38,7 +38,7 @@ extension SearchResultViewController: UITextFieldDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedProduct = viewModel.searchedProducts[indexPath.row]
         
-        coordinator.showDetailFlow(productId: selectedProduct.id)
+        viewModel.showDetailFlow(selectedProduct.id)
     }
 }
 

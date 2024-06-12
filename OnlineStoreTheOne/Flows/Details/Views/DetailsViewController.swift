@@ -11,7 +11,6 @@ import Combine
 final class DetailsViewController: BaseViewController {
     //MARK: - Private Properties
     private let viewModel: DetailsProductViewModel
-    let coordinator: IDetailCoordinator
     
     private let scrollView = UIScrollView()
     private let mainStackView = UIStackView()
@@ -50,9 +49,9 @@ final class DetailsViewController: BaseViewController {
     }(UIView())
     
     //MARK: - Lifecycle
-    init(viewModel: DetailsProductViewModel, coordinator: IDetailCoordinator) {
+    init(viewModel: DetailsProductViewModel) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -63,16 +62,13 @@ final class DetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addViews()
-        setupConstraints()
-        setupNavigation()
         actionForAddToWishListButtonTap()
         bind()
         changeToWishListButton()
     }
     
     deinit {
-        coordinator.finish()
+        viewModel.coordinator?.finish()
     }
     
     //MARK: - Private Methods
@@ -98,8 +94,17 @@ final class DetailsViewController: BaseViewController {
             .store(in: &viewModel.cancellables)
     }
     
+    override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
+        CustomNavigationBarConfiguration(
+        title: "Details product",
+        isSetupBackButton: true,
+        isSetupCartButton: true
+        )
+    }
+    
     override func addViews() {
-        view.backgroundColor = .white
+        super.addViews()
+        
         [scrollView, mainStackView, buttonStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         view.addSubview(scrollView)
         scrollView.addSubview(mainStackView)
@@ -114,20 +119,20 @@ final class DetailsViewController: BaseViewController {
         view.addSubview(separatorLine)
     }
     
-    private func setupNavigation() {
-//        addNavBarButton(at: .backButton)
-//        addNavBarButton(at: .cartButton)
-        navigationItem.title = "Details product"
+    override func cartBarButtonTap() {
+        viewModel.showCartFLow()
     }
     
-    override func cartBarButtonTap() {
-        coordinator.showCartsFlow()
+    override func backBarButtonTap() {
+        viewModel.dismissScreen()
     }
     
 //    MARK: Override methods
     override func setupConstraints() {
+        super.setupConstraints()
+        
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
             $0.bottom.equalTo(separatorLine.snp.bottom)
             $0.leading.trailing.equalToSuperview()
         }
@@ -162,7 +167,7 @@ final class DetailsViewController: BaseViewController {
 // MARK: - Actions
 private extension DetailsViewController {
     func payButtonTap() {
-        coordinator.showPayScene()
+        viewModel.showPayScene()
     }
     
     func cartButtonTap() {
@@ -184,6 +189,4 @@ private extension DetailsViewController {
         let image = status ? UIImage(named: "selectedWishlist") : UIImage(named: "Wishlist")
         productList.addToWishListButton.setImage(image, for: .normal)
     }
-    
-
 }

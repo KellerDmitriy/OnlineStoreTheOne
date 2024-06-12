@@ -15,11 +15,15 @@ protocol RegistrationViewModelProtocol {
     var formIsValid: Bool { get }
     
     func registerUser(completion: @escaping (Error?) -> Void)
+    func showErrorInfo(message: String, action: @escaping ()-> Void)
+    func showLoginFlow()
+    func coordinatorDidFinish()
 }
 
 final class RegistrationViewModel: RegistrationViewModelProtocol {
     
     let authService: IFirebase = DIService.resolve(forKey: .authService) ?? FirebaseService()
+    weak var coordinator: IAuthCoordinator?
     
     var login: String?
     var email: String?
@@ -45,6 +49,13 @@ final class RegistrationViewModel: RegistrationViewModelProtocol {
             && email.isValidEmail
     }
     
+    
+    //    MARK: - Init
+    init(coordinator: IAuthCoordinator ) {
+        self.coordinator = coordinator
+    }
+    
+    //    MARK: - Methods
     func registerUser(completion: @escaping (Error?) -> Void) {
         guard let login = login,
               let email = email,
@@ -65,6 +76,22 @@ final class RegistrationViewModel: RegistrationViewModelProtocol {
         authService.registerUser(with: credentials) { error in
             completion(error)
         }
+    }
+    
+    //    MARK: - Route
+    func showErrorInfo(message: String, action: @escaping ()->Void) {
+        coordinator?.showAlertController(
+            title: "Error",
+            message: message,
+            createAction: action)
+    }
+    
+    func showLoginFlow() {
+        coordinator?.showLoginScene()
+    }
+    
+    func coordinatorDidFinish() {
+        coordinator?.finish()
     }
 }
 

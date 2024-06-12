@@ -26,6 +26,7 @@ protocol ICoordinatorFinishDelete {
 
 protocol ICoordinator: AnyObject {
     var type: CoordinatorType { get }
+    
     var finishDelegate: ICoordinatorFinishDelete? { get set }
     var navigationController: UINavigationController { get set }
     var childCoordinators: [ICoordinator] { get set }
@@ -63,6 +64,10 @@ extension ICoordinator {
     func finish() {
         finishDelegate?.didFinish(self)
     }
+    
+    func popViewController() {
+        navigationController.popViewController(animated: true)
+    }
 }
 
 protocol IAppCoordinator: ICoordinator {
@@ -91,7 +96,7 @@ protocol IHomeCoordinator: ICoordinator {
 protocol ISearchResultCoordinator: ICoordinator {
     func showSearchResultScene(searchText: String?)
     
-    func showDetailFlow(productId: Int)
+    func showDetailFlow(_ productId: Int)
     func showCartsFlow()
     
 }

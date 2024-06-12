@@ -11,7 +11,7 @@ import SnapKit
 final class HomeViewController: BaseViewController {
     //MARK: - Properties
     let viewModel: HomeViewModel
-    let coordinator: IHomeCoordinator
+  
     
     let sections = SectionsData.shared.sections
     
@@ -25,9 +25,8 @@ final class HomeViewController: BaseViewController {
     }()
     
     //MARK: - Init
-    init(viewModel: HomeViewModel, coordinator: IHomeCoordinator) {
+    init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,7 +48,6 @@ final class HomeViewController: BaseViewController {
         super.viewWillAppear(animated)
         viewModel.fetchCategories()
         viewModel.fetchProducts()
-       
     }
     
     deinit {
@@ -142,7 +140,7 @@ final class HomeViewController: BaseViewController {
                 }
             }
             
-            coordinator.showAlertController(title: "Error", message: message) {
+            viewModel.coordinator?.showAlertController(title: "Error", message: message) {
                 retryAction()
             }
         }
@@ -157,7 +155,7 @@ final class HomeViewController: BaseViewController {
     }
     
     override func cartBarButtonTap() {
-        coordinator.showCartsFlow()
+        viewModel.coordinator?.showCartsFlow()
     }
     
     //MARK: - Action
