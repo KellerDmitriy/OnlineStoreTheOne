@@ -1,5 +1,5 @@
 //
-//  StartEntity.swift
+//  StartService.swift
 //  OnlineStoreTheOne
 //
 //  Created by Келлер Дмитрий on 09.05.2024.
@@ -27,11 +27,11 @@ final class Context {
     }
 }
 
-protocol IStartEntity {
+protocol IStartService {
     func selectStartFlow(context: Context) -> CoordinatorType
 }
 
-final class StartEntity: IStartEntity {
+final class StartService: IStartService {
     func selectStartFlow(context: Context) -> CoordinatorType {
         if !context.isOnboardComplete {
             return .onboarding

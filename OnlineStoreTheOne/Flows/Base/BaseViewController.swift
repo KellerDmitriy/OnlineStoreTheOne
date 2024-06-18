@@ -32,6 +32,19 @@ class BaseViewController: UIViewController, IBaseViewController {
         customNavigationBar.setupConfiguration(configureNavigationBar())
         addActionForNavBarButton(at: .cartButton)
         addActionForNavBarButton(at: .backButton)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCartButtonCount(_:)), name: NSNotification.Name("getCartsCount"), object: nil)
+        
+        updateCartButtonCount(nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateCartButtonCount(nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - IBaseViewController
@@ -41,6 +54,13 @@ class BaseViewController: UIViewController, IBaseViewController {
 
 @objc
 extension BaseViewController {
+    
+    // MARK: - Notification Handling
+        func updateCartButtonCount(_ notification: Notification?) {
+            let count = notification?.userInfo?["count"] as? Int ?? StorageService().getCartsCount()
+            cartButton.count = count
+        }
+    
     // MARK: - Configuration
     func configure() {
         view.backgroundColor = .systemBackground

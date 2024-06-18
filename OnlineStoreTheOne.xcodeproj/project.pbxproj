@@ -88,7 +88,7 @@
 		E1835F2A2BEC1F8D00BE1962 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */; };
 		E1835F2C2BECAFA000BE1962 /* ICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */; };
 		E1835F2E2BECB0FD00BE1962 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F2D2BECB0FD00BE1962 /* AuthCoordinator.swift */; };
-		E1835F322BECB7B500BE1962 /* StartEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F312BECB7B500BE1962 /* StartEntity.swift */; };
+		E1835F322BECB7B500BE1962 /* StartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F312BECB7B500BE1962 /* StartService.swift */; };
 		E1835F352BEE76F900BE1962 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F342BEE76F900BE1962 /* OnboardingCoordinator.swift */; };
 		E1835F372BEE7EE500BE1962 /* WishListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F362BEE7EE500BE1962 /* WishListCoordinator.swift */; };
 		E1835F392BEE7F0B00BE1962 /* CartsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1835F382BEE7F0B00BE1962 /* CartsCoordinator.swift */; };
@@ -124,6 +124,7 @@
 		E1D91A122BDE54D00031B413 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1D91A112BDE54D00031B413 /* Assets.xcassets */; };
 		E1E2B4C82BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */; };
 		E1E2B4CA2BDBD98300D72CF7 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */; };
+		E1EB6FCA2C21B75500113CF4 /* OnlineStoreTheOneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB6FC92C21B75500113CF4 /* OnlineStoreTheOneTests.swift */; };
 		E1F1B2222BCC1852001DC54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2212BCC1852001DC54D /* AppDelegate.swift */; };
 		E1F1B2242BCC1852001DC54D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */; };
 		E1F1B22E2BCC1853001DC54D /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E1F1B22D2BCC1853001DC54D /* Base */; };
@@ -143,6 +144,16 @@
 		E1F1B2632BCC50D5001DC54D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B2622BCC50D5001DC54D /* Observable.swift */; };
 		E1F1B26B2BCC6B60001DC54D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1B26A2BCC6B60001DC54D /* TabBarController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E1EB6FCB2C21B75500113CF4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E1F1B2162BCC1852001DC54D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1F1B21D2BCC1852001DC54D;
+			remoteInfo = OnlineStoreTheOne;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		531121E62BD1A99A0018FA37 /* TypeOfAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfAccountViewController.swift; sourceTree = "<group>"; };
@@ -222,7 +233,7 @@
 		E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICoordinator.swift; sourceTree = "<group>"; };
 		E1835F2D2BECB0FD00BE1962 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
-		E1835F312BECB7B500BE1962 /* StartEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartEntity.swift; sourceTree = "<group>"; };
+		E1835F312BECB7B500BE1962 /* StartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartService.swift; sourceTree = "<group>"; };
 		E1835F342BEE76F900BE1962 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		E1835F362BEE7EE500BE1962 /* WishListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCoordinator.swift; sourceTree = "<group>"; };
 		E1835F382BEE7F0B00BE1962 /* CartsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartsCoordinator.swift; sourceTree = "<group>"; };
@@ -255,6 +266,8 @@
 		E1D91A112BDE54D00031B413 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1E2B4C72BDB92B700D72CF7 /* HomeViewController + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionView.swift"; sourceTree = "<group>"; };
 		E1E2B4C92BDBD98300D72CF7 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
+		E1EB6FC72C21B75500113CF4 /* OnlineStoreTheOneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnlineStoreTheOneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1EB6FC92C21B75500113CF4 /* OnlineStoreTheOneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineStoreTheOneTests.swift; sourceTree = "<group>"; };
 		E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStoreTheOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F1B2212BCC1852001DC54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -278,6 +291,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E1EB6FC42C21B75500113CF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1F1B21B2BCC1852001DC54D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -677,6 +697,7 @@
 		E1835F282BEC1DE400BE1962 /* NavigationService */ = {
 			isa = PBXGroup;
 			children = (
+				E1EB6FD02C21B95E00113CF4 /* StartService */,
 				E1835F2B2BECAFA000BE1962 /* ICoordinator.swift */,
 				E1835F292BEC1F8D00BE1962 /* AppCoordinator.swift */,
 				E15B89892C0125930060A8D3 /* ICustomNavigationBar.swift */,
@@ -951,10 +972,27 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		E1EB6FC82C21B75500113CF4 /* OnlineStoreTheOneTests */ = {
+			isa = PBXGroup;
+			children = (
+				E1EB6FC92C21B75500113CF4 /* OnlineStoreTheOneTests.swift */,
+			);
+			path = OnlineStoreTheOneTests;
+			sourceTree = "<group>";
+		};
+		E1EB6FD02C21B95E00113CF4 /* StartService */ = {
+			isa = PBXGroup;
+			children = (
+				E1835F312BECB7B500BE1962 /* StartService.swift */,
+			);
+			path = StartService;
+			sourceTree = "<group>";
+		};
 		E1F1B2152BCC1852001DC54D = {
 			isa = PBXGroup;
 			children = (
 				E1F1B2202BCC1852001DC54D /* OnlineStoreTheOne */,
+				E1EB6FC82C21B75500113CF4 /* OnlineStoreTheOneTests */,
 				E1F1B21F2BCC1852001DC54D /* Products */,
 				868A9A4D2BD9366E00476776 /* Frameworks */,
 			);
@@ -964,6 +1002,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F1B21E2BCC1852001DC54D /* OnlineStoreTheOne.app */,
+				E1EB6FC72C21B75500113CF4 /* OnlineStoreTheOneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -985,7 +1024,6 @@
 				E1F1B2212BCC1852001DC54D /* AppDelegate.swift */,
 				E1F1B2232BCC1852001DC54D /* SceneDelegate.swift */,
 				E1F1B2622BCC50D5001DC54D /* Observable.swift */,
-				E1835F312BECB7B500BE1962 /* StartEntity.swift */,
 				E18A56082BD7BCE000E34777 /* GoogleService-Info.plist */,
 				E1F1B22F2BCC1853001DC54D /* Info.plist */,
 			);
@@ -1106,6 +1144,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E1EB6FC62C21B75500113CF4 /* OnlineStoreTheOneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1EB6FCF2C21B75600113CF4 /* Build configuration list for PBXNativeTarget "OnlineStoreTheOneTests" */;
+			buildPhases = (
+				E1EB6FC32C21B75500113CF4 /* Sources */,
+				E1EB6FC42C21B75500113CF4 /* Frameworks */,
+				E1EB6FC52C21B75500113CF4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E1EB6FCC2C21B75500113CF4 /* PBXTargetDependency */,
+			);
+			name = OnlineStoreTheOneTests;
+			productName = OnlineStoreTheOneTests;
+			productReference = E1EB6FC72C21B75500113CF4 /* OnlineStoreTheOneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E1F1B21D2BCC1852001DC54D /* OnlineStoreTheOne */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1F1B2322BCC1853001DC54D /* Build configuration list for PBXNativeTarget "OnlineStoreTheOne" */;
@@ -1142,6 +1198,10 @@
 				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					E1EB6FC62C21B75500113CF4 = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = E1F1B21D2BCC1852001DC54D;
+					};
 					E1F1B21D2BCC1852001DC54D = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -1166,11 +1226,19 @@
 			projectRoot = "";
 			targets = (
 				E1F1B21D2BCC1852001DC54D /* OnlineStoreTheOne */,
+				E1EB6FC62C21B75500113CF4 /* OnlineStoreTheOneTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E1EB6FC52C21B75500113CF4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1F1B21C2BCC1852001DC54D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1193,6 +1261,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E1EB6FC32C21B75500113CF4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1EB6FCA2C21B75500113CF4 /* OnlineStoreTheOneTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1F1B21A2BCC1852001DC54D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1228,7 +1304,7 @@
 				86BC2D552BDE5B2D003BF895 /* CustomViewWithPickerViewModel.swift in Sources */,
 				E1D1DC3A2BD24FC10009C2A3 /* CartButton.swift in Sources */,
 				86BC2D472BDD55FE003BF895 /* AddNewCategoryViewController.swift in Sources */,
-				E1835F322BECB7B500BE1962 /* StartEntity.swift in Sources */,
+				E1835F322BECB7B500BE1962 /* StartService.swift in Sources */,
 				86BC2D5C2BDE860F003BF895 /* UpdateProductViewModel.swift in Sources */,
 				E1A2E83A2BCD109600CC0D64 /* ProductsModel.swift in Sources */,
 				E16BB6982BD654B6009991F3 /* PhotoCell.swift in Sources */,
@@ -1318,6 +1394,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E1EB6FCC2C21B75500113CF4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1F1B21D2BCC1852001DC54D /* OnlineStoreTheOne */;
+			targetProxy = E1EB6FCB2C21B75500113CF4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		E1F1B22C2BCC1853001DC54D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1330,6 +1414,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E1EB6FCD2C21B75600113CF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KYB528F2CP;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = keller.OnlineStoreTheOne.OnlineStoreTheOneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnlineStoreTheOne.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OnlineStoreTheOne";
+			};
+			name = Debug;
+		};
+		E1EB6FCE2C21B75600113CF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KYB528F2CP;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = keller.OnlineStoreTheOne.OnlineStoreTheOneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnlineStoreTheOne.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OnlineStoreTheOne";
+			};
+			name = Release;
+		};
 		E1F1B2302BCC1853001DC54D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1516,6 +1638,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E1EB6FCF2C21B75600113CF4 /* Build configuration list for PBXNativeTarget "OnlineStoreTheOneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1EB6FCD2C21B75600113CF4 /* Debug */,
+				E1EB6FCE2C21B75600113CF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E1F1B2192BCC1852001DC54D /* Build configuration list for PBXProject "OnlineStoreTheOne" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         
         let context = Context()
-        let startFlow = StartEntity().selectStartFlow(context: context)
+        let startFlow = StartService().selectStartFlow(context: context)
         
         coordinator = AppCoordinator(
             window: window,

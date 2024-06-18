@@ -20,6 +20,7 @@ protocol StorageServiceProtocol {
     func addCarts(_ cartItems: [CartModel])
     func saveOrUpdateCart(_ cartItem: CartModel)
     func getCarts() -> [CartModel]
+    func getCartsCount() -> Int 
     func updateCart<T>(for id: Int, newValue: T)
     func removeCartItem(for id: Int)
 }
@@ -104,16 +105,16 @@ final class StorageService: StorageServiceProtocol {
         return wishListIDs.contains(id)
     }
     
-    // MARK: - saved for Carts
+    // MARK: - Saved for Carts
     func addCarts(_ cartItems: [CartModel]) {
-           let cartItemsData = try? JSONEncoder().encode(cartItems)
+        let cartItemsData = try? JSONEncoder().encode(cartItems)
         userDefaults.set(cartItemsData, forKey: UDKeys.cartKey)
-       }
-    
+        notifyCartCountChange()
+    }
+
     func saveOrUpdateCart(_ cartItem: CartModel) {
         var cartItems = getCarts()
-        if let index = cartItems
-            .firstIndex(where: { $0.product.id == cartItem.product.id }) {
+        if let index = cartItems.firstIndex(where: { $0.product.id == cartItem.product.id }) {
             cartItems[index].countProduct += 1
             cartItems[index].isSelected = cartItem.isSelected
         } else {
@@ -121,39 +122,47 @@ final class StorageService: StorageServiceProtocol {
         }
         addCarts(cartItems)
     }
-    
+
     func getCarts() -> [CartModel] {
-           guard let cartItemsData = userDefaults.data(forKey: UDKeys.cartKey),
-                 let decodedCartItems = try? JSONDecoder().decode([CartModel].self, from: cartItemsData) else {
-               return []
-           }
-           return decodedCartItems
-       }
-    
+        guard let cartItemsData = userDefaults.data(forKey: UDKeys.cartKey),
+              let decodedCartItems = try? JSONDecoder().decode([CartModel].self, from: cartItemsData) else {
+            return []
+        }
+        return decodedCartItems
+    }
+
     func updateCart<T>(for id: Int, newValue: T) {
         var cartItems = getCarts()
-        
         guard let index = cartItems.firstIndex(where: { $0.product.id == id }) else {
             return
         }
-        
+
         if let newValue = newValue as? Int {
             cartItems[index].countProduct = newValue
         } else if let newValue = newValue as? Bool {
             cartItems[index].isSelected = newValue
         }
-        
+
         addCarts(cartItems)
     }
-    
+
+    func getCartsCount() -> Int {
+        return getCarts().count
+    }
+
     func removeCartItem(for id: Int) {
         var cartItems = getCarts()
-        
         if let index = cartItems.firstIndex(where: { $0.product.id == id }) {
             cartItems.remove(at: index)
             addCarts(cartItems)
         }
     }
 
+    // MARK: - Private Methods
+    private func notifyCartCountChange() {
+        let count = getCarts().count
+        NotificationCenter.default.post(name: NSNotification.Name("getCartsCount"), object: nil, userInfo: ["count": count])
+    }
 }
+
 

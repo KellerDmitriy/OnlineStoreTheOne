@@ -82,13 +82,6 @@ final class HomeViewController: BaseViewController {
             }
             .store(in: &viewModel.subscription)
         
-        viewModel.$productCount
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.customNavigationBar.cartButton.count = viewModel.productCount
-            }
-            .store(in: &viewModel.subscription)
         
         viewModel.$isCategoryExpanded
             .receive(on: DispatchQueue.main)

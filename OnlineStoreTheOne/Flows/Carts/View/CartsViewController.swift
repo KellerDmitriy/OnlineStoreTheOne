@@ -90,7 +90,7 @@ final class CartsViewController: BaseViewController {
                .receive(on: DispatchQueue.main)
                .sink { [weak self] carts in
                    self?.animateCollectionView()
-                   self?.cartButton.count = carts.count
+//                   self?.cartButton.count = carts.count
                }
                .store(in: &viewModel.subscription)
        }

@@ -173,11 +173,11 @@ extension AppCoordinator: ICoordinatorFinishDelete {
             
         case .onboarding:
             context.isOnboardComplete = true
-            type = StartEntity().selectStartFlow(context: context)
+            type = StartService().selectStartFlow(context: context)
             start()
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .auth:
-            type = StartEntity().selectStartFlow(context: context)
+            type = StartService().selectStartFlow(context: context)
             start()
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         case .tabBar:
@@ -198,7 +198,7 @@ extension AppCoordinator: ICoordinatorFinishDelete {
             return finish()
         case .profile:
             context.isOnboardComplete = false
-            type = StartEntity().selectStartFlow(context: context)
+            type = StartService().selectStartFlow(context: context)
             start()
             navigationController.viewControllers = [navigationController.viewControllers.last ?? UIViewController()]
         }

@@ -26,7 +26,6 @@ enum DataError: Error {
 final class HomeViewModel: ObservableObject {
     @Published var dataError: DataError?
     
-    @Published var productCount = 1
     @Published var isCategoryExpanded = false
     
     @Published var isLoading: Bool = true

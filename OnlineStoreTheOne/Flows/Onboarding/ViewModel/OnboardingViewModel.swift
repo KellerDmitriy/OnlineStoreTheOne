@@ -21,8 +21,8 @@ final class OnboardingViewModel {
     //    MARK: - Init
     init(coordinator: IOnboardingCoordinator) {
         self.coordinator = coordinator
-        
     }
+    
     // MARK: - Methods
     func currentImage() -> UIImage? {
         guard currentIndex < imageArray.count else { return nil }
