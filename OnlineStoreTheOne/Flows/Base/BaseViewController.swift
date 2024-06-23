@@ -65,7 +65,6 @@ extension BaseViewController {
     func configure() {
         view.backgroundColor = .systemBackground
         customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
-       
     }
     
     // MARK: - Actions

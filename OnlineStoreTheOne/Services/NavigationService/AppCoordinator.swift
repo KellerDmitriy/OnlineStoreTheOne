@@ -81,11 +81,11 @@ final class AppCoordinator: ICoordinator {
     
     func showAuthFlow() {
         let authCoordinator = AuthCoordinator(
-            flow: .auth, 
+            flow: .auth,
             finishDelegate: self,
             navigationController: navigationController
         )
-       
+        
         childCoordinators.append(authCoordinator)
         authCoordinator.start()
     }
@@ -93,27 +93,27 @@ final class AppCoordinator: ICoordinator {
     func showTabBarFlow() {
         let homeNavigationController = CustomNavigationController()
         let homeCoordinator = HomeCoordinator(
-            type: .home, 
+            type: .home,
             finishDelegate: self,
             navigationController: homeNavigationController
         )
         homeNavigationController.tabBarItem = UITabBarItem(
-            title: "Home",
-            image: UIImage(named: "Home"),
-            selectedImage: UIImage(named: "selectedHome")
+            title: Resources.Text.home,
+            image: Resources.Image.home,
+            selectedImage: Resources.Image.selectedHome
         )
         homeCoordinator.start()
         
         let wishListNavigationController = CustomNavigationController()
         let wishListCoordinator = WishListCoordinator(
-            flow: .wishList, 
+            flow: .wishList,
             finishDelegate: self,
             navigationController: wishListNavigationController
         )
         wishListNavigationController.tabBarItem = UITabBarItem(
-            title: "Wish List",
-            image: UIImage(named: "Wishlist"),
-            selectedImage: UIImage(named: "selectedWishlist")
+            title: Resources.Text.wishList,
+            image: Resources.Image.wishList,
+            selectedImage: Resources.Image.selectedWishlist
         )
         
         wishListCoordinator.finishDelegate = self
@@ -121,14 +121,14 @@ final class AppCoordinator: ICoordinator {
         
         let managerNavigationController = UINavigationController()
         let managerCoordinator = ManagerCoordinator(
-            flow: .manager, 
+            flow: .manager,
             finishDelegate: self,
             navigationController: managerNavigationController
         )
         managerNavigationController.tabBarItem = UITabBarItem(
-            title: "Manager",
-            image: UIImage(named: "Manager"),
-            selectedImage: UIImage(named: "selectedManager")
+            title: Resources.Text.manager,
+            image: Resources.Image.manager,
+            selectedImage: Resources.Image.selectedManager
         )
         
         managerCoordinator.finishDelegate = self
@@ -136,15 +136,15 @@ final class AppCoordinator: ICoordinator {
         
         let profileNavigationController = CustomNavigationController()
         let profileCoordinator = ProfileCoordinator(
-            flow: .profile, 
+            flow: .profile,
             finishDelegate: self,
             navigationController: profileNavigationController,
             storageService: storageService
         )
         profileNavigationController.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: UIImage(named: "ProfileTab"),
-            selectedImage: UIImage(named: "selectedProfile")
+            title: Resources.Text.profile,
+            image: Resources.Image.profileTab,
+            selectedImage: Resources.Image.selectedProfile
         )
         profileCoordinator.start()
         
@@ -163,7 +163,6 @@ final class AppCoordinator: ICoordinator {
         window?.rootViewController = tabBarController
     }
 }
-
 //MARK: - ICoordinatorFinishDelete
 extension AppCoordinator: ICoordinatorFinishDelete {
  

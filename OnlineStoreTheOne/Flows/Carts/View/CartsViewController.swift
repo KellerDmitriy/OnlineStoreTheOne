@@ -90,7 +90,6 @@ final class CartsViewController: BaseViewController {
                .receive(on: DispatchQueue.main)
                .sink { [weak self] carts in
                    self?.animateCollectionView()
-//                   self?.cartButton.count = carts.count
                }
                .store(in: &viewModel.subscription)
        }
@@ -121,6 +120,19 @@ final class CartsViewController: BaseViewController {
         coordinator.popViewController()
     }
     
+    func animateCollectionView() {
+        UIView.transition(with: tableView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.tableView.reloadData()
+        }, completion: nil)
+    }
+    
+    private func configureTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(CartsTableViewCell.self, forCellReuseIdentifier: CartsTableViewCell.cellID)
+        tableView.rowHeight = Constants.rowHeight
+    }
+    
     override func addViews() {
         super.addViews()
         
@@ -138,20 +150,6 @@ final class CartsViewController: BaseViewController {
         
         configureTableView()
     }
-    
-    func animateCollectionView() {
-        UIView.transition(with: tableView, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            self.tableView.reloadData()
-        }, completion: nil)
-    }
-    
-    private func configureTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(CartsTableViewCell.self, forCellReuseIdentifier: CartsTableViewCell.cellID)
-        tableView.rowHeight = Constants.rowHeight
-    }
-    
     override func setupConstraints() {
         super.setupConstraints()
         

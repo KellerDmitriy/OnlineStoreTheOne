@@ -140,7 +140,7 @@ final class CustomNavigationBarImpl: UIView, ICustomNavigationBar {
         setupLocationView(configuration.withLocationView, configuration.isSetupCartButton, configuration.isSetupBackButton)
     }
     
-    // Enum для хранения магических чисел
+    
     enum Constants {
         static let height: CGFloat = 44
         static let buttonSize: CGFloat = 40

@@ -26,7 +26,7 @@ final class LocationView: UIView {
         let label = UILabel()
         label.font = UIFont.makeTypography(.semiBold, size: 12)
         label.textColor = .label.withAlphaComponent(0.5)
-        label.text = Text.deliveryAddress
+        label.text = Resources.Text.deliveryAddress
         return label
     }()
     
@@ -37,7 +37,7 @@ final class LocationView: UIView {
         button.configuration?.baseForegroundColor = Colors.darkArsenic
         button.configuration?.title = deliveryAddress
         button.configuration?.titleAlignment = .leading
-        button.configuration?.image = Image.chevronDown?.resizedImage(
+        button.configuration?.image = Resources.Image.chevronDown?.resizedImage(
            Size: CGSize(width: 14, height: 8)
         )
         button.configuration?.imagePlacement = .trailing
