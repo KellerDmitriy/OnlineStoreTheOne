@@ -26,6 +26,8 @@ enum Resources {
         static let logo = UIImage(named: "logo")
         static let mail = UIImage(named: "mail")
         static let lock = UIImage(named: "lock")
+        static let person = UIImage(named: "person")
+        static let chevronForward = UIImage(systemName: "chevron.forward")
         
     }
     
@@ -42,6 +44,15 @@ enum Resources {
         static let login = "Log In"
         static let dontHaveAccount = "Don't have an account? "
         static let signUp = "Sign Up"
+        static let enterName = "Enter your Name"
+        static let enterEmail = "Enter your Email"
+        static let enterPassword = "Enter your Password"
+        static let confirmPassword = "Confirm your Password"
+        static let typeOfAccount = "Type of account"
+        static let alreadyHaveAccount = "Already have an account? "
+        static let logIn = "Log In"
+        static let completeYourAccount = "Complete your account"
+        static let chevronForward = "chevron.forward"
     }
 }
 

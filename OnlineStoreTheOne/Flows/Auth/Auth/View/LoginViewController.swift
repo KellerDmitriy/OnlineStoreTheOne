@@ -94,6 +94,8 @@ final class LoginViewController: UIViewController {
         setupViews()
         setConstraints()
         setupObservers()
+        
+        checkFormStatus()
     }
     
     deinit {
@@ -200,8 +202,6 @@ private extension LoginViewController {
         guard let keyboardFrame = notification.userInfo?[
             UIResponder.keyboardFrameEndUserInfoKey
         ] as? NSValue else { return }
-        
-        let keyboardHeight = keyboardFrame.cgRectValue.height
         
         if !isKeyboardShow {
             UIView.animate(withDuration: 0.3) { [weak self] in

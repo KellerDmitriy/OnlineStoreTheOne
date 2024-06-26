@@ -32,21 +32,58 @@ final class RegistrationViewModel: RegistrationViewModelProtocol {
     var type: String?
     
     var formIsValid: Bool {
-        guard let email = email,
-              let password = password,
-              let confirmPassword = confirmPassword,
-              let login = login,
-              let type = type else {
+        return isEmailValid 
+        && isPasswordValid
+        && isConfirmPasswordValid
+        && isLoginValid
+        && isTypeValid
+        && passwordsMatch
+    }
+
+    private var isEmailValid: Bool {
+        guard let email = email else {
             return false
         }
         
-        return !email.isEmpty
-            && !password.isEmpty
-            && !confirmPassword.isEmpty
-            && !login.isEmpty
-            && password == confirmPassword
-            && !type.isEmpty
-            && email.isValidEmail
+        let isValid = !email.isEmpty && email.isValidEmail
+        return isValid
+    }
+
+    private var isPasswordValid: Bool {
+        guard let password = password else {
+            return false
+        }
+        let isValid = !password.isEmpty
+        return isValid
+    }
+
+    private var isConfirmPasswordValid: Bool {
+        guard let confirmPassword = confirmPassword else {
+            return false
+        }
+        let isValid = !confirmPassword.isEmpty
+        return isValid
+    }
+
+    private var isLoginValid: Bool {
+        guard let login = login else {
+            return false
+        }
+        let isValid = !login.isEmpty
+        return isValid
+    }
+
+    private var isTypeValid: Bool {
+        guard let type = type else {
+            return false
+        }
+        let isValid = !type.isEmpty
+        return isValid
+    }
+
+    private var passwordsMatch: Bool {
+        let isMatch = password == confirmPassword
+        return isMatch
     }
     
     
