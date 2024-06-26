@@ -10,7 +10,9 @@ import UIKit
 final class RegistrationViewController: UIViewController {
     // MARK: - Private properties
     private var viewModel: RegistrationViewModelProtocol
+    private var isKeyboardShow = false
     
+    // MARK: - UI Elements
     private let loginView = InputContainerView(
         image: Resources.Image.person,
         textField: CustomTextField(placeholder: Resources.Text.enterName, type: .text)
@@ -91,9 +93,14 @@ final class RegistrationViewController: UIViewController {
         
         setupViews()
         setConstraints()
+        
+        setupObservers()
         checkFormStatus()
     }
     
+    deinit {
+        stopKeyboardListener()
+    }
     
     // MARK: - Private Methods
     private func registerUser() {
@@ -185,11 +192,79 @@ extension RegistrationViewController: AuthenticationControllerProtocol {
         }
     }
 }
-
+// MARK: - Observers
+private extension RegistrationViewController {
+    func setupObservers() {
+        startKeyboardListener()
+    }
+    
+    func startKeyboardListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    func stopKeyboardListener() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? NSValue else { return }
+        
+        if !isKeyboardShow {
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self = self else { return }
+                self.navigationController?.isNavigationBarHidden = true
+                self.accountStackView.snp.updateConstraints {
+                    $0.top.equalToSuperview().offset(Constants.stackViewTopOffsetForKeyboardShow)
+                }
+                self.view.layoutIfNeeded()
+                self.isKeyboardShow = true
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? NSValue != nil else { return }
+        
+        if isKeyboardShow {
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self = self else { return }
+                self.navigationController?.isNavigationBarHidden = false
+                self.accountStackView.snp.updateConstraints {
+                    $0.top.equalToSuperview().offset(Constants.stackViewTopOffset)
+                }
+                self.view.layoutIfNeeded()
+                self.isKeyboardShow = false
+            }
+        }
+    }
+}
 // MARK: - Constants
 private extension RegistrationViewController {
     enum Constants {
         static let stackViewTopOffset: CGFloat = 150
+        static let stackViewTopOffsetForKeyboardShow: CGFloat = 80
         static let stackViewHorizontalInset: CGFloat = 20
         static let stackViewSpacing: CGFloat = 26
         static let fontSize: CGFloat = 16
