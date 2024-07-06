@@ -32,8 +32,8 @@ final class ProfileCoordinator: IProfileCoordinator {
     
     // MARK: - Flow Presentation
     func showProfileScene() {
-        let viewModel = ProfileViewModel(storageService: storageService)
-        let viewController = ProfileViewController(viewModel: viewModel, coordinator: self)
+        let viewModel = ProfileViewModel(storageService: storageService, coordinator: self)
+        let viewController = ProfileViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
     

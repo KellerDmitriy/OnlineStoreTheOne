@@ -18,16 +18,15 @@ final class DetailsViewController: BaseViewController {
     private let productList = ProductListView()
     
     private lazy var addToCartButton = FilledButtonFactory(
-        title: "Add to Cart",
+        title: Resources.Text.addToCart,
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
             self?.cartButtonTap()
-            
         })
     ).createButton()
     
     private lazy var buyNowButton = FilledButtonFactory(
-        title: "Buy Now",
+        title: Resources.Text.buyNow,
         type: .grayButton,
         action: UIAction(handler: { [weak self] _ in
             self?.payButtonTap()
@@ -37,7 +36,7 @@ final class DetailsViewController: BaseViewController {
     private lazy var buttonStackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.axis = .horizontal
-        $0.spacing = 16
+        $0.spacing = Constants.buttonStackSpacing
         $0.distribution = .fillEqually
         return $0
     }(UIStackView())
@@ -51,7 +50,6 @@ final class DetailsViewController: BaseViewController {
     //MARK: - Lifecycle
     init(viewModel: DetailsProductViewModel) {
         self.viewModel = viewModel
-
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +59,6 @@ final class DetailsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         actionForAddToWishListButtonTap()
         bind()
         changeToWishListButton()
@@ -87,7 +84,6 @@ final class DetailsViewController: BaseViewController {
     private func changeToWishListButton() {
         viewModel.$isSaved
             .receive(on: DispatchQueue.main)
-        
             .sink { [weak self] isSaved in
                 self?.setToAddToWishListButton(isSaved)
             }
@@ -96,23 +92,28 @@ final class DetailsViewController: BaseViewController {
     
     override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
         CustomNavigationBarConfiguration(
-        title: "Details product",
-        isSetupBackButton: true,
-        isSetupCartButton: true
+            title: Resources.Text.detailsProductTitle,
+            isSetupBackButton: true,
+            isSetupCartButton: true
         )
     }
     
     override func addViews() {
         super.addViews()
         
-        [scrollView, mainStackView, buttonStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [
+            scrollView,
+            mainStackView,
+            buttonStackView
+        ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        
         view.addSubview(scrollView)
         scrollView.addSubview(mainStackView)
         
         mainStackView.addArrangedSubview(photoCollection)
         mainStackView.addArrangedSubview(productList)
         mainStackView.axis = .vertical
-        mainStackView.spacing = 16
+        mainStackView.spacing = Constants.mainStackViewSpacing
         
         view.addSubview(buttonStackView)
         [addToCartButton, buyNowButton].forEach(buttonStackView.addArrangedSubview(_:))
@@ -127,12 +128,11 @@ final class DetailsViewController: BaseViewController {
         viewModel.dismissScreen()
     }
     
-//    MARK: Override methods
     override func setupConstraints() {
         super.setupConstraints()
         
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.scrollViewTopOffset)
             $0.bottom.equalTo(separatorLine.snp.bottom)
             $0.leading.trailing.equalToSuperview()
         }
@@ -143,23 +143,23 @@ final class DetailsViewController: BaseViewController {
         }
         
         buttonStackView.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
-            $0.leading.equalTo(view.snp.leading).offset(20)
-            $0.trailing.equalTo(view.snp.trailing).offset(-20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(Constants.buttonStackBottomOffset)
+            $0.leading.equalTo(view.snp.leading).offset(Constants.buttonStackLeadingOffset)
+            $0.trailing.equalTo(view.snp.trailing).offset(Constants.buttonStackTrailingOffset)
         }
         
         addToCartButton.snp.makeConstraints {
-            $0.height.equalTo(46)
+            $0.height.equalTo(Constants.buttonHeight)
         }
         
         buyNowButton.snp.makeConstraints {
-            $0.height.equalTo(46)
+            $0.height.equalTo(Constants.buttonHeight)
         }
         
         separatorLine.snp.makeConstraints {
-            $0.bottom.equalTo(buttonStackView.snp.top).offset(-14)
+            $0.bottom.equalTo(buttonStackView.snp.top).offset(Constants.separatorLineBottomOffset)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(1)
+            $0.height.equalTo(Constants.separatorLineHeight)
         }
     }
 }
@@ -178,7 +178,8 @@ private extension DetailsViewController {
         productList.addToWishListButton.addAction(UIAction { [weak self] _ in
             self?.addToWishListButtonTap()
         },
-        for: .touchUpInside)
+        for: .touchUpInside
+        )
     }
     
     func addToWishListButtonTap () {
@@ -186,7 +187,22 @@ private extension DetailsViewController {
     }
     
     func setToAddToWishListButton(_ status: Bool) {
-        let image = status ? UIImage(named: "selectedWishlist") : UIImage(named: "Wishlist")
+        let image = status ? Resources.Image.selectedWishlist : Resources.Image.wishList
         productList.addToWishListButton.setImage(image, for: .normal)
+    }
+}
+
+//MARK: Constants
+extension DetailsViewController {
+    enum Constants {
+        static let scrollViewTopOffset: CGFloat = 70
+        static let buttonStackBottomOffset: CGFloat = -10
+        static let buttonStackLeadingOffset: CGFloat = 20
+        static let buttonStackTrailingOffset: CGFloat = -20
+        static let buttonHeight: CGFloat = 46
+        static let separatorLineBottomOffset: CGFloat = -14
+        static let separatorLineHeight: CGFloat = 1
+        static let mainStackViewSpacing: CGFloat = 16
+        static let buttonStackSpacing: CGFloat = 16
     }
 }

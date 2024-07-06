@@ -12,10 +12,11 @@ final class OnboardingViewModel {
     weak var coordinator: IOnboardingCoordinator?
     
     private let imageArray = [
-        UIImage(named: "Onboarding1"),
-        UIImage(named: "Onboarding2"),
-        UIImage(named: "Onboarding3"),
+        Resources.Image.onboarding1,
+        Resources.Image.onboarding2,
+        Resources.Image.onboarding3,
     ]
+    
     private var currentIndex = 0
     
     //    MARK: - Init
@@ -34,5 +35,4 @@ final class OnboardingViewModel {
         guard currentIndex < imageArray.count else { return nil }
         return imageArray[currentIndex]
     }
-    
 }

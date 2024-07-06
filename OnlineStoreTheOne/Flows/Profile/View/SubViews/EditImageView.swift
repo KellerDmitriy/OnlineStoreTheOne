@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import FirebaseAuth
 
 protocol EditImageViewDelegate: AnyObject {
     func takePhotoButtonTap()
@@ -130,35 +129,51 @@ private extension EditImageView {
         contentView.addSubview(titleLabel)
         contentView.addSubview(separatorView)
         contentView.addSubview(buttonsStack)
-        
     }
     
     //MARK: - Set constraint
     func setConstraint() {
         
         contentView.snp.makeConstraints { make in
-            make.height.equalTo(300)
-            make.width.equalTo(300)
+            make.height.equalTo(Constants.contentViewSize)
+            make.width.equalTo(Constants.contentViewSize)
             make.centerX.centerY.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(Constants.titleLabelTopOffset)
             make.centerX.equalToSuperview()
         }
         
         separatorView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.separatorTopOffset)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0.3)
-            make.bottom.equalTo(buttonsStack.snp.top).offset(-20)
+            make.height.equalTo(Constants.separatorHeight)
+            make.bottom.equalTo(buttonsStack.snp.top).offset(Constants.separatorBottomOffset)
         }
         
         buttonsStack.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(12)
-            make.bottom.equalToSuperview().inset(12)
-            make.height.equalTo(180)
+            make.leading.trailing.equalToSuperview().inset(Constants.buttonStackHorizontalInset)
+            make.bottom.equalToSuperview().inset(Constants.buttonStackBottomInset)
+            make.height.equalTo(Constants.buttonStackHeight)
         }
     }
+    
+    // MARK: - Constants
+    private enum Constants {
+        static let cornerRadius: CGFloat = 12
+        static let separatorAlpha: CGFloat = 0.5
+        static let titleLabelFontSize: CGFloat = 20
+        static let buttonStackSpacing: CGFloat = 12
+        static let contentViewSize: CGFloat = 300
+        static let titleLabelTopOffset: CGFloat = 20
+        static let separatorTopOffset: CGFloat = 20
+        static let separatorHeight: CGFloat = 0.3
+        static let separatorBottomOffset: CGFloat = -20
+        static let buttonStackHorizontalInset: CGFloat = 12
+        static let buttonStackBottomInset: CGFloat = 12
+        static let buttonStackHeight: CGFloat = 180
+    }
+
 }
 

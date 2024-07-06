@@ -25,6 +25,7 @@ final class TermsConditionalViewController: UIViewController {
         setUpView()
         setConstrains()
         applyAttributedText()
+        setupNabBar()
     }
 }
 
@@ -36,11 +37,11 @@ private extension TermsConditionalViewController {
         view.backgroundColor = .white
         
         view.addSubview(termsTextView)
-        
+    }
+    
+    func setupNabBar() {
         navigationItem.title = "Terms & Conditional"
         navigationController?.setupNavigationBar()
-        navigationController?.navigationBar.addBottomBorder()
-        
     }
     
     //MARK: - Set constraint

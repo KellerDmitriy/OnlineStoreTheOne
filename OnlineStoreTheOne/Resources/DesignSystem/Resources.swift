@@ -7,13 +7,17 @@
 
 import UIKit
 
-import UIKit
-
 enum Resources {
     
     enum Image {
+        static let searchIcon = UIImage(named: "magnifyingglass")
+        //        Onboarding
+        static let onboarding1 = UIImage(named: "Onboarding1")
+        static let onboarding2 = UIImage(named: "Onboarding2")
+        static let onboarding3 = UIImage(named: "Onboarding3")
+        
         static let chevronDown = UIImage(systemName: "chevron.down")
-//        tabBar
+        //        TabBar
         static let home = UIImage(named: "Home")
         static let selectedHome = UIImage(named: "selectedHome")
         static let wishList = UIImage(named: "Wishlist")
@@ -22,12 +26,18 @@ enum Resources {
         static let selectedManager = UIImage(named: "selectedManager")
         static let profileTab = UIImage(named: "ProfileTab")
         static let selectedProfile = UIImage(named: "selectedProfile")
-//        auth
+        //        Auth
         static let logo = UIImage(named: "logo")
         static let mail = UIImage(named: "mail")
         static let lock = UIImage(named: "lock")
         static let person = UIImage(named: "person")
         static let chevronForward = UIImage(systemName: "chevron.forward")
+        //        Profile
+        static let profileImage = UIImage(named: "ProfileImage")
+        static let editIcon = UIImage(named: "EditIcon")
+        static let cameraIcon = UIImage(named: "camera")
+        static let folderIcon = UIImage(named: "folder")
+        static let trashIcon = UIImage(named: "trash.fill")
         
     }
     
@@ -53,6 +63,29 @@ enum Resources {
         static let logIn = "Log In"
         static let completeYourAccount = "Complete your account"
         static let chevronForward = "chevron.forward"
+        
+        //        DetailsViewController
+        static let addToCart = "Add to Cart"
+        static let buyNow = "Buy Now"
+        static let detailsProductTitle = "Details product"
+        
+        //        Profile
+        static let attention = "Attention"
+        static let signOutMessage = "Are you sure you want to sign out?"
+        static let signOut = "Sign Out"
+        static let cancel = "Cancel"
+        static let userName = "DevP"
+        static let userEmail = "dev@gmail.com"
+        static let termsConditions = "Terms & Conditions"
+        static let arrowForward = "arrow.forward.to.line.square"
+        
+        static let changeYourPicture = "Change your picture"
+        static let takePhoto = "Take a photo"
+        static let chooseFromYourFile = "Choose from your file"
+        static let deletePhoto = "Delete Photo"
+        
+        static let errorTitle = "exit error"
+        static let ok = "Ok"
     }
 }
 

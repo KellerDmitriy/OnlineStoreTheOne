@@ -20,7 +20,7 @@ final class WishListCollectionCell: UICollectionViewCell {
         let element = UIImageView()
         element.contentMode = .scaleAspectFill
         element.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        element.layer.cornerRadius = 8
+        element.layer.cornerRadius = Constants.cornerRadius
         element.layer.masksToBounds = true
         return element
     }()
@@ -28,7 +28,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let element = UILabel()
         element.textColor = .black
-        element.font = UIFont.makeTypography(.regular, size: 12)
+        element.font = UIFont.makeTypography(.regular, size: Constants.titleFontSize)
         element.textAlignment = .left
         element.backgroundColor = .clear
         return element
@@ -37,7 +37,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     private let priceLabel: UILabel = {
         let element = UILabel()
         element.textColor = .black
-        element.font = UIFont.makeTypography(.semiBold, size: 14)
+        element.font = UIFont.makeTypography(.semiBold, size: Constants.priceFontSize)
         element.textAlignment = .left
         element.backgroundColor = .clear
         return element
@@ -45,7 +45,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     
     private lazy var addToCartButton: UIButton = {
         let filledButtonFactory = FilledButtonFactory(
-            title: "Add to cart",
+            title: Resources.Text.addToCart,
             type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.addToCartCompletion?()
@@ -54,9 +54,9 @@ final class WishListCollectionCell: UICollectionViewCell {
         return filledButtonFactory.createButton()
     }()
     
-    private lazy var addToWishListButton: UIButton = {
+    private lazy var removeFromWishListButton: UIButton = {
         let button = UIButton()
-        if let image = UIImage(named: "selectedWishlist") {
+        if let image = Resources.Image.selectedWishlist {
             button.setBackgroundImage(image, for: .normal)
         }
         button.addAction(UIAction { [weak self] _ in
@@ -71,7 +71,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        layer.cornerRadius = 8
+        layer.cornerRadius = Constants.cornerRadius
         setupViews()
         setConstraints()
         
@@ -81,7 +81,7 @@ final class WishListCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Methods
+    // MARK: - Methods
     func configureCell(_ wishModel: Products) {
         titleLabel.text = wishModel.title
         priceLabel.text = String("$\(wishModel.price)")
@@ -100,44 +100,60 @@ final class WishListCollectionCell: UICollectionViewCell {
         }
     }
     
-    //MARK: - Setup Views
+    // MARK: - Setup Views
     private func setupViews() {
         addSubview(productImageView)
         addSubview(titleLabel)
         addSubview(priceLabel)
         addSubview(addToCartButton)
-        addSubview(addToWishListButton)
-     
+        addSubview(removeFromWishListButton)
     }
     
     private func setConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(112)
+            make.height.equalTo(Constants.productImageHeight)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(productImageView.snp.bottom).offset(13)
-            make.leading.trailing.equalToSuperview().inset(13)
+            make.top.equalTo(productImageView.snp.bottom).offset(Constants.titleTopOffset)
+            make.leading.trailing.equalToSuperview().inset(Constants.sideInset)
         }
         
         priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.priceTopOffset)
             make.leading.trailing.equalTo(titleLabel)
         }
         
-        addToWishListButton.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().inset(13)
-            make.bottom.equalToSuperview().inset(10)
-            make.width.equalTo(28)
+        removeFromWishListButton.snp.makeConstraints { make in
+            make.top.equalTo(priceLabel.snp.bottom).offset(Constants.buttonTopOffset)
+            make.leading.equalToSuperview().inset(Constants.sideInset)
+            make.bottom.equalToSuperview().inset(Constants.sideInset)
+            make.width.equalTo(Constants.wishListButtonWidth)
         }
         
         addToCartButton.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().inset(13)
-            make.leading.equalTo(addToWishListButton.snp.trailing).offset(8)
-            make.bottom.equalToSuperview().inset(10)
+            make.top.equalTo(priceLabel.snp.bottom).offset(Constants.buttonTopOffset)
+            make.trailing.equalToSuperview().inset(Constants.sideInset)
+            make.leading.equalTo(removeFromWishListButton.snp.trailing).offset(Constants.buttonSpacing)
+            make.bottom.equalToSuperview().inset(Constants.sideInset)
         }
+    }
+}
+
+// MARK: - Constants
+private extension WishListCollectionCell {
+    enum Constants {
+        static let cornerRadius: CGFloat = 8
+        static let backgroundAlpha: CGFloat = 0.1
+        static let productImageHeight: CGFloat = 112
+        static let titleFontSize: CGFloat = 12
+        static let priceFontSize: CGFloat = 14
+        static let titleTopOffset: CGFloat = 13
+        static let priceTopOffset: CGFloat = 5
+        static let buttonTopOffset: CGFloat = 10
+        static let sideInset: CGFloat = 13
+        static let wishListButtonWidth: CGFloat = 28
+        static let buttonSpacing: CGFloat = 8
     }
 }

@@ -11,9 +11,7 @@ import SnapKit
 
 final class ProfileViewController: BaseViewController {
     // MARK: - Properties
-    private var viewModel: ProfileViewModel
-    private let coordinator: IProfileCoordinator
-    
+    private var viewModel: IProfileViewModel
     
     //MARK: - UI elements
     let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -25,12 +23,11 @@ final class ProfileViewController: BaseViewController {
         return view
     }()
     
-    
     lazy var profileImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "ProfileImage")
+        image.image = Resources.Image.profileImage
         image.contentMode = .scaleToFill
-        image.layer.cornerRadius = 50
+        image.layer.cornerRadius = Constants.cornerRadius
         image.layer.masksToBounds = false
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -41,23 +38,22 @@ final class ProfileViewController: BaseViewController {
         let button = UIButton(primaryAction: UIAction { [weak self] _ in
             self?.editImageAction()
         })
-        button.setBackgroundImage(UIImage(named: "EditIcon"), for: .normal)
-        button.layer.cornerRadius = 16
+        button.setBackgroundImage(Resources.Image.editIcon, for: .normal)
+        button.layer.cornerRadius = Constants.editButtonCornerRadius
         button.layer.masksToBounds = false
         button.clipsToBounds = true
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 3
+        button.layer.borderWidth = Constants.borderWidth
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    
     private lazy var userName: UILabel = {
-        LabelFactory(text: "DevP", font: .bold, size: 16).createLabel()
+        LabelFactory(text: Resources.Text.userName, font: .bold, size: 16).createLabel()
     }()
     
     private lazy var userMail: UILabel = {
-        let label = LabelFactory(text: "dev@gmail.com", font: .light, size: 14).createLabel()
+        let label = LabelFactory(text: Resources.Text.userEmail, font: .light, size: 14).createLabel()
         let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
         let underlineAttributedString = NSAttributedString(string: label.text ?? "", attributes: underlineAttribute)
         label.attributedText = underlineAttributedString
@@ -66,10 +62,10 @@ final class ProfileViewController: BaseViewController {
     
     private lazy var termsButton: UIButton = {
         let button = ChevronButtonFactory(
-            title: "Terms & Conditions",
-            chevron: "chevron.forward",
+            title: Resources.Text.termsConditions,
+            chevron: Resources.Text.chevronForward,
             action: UIAction { [weak self] _ in
-                self?.termsAction()
+                self?.viewModel.showTermAndConditionScene()
             },
             textColor: Colors.gray
         )
@@ -78,10 +74,10 @@ final class ProfileViewController: BaseViewController {
     
     private lazy var typeButton: UIButton = {
         let button = ChevronButtonFactory(
-            title: "Type of account",
-            chevron: "chevron.forward",
+            title: Resources.Text.typeOfAccount,
+            chevron: Resources.Text.chevronForward,
             action: UIAction { [weak self] _ in
-                self?.typeAction()
+                self?.viewModel.showTypeOfAccountScene()
             },
             textColor: Colors.gray
         )
@@ -90,10 +86,10 @@ final class ProfileViewController: BaseViewController {
     
     private lazy var signOutButton: UIButton = {
         let button = ChevronButtonFactory(
-            title: "Sign Out",
-            chevron: "arrow.forward.to.line.square",
+            title: Resources.Text.signOut,
+            chevron: Resources.Text.arrowForward,
             action: UIAction { [weak self] _ in
-                self?.signOutAction()
+                self?.viewModel.signOutAction()
             },
             textColor: Colors.gray
         )
@@ -103,7 +99,7 @@ final class ProfileViewController: BaseViewController {
     private lazy var buttonsStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 16
+        stack.spacing = Constants.stackSpacing
         stack.distribution = .fillEqually
         stack.addArrangedSubview(termsButton)
         stack.addArrangedSubview(typeButton)
@@ -114,9 +110,8 @@ final class ProfileViewController: BaseViewController {
     }()
     
     //MARK: - Init
-    init(viewModel: ProfileViewModel, coordinator: IProfileCoordinator) {
+    init(viewModel: IProfileViewModel) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -135,32 +130,8 @@ final class ProfileViewController: BaseViewController {
     }
     
     func setupNavigationBar() {
-        navigationItem.title = "Profile"
-    }
-    
-    //MARK: - Actions
-    func termsAction() {
-        coordinator.showTermAndConditionScene()
-    }
-    
-    func signOutAction() {
-        coordinator.showAlertController(title: "Attention", message: "Are you sure you want to sign out?", titleDefaultAction: "Sign out", titleDestructiveAction: "Cancel") { [weak self] in
-            self?.singOut()
-        }
-    }
-    
-    func singOut() {
-        coordinator.finish()
-        
-        do {
-            try Auth.auth().signOut()
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func typeAction() {
-        coordinator.showTypeOfAccountScene()
+        navigationItem.title = Resources.Text.profile
+        navigationController?.navigationBar.addBottomBorder()
     }
     
     //MARK: - Private Methods
@@ -170,99 +141,101 @@ final class ProfileViewController: BaseViewController {
             let authService: IFirebase = DIService.resolve(forKey: .authService) ?? FirebaseService()
             authService.fetchUser(userId: userId) { [weak self] user in
                 guard let user, let self else { return }
-                userName.text = user.login
-                userMail.text = user.email
+                self.userName.text = user.login
+                self.userMail.text = user.email
                 
                 if user.profileImageURL.isEmpty {
-                    profileImage.image = UIImage(named: "ProfileImage")
+                    self.profileImage.image = Resources.Image.profileImage
                 } else {
-                    profileImage.kf.setImage(with: URL(string: user.profileImageURL))
+                    self.profileImage.kf.setImage(with: URL(string: user.profileImageURL))
                 }
             }
         }
     }
-}
-
-//MARK: - Extension
-extension ProfileViewController {
     
-    //MARK: - Set up view
     override func addViews() {
         settingsView.delegate = self
         
         view.addSubview(profileInformationContainer)
         
-       [
+        [
             profileImage,
             changeAvatarButton,
             userName,
             userMail
-       ].forEach(profileInformationContainer.addSubview(_:))
-      
+        ].forEach(profileInformationContainer.addSubview(_:))
+        
         view.addSubview(buttonsStack)
     }
     
-    //MARK: - Setup Constraints
     override func setupConstraints() {
         profileInformationContainer.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(120)
+            make.top.equalTo(view.snp.top).offset(Constants.topOffset)
+            make.leading.trailing.equalToSuperview().inset(Constants.horizontalInset)
+            make.height.equalTo(Constants.profileInfoContainerHeight)
         }
         
         profileImage.snp.makeConstraints { make in
-            make.height.equalTo(100)
-            make.width.equalTo(profileImage.snp.height)
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
+            make.height.width.equalTo(Constants.profileImageSize)
+            make.top.leading.equalToSuperview()
         }
         
         changeAvatarButton.snp.makeConstraints { make in
-            make.height.equalTo(32)
-            make.width.equalTo(32)
-            make.top.equalTo(profileImage.snp.top).offset(68)
-            make.leading.equalTo(profileImage.snp.leading).offset(68)
+            make.height.width.equalTo(Constants.editButtonSize)
+            make.top.equalTo(profileImage.snp.top).offset(Constants.editButtonOffset)
+            make.leading.equalTo(profileImage.snp.leading).offset(Constants.editButtonOffset)
         }
         
         userName.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
-            make.leading.equalTo(profileImage.snp.trailing).offset(40)
+            make.top.equalToSuperview().offset(Constants.userNameTopOffset)
+            make.leading.equalTo(profileImage.snp.trailing).offset(Constants.userNameLeadingOffset)
         }
         
         userMail.snp.makeConstraints { make in
-            make.top.equalTo(userName.snp.top).offset(25)
-            make.leading.equalTo(profileImage.snp.trailing).offset(40)
+            make.top.equalTo(userName.snp.top).offset(Constants.userMailTopOffset)
+            make.leading.equalTo(profileImage.snp.trailing).offset(Constants.userNameLeadingOffset)
         }
         
         buttonsStack.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-30)
-            make.leading.equalTo(view.snp.leading).offset(20)
-            make.trailing.equalTo(view.snp.trailing).offset(-20)
-            make.height.equalTo(200)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(Constants.stackBottomOffset)
+            make.leading.equalTo(view.snp.leading).offset(Constants.stackHorizontalInset)
+            make.trailing.equalTo(view.snp.trailing).inset(Constants.stackHorizontalInset)
+            make.height.equalTo(Constants.stackHeight)
         }
     }
 }
+
 
 // MARK: - Protocols for load Image from gallery
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, EditImageViewDelegate {
     
     func setupBlurEffectView() {
-        blurEffectView.frame = view.bounds
-        blurEffectView.alpha = 0
-        view.addSubview(blurEffectView)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSettings))
-        blurEffectView.addGestureRecognizer(tapGesture)
-    }
-    
-    func setupSettingsView() {
-        settingsView.frame = CGRect(x: changeAvatarButton.frame.minX, y: changeAvatarButton.frame.minY, width: 300, height: 300)
-        settingsView.alpha = 0
-        settingsView.backgroundColor = .white
-        settingsView.layer.cornerRadius = 12
-        settingsView.clipsToBounds = true
-        view.addSubview(settingsView)
-    }
+           guard let windowScene = view.window?.windowScene else { return }
+           guard let window = windowScene.windows.first else { return }
+           
+           blurEffectView.frame = window.bounds
+           blurEffectView.alpha = 0
+           window.addSubview(blurEffectView)
+           
+           let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSettings))
+           blurEffectView.addGestureRecognizer(tapGesture)
+       }
+       
+       func setupSettingsView() {
+           guard let windowScene = view.window?.windowScene else { return }
+           guard let window = windowScene.windows.first else { return }
+           
+           settingsView.frame = CGRect(
+            x: changeAvatarButton.frame.minX,
+            y: changeAvatarButton.frame.minY,
+            width: 300,
+            height: 300
+           )
+           settingsView.backgroundColor = .white
+           settingsView.layer.cornerRadius = 12
+           settingsView.clipsToBounds = true
+           window.addSubview(settingsView)
+       }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else {
@@ -316,20 +289,42 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         UIView.animate(withDuration: 0.3, animations: {
             self.blurEffectView.alpha = 1
             self.settingsView.center = self.view.center
-            self.settingsView.alpha = 1
         })
     }
     
     @objc func hideSettings() {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.blurEffectView.alpha = 0
-                self.settingsView.frame = CGRect(x: self.changeAvatarButton.frame.minX, y: self.changeAvatarButton.frame.minY, width: 300, height: 300)
-                self.settingsView.alpha = 0
-            }) { _ in
-                self.blurEffectView.removeFromSuperview()
-                self.settingsView.removeFromSuperview()
-            }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.blurEffectView.alpha = 0
+            self.settingsView.frame = CGRect(
+                x: self.changeAvatarButton.frame.minX,
+                y: self.changeAvatarButton.frame.minY,
+                width: 300,
+                height: 300
+            )
+        }) { _ in
+            self.blurEffectView.removeFromSuperview()
+            self.settingsView.removeFromSuperview()
         }
     }
+}
 
-
+extension ProfileViewController {
+    enum Constants {
+        static let topOffset: CGFloat = 16
+        static let horizontalInset: CGFloat = 16
+        static let profileInfoContainerHeight: CGFloat = 120
+        static let profileImageSize: CGFloat = 100
+        static let editButtonSize: CGFloat = 32
+        static let editButtonOffset: CGFloat = 68
+        static let cornerRadius: CGFloat = 50
+        static let editButtonCornerRadius: CGFloat = 16
+        static let borderWidth: CGFloat = 3
+        static let userNameTopOffset: CGFloat = 16
+        static let userNameLeadingOffset: CGFloat = 40
+        static let userMailTopOffset: CGFloat = 25
+        static let stackSpacing: CGFloat = 16
+        static let stackBottomOffset: CGFloat = -30
+        static let stackHorizontalInset: CGFloat = 20
+        static let stackHeight: CGFloat = 200
+    }
+}

@@ -14,14 +14,14 @@ final class SearchResultViewController: BaseViewController {
 
     
     //MARK: Private properties
-    private var searchBarIsEmpty: Bool {
-        guard let text = customNavigationBar.searchTextFieldCell.searchTextField.text else { return false }
-        return text.isEmpty
-    }
+//    private var searchBarIsEmpty: Bool {
+//        guard let text = customNavigationBar.searchTextFieldCell.searchTextField.text else { return false }
+//        return text.isEmpty
+//    }
     
-    var isFiltering: Bool {
-        return !searchBarIsEmpty
-    }
+//    var isFiltering: Bool {
+//        return !searchBarIsEmpty
+//    }
     
     // MARK: - UI Components
     lazy var collectionView: UICollectionView = {

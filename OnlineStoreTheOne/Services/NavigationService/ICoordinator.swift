@@ -41,7 +41,7 @@ extension ICoordinator {
         message: String,
         titleDefaultAction: String = "Ok",
         titleDestructiveAction: String = "Cancel",
-        createAction: @escaping () -> Void
+        createAction: (() -> Void)? = nil
     ) {
         let alert = UIAlertFactory.createAlert(
             title: title,

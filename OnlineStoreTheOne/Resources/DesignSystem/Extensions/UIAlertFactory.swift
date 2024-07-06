@@ -14,13 +14,13 @@ enum UIAlertFactory {
         message: String,
         titleDefaultAction: String = "Ok",
         titleDestructiveAction: String = "Cancel",
-        completion: @escaping () -> Void
+        completion: (() -> Void)? = nil
     ) -> UIAlertController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: titleDefaultAction, style: .default) { _ in
-            completion()
+            completion?()
         }
         
         let cancelAction = UIAlertAction(title: titleDestructiveAction, style: .destructive)

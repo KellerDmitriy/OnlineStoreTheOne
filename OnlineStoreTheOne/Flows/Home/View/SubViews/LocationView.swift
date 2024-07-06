@@ -33,7 +33,7 @@ final class LocationView: UIView {
     private lazy var changeDeliveryAddressButton: UIButton = {
         let button = UIButton()
         button.configuration = .bordered()
-        button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
         button.configuration?.baseForegroundColor = Colors.darkArsenic
         button.configuration?.title = deliveryAddress
         button.configuration?.titleAlignment = .leading
@@ -43,7 +43,6 @@ final class LocationView: UIView {
         button.configuration?.imagePlacement = .trailing
         button.configuration?.imagePadding = 5
     
-        
         return button
     }()
     
@@ -89,7 +88,7 @@ final class LocationView: UIView {
        var menuActions = [UIAction]()
         for country in Country.allCases {
             let action = UIAction(title: "\(country.capitalized) - \(country.capital)", image: nil) { action in
-                self.deliveryAddress = country.capital
+                self.deliveryAddress = "\(country.capitalized) - \(country.capital)"
             }
             menuActions.append(action)
         }
@@ -119,7 +118,7 @@ final class LocationView: UIView {
             switch self {
             case .china: return "Beijing"
             case .japan: return "Tokyo"
-            case .unitedStates: return "WashingtonD.C."
+            case .unitedStates: return "Washington D. C."
             case .unitedKingdom: return "London"
             case .russia: return "Moscow"
             case .india: return "NewDelhi"

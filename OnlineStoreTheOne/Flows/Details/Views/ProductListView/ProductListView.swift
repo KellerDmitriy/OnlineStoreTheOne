@@ -13,7 +13,6 @@ final class ProductListView: UIView {
     private let productContainerView = UIView()
     private lazy var productNameLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.text = "Air pods pro max by Apple"
         $0.font = .makeTypography(.medium, size: 16)
         $0.textColor = Colors.darkArsenic
         $0.numberOfLines = 2
@@ -22,7 +21,6 @@ final class ProductListView: UIView {
     
     private lazy var productPriceLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.text = "$ 1999,99"
         $0.font = .makeTypography(.medium, size: 18)
         $0.textColor = Colors.darkArsenic
         return $0
@@ -48,7 +46,6 @@ final class ProductListView: UIView {
     
     private lazy var productDescriptionTitleLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.text = "Description of product"
         $0.font = .makeTypography(.medium, size: 16)
         $0.textColor = Colors.darkArsenic
         return $0
@@ -98,25 +95,25 @@ final class ProductListView: UIView {
         
         productLabelsStackView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalTo(addToWishListButton.snp.leading).inset(-8)
+            $0.leading.equalToSuperview().offset(Constants.labelHorizontalInset)
+            $0.trailing.equalTo(addToWishListButton.snp.leading).inset(Constants.stackViewTrailingOffset)
         }
         
         addToWishListButton.snp.makeConstraints {
-            $0.height.width.equalTo(46)
+            $0.height.width.equalTo(Constants.buttonSize)
             $0.centerY.equalTo(productLabelsStackView.snp.centerY)
-            $0.trailing.equalTo(productContainerView.snp.trailing).offset(-20)
+            $0.trailing.equalTo(productContainerView.snp.trailing).inset(Constants.labelHorizontalInset)
         }
         
         productDescriptionTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(productLabelsStackView.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(20)
+            $0.top.equalTo(productLabelsStackView.snp.bottom).offset(Constants.labelStackBottomOffset)
+            $0.leading.equalToSuperview().offset(Constants.labelHorizontalInset)
         }
         
         productDescriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(productDescriptionTitleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.top.equalTo(productDescriptionTitleLabel.snp.bottom).offset(Constants.descriptionLabelTopOffset)
+            $0.leading.equalToSuperview().offset(Constants.labelHorizontalInset)
+            $0.trailing.equalToSuperview().inset(Constants.labelHorizontalInset)
             $0.bottom.equalToSuperview()
         }
     }
@@ -135,6 +132,20 @@ final class ProductListView: UIView {
         paragraphStyle.lineSpacing = 10
         let attributedString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
         productDescriptionLabel.attributedText = attributedString
+    }
+}
+
+//MARK: - Constants
+extension ProductListView {
+    enum Constants {
+        static let labelStackSpacing: CGFloat = 6
+        static let buttonCornerRadius: CGFloat = 23
+        static let buttonSize: CGFloat = 46
+        static let labelHorizontalInset: CGFloat = 20
+        static let labelStackBottomOffset: CGFloat = 16
+        static let descriptionLabelTopOffset: CGFloat = 10
+        static let containerViewEdgeInsets: CGFloat = 20
+        static let stackViewTrailingOffset: CGFloat = 8
     }
 }
 

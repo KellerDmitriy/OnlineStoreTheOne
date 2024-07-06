@@ -11,8 +11,9 @@ import Combine
 
 final class WishListViewModel {
     //MARK:  Properties
-    let networkService: NetworkServiceProtocol
-    let storageService: StorageServiceProtocol
+    private let networkService: NetworkServiceProtocol
+    private let storageService: StorageServiceProtocol
+    private let coordinator: IWishListCoordinator
     
     @Published var wishList: [Products] = []
     @Published var filteredWishList: [Products] = []
@@ -22,10 +23,10 @@ final class WishListViewModel {
     var subscription: Set<AnyCancellable> = []
     
     //MARK: - Init
-    init(networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol, coordinator: IWishListCoordinator) {
         self.networkService = networkService
         self.storageService = storageService
-        
+        self.coordinator = coordinator
         observeProducts()
     }
     
@@ -70,5 +71,18 @@ final class WishListViewModel {
     func removeWishList(at id: Int) {
         storageService.removeIDFromWishList(id)
         wishList.removeAll { $0.id == id }
+    }
+    
+    //    MARK: - Route
+    func showCartsFlow() {
+        coordinator.showCartsFlow()
+    }
+    
+    func coordinatorFinish() {
+        coordinator.finish()
+    }
+    
+    func showDetailFlow(_ id: Int) {
+        coordinator.showDetailFlow(id)
     }
 }

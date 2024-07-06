@@ -8,19 +8,16 @@
 import UIKit
 
 // MARK: - UICollectionViewDataSource
-
 extension WishListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return  isFiltering ? viewModel.filteredWishList.count : viewModel.wishList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishListCollectionCell.cellID, for: indexPath) as? WishListCollectionCell else {
-            return UICollectionViewCell()
-        }
+        let cell = collectionView.dequeueReusableCell(type: WishListCollectionCell.self, for: indexPath)
         
         let product = isFiltering
-        ? viewModel.filteredWishList[indexPath.item] 
+        ? viewModel.filteredWishList[indexPath.item]
         : viewModel.wishList[indexPath.item]
         
         cell.configureCell(product)
@@ -43,7 +40,7 @@ extension WishListViewController: UICollectionViewDelegate {
         ? viewModel.filteredWishList[indexPath.item]
         : viewModel.wishList[indexPath.item]
         
-        coordinator.showDetailFlow(selectedWishList.id)
+        viewModel.showDetailFlow(selectedWishList.id)
     }
 }
 

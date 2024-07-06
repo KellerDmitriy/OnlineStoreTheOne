@@ -11,8 +11,6 @@ import SnapKit
 final class HomeViewController: BaseViewController {
     //MARK: - Properties
     let viewModel: HomeViewModel
-  
-    
     let sections = SectionsData.shared.sections
     
     lazy var collectionView: UICollectionView = {
@@ -36,10 +34,8 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         registrationCells()
         setDelegates()
-        
         observeProducts()
         observeError()
     }
@@ -82,7 +78,6 @@ final class HomeViewController: BaseViewController {
             }
             .store(in: &viewModel.subscription)
         
-        
         viewModel.$isCategoryExpanded
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -91,7 +86,6 @@ final class HomeViewController: BaseViewController {
             }
             .store(in: &viewModel.subscription)
     }
-    
     
     private func observeError() {
         viewModel.$dataError
@@ -106,7 +100,7 @@ final class HomeViewController: BaseViewController {
         viewModel.$isLoading
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
+            .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.collectionView.reloadData()
             }
@@ -173,7 +167,6 @@ final class HomeViewController: BaseViewController {
     private func setDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        
     }
     
     //MARK: - CollectionView
@@ -182,11 +175,7 @@ final class HomeViewController: BaseViewController {
         case UICollectionView.elementKindSectionHeader:
             let section = sections[indexPath.section]
             switch section {
-            case .searchField:
-                fallthrough
-            case .categories:
-                fallthrough
-            case .products:
+            case .searchField, .categories, .products:
                 let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: "HeaderProductsView",
@@ -213,13 +202,14 @@ final class HomeViewController: BaseViewController {
 extension HomeViewController {
     override internal func addViews() {
         super.addViews()
+//        customNavigationBar.addBottomBorder()
         view.addSubview(collectionView)
     }
     
     override internal func setupConstraints() {
         super.setupConstraints()
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.CollectionView.topOffset)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
@@ -267,78 +257,127 @@ extension HomeViewController {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(20)),
-            subitems: [item]
-        )
+                heightDimension: .absolute(Constants.CollectionView.SearchFieldSection.height)),
+                subitems: [item]
+                )
         
         let section = NSCollectionLayoutSection(group: group)
-        section.supplementariesFollowContentInsets = false
-        section.interGroupSpacing = 16
-        section.boundarySupplementaryItems = []
-        section.contentInsets = .init(top: 16, leading: 16, bottom: 33, trailing: 16)
-        return section
-        
-    }
-    
-    private func createCategorySection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(1))
-        )
-        
-        
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
-            widthDimension: .absolute(70),
-            heightDimension: .absolute(70)),
-                                                       subitems: [item]
-        )
-        let section = createLayoutSection(
-            group: group,
-            behavior: .groupPaging,
-            interGroupSpacing: 16,
-            supplementaryItems: [supplementaryFooterItem()],
-            contentInsets: false
-        )
-        section.contentInsets = .init(top: 0, leading: 16, bottom: 33, trailing: 16)
-        return section
-    }
-    
-    private func createProductSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(0.5),
-                heightDimension: .fractionalHeight(1))
-        )
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: .init(
-                widthDimension: .absolute(349),
-                heightDimension: .absolute(217)),
-            subitems: [item]
-        )
-        group.interItemSpacing = .fixed(16)
-        let section = NSCollectionLayoutSection(group: group)
-        section.supplementariesFollowContentInsets = false
-        section.interGroupSpacing = 16
-        section.boundarySupplementaryItems = [supplementaryHeaderItem()]
-        section.contentInsets = .init(top: 16, leading: 20, bottom: 16, trailing: 20)
-        return section
-    }
-    
-    private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
-        .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                                heightDimension: .estimated(30)),
-              elementKind: UICollectionView.elementKindSectionHeader,
-              alignment: .top)
-    }
-    
-    private func supplementaryFooterItem() -> NSCollectionLayoutBoundarySupplementaryItem {
-        return .init(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
-                                       heightDimension: .absolute(48.3)),
-                     elementKind: UICollectionView.elementKindSectionFooter,
-                     alignment: .bottom)
-    }
-    
+           section.supplementariesFollowContentInsets = false
+           section.interGroupSpacing = Constants.CollectionView.interGroupSpacing
+           section.boundarySupplementaryItems = []
+           section.contentInsets = .init(
+               top: Constants.CollectionView.sectionContentInset,
+               leading: Constants.CollectionView.sectionContentInset,
+               bottom: Constants.CollectionView.SearchFieldSection.bottomInset,
+               trailing: Constants.CollectionView.sectionContentInset
+           )
+           return section
+       }
+
+       private func createCategorySection() -> NSCollectionLayoutSection {
+           let item = NSCollectionLayoutItem(
+               layoutSize: .init(
+                   widthDimension: .fractionalWidth(1),
+                   heightDimension: .fractionalHeight(1))
+           )
+           
+           let group = NSCollectionLayoutGroup.horizontal(
+               layoutSize: .init(
+                   widthDimension: .absolute(Constants.CollectionView.CategorySection.itemWidth),
+                   heightDimension: .absolute(Constants.CollectionView.CategorySection.itemHeight)),
+               subitems: [item]
+           )
+           let section = createLayoutSection(
+               group: group,
+               behavior: .groupPaging,
+               interGroupSpacing: Constants.CollectionView.interGroupSpacing,
+               supplementaryItems: [supplementaryFooterItem()],
+               contentInsets: false
+           )
+           section.contentInsets = .init(
+               top: 0,
+               leading: Constants.CollectionView.sectionContentInset,
+               bottom: Constants.CollectionView.CategorySection.bottomInset,
+               trailing: Constants.CollectionView.sectionContentInset
+           )
+           return section
+       }
+
+       private func createProductSection() -> NSCollectionLayoutSection {
+           let item = NSCollectionLayoutItem(
+               layoutSize: .init(
+                   widthDimension: .fractionalWidth(0.5),
+                   heightDimension: .fractionalHeight(1))
+           )
+           let group = NSCollectionLayoutGroup.horizontal(
+               layoutSize: .init(
+                   widthDimension: .absolute(Constants.CollectionView.ProductSection.itemWidth),
+                   heightDimension: .absolute(Constants.CollectionView.ProductSection.itemHeight)),
+               subitems: [item]
+           )
+           group.interItemSpacing = .fixed(Constants.CollectionView.interGroupSpacing)
+           let section = NSCollectionLayoutSection(group: group)
+           section.supplementariesFollowContentInsets = false
+           section.interGroupSpacing = Constants.CollectionView.interGroupSpacing
+           section.boundarySupplementaryItems = [supplementaryHeaderItem()]
+           section.contentInsets = .init(
+               top: Constants.CollectionView.ProductSection.topInset,
+               leading: Constants.CollectionView.ProductSection.leadingInset,
+               bottom: Constants.CollectionView.ProductSection.bottomInset,
+               trailing: Constants.CollectionView.ProductSection.trailingInset
+           )
+           return section
+       }
+
+       private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+           .init(layoutSize: .init(
+                   widthDimension: .fractionalWidth(1.0),
+                   heightDimension: .estimated(Constants.CollectionView.Supplementary.headerHeight)),
+                 elementKind: UICollectionView.elementKindSectionHeader,
+                 alignment: .top)
+       }
+
+       private func supplementaryFooterItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+           .init(layoutSize: .init(
+                   widthDimension: .fractionalWidth(Constants.CollectionView.Supplementary.footerWidth),
+                   heightDimension: .absolute(Constants.CollectionView.Supplementary.footerHeight)),
+                 elementKind: UICollectionView.elementKindSectionFooter,
+                 alignment: .bottom)
+       }
 }
 
-
+extension HomeViewController {
+    enum Constants {
+        enum CollectionView {
+            static let topOffset: CGFloat = 50.0
+            static let interGroupSpacing: CGFloat = 16.0
+            static let sectionContentInset: CGFloat = 16.0
+            
+            enum SearchFieldSection {
+                static let height: CGFloat = 20.0
+                static let bottomInset: CGFloat = 33.0
+            }
+            
+            enum CategorySection {
+                static let itemWidth: CGFloat = 70.0
+                static let itemHeight: CGFloat = 70.0
+                static let bottomInset: CGFloat = 33.0
+            }
+            
+            enum ProductSection {
+                static let itemWidth: CGFloat = 349.0
+                static let itemHeight: CGFloat = 217.0
+                static let topInset: CGFloat = 16.0
+                static let bottomInset: CGFloat = 16.0
+                static let leadingInset: CGFloat = 20.0
+                static let trailingInset: CGFloat = 20.0
+            }
+            
+            enum Supplementary {
+                static let headerHeight: CGFloat = 30.0
+                static let footerWidth: CGFloat = 0.9
+                static let footerHeight: CGFloat = 48.3
+            }
+        }
+    }
+}

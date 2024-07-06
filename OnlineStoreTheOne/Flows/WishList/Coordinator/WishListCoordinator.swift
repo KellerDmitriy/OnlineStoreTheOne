@@ -38,8 +38,8 @@ final class WishListCoordinator: IWishListCoordinator {
     
     // MARK: - Flow Presentation
     func showWishListScene() {
-        let viewModel = WishListViewModel(networkService: networkService, storageService: storageService)
-        let viewController = WishListViewController(viewModel: viewModel, coordinator: self)
+        let viewModel = WishListViewModel(networkService: networkService, storageService: storageService, coordinator: self)
+        let viewController = WishListViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
 

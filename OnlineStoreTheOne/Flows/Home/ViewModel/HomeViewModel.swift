@@ -34,7 +34,6 @@ final class HomeViewModel: ObservableObject {
     @Published var productsForCategory: [Products] = []
     @Published var searchedProducts: [Products] = []
     
-    //    @Published var idsForCart: [Int] = []
     @Published var searchText = ""
     
     @Published var selectedCategory: Int?  = nil

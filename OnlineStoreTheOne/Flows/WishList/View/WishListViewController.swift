@@ -7,13 +7,12 @@
 
 import UIKit
 
-final class WishListViewController: BaseViewController, UITextFieldDelegate {
+final class WishListViewController: BaseViewController {
     let viewModel: WishListViewModel
-    let coordinator: IWishListCoordinator
     
     //MARK: Private properties
     private var searchBarIsEmpty: Bool {
-        guard let text = customNavigationBar.searchTextFieldCell.searchTextField.text else { return false }
+        guard let text = customNavigationBar.searchBarView.searchBar.searchTextField.text else { return false }
         return text.isEmpty
     }
     
@@ -29,9 +28,9 @@ final class WishListViewController: BaseViewController, UITextFieldDelegate {
     }()
     
     // MARK: - Init
-    init(viewModel: WishListViewModel, coordinator: IWishListCoordinator) {
+    init(viewModel: WishListViewModel) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,7 +56,6 @@ final class WishListViewController: BaseViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
-    
     // MARK: - ViewModel Observing
     private func observeViewModelChanges() {
         viewModel.$wishList
@@ -78,8 +76,10 @@ final class WishListViewController: BaseViewController, UITextFieldDelegate {
     //MARK: - NavigationController
     func configureNavBar() {
         navigationController?.navigationBar.isHidden = true
-        navigationController?.tabBarItem.title = "Wish List"
-        customNavigationBar.searchTextFieldCell.searchTextField.delegate = self
+        navigationController?.tabBarItem.title = Resources.Text.wishList
+        
+        customNavigationBar.searchBarView.delegate = self
+        
     }
     
     override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
@@ -92,11 +92,11 @@ final class WishListViewController: BaseViewController, UITextFieldDelegate {
     
     // MARK: - Actions
     override func cartBarButtonTap() {
-        coordinator.showCartsFlow()
+        viewModel.showCartsFlow()
     }
     
     override func backBarButtonTap() {
-        coordinator.finish()
+        viewModel.coordinatorFinish()
     }
     
     // MARK: - UI Setup
@@ -105,7 +105,6 @@ final class WishListViewController: BaseViewController, UITextFieldDelegate {
             self.collectionView.reloadData()
         }, completion: nil)
     }
-    
     
     private func setupCollectionView() {
         let layout = createLayout()
@@ -123,7 +122,7 @@ final class WishListViewController: BaseViewController, UITextFieldDelegate {
     }
     
     private func registerCollectionViewCells() {
-        collectionView.register(WishListCollectionCell.self, forCellWithReuseIdentifier: WishListCollectionCell.cellID)
+        collectionView.register(WishListCollectionCell.self)
     }
     
     override func addViews() {
@@ -165,18 +164,25 @@ final class WishListViewController: BaseViewController, UITextFieldDelegate {
 }
 
 // MARK: - UISearchResultsUpdating, TextFieldDelegate
-extension WishListViewController: UISearchBarDelegate {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        let searchText = searchController.searchBar.text ?? ""
+extension WishListViewController: SearchBarViewDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let searchText = searchBar.text ?? ""
         viewModel.filteredWishList = viewModel.wishList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
-        collectionView.reloadData()
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        #warning("разобраться с методом")
+    }
+
 }
 
 //MARK: Constants
 extension WishListViewController {
-    struct Constants {
+    enum Constants {
         static let topAnchor: CGFloat = 60
         static let horizontalSpacing: CGFloat = 20
         static let interItemSpacing: CGFloat = 20

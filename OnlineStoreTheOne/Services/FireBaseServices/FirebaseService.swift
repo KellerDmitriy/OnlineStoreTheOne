@@ -12,6 +12,7 @@ import FirebaseAuth
 
 protocol IFirebase {
     func isAuthenticated() -> Bool
+    func signOut(completion: @escaping(Error?) -> Void)
     func logUserIn(with email: String, password: String, completion: ((AuthDataResult?, Error?) -> Void)?)
     func registerUser(with model: RegistrationCredentials, completion: @escaping (Error?) -> Void)
     func changeAccountType(userId: String, type: String)
@@ -20,6 +21,15 @@ protocol IFirebase {
 }
 
 final class FirebaseService: IFirebase {
+    func signOut(completion: @escaping(Error?) -> Void) {
+           do {
+               try Auth.auth().signOut()
+               completion(nil)
+           } catch let error {
+               completion(error)
+               print(error.localizedDescription)
+           }
+       }
     
     func isAuthenticated() -> Bool {
         return Auth.auth().currentUser?.uid != nil
