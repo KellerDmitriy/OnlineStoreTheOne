@@ -13,6 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        DIService.register({ FirebaseService() as IFirebase }, forKey: .authService)
+        DIService.register({ NetworkService() as NetworkServiceProtocol }, forKey: .networkService)
+        DIService.register({ StorageService() as StorageServiceProtocol }, forKey: .storageService)
         return true
     }
 
