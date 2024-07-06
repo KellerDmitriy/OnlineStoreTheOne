@@ -9,10 +9,11 @@ import Foundation
 
 // MARK: - Products
 struct Products: Codable {
+
     let id: Int
     let title: String
     let price: Int
-    let description: String?
+    let description: String
     let category: Category?
     let image: String?
     let images: [String]?
