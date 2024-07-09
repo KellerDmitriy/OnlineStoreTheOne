@@ -87,7 +87,7 @@ protocol IOnboardingCoordinator: ICoordinator {
 
 protocol IHomeCoordinator: ICoordinator {
     func showHomeScene()
-    func showSearchResultFlow()
+    func showSearchResultFlow(_ searchText: String)
     
     func showCartsFlow()
     func showDetailFlow(productId: Int)

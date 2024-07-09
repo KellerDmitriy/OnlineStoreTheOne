@@ -16,7 +16,7 @@ final class SearchFieldCollectionViewCell: UICollectionViewCell {
         element.backgroundColor = .white
         element.layer.cornerRadius = 8
         element.layer.masksToBounds = true
-        element.layer.borderWidth = 1
+        element.layer.borderWidth = 0.5
         element.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         element.translatesAutoresizingMaskIntoConstraints = false
         return element

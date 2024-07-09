@@ -225,9 +225,9 @@ private extension RegistrationViewController {
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        guard let keyboardFrame = notification.userInfo?[
+        guard notification.userInfo?[
             UIResponder.keyboardFrameEndUserInfoKey
-        ] as? NSValue else { return }
+        ] is NSValue else { return }
         
         if !isKeyboardShow {
             UIView.animate(withDuration: 0.3) { [weak self] in

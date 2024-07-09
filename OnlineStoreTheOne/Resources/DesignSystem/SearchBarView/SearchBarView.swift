@@ -75,7 +75,6 @@ final class SearchBarView: UIView {
             searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: trailingAnchor),
             searchBar.bottomAnchor.constraint(equalTo: bottomAnchor),
-            searchBar.searchTextField.heightAnchor.constraint(equalToConstant: 35),
             
             // Constraints for searchButton
             searchButton.topAnchor.constraint(equalTo: searchBar.searchTextField.topAnchor, constant: 5),

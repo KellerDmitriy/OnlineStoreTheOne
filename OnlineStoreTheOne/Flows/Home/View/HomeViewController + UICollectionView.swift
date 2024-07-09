@@ -103,7 +103,7 @@ extension HomeViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.inputView = UIView()
         let searchText = textField.text
-        viewModel.coordinator?.showSearchResultFlow()
+        viewModel.coordinator?.showSearchResultFlow(searchText ?? "")
     }
 }
 

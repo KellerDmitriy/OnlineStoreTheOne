@@ -202,12 +202,13 @@ final class HomeViewController: BaseViewController {
 extension HomeViewController {
     override internal func addViews() {
         super.addViews()
-//        customNavigationBar.addBottomBorder()
+
         view.addSubview(collectionView)
     }
     
     override internal func setupConstraints() {
         super.setupConstraints()
+      
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.CollectionView.topOffset)
             make.leading.trailing.equalToSuperview()
@@ -349,7 +350,7 @@ extension HomeViewController {
 extension HomeViewController {
     enum Constants {
         enum CollectionView {
-            static let topOffset: CGFloat = 50.0
+            static let topOffset: CGFloat = 30.0
             static let interGroupSpacing: CGFloat = 16.0
             static let sectionContentInset: CGFloat = 16.0
             

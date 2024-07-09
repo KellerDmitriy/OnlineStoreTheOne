@@ -37,7 +37,7 @@ final class HomeCoordinator: IHomeCoordinator {
         navigationController.setViewControllers([viewController], animated: true)
     }
     
-    func showSearchResultFlow() {
+    func showSearchResultFlow(_ searchText: String) {
         navigationController.navigationBar.isHidden = true
         
         let searchResultCoordinator = SearchResultCoordinator(
