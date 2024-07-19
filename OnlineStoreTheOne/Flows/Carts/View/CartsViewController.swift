@@ -10,27 +10,56 @@ import SnapKit
 
 final class CartsViewController: BaseViewController {
     let viewModel: CartsViewModel
-    let coordinator: ICartsCoordinator
-    
-    //    MARK: - UI elements
+
+    // MARK: - UI elements
     private lazy var locationTitleLabel: UILabel = {
-        LabelFactory(text: "Delivery to:", font: .extraLight, color: .black, size: 16).createLabel()
+        LabelFactory(
+            text: Resources.Texts.deliveryTo,
+            font: .extraLight,
+            color: .black,
+            size: 16
+        )
+        .createLabel()
     }()
     
     private lazy var locationLabel: UILabel = {
-        LabelFactory(text: "Moroco, St. 1/4", font: .extraLight, color: .black, size: 16).createLabel()
+        LabelFactory(
+            text: Resources.Texts.moroccoAddress,
+            font: .extraLight,
+            color: .black,
+            size: 16
+        )
+        .createLabel()
     }()
     
     private lazy var summaryLabel: UILabel = {
-        LabelFactory(text: "Order Summary:", font: .extraBold, color: .black, size: 16).createLabel()
+        LabelFactory(
+            text: Resources.Texts.orderSummary,
+            font: .extraBold,
+            color: .black,
+            size: 16
+        )
+        .createLabel()
     }()
     
     private lazy var totalLabel: UILabel = {
-        LabelFactory(text: "Totals:", font: .medium, color: .black, size: 16).createLabel()
+        LabelFactory(
+            text: Resources.Texts.totals,
+            font: .medium,
+            color: .black,
+            size: 16
+        )
+        .createLabel()
     }()
     
     private lazy var totalPriceLabel: UILabel = {
-        LabelFactory(text: "100 $", font: .extraBold, color: .black, size: 16).createLabel()
+        LabelFactory(
+            text: Resources.Texts.hundredDollars,
+            font: .extraBold,
+            color: .black,
+            size: 16
+        )
+        .createLabel()
     }()
     
     private lazy var tableView: UITableView = {
@@ -50,7 +79,7 @@ final class CartsViewController: BaseViewController {
     
     private lazy var payButton: UIButton = {
         let filledButtonFactory = FilledButtonFactory(
-            title: "Selected payment method",
+            title: Resources.Texts.selectedPaymentMethod,
             type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.payButtonTap()
@@ -60,17 +89,16 @@ final class CartsViewController: BaseViewController {
     }()
     
     // MARK: - Init
-    init(viewModel: CartsViewModel, coordinator: ICartsCoordinator) {
+    init(viewModel: CartsViewModel) {
         self.viewModel = viewModel
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Resources.Texts.error)
     }
     
-    //    MARK: - LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,14 +113,14 @@ final class CartsViewController: BaseViewController {
     }
     
     // MARK: - Data Observing
-       private func observeCartProducts() {
-           viewModel.$cartProducts
-               .receive(on: DispatchQueue.main)
-               .sink { [weak self] carts in
-                   self?.animateCollectionView()
-               }
-               .store(in: &viewModel.subscription)
-       }
+    private func observeCartProducts() {
+        viewModel.$cartProducts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] carts in
+                self?.animateCollectionView()
+            }
+            .store(in: &viewModel.subscription)
+    }
     
     private func observeTotal() {
         viewModel.$orderSummary
@@ -103,21 +131,21 @@ final class CartsViewController: BaseViewController {
             .store(in: &viewModel.subscription)
     }
     
-    //    MARK: - Override Methods
+    // MARK: - Override Methods
     override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
         CustomNavigationBarConfiguration(
-        title: "Your Cart",
+        title: Resources.Texts.yourCart,
         isSetupBackButton: true,
         isSetupCartButton: true
         )
     }
     
     override func cartBarButtonTap() {
-        coordinator.showCartsScene()
+        viewModel.showCartsScene()
     }
     
     override func backBarButtonTap() {
-        coordinator.popViewController()
+        viewModel.dismissCartsScene()
     }
     
     func animateCollectionView() {
@@ -154,12 +182,12 @@ final class CartsViewController: BaseViewController {
         super.setupConstraints()
         
         locationTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing * 2)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.tppSpacing)
             make.leading.equalTo(Constants.horizontalSpacing)
         }
 
         locationLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.verticalSpacing * 2)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.tppSpacing)
             make.trailing.equalToSuperview().inset(Constants.horizontalSpacing)
         }
 
@@ -200,13 +228,14 @@ final class CartsViewController: BaseViewController {
     
     //    MARK: - Action
     private func payButtonTap() {
-        coordinator.showPayScene()
+        viewModel.showPayFlow()
     }
 }
 
 // MARK: - Constants
 extension CartsViewController {
     enum Constants {
+        static let tppSpacing: CGFloat = 40
         static let rowHeight: CGFloat = 150
         static let horizontalSpacing: CGFloat = 16
         static let verticalSpacing: CGFloat = 20

@@ -102,8 +102,7 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.inputView = UIView()
-        let searchText = textField.text
-        viewModel.coordinator?.showSearchResultFlow(searchText ?? "")
+        viewModel.showSearchResultFlow()
     }
 }
 

@@ -81,7 +81,7 @@ extension BaseViewController {
         customNavigationBar.snp.makeConstraints { make in
             make.height.equalTo(44)
             make.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalToSuperview().offset(45)
         }
     }
 }

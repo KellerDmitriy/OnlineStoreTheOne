@@ -33,10 +33,11 @@ final class CartsCoordinator: ICartsCoordinator {
     // MARK: - Flow Presentation
     func showCartsScene() {
         let viewModel = CartsViewModel(
+            coordinator: self,
             networkService: networkService,
             storageService: storageService
         )
-        let viewController = CartsViewController(viewModel: viewModel, coordinator: self)
+        let viewController = CartsViewController(viewModel: viewModel)
         navigationController.navigationBar.isHidden = true
         viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)

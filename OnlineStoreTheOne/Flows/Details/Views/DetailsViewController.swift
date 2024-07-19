@@ -18,7 +18,7 @@ final class DetailsViewController: BaseViewController {
     private let productList = ProductListView()
     
     private lazy var addToCartButton = FilledButtonFactory(
-        title: Resources.Text.addToCart,
+        title: Resources.Texts.addToCart,
         type: .greenButton,
         action: UIAction(handler: { [weak self] _ in
             self?.cartButtonTap()
@@ -26,7 +26,7 @@ final class DetailsViewController: BaseViewController {
     ).createButton()
     
     private lazy var buyNowButton = FilledButtonFactory(
-        title: Resources.Text.buyNow,
+        title: Resources.Texts.buyNow,
         type: .grayButton,
         action: UIAction(handler: { [weak self] _ in
             self?.payButtonTap()
@@ -92,7 +92,7 @@ final class DetailsViewController: BaseViewController {
     
     override func configureNavigationBar() -> CustomNavigationBarConfiguration? {
         CustomNavigationBarConfiguration(
-            title: Resources.Text.detailsProductTitle,
+            title: Resources.Texts.detailsProductTitle,
             isSetupBackButton: true,
             isSetupCartButton: true
         )

@@ -49,11 +49,11 @@ final class ProfileViewController: BaseViewController {
     }()
     
     private lazy var userName: UILabel = {
-        LabelFactory(text: Resources.Text.userName, font: .bold, size: 16).createLabel()
+        LabelFactory(text: Resources.Texts.userName, font: .bold, size: 16).createLabel()
     }()
     
     private lazy var userMail: UILabel = {
-        let label = LabelFactory(text: Resources.Text.userEmail, font: .light, size: 14).createLabel()
+        let label = LabelFactory(text: Resources.Texts.userEmail, font: .light, size: 14).createLabel()
         let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
         let underlineAttributedString = NSAttributedString(string: label.text ?? "", attributes: underlineAttribute)
         label.attributedText = underlineAttributedString
@@ -62,8 +62,8 @@ final class ProfileViewController: BaseViewController {
     
     private lazy var termsButton: UIButton = {
         let button = ChevronButtonFactory(
-            title: Resources.Text.termsConditions,
-            chevron: Resources.Text.chevronForward,
+            title: Resources.Texts.termsConditions,
+            chevron: Resources.Texts.chevronForward,
             action: UIAction { [weak self] _ in
                 self?.viewModel.showTermAndConditionScene()
             },
@@ -74,8 +74,8 @@ final class ProfileViewController: BaseViewController {
     
     private lazy var typeButton: UIButton = {
         let button = ChevronButtonFactory(
-            title: Resources.Text.typeOfAccount,
-            chevron: Resources.Text.chevronForward,
+            title: Resources.Texts.typeOfAccount,
+            chevron: Resources.Texts.chevronForward,
             action: UIAction { [weak self] _ in
                 self?.viewModel.showTypeOfAccountScene()
             },
@@ -86,8 +86,8 @@ final class ProfileViewController: BaseViewController {
     
     private lazy var signOutButton: UIButton = {
         let button = ChevronButtonFactory(
-            title: Resources.Text.signOut,
-            chevron: Resources.Text.arrowForward,
+            title: Resources.Texts.signOut,
+            chevron: Resources.Texts.arrowForward,
             action: UIAction { [weak self] _ in
                 self?.viewModel.signOutAction()
             },
@@ -130,7 +130,7 @@ final class ProfileViewController: BaseViewController {
     }
     
     func setupNavigationBar() {
-        navigationItem.title = Resources.Text.profile
+        navigationItem.title = Resources.Texts.profile
         navigationController?.navigationBar.addBottomBorder()
     }
     

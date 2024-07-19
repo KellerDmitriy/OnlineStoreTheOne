@@ -76,7 +76,7 @@ final class WishListViewController: BaseViewController {
     //MARK: - NavigationController
     func configureNavBar() {
         navigationController?.navigationBar.isHidden = true
-        navigationController?.tabBarItem.title = Resources.Text.wishList
+        navigationController?.tabBarItem.title = Resources.Texts.wishList
         
         customNavigationBar.searchBarView.delegate = self
         

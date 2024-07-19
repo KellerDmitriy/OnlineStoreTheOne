@@ -40,10 +40,10 @@ final class ProfileViewModel: IProfileViewModel {
     
     func signOutAction() {
         coordinator.showAlertController(
-            title: Resources.Text.attention,
-            message: Resources.Text.signOutMessage,
-            titleDefaultAction: Resources.Text.signOut,
-            titleDestructiveAction: Resources.Text.cancel
+            title: Resources.Texts.attention,
+            message: Resources.Texts.signOutMessage,
+            titleDefaultAction: Resources.Texts.signOut,
+            titleDestructiveAction: Resources.Texts.cancel
         ) { [weak self] in
             self?.signOut()
         }
@@ -62,9 +62,9 @@ final class ProfileViewModel: IProfileViewModel {
     
     func handleSignOutError(_ error: Error) {
         coordinator.showAlertController(
-            title: Resources.Text.errorTitle,
+            title: Resources.Texts.errorTitle,
             message: error.localizedDescription,
-            titleDefaultAction: Resources.Text.ok,
+            titleDefaultAction: Resources.Texts.ok,
             createAction: nil
         )
     }

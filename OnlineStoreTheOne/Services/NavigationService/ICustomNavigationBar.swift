@@ -109,7 +109,8 @@ final class CustomNavigationBarImpl: UIView, ICustomNavigationBar {
         if withTextField {
             addSubview(searchBarView)
             searchBarView.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview().inset(Constants.textFieldVerticalInset)
+                make.top.equalToSuperview().offset(Constants.textFieldVerticalInset)
+                make.bottom.equalToSuperview().offset(-Constants.textFieldVerticalInset)
                 make.trailing.equalToSuperview().inset(Constants.textFieldTrailingInset)
                 make.leading.equalToSuperview().inset(withBackButton ? Constants.backButtonLeadingInset : Constants.buttonInset)
             }
@@ -132,8 +133,8 @@ final class CustomNavigationBarImpl: UIView, ICustomNavigationBar {
         
         backgroundColor = .systemBackground
         
-        setTitle(title: configuration.title)
         setupView()
+        setTitle(title: configuration.title)
         setupBackButton(configuration.isSetupBackButton)
         setupCartButton(configuration.isSetupCartButton)
         setupTextField(configuration.withSearchTextField, configuration.isSetupBackButton)

@@ -25,7 +25,7 @@ final class SearchBarView: UIView {
         search.delegate = self
         search.barTintColor = nil
         search.tintColor = .gray
-        search.searchTextPositionAdjustment = UIOffset(horizontal: 5, vertical: 1)
+//        search.searchTextPositionAdjustment = UIOffset(horizontal: 5, vertical: 1)
         search.searchTextField.placeholder = "Search"
         search.searchTextField.textColor = .gray
         search.backgroundColor = .clear

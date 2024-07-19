@@ -28,7 +28,7 @@ final class LoginViewController: UIViewController {
     private let emailView = InputContainerView(
         image: Resources.Image.mail,
         textField: CustomTextField(
-            placeholder: Resources.Text.email,
+            placeholder: Resources.Texts.email,
             type: .text
         )
     )
@@ -36,14 +36,14 @@ final class LoginViewController: UIViewController {
     private let passwordView = InputContainerView(
         image: Resources.Image.lock,
         textField: CustomTextField(
-            placeholder: Resources.Text.password,
+            placeholder: Resources.Texts.password,
             type: .password
         )
     )
     
     private lazy var loginButton: UIButton = {
         let button = FilledButtonFactory(
-            title: Resources.Text.login,
+            title: Resources.Texts.login,
             type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.loginUser()
@@ -63,12 +63,12 @@ final class LoginViewController: UIViewController {
     
     private lazy var dontHaveAccountButton: UIButton = {
         let attributedTitle = NSMutableAttributedString(
-            string: Resources.Text.dontHaveAccount,
+            string: Resources.Texts.dontHaveAccount,
             attributes: [.font: UIFont.makeTypography(.medium, size: Constants.fontSize), .foregroundColor: Colors.darkArsenic]
         )
         attributedTitle.append(
             NSAttributedString(
-                string: Resources.Text.signUp,
+                string: Resources.Texts.signUp,
                 attributes: [.font: UIFont.makeTypography(.bold, size: Constants.fontSize), .foregroundColor: Colors.greenSheen]
             )
         )

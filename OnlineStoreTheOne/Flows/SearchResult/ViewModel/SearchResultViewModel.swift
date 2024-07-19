@@ -63,7 +63,6 @@ final class SearchResultViewModel: ObservableObject {
     }
     
     //MARK: - Storage Methods
-    
     func addToCart(_ productId: Int) {
         if let product = products.first(where: { $0.id == productId }) {
             let cartItem = CartModel(product: product, countProduct: 1, isSelected: true)

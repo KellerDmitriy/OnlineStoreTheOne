@@ -45,7 +45,7 @@ final class WishListCollectionCell: UICollectionViewCell {
     
     private lazy var addToCartButton: UIButton = {
         let filledButtonFactory = FilledButtonFactory(
-            title: Resources.Text.addToCart,
+            title: Resources.Texts.addToCart,
             type: .greenButton,
             action: UIAction { [weak self] _ in
                 self?.addToCartCompletion?()

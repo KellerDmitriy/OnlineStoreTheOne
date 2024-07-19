@@ -41,7 +41,7 @@ enum Resources {
         
     }
     
-    enum Text {
+    enum Texts {
         static let deliveryAddress = "Delivery address"
         //        tabBar
         static let home = "Home"
@@ -63,12 +63,20 @@ enum Resources {
         static let logIn = "Log In"
         static let completeYourAccount = "Complete your account"
         static let chevronForward = "chevron.forward"
+        static let error = "Error"
         
         //        DetailsViewController
         static let addToCart = "Add to Cart"
         static let buyNow = "Buy Now"
         static let detailsProductTitle = "Details product"
-        
+        // Carts
+        static let deliveryTo = "Delivery to:"
+        static let moroccoAddress = "Moroco, St. 1/4"
+        static let orderSummary = "Order Summary:"
+        static let totals = "Totals:"
+        static let hundredDollars = "100 $"
+        static let selectedPaymentMethod = "Selected payment method"
+        static let yourCart = "Your Cart"
         //        Profile
         static let attention = "Attention"
         static let signOutMessage = "Are you sure you want to sign out?"
@@ -86,6 +94,7 @@ enum Resources {
         
         static let errorTitle = "exit error"
         static let ok = "Ok"
+        static let searchResultHeader = "Search result for "
     }
 }
 

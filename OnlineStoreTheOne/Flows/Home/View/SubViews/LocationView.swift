@@ -26,7 +26,7 @@ final class LocationView: UIView {
         let label = UILabel()
         label.font = UIFont.makeTypography(.semiBold, size: 12)
         label.textColor = .label.withAlphaComponent(0.5)
-        label.text = Resources.Text.deliveryAddress
+        label.text = Resources.Texts.deliveryAddress
         return label
     }()
     

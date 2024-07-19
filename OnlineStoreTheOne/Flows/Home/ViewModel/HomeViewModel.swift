@@ -143,6 +143,23 @@ extension HomeViewModel {
         }
         return uniqueCategories
     }
+    
+    //MARK: -  Route
+    func showCartsFlow() {
+        coordinator?.showCartsFlow()
+    }
+    
+    func showAlertController(_ message: String, _ action: @escaping ()-> Void) {
+        coordinator?.showAlertController(
+            title: Resources.Texts.error,
+            message: message,
+            createAction: action
+        )
+    }
+    
+    func showSearchResultFlow() {
+        coordinator?.showSearchResultFlow(searchText)
+    }
 }
 //MARK: - HeaderProductsDelegate
 extension HomeViewModel: HeaderProductsDelegate {

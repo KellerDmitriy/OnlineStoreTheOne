@@ -127,9 +127,7 @@ final class HomeViewController: BaseViewController {
                 }
             }
             
-            viewModel.coordinator?.showAlertController(title: "Error", message: message) {
-                retryAction()
-            }
+            viewModel.showAlertController(message, retryAction)
         }
     }
     
@@ -142,7 +140,7 @@ final class HomeViewController: BaseViewController {
     }
     
     override func cartBarButtonTap() {
-        viewModel.coordinator?.showCartsFlow()
+        viewModel.showCartsFlow()
     }
     
     //MARK: - Action

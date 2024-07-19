@@ -12,7 +12,8 @@ final class CartsViewModel: ObservableObject {
     //MARK:  Properties
     let networkService: NetworkServiceProtocol
     let storageService: StorageServiceProtocol
-
+    let coordinator: ICartsCoordinator
+    
     @Published var cartProducts: [CartModel] = []
     
     @Published var isSelect = true
@@ -22,7 +23,8 @@ final class CartsViewModel: ObservableObject {
     var subscription: Set<AnyCancellable> = []
     
     //MARK: - Init
-    init(networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+    init(coordinator: ICartsCoordinator, networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+        self.coordinator = coordinator
         self.networkService = networkService
         self.storageService = storageService
         
@@ -71,7 +73,6 @@ final class CartsViewModel: ObservableObject {
     }
     
     //MARK: - Helper Methods
-    
     func getOrderSummery() {
         orderSummary = 0
         for cart in cartProducts {
@@ -79,5 +80,18 @@ final class CartsViewModel: ObservableObject {
                 orderSummary += cart.product.price * cart.countProduct
             }
         }
+    }
+    
+    //    MARK: - Route
+    func showPayFlow() {
+        coordinator.showPayScene()
+    }
+    
+    func showCartsScene() {
+        coordinator.showCartsScene()
+    }
+    
+    func dismissCartsScene() {
+        coordinator.popViewController()
     }
 }

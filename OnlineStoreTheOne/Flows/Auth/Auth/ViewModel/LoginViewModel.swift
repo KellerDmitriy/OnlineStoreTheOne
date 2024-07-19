@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 protocol LoginViewModelProtocol {
     var email: String? { get set }
     var password: String? { get set }
@@ -52,7 +51,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     //    MARK: - Route
     func showErrorInfo(message: String, action: @escaping ()->Void) {
         coordinator?.showAlertController(
-            title: "Error",
+            title: Resources.Texts.error,
             message: message,
             createAction: action)
     }

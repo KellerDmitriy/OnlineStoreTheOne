@@ -98,7 +98,7 @@ final class AppCoordinator: ICoordinator {
             navigationController: homeNavigationController
         )
         homeNavigationController.tabBarItem = UITabBarItem(
-            title: Resources.Text.home,
+            title: Resources.Texts.home,
             image: Resources.Image.home,
             selectedImage: Resources.Image.selectedHome
         )
@@ -111,7 +111,7 @@ final class AppCoordinator: ICoordinator {
             navigationController: wishListNavigationController
         )
         wishListNavigationController.tabBarItem = UITabBarItem(
-            title: Resources.Text.wishList,
+            title: Resources.Texts.wishList,
             image: Resources.Image.wishList,
             selectedImage: Resources.Image.selectedWishlist
         )
@@ -126,7 +126,7 @@ final class AppCoordinator: ICoordinator {
             navigationController: managerNavigationController
         )
         managerNavigationController.tabBarItem = UITabBarItem(
-            title: Resources.Text.manager,
+            title: Resources.Texts.manager,
             image: Resources.Image.manager,
             selectedImage: Resources.Image.selectedManager
         )
@@ -142,7 +142,7 @@ final class AppCoordinator: ICoordinator {
             storageService: storageService
         )
         profileNavigationController.tabBarItem = UITabBarItem(
-            title: Resources.Text.profile,
+            title: Resources.Texts.profile,
             image: Resources.Image.profileTab,
             selectedImage: Resources.Image.selectedProfile
         )

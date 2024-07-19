@@ -15,28 +15,28 @@ final class RegistrationViewController: UIViewController {
     // MARK: - UI Elements
     private let loginView = InputContainerView(
         image: Resources.Image.person,
-        textField: CustomTextField(placeholder: Resources.Text.enterName, type: .text)
+        textField: CustomTextField(placeholder: Resources.Texts.enterName, type: .text)
     )
     
     private let emailView = InputContainerView(
         image: Resources.Image.mail,
-        textField: CustomTextField(placeholder: Resources.Text.enterEmail, type: .text)
+        textField: CustomTextField(placeholder: Resources.Texts.enterEmail, type: .text)
     )
     
     private let passwordView = InputContainerView(
         image: Resources.Image.lock,
-        textField: CustomTextField(placeholder: Resources.Text.enterPassword, type: .password)
+        textField: CustomTextField(placeholder: Resources.Texts.enterPassword, type: .password)
     )
     
     private let confirmPasswordView = InputContainerView(
         image: Resources.Image.lock,
-        textField: CustomTextField(placeholder: Resources.Text.confirmPassword, type: .password)
+        textField: CustomTextField(placeholder: Resources.Texts.confirmPassword, type: .password)
     )
     
     private lazy var typeOfAccountButton: UIButton = {
         let button = ChevronButtonFactory(
-            title: Resources.Text.typeOfAccount,
-            chevron: Resources.Text.chevronForward,
+            title: Resources.Texts.typeOfAccount,
+            chevron: Resources.Texts.chevronForward,
             action: UIAction { [weak self] _ in
                 self?.changeType()
             },
@@ -46,7 +46,7 @@ final class RegistrationViewController: UIViewController {
     }()
     
     private lazy var signUpButton = FilledButtonFactory(
-        title: Resources.Text.signUp,
+        title: Resources.Texts.signUp,
         type: .greenButton,
         action: UIAction { [weak self] _ in
             self?.registerUser()
@@ -63,12 +63,12 @@ final class RegistrationViewController: UIViewController {
     
     private lazy var alreadyHaveAccountButton: UIButton = {
         let attributedTitle = NSMutableAttributedString(
-            string: Resources.Text.alreadyHaveAccount,
+            string: Resources.Texts.alreadyHaveAccount,
             attributes: [.font: UIFont.makeTypography(.medium, size: Constants.fontSize), .foregroundColor: Colors.darkArsenic]
         )
         attributedTitle.append(
             NSAttributedString(
-                string: Resources.Text.logIn,
+                string: Resources.Texts.logIn,
                 attributes: [.font: UIFont.makeTypography(.bold, size: Constants.fontSize), .foregroundColor: Colors.greenSheen]
             )
         )
@@ -119,7 +119,7 @@ final class RegistrationViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         
-        navigationItem.title = Resources.Text.completeYourAccount
+        navigationItem.title = Resources.Texts.completeYourAccount
         navigationItem.hidesBackButton = true
         
         view.addSubview(accountStackView)

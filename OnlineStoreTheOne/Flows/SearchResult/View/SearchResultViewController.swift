@@ -10,18 +10,17 @@ import SnapKit
 
 final class SearchResultViewController: BaseViewController {
     // MARK: - Properties
-    var viewModel: SearchResultViewModel
+    let viewModel: SearchResultViewModel
 
-    
     //MARK: Private properties
-//    private var searchBarIsEmpty: Bool {
-//        guard let text = customNavigationBar.searchTextFieldCell.searchTextField.text else { return false }
-//        return text.isEmpty
-//    }
+    private var searchBarIsEmpty: Bool {
+        guard let text = customNavigationBar.searchBarView.searchBar.searchTextField.text else { return false }
+        return text.isEmpty
+    }
     
-//    var isFiltering: Bool {
-//        return !searchBarIsEmpty
-//    }
+    var isFiltering: Bool {
+        return !searchBarIsEmpty
+    }
     
     // MARK: - UI Components
     lazy var collectionView: UICollectionView = {
@@ -50,14 +49,13 @@ final class SearchResultViewController: BaseViewController {
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+    
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCollectionView()
-
         observeProducts()
     }
     
@@ -86,8 +84,6 @@ final class SearchResultViewController: BaseViewController {
         isSetupCartButton: true
         )
     }
-    //MARK: - Private methods
-    
     
     //MARK: - Actions
     func cartButtonTapped(_ productID: Int) {
@@ -104,12 +100,19 @@ final class SearchResultViewController: BaseViewController {
 }
 
 // MARK: - UISearchResultsUpdating, TextFieldDelegate
-extension SearchResultViewController: UISearchResultsUpdating {
+extension SearchResultViewController: SearchBarViewDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        //        let searchText = searchController.searchBar.text ?? ""
-        //        viewModel.filteredWishList = viewModel.wishList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
-        //        collectionView.reloadData()
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let searchText = searchBar.text ?? ""
+        viewModel.searchedProducts = viewModel.products.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+#warning("разобраться с методом")
     }
 }
 
@@ -127,21 +130,21 @@ extension SearchResultViewController {
     }
     
     private func registerCells() {
-        collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: "ProductCollectionViewCell")
-        collectionView.register(HeaderProductsView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderProductsView")
+        collectionView.register(ProductCollectionViewCell.self)
+        collectionView.registerHeader(HeaderProductsView.self)
     }
     
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+        customNavigationBar.searchBarView.delegate = self
     }
     
     override func setupConstraints() {
         super.setupConstraints()
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.topOffset)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
@@ -154,7 +157,7 @@ extension SearchResultViewController {
         ///хедер
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(30)
+            heightDimension: .estimated(Constants.headerEstimatedHeight)
         )
         let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
@@ -167,16 +170,16 @@ extension SearchResultViewController {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize:
                 .init(
-                    widthDimension: .absolute(349),
-                    heightDimension: .absolute(217)),
+                    widthDimension: .absolute(Constants.itemWidth),
+                    heightDimension: .absolute(Constants.itemHeight)),
                     subitems: [item]
         )
-        group.interItemSpacing = .fixed(16)
+        group.interItemSpacing = .fixed(Constants.itemSpacing)
         let section = NSCollectionLayoutSection(group: group)
         section.supplementariesFollowContentInsets = false
-        section.interGroupSpacing = 16
+        section.interGroupSpacing = Constants.itemSpacing
         section.boundarySupplementaryItems = [headerSupplementary]
-        section.contentInsets = .init(top: 16, leading: 20, bottom: 16, trailing: 20)
+        section.contentInsets = Constants.contentInset
         return section
     }
     
@@ -184,7 +187,7 @@ extension SearchResultViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 50)
+        return CGSize(width: collectionView.bounds.width, height: Constants.headerHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -193,7 +196,19 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderProductsView", for: indexPath) as! HeaderProductsView
-        headerView.configureHeader(labelName: "Search result for \(viewModel.searchText)")
+        headerView.configureHeader(labelName: "\(Resources.Texts.searchResultHeader) \(viewModel.searchText)")
         return headerView
+    }
+}
+
+extension SearchResultViewController {
+    enum Constants {
+        static let topOffset: CGFloat = 70.0
+        static let itemWidth: CGFloat = 349.0
+        static let itemHeight: CGFloat = 217.0
+        static let itemSpacing: CGFloat = 16.0
+        static let contentInset: NSDirectionalEdgeInsets = .init(top: 16, leading: 20, bottom: 16, trailing: 20)
+        static let headerEstimatedHeight: CGFloat = 30.0
+        static let headerHeight: CGFloat = 50.0
     }
 }

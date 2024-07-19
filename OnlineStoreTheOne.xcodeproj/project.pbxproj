@@ -512,10 +512,10 @@
 		86EDFF0D2BD80F2C00CD9F81 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				E1835F502BF4B8C700BE1962 /* Registration */,
-				E1835F512BF4B8DE00BE1962 /* Auth */,
 				E1835F402BEEB8EF00BE1962 /* Coordinator */,
 				86EDFF122BD80F6200CD9F81 /* Views */,
+				E1835F512BF4B8DE00BE1962 /* Auth */,
+				E1835F502BF4B8C700BE1962 /* Registration */,
 			);
 			path = Auth;
 			sourceTree = "<group>";

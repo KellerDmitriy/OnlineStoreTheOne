@@ -118,7 +118,7 @@ final class RegistrationViewModel: RegistrationViewModelProtocol {
     //    MARK: - Route
     func showErrorInfo(message: String, action: @escaping ()->Void) {
         coordinator?.showAlertController(
-            title: "Error",
+            title: Resources.Texts.error,
             message: message,
             createAction: action)
     }
