@@ -10,7 +10,6 @@ import Combine
 
 final class CartsViewModel: ObservableObject {
     //MARK:  Properties
-    let networkService: NetworkServiceProtocol
     let storageService: StorageServiceProtocol
     let coordinator: ICartsCoordinator
     
@@ -23,18 +22,15 @@ final class CartsViewModel: ObservableObject {
     var subscription: Set<AnyCancellable> = []
     
     //MARK: - Init
-    init(coordinator: ICartsCoordinator, networkService: NetworkServiceProtocol, storageService: StorageServiceProtocol) {
+    init(coordinator: ICartsCoordinator, storageService: StorageServiceProtocol) {
         self.coordinator = coordinator
-        self.networkService = networkService
         self.storageService = storageService
         
         observeCartProducts()
-//        getProductsFromCart()
+        getProductsFromCart()
     }
     
     //MARK: - Observe Methods
-    
-    
     private func observeCartProducts() {
         $isSelect
             .receive(on: DispatchQueue.main)

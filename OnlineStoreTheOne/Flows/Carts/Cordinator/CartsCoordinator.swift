@@ -34,7 +34,6 @@ final class CartsCoordinator: ICartsCoordinator {
     func showCartsScene() {
         let viewModel = CartsViewModel(
             coordinator: self,
-            networkService: networkService,
             storageService: storageService
         )
         let viewController = CartsViewController(viewModel: viewModel)

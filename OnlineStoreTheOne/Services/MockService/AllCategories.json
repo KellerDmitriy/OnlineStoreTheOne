@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "name": "Cateoria Gold",
+    "image": "https://i.imgur.com/QkIa5tT.jpeg",
+    "creationAt": "2024-07-21T03:45:06.000Z",
+    "updatedAt": "2024-07-21T17:42:31.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Electronics",
+    "image": "https://i.imgur.com/ZANVnHE.jpeg",
+    "creationAt": "2024-07-21T03:45:06.000Z",
+    "updatedAt": "2024-07-21T03:45:06.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Furniture",
+    "image": "https://i.imgur.com/Qphac99.jpeg",
+    "creationAt": "2024-07-21T03:45:06.000Z",
+    "updatedAt": "2024-07-21T03:45:06.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Shoes",
+    "image": "https://i.imgur.com/qNOjJje.jpeg",
+    "creationAt": "2024-07-21T03:45:06.000Z",
+    "updatedAt": "2024-07-21T03:45:06.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Miscellaneous",
+    "image": "https://i.imgur.com/BG8J0Fj.jpg",
+    "creationAt": "2024-07-21T03:45:06.000Z",
+    "updatedAt": "2024-07-21T03:45:06.000Z"
+  },
+  {
+    "id": 7,
+    "name": "KFC",
+    "image": "https://cdn0-production-images-kly.akamaized.net/AA3wKXX48_LuAfFx8ETga82XFqc=/1200x900/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/978760/original/087985800_1441451681-harland-sanders-kfc-7-131118-c.jpg",
+    "creationAt": "2024-07-21T07:24:23.000Z",
+    "updatedAt": "2024-07-21T07:24:23.000Z"
+  },
+  {
+    "id": 8,
+    "name": "Uniqlo",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UNIQLO_logo.svg/2058px-UNIQLO_logo.svg.png",
+    "creationAt": "2024-07-21T07:26:00.000Z",
+    "updatedAt": "2024-07-21T07:26:00.000Z"
+  },
+  {
+    "id": 9,
+    "name": "D'Cost",
+    "image": "https://media.licdn.com/dms/image/C4E0BAQGy2FfXFL-VBg/company-logo_200_200/0/1655181809503/dcost_seafood_logo?e=2147483647&v=beta&t=sR3eLM0zSYGeN0p5mBBGTqHs8yiqLCtmEyNyQNUO7-k",
+    "creationAt": "2024-07-21T07:27:31.000Z",
+    "updatedAt": "2024-07-21T07:27:31.000Z"
+  },
+  {
+    "id": 10,
+    "name": "Starbucks",
+    "image": "https://www.logogenie.net/images/articles/starbucks-logo1.jpg",
+    "creationAt": "2024-07-21T07:30:38.000Z",
+    "updatedAt": "2024-07-21T07:30:38.000Z"
+  },
+  {
+    "id": 11,
+    "name": "Domino Pizza",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Dominos_pizza_logo.svg/768px-Dominos_pizza_logo.svg.png",
+    "creationAt": "2024-07-21T07:31:24.000Z",
+    "updatedAt": "2024-07-21T07:31:24.000Z"
+  },
+  {
+    "id": 12,
+    "name": "Pizza Hut",
+    "image": "https://logowik.com/content/uploads/images/130_pizzahut.jpg",
+    "creationAt": "2024-07-21T07:31:52.000Z",
+    "updatedAt": "2024-07-21T07:31:52.000Z"
+  },
+  {
+    "id": 13,
+    "name": "Xiboba",
+    "image": "https://s3.giladiskon.com/images/merchants/logo/502-xi-boba.png",
+    "creationAt": "2024-07-21T07:33:55.000Z",
+    "updatedAt": "2024-07-21T07:33:55.000Z"
+  },
+  {
+    "id": 15,
+    "name": "Adidas",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/2560px-Adidas_Logo.svg.png",
+    "creationAt": "2024-07-21T07:34:50.000Z",
+    "updatedAt": "2024-07-21T07:34:50.000Z"
+  },
+  {
+    "id": 16,
+    "name": "Wendy's",
+    "image": "https://i.insider.com/51e3f458eab8ea135800001d?width=750&format=jpeg&auto=webp",
+    "creationAt": "2024-07-21T07:35:32.000Z",
+    "updatedAt": "2024-07-21T07:35:32.000Z"
+  },
+  {
+    "id": 17,
+    "name": "Fore",
+    "image": "https://fore.coffee/wp-content/uploads/2023/11/fore-sg.png",
+    "creationAt": "2024-07-21T07:36:20.000Z",
+    "updatedAt": "2024-07-21T07:36:20.000Z"
+  },
+  {
+    "id": 18,
+    "name": "Teh Poci",
+    "image": "https://i.pinimg.com/originals/1d/fa/ae/1dfaae1c4f984b290e1404c3d8c081ed.png",
+    "creationAt": "2024-07-21T07:37:13.000Z",
+    "updatedAt": "2024-07-21T07:37:13.000Z"
+  },
+  {
+    "id": 19,
+    "name": "HnM",
+    "image": "https://1000logos.net/wp-content/uploads/2017/02/HM-symbol.jpg",
+    "creationAt": "2024-07-21T07:38:12.000Z",
+    "updatedAt": "2024-07-21T07:38:12.000Z"
+  },
+  {
+    "id": 20,
+    "name": "Ramen Ya!",
+    "image": "https://i0.wp.com/aniloka.com/wp-content/uploads/2024/03/Ramen-YA-Menu.jpg?ssl=1",
+    "creationAt": "2024-07-21T07:39:34.000Z",
+    "updatedAt": "2024-07-21T07:39:34.000Z"
+  },
+  {
+    "id": 21,
+    "name": "Zenbu",
+    "image": "https://www.centralparkjakarta.com/wp-content/uploads/2017/10/zenbu.jpg",
+    "creationAt": "2024-07-21T07:40:10.000Z",
+    "updatedAt": "2024-07-21T07:40:10.000Z"
+  },
+  {
+    "id": 22,
+    "name": "Chatime",
+    "image": "https://iconape.com/wp-content/files/tf/385756/svg/385756.svg",
+    "creationAt": "2024-07-21T07:40:50.000Z",
+    "updatedAt": "2024-07-21T07:40:50.000Z"
+  },
+  {
+    "id": 23,
+    "name": "Gardening",
+    "image": "https://static.vecteezy.com/system/resources/previews/027/951/485/original/gardening-logo-design-illustration-vector.jpg",
+    "creationAt": "2024-07-21T07:41:52.000Z",
+    "updatedAt": "2024-07-21T07:41:52.000Z"
+  },
+  {
+    "id": 24,
+    "name": "BBQ Mountain Boys",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAcTKWWnPS48A3qQDJIMLvTKfjCjKDgbPZdCg568rsi64Mt49fZzfHER-a_LicJk5BKw&usqp=CAU",
+    "creationAt": "2024-07-21T07:42:40.000Z",
+    "updatedAt": "2024-07-21T07:42:40.000Z"
+  },
+  {
+    "id": 25,
+    "name": "Yoshinoya",
+    "image": "https://upload.wikimedia.org/wikipedia/id/3/3d/Yoshinoya_logo.jpg",
+    "creationAt": "2024-07-21T07:43:13.000Z",
+    "updatedAt": "2024-07-21T07:43:13.000Z"
+  },
+  {
+    "id": 26,
+    "name": "Cateoria Gold",
+    "image": "https://res.cloudinary.com/df2knrwm3/image/upload/v1657071560/e1vimhwsviaps4tj0ofv.png",
+    "creationAt": "2024-07-21T07:44:01.000Z",
+    "updatedAt": "2024-07-21T17:32:21.000Z"
+  },
+  {
+    "id": 27,
+    "name": "Cateoria Primium",
+    "image": "https://placeimg.com/640/480/any",
+    "creationAt": "2024-07-21T17:21:06.000Z",
+    "updatedAt": "2024-07-21T17:31:06.000Z"
+  }
+]

@@ -48,8 +48,7 @@ extension HomeViewController: UICollectionViewDataSource {
             cell.makeCellShadow()
             if indexPath.row < viewModel.categories.count {
                 let category = viewModel.categories[indexPath.row]
-                cell.configureCell(image: category.image ?? "",
-                                   category: category.name ?? "")
+                cell.configureCell(category)
             }
             return cell
             
@@ -80,6 +79,7 @@ extension HomeViewController: UICollectionViewDelegate {
         let section = sections[indexPath.section]
         switch section {
         case .searchField: break
+            
         case .categories:
             let category = viewModel.categories[indexPath.row]
             viewModel.updateCategory(category.id)
@@ -90,6 +90,7 @@ extension HomeViewController: UICollectionViewDelegate {
                 collectionView.deselectItem(at: selectedIndexPath, animated: true)
             }
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            
         case .products:
             let selectedProduct = viewModel.productsForCategory[indexPath.row]
             viewModel.coordinator?.showDetailFlow(productId: selectedProduct.id)

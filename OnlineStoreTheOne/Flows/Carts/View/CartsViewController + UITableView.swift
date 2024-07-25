@@ -40,8 +40,8 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
     
     //    MARK: - Action
     func checkMarkButtonTap(id: Int, newIsSelect: Bool) {
-        viewModel.isSelect = newIsSelect
         viewModel.updateCheckMark(for: id, isSelect: newIsSelect)
+        viewModel.isSelect = newIsSelect
     }
     
     func trashButtonTap(id: Int) {
@@ -49,8 +49,8 @@ extension CartsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func updateCount(_ productID: Int, newCount: Int) {
-        viewModel.productCount = newCount
         viewModel.updateProductCount(for: productID, newCount: newCount)
+        viewModel.productCount = newCount
     }
 }
 

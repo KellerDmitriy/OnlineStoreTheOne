@@ -34,13 +34,7 @@ final class NetworkService: NetworkServiceProtocol {
     /// Декодер JSON для декодирования полученных данных.
     let decoder = JSONDecoder()
     
-    // MARK: - Initialization
-    
-    /// Приватный инициализатор для предотвращения создания экземпляров снаружи класса.
-    init () {}
-    
     // MARK: - Public Methods
-    
     /// Получение всех продуктов из сети.
     /// - Returns: Результат выполнения запроса с массивом продуктов или ошибкой сети.
     func fetchAllProducts() async -> Result<[Products], NetworkError> {
